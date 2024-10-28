@@ -1,12 +1,7 @@
 name: Lint Next.js Application
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: push
+ 
 
 jobs:
   lint:
