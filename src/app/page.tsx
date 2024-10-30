@@ -20,7 +20,7 @@ export default function Home() {
             </code>
             .
           </li>
-          <li>My first ci/cd action and deployment.</li>
+          <li>My first ci/cd action and deployment.kostis</li>
         </ol>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
