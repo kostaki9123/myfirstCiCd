@@ -3,7 +3,7 @@ name: Deploy Next.js App to Azure
 on:
   push:
     branches: 
-      - main # Change this to your deployment branch
+      - main # Change this to your deployment branch.(Our branch called main)
   workflow_dispatch:
 
 jobs:
