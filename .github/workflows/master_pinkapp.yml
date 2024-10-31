@@ -1,4 +1,7 @@
-name: Build and deploy Next.js app to Azure Web App - pinkapp
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy ASP.Net Core app to Azure Web App - pinkapp
 
 on:
   push:
@@ -8,53 +11,55 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Use Ubuntu as it's common for Node.js projects
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
         with:
-          node-version: '18.x'  # Use the version that matches your Next.js app requirements
+          dotnet-version: '8.x'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
 
-      - name: Build Next.js app
-        run: npm run build
+      - name: dotnet publish
+        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: nextjs-app
-          path: .next  # The default Next.js build output directory
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/myapp
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: build
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write
+      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: nextjs-app
-
+          name: .net-app
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_6A4C1A324EF94AF2828B105570EAFC6D }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_89B821AFAC3242D1BA305CF7EFBCADF6 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6AC329F444EA42DE82BFFA83E090918D }}
 
       - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
         with:
-          app-name: 'pinkapp'  # Replace with your Azure Web App name
-          slot-name: 'production'
-          package: '.next'
+          app-name: 'pinkapp'
+          slot-name: 'Production'
+          package: .
+          
