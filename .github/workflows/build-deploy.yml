@@ -35,10 +35,7 @@ jobs:
       id-token: write  # Required for login to Azure
 
     steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: nextjs-build
+   
 
       - name: Login to Azure
         uses: azure/login@v2
