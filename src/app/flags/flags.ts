@@ -4,7 +4,7 @@ export const allowExpensiveAI = flag({
     key: "expensive-ai" , 
     description : "Use the expensive AI model" ,
     decide : async () => false , 
-    defaultValue : false
+    defaultValue : true
 })
 
 export const precopmuteFlags = [allowExpensiveAI] as const
