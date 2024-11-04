@@ -1,5 +1,7 @@
+import { allowExpensiveAI } from "./flags/flags"
 
-export default function Home() {
+export default async function Home() {
+  const expensiveAI = await allowExpensiveAI();  //flag
   return (
   <div className=' h-full w-full'>
     <div className=" min-h-screen bg-[#5893D4] w-full text-white min-w-[344px] ">
@@ -8,7 +10,7 @@ export default function Home() {
 
             <div className="xxxll:w-[70%] xll:w-[80%] 600:w-[72%] 535:w-[80%] 426:w-[85%] base:w-[92%] p-6">
                    <h2 className="scroll-m-20  text-3xl font-semibold tracking-tight first:mt-0">
-                     My trips
+                      {expensiveAI  ? 'My trips' : 'My journeys' }
                    </h2>
             </div>
 
