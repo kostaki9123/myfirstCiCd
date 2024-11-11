@@ -1,13 +1,9 @@
 import { allowExpensiveAI } from "./flags/flags"
 
-export default async function Home({searchParams}:{searchParams :{ [key: string]: string | string[] | undefined}}) {
+export default async function Home() {
 
   const expensiveAI = await allowExpensiveAI();  //feauture flag
 
-  let sortMethod = searchParams?.sort
-    if (sortMethod === undefined){
-        sortMethod === "alltrips"
-    }
 
   //get user action -> controller -> use case -> repository
 
