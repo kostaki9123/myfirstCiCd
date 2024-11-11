@@ -1,7 +1,18 @@
 import { allowExpensiveAI } from "./flags/flags"
 
-export default async function Home() {
-  const expensiveAI = await allowExpensiveAI();  //flag
+export default async function Home({searchParams}:{searchParams :{ [key: string]: string | string[] | undefined}}) {
+
+  const expensiveAI = await allowExpensiveAI();  //feauture flag
+
+  let sortMethod = searchParams?.sort
+    if (sortMethod === undefined){
+        sortMethod === "alltrips"
+    }
+
+  //get user action -> controller -> use case -> repository
+
+  
+
   return (
   <div className=' h-full w-full'>
     <div className=" min-h-screen bg-[#5893D4] w-full text-white min-w-[344px] ">
