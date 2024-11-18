@@ -1,43 +1,112 @@
-import { allowExpensiveAI } from "./flags/flags"
-
-export default async function Home() {
-
-  const expensiveAI = await allowExpensiveAI();  //feauture flag
-
-
-  //get user action -> controller -> use case -> repository
-
-  
+export default function Home() {
+  const trips = [
+    {
+      id: 1,
+      name: "Vacation in Bali",
+      countries: [{ name: "Indonesia", flag: "🇮🇩" }],
+      moneyStatus: "Affordable",
+      travelingAlone: false,
+      type: "Beach",
+      cost: 1200,
+      startsInDays: 30,
+    },
+    {
+      id: 2,
+      name: "Viaje en Chipre",
+      countries: [{ name: "Cyprus", flag: "🇨🇾" }],
+      moneyStatus: "Affordable",
+      travelingAlone: false,
+      type: "Beach",
+      cost: 1600,
+      startsInDays: 20,
+    },
+  ];
 
   return (
-  <div className=' h-full w-full'>
-    <div className=" min-h-screen bg-[#5893D4] w-full text-white min-w-[344px] ">
-        {/**<Navbar/>**/}
-        <div className="h-fit w-full bg-[#5893D4] absolute top-20  flex items-center justify-center flex-col min-w-[344px] ">
+    <div className="min-h-screen bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-gray-200 pt-20">
+      {/* Header */}
+      <header className="w-full py-8 text-center  shadow-lg">
+        <h1 className="text-4xl font-extrabold tracking-wide text-white">
+          My trips
+        </h1>
+       
+      </header>
 
-            <div className="xxxll:w-[70%] xll:w-[80%] 600:w-[72%] 535:w-[80%] 426:w-[85%] base:w-[92%] p-6">
-                   <h2 className="scroll-m-20  text-3xl font-semibold tracking-tight first:mt-0">
-                      {expensiveAI  ? 'My trips' : 'My journeys' }
-                   </h2>
+      {/* Action Buttons */}
+      <div className="mt-10 flex justify-center space-x-6">
+        <button className="px-6 py-3 bg-gradient-to-r from-[#16a34a] to-[#22c55e] text-white rounded-lg shadow-lg hover:scale-105 transition-transform duration-200">
+          + Create Trip
+        </button>
+        <button className="px-6 py-3 bg-gradient-to-r from-[#6d28d9] to-[#9333ea] text-white rounded-lg shadow-lg hover:scale-105 transition-transform duration-200">
+          Sort Trips
+        </button>
+      </div>
+
+      {/* Trip Cards */}
+      <main className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 md:px-12">
+        {trips.map((trip) => (
+          <div
+            key={trip.id}
+            className="relative bg-[#1e293b] rounded-xl p-6 shadow-md hover:shadow-xl transform hover:-translate-y-2 transition-all"
+          >
+            {/* Trip Name */}
+            <h2 className="text-2xl font-bold text-[#38bdf8]">{trip.name}</h2>
+
+            {/* Countries */}
+            <div className="mt-3 flex items-center space-x-2">
+              {trip.countries.map((country, idx) => (
+                <span key={idx} className="text-sm text-gray-400">
+                  {country.flag} {country.name}
+                </span>
+              ))}
             </div>
 
-            <div className=" xxxll:w-[70%] xll:w-[80%] 600:w-[72%] 535:w-[80%] 426:w-[85%] base:w-[92%]   flex justify-between  ">
-          { /**   <Dropdown/>
-             <Createtripmodal/>  */ }
+            {/* Features */}
+            <div className="mt-6 flex flex-wrap gap-3">
+              <span className="px-3 py-1 bg-[#16a34a]/20 text-[#16a34a] text-sm rounded-full">
+                💵 {trip.moneyStatus}
+              </span>
+              <span className="px-3 py-1 bg-[#3b82f6]/20 text-[#3b82f6] text-sm rounded-full">
+                {trip.travelingAlone ? "🧍 Traveling Alone" : "👥 Group Travel"}
+              </span>
+              <span className="px-3 py-1 bg-[#facc15]/20 text-[#facc15] text-sm rounded-full">
+                🌟 {trip.type}
+              </span>
             </div>
 
-            <div className=" xxxll:w-[70%] xll:w-[80%] 600:w-[72%] 535:w-[80%] 426:w-[85%] base:w-[92%]   p-3  ">
-                <div className=" p-3 flex gap-3 flex-wrap ">
-                 {/**    {getalltrip.map((trip , key) =>
-                        <Tripmodal key={key} tripTitle={trip.tripName} tripId={trip.id as string}/>  
-                 ) }            */  }         
+            {/* Cost and Details */}
+            <div className="mt-6">
+              <h3 className="text-sm font-medium text-gray-400 uppercase">
+                Cost and Details:
+              </h3>
+              <div className="flex justify-between mt-2">
+                <div className="flex flex-col text-center">
+                  <small className="text-sm text-gray-400">Cost</small>
+                  <div className="text-lg font-semibold text-gray-300">
+                    ${trip.cost}
+                  </div>
                 </div>
-
-
+                <div className="flex flex-col text-center">
+                  <small className="text-sm text-gray-400">Starts in</small>
+                  <div className="text-lg font-semibold text-gray-300">
+                    {trip.startsInDays} days
+                  </div>
+                </div>
+              </div>
             </div>
 
-        </div>  
+            {/* Actions */}
+            <div className="mt-6 flex justify-between items-center">
+              <button className="px-4 py-2 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white rounded-lg shadow-lg hover:scale-105 transition-transform">
+                Join Dashboard
+              </button>
+              <button className="px-4 py-2 text-[#f87171] border border-[#f87171] rounded-lg hover:bg-[#f87171] hover:text-white transition">
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
+      </main>
     </div>
-  </div>
-  )
+  );
 }
