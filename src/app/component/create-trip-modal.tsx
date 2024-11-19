@@ -85,10 +85,8 @@ const Createtripmodal = () => {
 
   return (
     <Dialog >
-      <DialogTrigger>
-         <div className="px-6 py-3 bg-gradient-to-r from-[#16a34a] to-[#22c55e] text-white rounded-lg shadow-lg hover:scale-105 transition-transform duration-200">
-          + Create Trip
-        </div>    
+      <DialogTrigger  className="px-6 py-3 bg-gradient-to-r from-[#16a34a] to-[#22c55e] text-white rounded-lg shadow-lg hover:scale-105 transition-transform duration-200">
+          + Create Trip    
       </DialogTrigger>
 
       <DialogContent className="h-fit w-fit  text-black   p-2">
@@ -98,8 +96,8 @@ const Createtripmodal = () => {
               </DialogTitle>
               <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name" className="pb-2">Trip Name</Label>
-                  <Input id="name" name="tripName" placeholder="Name of your trip" maxLength={30} />
+                  <label>Trip Name</label>  
+                  <input id="name" className='border-2 border-pink-600' name="tripName" placeholder="Name of your trip" maxLength={30} />
                   {/** errorMessageTripname && <p className="text-red-500">{errorMessageTripname}</p>  */}
                 </div>
                 {/* <div className="flex flex-col space-y-1.5">
@@ -110,21 +108,18 @@ const Createtripmodal = () => {
               </div>
               <div className=' w-[400px]  pt-2 flex'>
                  <div className=' w-1/2 ' >
-                     <Label htmlFor="name" >Trip Budget</Label>
+                     <label>Trip Budget</label>
                  </div>
                  <div className=' w-1/2 ' >
-                     <Label htmlFor="name" >Traveling with</Label>
+                     <label>Traveling with</label>
                  </div>     
               </div>
               <div className=' w-full pt-2 ' >
-                     <Label htmlFor="name"  >Trip type {"(Max 3)"}</Label>
+                     <label >Trip type </label>
                      <div className='flex flex-wrap gap-2 w-full  mt-2 max-w-[400px]'>
                      {["Adventures", "Cultural enthusiasts", "Natural lovers", "Nightlife", "Festival", "Sports Enthusiast", "Events"].map((type , key) => (
                     <div key={key} className="flex items-center space-x-1">
-                      <Checkbox
-                        id={type}
-                      
-                      />
+                     
                       <label
                         htmlFor={type}
                         className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70  `}
@@ -137,7 +132,7 @@ const Createtripmodal = () => {
                      </div>
               </div> 
           
-              <Button type="submit">Create trip</Button>
+              <button type="submit">Create trip</button>
      
         </form>
       </DialogContent>
