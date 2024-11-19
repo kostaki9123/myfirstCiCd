@@ -1,3 +1,6 @@
+import Createtripmodal from "./component/create-trip-modal";
+import DeleteAlertDialog from "./component/delete-trip-modal";
+
 export default function Home() {
   const trips = [
     {
@@ -34,9 +37,8 @@ export default function Home() {
 
       {/* Action Buttons */}
       <div className="mt-10 flex justify-center space-x-6">
-        <button className="px-6 py-3 bg-gradient-to-r from-[#16a34a] to-[#22c55e] text-white rounded-lg shadow-lg hover:scale-105 transition-transform duration-200">
-          + Create Trip
-        </button>
+        <Createtripmodal/>
+      
         <button className="px-6 py-3 bg-gradient-to-r from-[#6d28d9] to-[#9333ea] text-white rounded-lg shadow-lg hover:scale-105 transition-transform duration-200">
           Sort Trips
         </button>
@@ -47,7 +49,7 @@ export default function Home() {
         {trips.map((trip) => (
           <div
             key={trip.id}
-            className="relative bg-[#1e293b] rounded-xl p-6 shadow-md hover:shadow-xl transform hover:-translate-y-2 transition-all"
+            className="relative  mb-6  bg-[#1e293b] rounded-xl p-6 shadow-md hover:shadow-xl transform hover:-translate-y-2 transition-all"
           >
             {/* Trip Name */}
             <h2 className="text-2xl font-bold text-[#38bdf8]">{trip.name}</h2>
@@ -100,9 +102,8 @@ export default function Home() {
               <button className="px-4 py-2 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white rounded-lg shadow-lg hover:scale-105 transition-transform">
                 Join Dashboard
               </button>
-              <button className="px-4 py-2 text-[#f87171] border border-[#f87171] rounded-lg hover:bg-[#f87171] hover:text-white transition">
-                Delete
-              </button>
+              <DeleteAlertDialog tripId="ndejd" />
+              
             </div>
           </div>
         ))}
