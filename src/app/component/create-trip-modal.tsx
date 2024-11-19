@@ -2,19 +2,13 @@
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card"
+
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React, { useCallback, useState } from 'react';
 
-import { MdAdd } from "react-icons/md";
+
+
 
 import { Checkbox } from '@/components/ui/checkbox';
 
@@ -94,20 +88,14 @@ const Createtripmodal = () => {
       <DialogTrigger>
          <div className="px-6 py-3 bg-gradient-to-r from-[#16a34a] to-[#22c55e] text-white rounded-lg shadow-lg hover:scale-105 transition-transform duration-200">
           + Create Trip
-        </div>
-      
+        </div>    
       </DialogTrigger>
 
-      <DialogContent className="h-fit w-fit  text-black   p-0">
-        <form >
-          <Card className="w-full text-black">
-            <CardHeader>
+      <DialogContent className="h-fit w-fit  text-black   p-2">
+        <form>
               <DialogTitle>
                 Create trip
               </DialogTitle>
-              <DialogDescription>Plan the Perfect Trip with Us!</DialogDescription>
-            </CardHeader>
-            <CardContent>
               <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="name" className="pb-2">Trip Name</Label>
@@ -148,11 +136,9 @@ const Createtripmodal = () => {
                     
                      </div>
               </div> 
-            </CardContent>
-            <CardFooter className="flex justify-end">
+          
               <Button type="submit">Create trip</Button>
-            </CardFooter>
-          </Card>
+     
         </form>
       </DialogContent>
     </Dialog>
