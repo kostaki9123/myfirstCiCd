@@ -20,9 +20,9 @@ const HorizontalItinerary = ({ itinerary }: any) => {
 
       {/* Itinerary Cards */}
       <div className="flex overflow-x-auto space-x-8 py-4">
-        {itinerary.map((item: any, index: number) => (
+        {itinerary.map((item: any, key: number) => (
           <div
-            key={index}
+            key={key}
             className="flex-shrink-0 w-64 bg-white shadow-md rounded-lg p-4 border border-gray-200"
           >
             <h2 className="text-lg font-semibold">{item.title}</h2>
