@@ -12,10 +12,10 @@ const DashboardLayout = ({children} : props) => {
    
 
   return (
-    <div className=' min-h-screen '>
+    <div className=' min-h-[612px]    '>
        <Navbar withManageTripbtn withtripname/>
        <Sidebar/>
-       <div className='fixed  top-20 right-0 bottom-0 left-0  md:left-64 '>
+       <div className=' top-20 absolute md:left-64 left-0 right-0 min-h-[532px]  '>
        {children} 
        </div>
     </div>
