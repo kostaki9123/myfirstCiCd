@@ -1,5 +1,6 @@
 import React from 'react'
 import Tripboard from './components/tripboard'
+import Tripboardphone from './components/tripboardphone';
 
 const points = [
   {
@@ -60,7 +61,7 @@ const points = [
     cyrcleArrId: "A3"
   },
   {
-    id: "4",
+    id: "3",
     role: "MOVINGBOX",
     index: 3,
     startdate: "2024-11-29T15:00:00Z",
@@ -79,34 +80,43 @@ const points = [
     cyrcleArrId: "A4"
   },
   {
-    id: "5",
-    role: "POINT",
+    id: "4",
+    role: "MOVINGBOX",
     index: 4,
-    startdate: "2024-11-29T18:00:00Z",
-    location: "San Francisco, CA",
-    enddate: null,
-    to: null,
-    from: null,
-    time: null,
-    moveIcon: null,
-    lat1: "37.7749",
-    lng1: "-122.4194",
-    lat2: null,
-    lng2: null,
-    placeId1: "ChIJIQBpAG2ahYAR_6128GcTUEo",
-    placeId2: null,
-    cyrcleArrId: "A5"
-  }
+    startdate: "2024-11-29T15:00:00Z",
+    location: null,
+    enddate: "2024-11-29T17:00:00Z",
+    to: "San Francisco, CA",
+    from: "Los Angeles, CA",
+    time: "6h",
+    moveIcon: "car",
+    lat1: "34.0522",
+    lng1: "-118.2437",
+    lat2: "37.7749",
+    lng2: "-122.4194",
+    placeId1: "ChIJE9on3F3HwoAR9AhGJW_fL-I",
+    placeId2: "ChIJIQBpAG2ahYAR_6128GcTUEo",
+    cyrcleArrId: "A4"
+  },
+  
 ];
 
 
 const page = () => {
   return (
-    <div className=' '>
+    <div className=' xxs:border-4   h-full bottom-0 absolute right-0 left-0  flex flex-col  '>
+        
+        <div className=' h-1/2 xxs:block hidden  ' >
+           <Tripboard  tripId='' cyrclesArr={points} />
+        </div>
+        <div className=' h-[52%]  w-full xxs:block hidden bg-slate-500 ' >
+           google map
+        </div>
 
-        <Tripboard  tripId='' cyrclesArr={points} />
-        <div>
-
+       
+       
+        <div  className=' block xxs:hidden h-full'>
+           <Tripboardphone  tripId='' cyrclesArr={points} />
         </div>
     </div>
   )

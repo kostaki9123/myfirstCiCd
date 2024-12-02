@@ -9,6 +9,7 @@ import { FaCar , FaBusAlt , FaBicycle, FaShip,FaWalking } from "react-icons/fa";
 import { FaTrainTram, FaMotorcycle , FaTrainSubway , FaTaxi , FaFerry  } from "react-icons/fa6";
 import { FaHelicopter } from "react-icons/fa";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import CurvelinePhone from './curvelinephone';
 //import Savebtn from '../viewcyrclemodal/deletebtn';
 //import ViewPlaceMoadal from '../viewcyrclemodal/viewplacemodal';
 
@@ -19,12 +20,13 @@ type Props = {
   index : number  
   datalenght : number
   tripId : string
+  withcurveline : boolean
 }
 
 
 
 const positiongrid = [
-  {gridColumn: 2, gridRow : 3 ,line : "up"},  //grid colunm delte if not needded
+  {gridColumn: 2, gridRow : 3 ,line : "up"   },  //grid colunm delte if not needded
   {gridColumn: 3, gridRow : 2 ,line : "down" },
   {gridColumn: 4, gridRow : 3 ,line : "up" },
   {gridColumn: 5, gridRow : 2 ,line : "down"},
@@ -45,6 +47,29 @@ const positiongrid = [
   {gridColumn: 20, gridRow : 3 ,line : "up" },
   {gridColumn: 21, gridRow : 2 ,line : "down"},
  ]
+
+ const positiongridphone = [
+  {gridColumn:1, gridRow : 2, line : "left" },
+  {gridColumn:2, gridRow : 3 ,line : "right"  },
+  {gridColumn:1, gridRow : 4 ,line : "left" },
+  {gridColumn:2, gridRow : 5 ,line : "right"},
+  {gridColumn:1, gridRow : 6 ,line : "left" },
+  {gridColumn:2, gridRow : 7 ,line : "right"},
+  {gridColumn:1, gridRow : 8 ,line : "left" },
+  {gridColumn:2, gridRow : 9 ,line : "right"},
+  {gridColumn: 1, gridRow : 10 ,line : "left" },
+  {gridColumn: 2, gridRow : 11 ,line : "right"},
+  {gridColumn: 1, gridRow : 12 ,line : "left" },
+  {gridColumn: 2, gridRow : 13 ,line : "right"},
+  {gridColumn: 1, gridRow : 14 ,line : "left" },
+  {gridColumn: 2, gridRow : 15 ,line : "right"},
+  {gridColumn: 1, gridRow : 16 ,line : "left" },
+  {gridColumn: 2, gridRow : 17 ,line : "right"},
+  {gridColumn: 1, gridRow : 18 ,line : "left" },
+  {gridColumn: 2, gridRow : 19 ,line :"right"},
+  {gridColumn: 1, gridRow : 20 ,line : "left" },
+  {gridColumn: 2, gridRow : 21 ,line : "right"},
+  ]
 
 const Movingbox = (props : Props) => {
  // const [by , setBy] = useState<string>(props.data.moveIcon)
@@ -130,9 +155,9 @@ const Movingbox = (props : Props) => {
   return (
 <>
     <Dialog >
-       <div style={{gridRow :`${positiongrid[props.index].gridRow}`  ,gridColumn : `${props.index + 2} `, display : "flex" , alignItems : "center", justifyItems : "center" , height : "83px" , width : "89px" }} >
+       <div style={{ paddingBottom: `${props.withcurveline === false && '20px'}`, marginLeft: props.withcurveline    ? '0px' : (positiongridphone[props.index].gridColumn === 2 ? '10px' : '50px'),gridRow :`${props.withcurveline ?positiongrid[props.index].gridRow : props.datalenght + 2 - props.index}`  ,gridColumn : `${props.withcurveline ? props.index + 2 : positiongridphone[props.index].gridColumn} `, display : "flex" , alignItems : "center", justifyItems : "center" , height : "83px" , width : "89px" , position: 'relative' }} >
            <DialogTrigger asChild>
-             <div className=' text-white cursor-pointer bg-[#2E305B] h-[90px] w-[90px] rounded-[50%] flex items-center justify-center gap-[3px] flex-col'>
+             <div className=' text-white cursor-pointer bg-[#2E305B] h-[90px] w-[90px] rounded-[50%] flex items-center justify-center gap-[3px] z-40 flex-col'>
                 <IoAirplaneOutline className=' text-xl' />
                 <h4 className=''>
                    {/**  {result.shortFormattedAddress ? <>{result.shortFormattedAddress}</> : */} 
@@ -146,16 +171,25 @@ const Movingbox = (props : Props) => {
                   {/** action menu */}{/**  <Actionsmenu cyrcleId={props.data.id}/> */}
            </div>
            <div className=' relative '>
-              {positiongrid[props.index].line === "up"  ?
-                 <div className=' absolute top-[-100px] right-[-46px]'>
-                       <Curveline line="up" />
-                 </div> 
+              {props.withcurveline ? 
+                 <>
+                   {positiongrid[props.index].line === "up"  ?
+                    <div className=' absolute top-[-100px] right-[-46px]'>
+                          <Curveline line="up" />
+                    </div> 
+                    :
+                    <div  className=' absolute top-[21px] right-[-64px]'>
+                          <Curveline line="down"/>
+                    </div>
+                    }
+                </>
                  :
-                 <div  className=' absolute top-[21px] right-[-64px]'>
-                       <Curveline line="down"/>
-                 </div>
-                 }
-            </div>      
+                <>
+                  <CurvelinePhone isthefirst={props.index === 0} color={true} line={positiongridphone[props.datalenght + 2 - props.index].line} />
+                </>   
+               }     
+            </div>
+           
         </div>
 
 
@@ -176,7 +210,7 @@ const Movingbox = (props : Props) => {
      </Dialog>
      {props.datalenght === props.index + 1 && (
           <>  
-            <Addnewcyrcle index={ props.index + 1} tripId={props.tripId} cyrcleArrId={props.data.cyrcleArrId} />
+            <Addnewcyrcle  withcurveline={props.withcurveline} index={ props.index + 1} tripId={props.tripId} cyrcleArrId={props.data.cyrcleArrId} />
           </>
       )}
 
