@@ -49,26 +49,26 @@ const positiongrid = [
  ]
 
  const positiongridphone = [
-  {gridColumn:1, gridRow : 2, line : "left" },
-  {gridColumn:2, gridRow : 3 ,line : "right"  },
-  {gridColumn:1, gridRow : 4 ,line : "left" },
-  {gridColumn:2, gridRow : 5 ,line : "right"},
-  {gridColumn:1, gridRow : 6 ,line : "left" },
-  {gridColumn:2, gridRow : 7 ,line : "right"},
-  {gridColumn:1, gridRow : 8 ,line : "left" },
-  {gridColumn:2, gridRow : 9 ,line : "right"},
-  {gridColumn: 1, gridRow : 10 ,line : "left" },
-  {gridColumn: 2, gridRow : 11 ,line : "right"},
-  {gridColumn: 1, gridRow : 12 ,line : "left" },
-  {gridColumn: 2, gridRow : 13 ,line : "right"},
-  {gridColumn: 1, gridRow : 14 ,line : "left" },
-  {gridColumn: 2, gridRow : 15 ,line : "right"},
-  {gridColumn: 1, gridRow : 16 ,line : "left" },
-  {gridColumn: 2, gridRow : 17 ,line : "right"},
-  {gridColumn: 1, gridRow : 18 ,line : "left" },
-  {gridColumn: 2, gridRow : 19 ,line :"right"},
-  {gridColumn: 1, gridRow : 20 ,line : "left" },
-  {gridColumn: 2, gridRow : 21 ,line : "right"},
+  {gridColumn: 2, gridRow : 2, line : "left" },
+  {gridColumn: 1, gridRow : 3 ,line : "right"  },
+  {gridColumn: 2, gridRow : 4 ,line : "left" },
+  {gridColumn: 1, gridRow : 5 ,line : "right" , pl : '50px' },
+  {gridColumn: 2, gridRow : 6 ,line : "left"  , pl : '10px' },
+  {gridColumn: 1, gridRow : 7 ,line : "right" , pl : '50px' },
+  {gridColumn: 2, gridRow : 8 ,line : "left"  , pl : '10px' },
+  {gridColumn: 1, gridRow : 9 ,line : "right" , pl : '50px' },
+  {gridColumn: 2, gridRow : 10 ,line : "left" , pl : '10px'},
+  {gridColumn: 1, gridRow : 11 ,line : "right" , pl : '50px'},
+  {gridColumn: 2, gridRow : 12 ,line : "left"  , pl : '10px'},
+  {gridColumn: 1, gridRow : 13 ,line : "right" , pl : '50px'},
+  {gridColumn: 2, gridRow : 14 ,line : "left"  , pl : '10px'},
+  {gridColumn: 1, gridRow : 15 ,line : "right" , pl : '50px'},
+  {gridColumn: 2, gridRow : 16 ,line : "left"  , pl : '10px'},
+  {gridColumn: 1, gridRow : 17 ,line : "right" , pl : '50px'},
+  {gridColumn: 2, gridRow : 18 ,line : "left"  , pl : '10px'},
+  {gridColumn: 1, gridRow : 19 ,line :"right"  , pl : '50px'},
+  {gridColumn: 2, gridRow : 20 ,line : "left"  , pl : '10px'},
+  {gridColumn: 1, gridRow : 21 ,line : "right" , pl : '50px'} ,
   ]
 
 const Movingbox = (props : Props) => {
@@ -155,7 +155,7 @@ const Movingbox = (props : Props) => {
   return (
 <>
     <Dialog >
-       <div style={{ paddingBottom: `${props.withcurveline === false && '20px'}`, marginLeft: props.withcurveline    ? '0px' : (positiongridphone[props.index].gridColumn === 2 ? '10px' : '50px'),gridRow :`${props.withcurveline ?positiongrid[props.index].gridRow : props.datalenght + 2 - props.index}`  ,gridColumn : `${props.withcurveline ? props.index + 2 : positiongridphone[props.index].gridColumn} `, display : "flex" , alignItems : "center", justifyItems : "center" , height : "83px" , width : "89px" , position: 'relative' }} >
+       <div style={{ paddingBottom: `${props.withcurveline === false && '20px'}`, marginLeft: props.withcurveline    ? '0px' : positiongridphone[props.datalenght + 2 - props.index].pl,gridRow :`${props.withcurveline ?positiongrid[props.index].gridRow : props.datalenght + 2 - props.index}`  ,gridColumn : `${props.withcurveline ? props.index + 2 : positiongridphone[props.datalenght + 2 - props.index].gridColumn} `, display : "flex" , alignItems : "center", justifyItems : "center" , height : "83px" , width : "89px" , position: 'relative' }} >
            <DialogTrigger asChild>
              <div className=' text-white cursor-pointer bg-[#2E305B] h-[90px] w-[90px] rounded-[50%] flex items-center justify-center gap-[3px] z-40 flex-col'>
                 <IoAirplaneOutline className=' text-xl' />
@@ -208,7 +208,7 @@ const Movingbox = (props : Props) => {
            {/**  <Savebtn  /> */}
           </DialogContent>
      </Dialog>
-     {props.datalenght === props.index + 1 && (
+     {props.datalenght === props.index + 1 && props.withcurveline && (
           <>  
             <Addnewcyrcle  withcurveline={props.withcurveline} index={ props.index + 1} tripId={props.tripId} cyrcleArrId={props.data.cyrcleArrId} />
           </>
