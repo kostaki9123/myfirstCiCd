@@ -31,6 +31,7 @@ const config: Config = {
 	  
 			'md': '768px',
 			// => @media (min-width: 768px) { ... }
+			'950': '950px',
 	  
 			'lg': '1024px',
 			// => @media (min-width: 1024px) { ... }
