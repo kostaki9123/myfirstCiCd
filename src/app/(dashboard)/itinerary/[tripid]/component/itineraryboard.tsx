@@ -3,8 +3,7 @@ import Placesdropdown from './placesdropdown'
 import Addaplace from './addplace'
 
 type props = {
-    cyrclesArr : any
-    
+    cyrclesArr : any    
     selectedPlacceId? : string
   }
 
