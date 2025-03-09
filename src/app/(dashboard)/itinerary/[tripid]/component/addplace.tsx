@@ -1,3 +1,6 @@
+
+
+
 import {
     Dialog,
     DialogContent,
@@ -17,6 +20,10 @@ import { TbSquareRoundedNumber6Filled } from "react-icons/tb";
 import { TbSquareRoundedNumber7Filled } from "react-icons/tb";
 import { TbSquareRoundedNumber8Filled } from "react-icons/tb";
 import { TbSquareRoundedNumber9Filled } from "react-icons/tb";
+import App from "@/app/component/map/map";
+import Mapprovider from "@/app/component/map/map-provider";
+import LocationInput from "./inputauto";
+
 
 
 const numbersiconArr = [
@@ -148,7 +155,7 @@ const url = `https://places.googleapis.com/v1/places:searchNearby`
                 </div>
                 
                 <div className=" border-2 border-yellow-700 hidden 950:flex  w-[50%] h-[440px]  z-50 cursor-pointer ">
-                  
+                    <Mapprovider/>
                 </div>
            </div>
            

@@ -85,8 +85,8 @@ const Addnewcyrcle = async (props : Props) => {
   return (
     <Dialog >
 
-        <DialogTrigger style={{  marginLeft: props.withcurveline ? '0px' :  '10px'   ,gridRow :`${props.withcurveline ?positiongrid[props.index].gridRow : 2}`,border:"2px solid red" ,borderRadius : "50%" ,gridColumn : `${props.withcurveline ? props.index + 2 : 2} `, display : "flex" , alignItems : "center", justifyItems : "center" , height : "83px" , width : "89px" , zIndex : 2 ,}} >
-               <div className='flex items-center justify-center border-2 border-lime-500 rounded-[50%] w-[89px] h-[83px] z-50 bg-slate-700 cursor-pointer'>
+        <DialogTrigger style={{  marginLeft: props.withcurveline ? '0px' :  '10px'   ,gridRow :`${props.withcurveline ?positiongrid[props.index].gridRow : 2}` ,borderRadius : "50%" ,gridColumn : `${props.withcurveline ? props.index + 2 : 2} `, display : "flex" , alignItems : "center", justifyItems : "center" , height : "100px" , width : "100px" , zIndex : 2 ,}} >
+               <div className='flex items-center justify-center  rounded-[50%] w-[100px] h-[100px] z-50 bg-slate-700 cursor-pointer'>
                    <MdAddLocationAlt style={{fontSize : "30px" , fontWeight : "bolder"}}/>
                </div>
         </DialogTrigger>

@@ -112,9 +112,9 @@ const Point = async (props:Props) => {
       : positiongridphone[props.datalenght + 2 - props.index].pl ,gridRow :` ${props.withcurveline ?positiongrid[props.index].gridRow : props.datalenght + 2 - props.index}`  ,gridColumn :
        `${props.withcurveline 
            ? props.index + 2  
-            : positiongridphone[props.datalenght + 2 - props.index].gridColumn}`, display : "flex" , alignItems : "center", justifyItems : "center" , height : "83px" , width : "89px" , position : "relative"}} >
+            : positiongridphone[props.datalenght + 2 - props.index].gridColumn}`, display : "flex" , alignItems : "center", justifyItems : "center" , height : "100px" , width : "100px" , position : "relative"}} >
            <DialogTrigger asChild>
-             <div className=' text-white cursor-pointer bg-[#2E305B] h-[90px] w-[90px] rounded-[50%] flex items-center justify-center gap-[3px] flex-col z-40'>
+             <div className=' text-white cursor-pointer bg-[#2E305B] h-[100px] w-[100px] rounded-[50%] flex items-center justify-center gap-[3px] flex-col z-40'>
                 <IoLocationSharp className=' text-xl'/>
                 <h4 className=''>
                    {/**  {result.shortFormattedAddress ? <>{result.shortFormattedAddress}</> : */} 
