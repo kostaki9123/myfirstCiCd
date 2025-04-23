@@ -10,7 +10,7 @@ type props = {
 const Itineraryboard = (props : props) => {
   return (
     <>
-    <div className='  h-fit  base:w-[100%] 674:w-[50%]   p-3   ' >
+    <div className='  h-fit  base:w-[100%]   p-3   ' >
 
         <div className=' h-fit w-full rounded-md p-2 bg-[#ACA7CB] min-w-[290px]   '>
 

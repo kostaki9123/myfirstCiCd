@@ -13,7 +13,7 @@ const  Navbar = async (props : props) => {
   const expensiveAI = await allowExpensiveAI();
 
   return (
-    <div className= 'h-20 absolute bg-[#010038] top-0 left-0 right-0 justify-center flex items-center z-50 min-w-[344px] shadow-lg'>
+    <div className= 'h-20 absolute bg-[#010038] top-0 left-0 right-0 justify-center flex items-center z-50 md:min-w-screen shadow-lg'>
           
 
        <div className='absolute left-0 min-w-fit h-full flex  text-white  '> 

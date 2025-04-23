@@ -23,15 +23,30 @@ const config: Config = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
 		  screens: {
+			'base': '0px',
+
+			'343': '343px',
+
 			'xxs' : '410px',
+
+			'426' : '426px',
 			// => @media (min-width: 410px) { ... }
+			'535' : '535px',
+
+			'600' : '600px',
 
 			'sm': '640px',
+
+			'674' : '674px',
 			// => @media (min-width: 640px) { ... }
 	  
 			'md': '768px',
+
+			'787' : '787px' ,
 			// => @media (min-width: 768px) { ... }
 			'950': '950px',
+
+			'986': '986px' ,
 	  
 			'lg': '1024px',
 			// => @media (min-width: 1024px) { ... }

@@ -21,7 +21,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-64 bg-[#010038] text-white min-h-screen pt-20 flex-col   md:flex hidden">
+    <aside className="w-64 bg-[#010038] text-white min-h-[1200px] flex-col   md:flex hidden absolute top-20  left-0  bottom-0 ">
       
       <nav className="flex-grow">
         <ul className=" ">
