@@ -9,7 +9,7 @@ import { FaBottleWater } from "react-icons/fa6";
 import { BsCupHotFill } from "react-icons/bs";
 import { CiBeerMugFull } from "react-icons/ci";
 
-import { pointT } from '@/types/next-authd';
+//import { pointT } from '@/types/next-authd';
 import Avgproductdropdown from './avgproductdropdown';
 
 const invoices = [
@@ -55,7 +55,7 @@ const getIcon = (paymentStatus: any) => {
 
 type Props = {
   tripId: string
-  cyrclesArr: pointT[]
+  cyrclesArr: any[]
   selectedAvgpcountry?: string
 }
 
