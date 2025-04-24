@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
   <ClerkProvider>
-    <html lang="en">
+    <html lang="en  " className="bg-[#010038]  ">
       <body
          className=""
       >
