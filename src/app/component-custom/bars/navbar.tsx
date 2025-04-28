@@ -3,6 +3,7 @@ import {  SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { allowExpensiveAI } from '@/app/flags/flags';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import Humburger from './humburger';
 
 type props = {
   withtripname? : boolean
@@ -17,9 +18,7 @@ const  Navbar = async (props : props) => {
           
 
        <div className='absolute left-0 min-w-fit h-full flex  text-white  '> 
-           <button className="text-white md:hidden mr-4 pl-8 text-xl" aria-label="Toggle Sidebar">
-              ☰
-           </button>
+           <Humburger/>
 
            <div className='md:w-[249px] w-[180px] justify-center items-center flex  '>
                <h3 className=" scroll-m-20 text-xl md:text-2xl font-semibold tracking-tight ">
