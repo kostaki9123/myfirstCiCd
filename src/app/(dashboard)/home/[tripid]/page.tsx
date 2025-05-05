@@ -30,8 +30,8 @@ const Home = () => {
         {/* Itinerary */}
         <div className="space-y-4 min-w-[300px] text-white">
           <h2 className="text-lg font-semibold">Itinerary</h2>
-          <ScrollArea className="w-full  max-w-[300px]">
-            <div className="flex flex-col  gap-4 w-max">
+          <ScrollArea className="w-full  535:max-w-[300px]">
+            <div className="flex flex-col 535:flex-row  gap-4 w-max">
               <Card className="min-w-[250px]">
                 <CardHeader>
                   <CardTitle>Day 1 - Paris</CardTitle>
