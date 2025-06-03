@@ -3,164 +3,338 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Calendar, MapPin, BedDouble, Plane } from "lucide-react";
+import { GoChecklist  } from "react-icons/go";
+import { MdHotel } from "react-icons/md"
+import { BiSolidMessageAltAdd } from "react-icons/bi";
+import { FaNotesMedical } from "react-icons/fa6";
+import { FaNoteSticky } from "react-icons/fa6";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import Sheetnotes from "./components/sheet";
+
+
 
 const Home = () => {
   return (
-    <div className="absolute  inset-0 flex items-center justify-center bg-[#010038] border-2 border-yellow-500 overflow-auto">
-      <div className="relative flex items-center border-lime-600 border-4  h-full w-full">
-      <div className="flex 535:flex-row flex-col 535:mt-0 top-0 535:top-auto w-full  535:w-auto  absolute gap-6 min-w-max p-6 border-2 border-red-600 ">
+    <div className=" absolute top-0 inset-0 flex items-start justify-start  bg-[#010038]   ">
+      
+      
+      <div className="relative   flex items-start justify-start   h-full w-full">
+          
+        
+            <div className="fixed top-20 right-0 bg-gray-800 text-white text-sm rounded-lg p-2 mx-4 my-4 shadow-lg z-50">
+              <p>Time to Trip:</p>
+              <div className="font-mono text-lg">
+                  2d 5h 20m 57s
+              </div>
+            </div>
+            <div className="fixed bottom-0 right-0 items-center cursor-pointer flex gap-2 bg-gray-800 text-white text-sm rounded-lg p-2 mx-4 my-4 shadow-lg z-50">
+              <p>Checklist</p>
+              <div className="font-mono text-4xl">
+                 <GoChecklist />
+              </div>
+            </div>
+      <div className="flex 535:flex-col flex-col 535:mt-0 relative   535:max-w-max   justify-start items-start   gap-6 min-w-max p-6  ">
+           <div className=" absolute left-[-9px] top-0   pl-4 h-full ">
+                  <div className=" bottom-0 w-1 bg-gray-500 rounded-full h-[98%] my-5 "></div>
+           </div>
 
         {/* Trip Overview */}
-        <Card className="min-w-[300px]">
-          <CardHeader>
-            <CardTitle>Summer Adventure 🌍</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4" />
-              <span>June 10 - June 20, 2025</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <MapPin className="h-4 w-4" />
-              <span>Paris → Rome → Barcelona</span>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="flex   w-full gap-12   ">
+          <div  className="relative pl-10 text-white w-40 hidden lg:flex  ">
+              
+               
+          </div>
+          
+          <Card className=" min-w-[500px] ">
+            <CardHeader>
+              <CardTitle>Summer Adventure 🌍</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                <span>June 10 - June 20, 2025</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="h-4 w-4" />
+                <span>Paris → Rome → Barcelona</span>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
         {/* Itinerary */}
-        <div className="space-y-4 min-w-[300px] text-white">
-          <h2 className="text-lg font-semibold">Itinerary</h2>
-          <ScrollArea className="w-full  535:max-w-[300px]">
-            <div className="flex flex-col 535:flex-row  gap-4 w-max">
-              <Card className="min-w-[250px]">
-                <CardHeader>
-                  <CardTitle>Day 1 - Paris</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-1 text-sm text-muted-foreground">
-                  <div>Arrival at 9:00 AM ✈️</div>
-                  <div>Visit: Eiffel Tower, Louvre</div>
-                  <div>Stay: Hotel Parisian Dreams</div>
-                </CardContent>
-              </Card>
-              <Card className="min-w-[250px]">
-                <CardHeader>
-                  <CardTitle>Day 2 - Rome</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-1 text-sm text-muted-foreground">
-                  <div>Flight at 8:00 AM 🛫</div>
-                  <div>Visit: Colosseum, Trevi Fountain</div>
-                  <div>Stay: Roma Inn</div>
-                </CardContent>
-              </Card>
-              <Card className="min-w-[250px]">
-                <CardHeader>
-                  <CardTitle>Day 3 - Barcelona</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-1 text-sm text-muted-foreground">
-                  <div>Flight at 10:00 AM 🛫</div>
-                  <div>Visit: Sagrada Familia, Park Güell</div>
-                  <div>Stay: Barcelona Bliss Hotel</div>
-                </CardContent>
-              </Card>
+        <div className="space-y-4 min-w-[500px] text-white ">
+        <div className="flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
+          <div  className="relative pl-10 text-white w-40   ">
+                <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full border-2 border-lime-500"></div>
+                <div className="text-lg font-semibold">Copenhagen</div>
+               
+          </div>
+          <div className=" flex flex-col pl-3 lg:pl-0 " >
+             
+             
+               <div className="flex flex-col  535:flex-row  gap-4 w-max">
+               <div className=" flex flex-col" >
+                         <h2 className=" text-base py-3 font-semibold hidden lg:block ">Accomodation</h2>
+                        <Card className="min-w-[250px] relative h-[162px] ">
+                          <CardHeader className="flex flex-row gap-2  " >
+                            <div className="flex flex-row  items-center gap-2 ">
+                              <CardTitle className=" ">Downtonw hostel</CardTitle>
+                              <MdHotel className="  h-full text-xl" />
+                            </div>
+                          </CardHeader>
+                          <CardContent className="space-y-1 text-sm text-muted-foreground">
+                            <Sheetnotes/>
+                            <div>Arrival at 9:00 AM ✈️</div>
+                            <div>Visit: Eiffel Tower, Louvre</div>
+                            <div>Stay: Hotel Parisian Dreams</div>
+                          </CardContent>
+                        </Card>
+                      </div>
+
+                      <div className=" flex flex-col" >
+                         <h2 className=" text-base py-3 font-semibold  hidden lg:block">Places</h2>
+                        <Card className="min-w-[250px] relative  ">
+                          <CardHeader>
+                            <CardTitle>Small mairmaed</CardTitle>
+                          </CardHeader>
+                          <CardContent className="space-y-1 text-sm text-muted-foreground">
+                            <Sheetnotes/>
+                            <div>Arrival at 9:00 AM ✈️</div>
+                            <div>Visit: Eiffel Tower, Louvre</div>
+                            <div>Stay: Hotel Parisian Dreams</div>
+                          </CardContent>
+                        </Card>
+                      </div>
+             
+                      <div className=" flex flex-col " >
+                        <h2 className=" text-base py-3 min-h-[44px] font-semibold  hidden lg:block"></h2>
+                        <Card className="min-w-[250px] relative  ">
+                          <CardHeader>
+                            <CardTitle>calsberg musuem</CardTitle>
+                          </CardHeader>
+                          <CardContent className="space-y-1 text-sm text-muted-foreground">
+                            <Sheetnotes/>
+                            <div>Time: 9:00 AM</div>
+                            <div>Tickets: </div>
+                            <div>Stay: Hotel Parisian Dreams</div>
+                          </CardContent>
+                        </Card>
+                      </div>
+               </div>
+           
             </div>
-            <ScrollBar orientation="horizontal" className="hidden sm:block" />
-          </ScrollArea>
+        </div>
         </div>
 
         {/* Transport */}
-        <Card className="min-w-[300px]">
-          <CardHeader>
-            <CardTitle>Transport</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Plane className="h-4 w-4" />
-              <span>Flight: Paris to Rome</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Plane className="h-4 w-4" />
-              <span>Flight: Rome to Barcelona</span>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
+          <div  className="relative pl-10 text-white w-40   ">
+                <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full border-2 border-lime-500"></div>
+                <div className="text-lg font-semibold">Bus</div>
+               
+          </div>
+
+          <Card className=" group min-w-[500px] relative ml-3 lg:ml-0 ">
+            <CardHeader>
+              <CardTitle>Transport</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2 text-sm text-muted-foreground">
+              <Sheetnotes/>
+              <div className="flex items-center gap-2">
+                <Plane className="h-4 w-4" />
+                <span>Bus: Copenhagen to Humburg</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Plane className="h-4 w-4" />
+                <span>Bus: Humburg to Berlin</span>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
         {/* Accommodation */}
-        <Card className="min-w-[300px]">
-          <CardHeader>
-            <CardTitle>Accommodation</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <BedDouble className="h-4 w-4" />
-              <span>Paris: Hotel Parisian Dreams</span>
+        <div className="flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center">
+          <div  className="relative pl-10 text-white w-40 ">
+                <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full border-2 border-lime-500"></div>
+                <div className="text-lg font-semibold">Berlin</div>
+               
+          </div>
+          <div className=" flex flex-col text-white pl-3 lg:pl-0  " >
+             
+             
+               <div className="flex flex-col  535:flex-row  gap-4 w-max">
+               <div className=" flex flex-col" >
+                         <h2 className=" text-base py-3 font-semibold">Accomodation</h2>
+                        <Card className="min-w-[250px] relative h-[162px] ">
+                          <CardHeader className="flex flex-row gap-2  " >
+                            <div className="flex flex-row  items-center gap-2 ">
+                              <CardTitle className=" ">Downtonw hostel</CardTitle>
+                              <MdHotel className="  h-full text-xl" />
+                            </div>
+                          </CardHeader>
+                          <CardContent className="space-y-1 text-sm text-muted-foreground">
+                            <Sheetnotes/>
+                            <div>Arrival at 9:00 AM ✈️</div>
+                            <div>Visit: Eiffel Tower, Louvre</div>
+                            <div>Stay: Hotel Parisian Dreams</div>
+                          </CardContent>
+                        </Card>
+                      </div>
+
+                      <div className=" flex flex-col" >
+                         <h2 className=" text-base py-3 font-semibold">Places</h2>
+                        <Card className="min-w-[250px] relative  ">
+                          <CardHeader>
+                            <CardTitle>Small mairmaed</CardTitle>
+                          </CardHeader>
+                          <CardContent className="space-y-1 text-sm text-muted-foreground">
+                            <Sheetnotes/>
+                            <div>Arrival at 9:00 AM ✈️</div>
+                            <div>Visit: Eiffel Tower, Louvre</div>
+                            <div>Stay: Hotel Parisian Dreams</div>
+                          </CardContent>
+                        </Card>
+                      </div>
+             
+                      <div className=" flex flex-col " >
+                        <h2 className=" text-base py-3 min-h-[44px] font-semibold"></h2>
+                        <Card className="min-w-[250px] relative  ">
+                          <CardHeader>
+                            <CardTitle>calsberg musuem</CardTitle>
+                          </CardHeader>
+                          <CardContent className="space-y-1 text-sm text-muted-foreground">
+                            <Sheetnotes/>
+                            <div>Time: 9:00 AM</div>
+                            <div>Tickets: </div>
+                            <div>Stay: Hotel Parisian Dreams</div>
+                          </CardContent>
+                        </Card>
+                      </div>
+               </div>
+           
             </div>
-            <div className="flex items-center gap-2">
-              <BedDouble className="h-4 w-4" />
-              <span>Rome: Roma Inn</span>
+        </div>
+
+
+        <div className="flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center">
+          <div  className="relative pl-10 text-white w-40 ">
+                <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full border-2 border-lime-500"></div>
+                <div className="text-lg font-semibold">Train</div>         
+          </div>
+          <Card className=" group min-w-[500px] relative ml-3 lg:ml-0 ">
+            <CardHeader>
+              <CardTitle>Transport</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2 text-sm text-muted-foreground">
+              <Sheetnotes/>
+              <div className="flex items-center gap-2">
+                <Plane className="h-4 w-4" />
+                <span>Train: Berlin to cologne</span>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+                  
+        <div className="flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center  ">
+          <div  className="relative pl-10 text-white w-40 ">
+                <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full border-2 border-lime-500"></div>
+                <div className="text-lg font-semibold">Cologne</div>
+               
+          </div>
+          <div className=" flex flex-col text-white  pl-3 lg:pl-0  " >
+             
+             
+               <div className="flex flex-col  535:flex-row  gap-4 w-max">
+                      <div className=" flex flex-col" >
+                         <h2 className=" text-base py-3 font-semibold">Accomodation</h2>
+                        <Card className="min-w-[250px] relative h-[162px] ">
+                          <CardHeader className="flex flex-row gap-2  " >
+                            <div className="flex flex-row  items-center gap-2 ">
+                              <CardTitle className=" ">Downtonw hostel</CardTitle>
+                              <MdHotel className="  h-full text-xl" />
+                            </div>
+                          </CardHeader>
+                          <CardContent className="space-y-1 text-sm text-muted-foreground">
+                            <Sheetnotes/>
+                            <div>Arrival at 9:00 AM ✈️</div>
+                            <div>Visit: Eiffel Tower, Louvre</div>
+                            <div>Stay: Hotel Parisian Dreams</div>
+                          </CardContent>
+                        </Card>
+                      </div>
+
+                      <div className=" flex flex-col" >
+                         <h2 className=" text-base py-3 font-semibold">Places</h2>
+                        <Card className="min-w-[250px] relative  ">
+                          <CardHeader>
+                            <CardTitle>Small mairmaed</CardTitle>
+                          </CardHeader>
+                          <CardContent className="space-y-1 text-sm text-muted-foreground">
+                            <Sheetnotes/>
+                            <div>Arrival at 9:00 AM ✈️</div>
+                            <div>Visit: Eiffel Tower, Louvre</div>
+                            <div>Stay: Hotel Parisian Dreams</div>
+                          </CardContent>
+                        </Card>
+                      </div>
+             
+                      <div className=" flex flex-col " >
+                        <h2 className=" text-base py-3 min-h-[44px] font-semibold"></h2>
+                        <Card className="min-w-[250px] relative  ">
+                          <CardHeader>
+                            <CardTitle>calsberg musuem</CardTitle>
+                          </CardHeader>
+                          <CardContent className="space-y-1 text-sm text-muted-foreground">
+                            <Sheetnotes/>
+                            <div>Time: 9:00 AM</div>
+                            <div>Tickets: </div>
+                            <div>Stay: Hotel Parisian Dreams</div>
+                          </CardContent>
+                        </Card>
+                      </div>
+               </div>
+           
             </div>
-            <div className="flex items-center gap-2">
-              <BedDouble className="h-4 w-4" />
-              <span>Barcelona: Barcelona Bliss Hotel</span>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="min-w-[300px]">
-          <CardHeader>
-            <CardTitle>Accommodation</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <BedDouble className="h-4 w-4" />
-              <span>Paris: Hotel Parisian Dreams</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <BedDouble className="h-4 w-4" />
-              <span>Rome: Roma Inn</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <BedDouble className="h-4 w-4" />
-              <span>Barcelona: Barcelona Bliss Hotel</span>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="min-w-[300px]">
-          <CardHeader>
-            <CardTitle>Accommodation</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <BedDouble className="h-4 w-4" />
-              <span>Paris: Hotel Parisian Dreams</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <BedDouble className="h-4 w-4" />
-              <span>Rome: Roma Inn</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <BedDouble className="h-4 w-4" />
-              <span>Barcelona: Barcelona Bliss Hotel</span>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="min-w-[300px]">
-          <CardHeader>
-            <CardTitle>Accommodation</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <BedDouble className="h-4 w-4" />
-              <span>Paris: Hotel Parisian Dreams</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <BedDouble className="h-4 w-4" />
-              <span>Rome: Roma Inn</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <BedDouble className="h-4 w-4" />
-              <span>Barcelona: Barcelona Bliss Hotel</span>
-            </div>
-          </CardContent>
-        </Card>
+        </div>
+      
+
+        <div className="flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-centerx ">
+          <div  className="relative pl-10 text-white">
+                <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full border-2 border-lime-500"></div>
+                <div className="text-sm font-semibold">Day 6</div>
+                <div className="text-xs text-muted-foreground">Barcelona - Park Güell</div>
+          </div>
+          <Card className=" group relative min-w-[500px] ml-3 lg:ml-0 ">
+            <CardHeader>
+              <CardTitle>Accommodation</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2 text-sm text-muted-foreground">
+            <Sheetnotes/>
+
+              <div className="flex items-center gap-2">
+                <BedDouble className="h-4 w-4" />
+                <span>Paris: Hotel Parisian Dreams</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <BedDouble className="h-4 w-4" />
+                <span>Rome: Roma Inn</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <BedDouble className="h-4 w-4" />
+                <span>Barcelona: Barcelona Bliss Hotel</span>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
       </div>
     </div>

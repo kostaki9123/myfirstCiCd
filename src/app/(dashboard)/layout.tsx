@@ -15,7 +15,7 @@ const DashboardLayout = ({children} : props) => {
     <div className=' min-h-screen relative  '>
        <Navbar withManageTripbtn withtripname/>
        <Sidebar/>
-       <div className=' bg-white top-20 absolute md:left-64 left-0 right-0 bottom-0 min-h-[632px]  '>
+       <div className=' bg-white top-20 absolute md:left-64 left-0 right-0 bottom-0 min-h-[632px]   '>
        {children} 
        </div>
     </div>
