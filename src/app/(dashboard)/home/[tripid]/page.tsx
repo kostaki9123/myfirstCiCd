@@ -22,25 +22,14 @@ import Sheetnotes from "./components/sheet";
 
 const Home = () => {
   return (
-    <div className=" absolute top-0 inset-0 flex items-start justify-start  bg-[#010038]   ">
+    <div className=" absolute top-0 inset-0 flex items-start justify-start 426:overflow-x-hidden 535:overflow-x-auto  bg-[#010038] border-2 border-lime-400   ">
       
       
       <div className="relative   flex items-start justify-start   h-full w-full">
           
         
-            <div className="fixed top-20 right-0 bg-gray-800 text-white text-sm rounded-lg p-2 mx-4 my-4 shadow-lg z-50">
-              <p>Time to Trip:</p>
-              <div className="font-mono text-lg">
-                  2d 5h 20m 57s
-              </div>
-            </div>
-            <div className="fixed bottom-0 right-0 items-center cursor-pointer flex gap-2 bg-gray-800 text-white text-sm rounded-lg p-2 mx-4 my-4 shadow-lg z-50">
-              <p>Checklist</p>
-              <div className="font-mono text-4xl">
-                 <GoChecklist />
-              </div>
-            </div>
-      <div className="flex 535:flex-col flex-col 535:mt-0 relative   535:max-w-max   justify-start items-start   gap-6 min-w-max p-6  ">
+          
+      <div className="flex 535:flex-col flex-col 535:mt-0 relative border-2 border-red-400 max-w-[200px]   535:max-w-conent   justify-start items-start   gap-6 min-w-max p-6  ">
            <div className=" absolute left-[-9px] top-0   pl-4 h-full ">
                   <div className=" bottom-0 w-1 bg-gray-500 rounded-full h-[98%] my-5 "></div>
            </div>
@@ -52,7 +41,7 @@ const Home = () => {
                
           </div>
           
-          <Card className=" min-w-[500px] ">
+          <Card className=" min-w-[400px]  535:min-w-[500px] border-2 border-yellow-500 ">
             <CardHeader>
               <CardTitle>Summer Adventure 🌍</CardTitle>
             </CardHeader>
@@ -83,7 +72,7 @@ const Home = () => {
                <div className="flex flex-col  535:flex-row  gap-4 w-max">
                <div className=" flex flex-col" >
                          <h2 className=" text-base py-3 font-semibold hidden lg:block ">Accomodation</h2>
-                        <Card className="min-w-[250px] relative h-[162px] ">
+                        <Card className="min-w-[350px] relative h-[162px] ">
                           <CardHeader className="flex flex-row gap-2  " >
                             <div className="flex flex-row  items-center gap-2 ">
                               <CardTitle className=" ">Downtonw hostel</CardTitle>
@@ -142,7 +131,7 @@ const Home = () => {
                
           </div>
 
-          <Card className=" group min-w-[500px] relative ml-3 lg:ml-0 ">
+          <Card className=" group min-w-[400px] 535:min-w-[500px] relative ml-3 lg:ml-0 ">
             <CardHeader>
               <CardTitle>Transport</CardTitle>
             </CardHeader>
@@ -173,7 +162,7 @@ const Home = () => {
                <div className="flex flex-col  535:flex-row  gap-4 w-max">
                <div className=" flex flex-col" >
                          <h2 className=" text-base py-3 font-semibold">Accomodation</h2>
-                        <Card className="min-w-[250px] relative h-[162px] ">
+                        <Card className="min-w-[350px] relative h-[162px] ">
                           <CardHeader className="flex flex-row gap-2  " >
                             <div className="flex flex-row  items-center gap-2 ">
                               <CardTitle className=" ">Downtonw hostel</CardTitle>
@@ -229,7 +218,7 @@ const Home = () => {
                 <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full border-2 border-lime-500"></div>
                 <div className="text-lg font-semibold">Train</div>         
           </div>
-          <Card className=" group min-w-[500px] relative ml-3 lg:ml-0 ">
+          <Card className=" group min-w-[400px] min-h-[142px] 535:min-w-[500px] relative ml-3 lg:ml-0 ">
             <CardHeader>
               <CardTitle>Transport</CardTitle>
             </CardHeader>
@@ -256,7 +245,7 @@ const Home = () => {
                <div className="flex flex-col  535:flex-row  gap-4 w-max">
                       <div className=" flex flex-col" >
                          <h2 className=" text-base py-3 font-semibold">Accomodation</h2>
-                        <Card className="min-w-[250px] relative h-[162px] ">
+                        <Card className="min-w-[350px] relative h-[162px] ">
                           <CardHeader className="flex flex-row gap-2  " >
                             <div className="flex flex-row  items-center gap-2 ">
                               <CardTitle className=" ">Downtonw hostel</CardTitle>
@@ -304,36 +293,6 @@ const Home = () => {
                </div>
            
             </div>
-        </div>
-      
-
-        <div className="flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-centerx ">
-          <div  className="relative pl-10 text-white">
-                <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full border-2 border-lime-500"></div>
-                <div className="text-sm font-semibold">Day 6</div>
-                <div className="text-xs text-muted-foreground">Barcelona - Park Güell</div>
-          </div>
-          <Card className=" group relative min-w-[500px] ml-3 lg:ml-0 ">
-            <CardHeader>
-              <CardTitle>Accommodation</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2 text-sm text-muted-foreground">
-            <Sheetnotes/>
-
-              <div className="flex items-center gap-2">
-                <BedDouble className="h-4 w-4" />
-                <span>Paris: Hotel Parisian Dreams</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <BedDouble className="h-4 w-4" />
-                <span>Rome: Roma Inn</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <BedDouble className="h-4 w-4" />
-                <span>Barcelona: Barcelona Bliss Hotel</span>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
       </div>
