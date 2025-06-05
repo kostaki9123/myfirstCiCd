@@ -91,7 +91,7 @@ const Sheetnotes = () => {
               {editing || note.trim() !== '' ? (
                 <Textarea
                   ref={textareaRef}
-                  className="min-h-20 resize-none text-lg p-2 border-2 border-lime-700"
+                  className="min-h-20 resize-none text-lg p-2 "
                   placeholder="Note"
                   value={note}
                   onChange={(e) => setNote(e.target.value)}

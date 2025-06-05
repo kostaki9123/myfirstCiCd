@@ -22,14 +22,14 @@ import Sheetnotes from "./components/sheet";
 
 const Home = () => {
   return (
-    <div className=" absolute top-0 inset-0 flex items-start justify-start 426:overflow-x-hidden 535:overflow-x-auto  bg-[#010038] border-2 border-lime-400   ">
+    <div className=" absolute top-0 inset-0 flex items-start justify-start 426:overflow-x-hidden 535:overflow-x-auto  bg-[#010038] ">
       
       
       <div className="relative   flex items-start justify-start   h-full w-full">
           
         
           
-      <div className="flex 535:flex-col flex-col 535:mt-0 relative border-2 border-red-400 max-w-[200px]   535:max-w-conent   justify-start items-start   gap-6 min-w-max p-6  ">
+      <div className="flex 535:flex-col flex-col 535:mt-0 relative  max-w-[200px]   535:max-w-conent   justify-start items-start   gap-6 min-w-max p-6  ">
            <div className=" absolute left-[-9px] top-0   pl-4 h-full ">
                   <div className=" bottom-0 w-1 bg-gray-500 rounded-full h-[98%] my-5 "></div>
            </div>
@@ -41,7 +41,7 @@ const Home = () => {
                
           </div>
           
-          <Card className=" min-w-[400px]  535:min-w-[500px] border-2 border-yellow-500 ">
+          <Card className=" min-w-[400px]  535:min-w-[500px]  ">
             <CardHeader>
               <CardTitle>Summer Adventure 🌍</CardTitle>
             </CardHeader>
@@ -62,7 +62,7 @@ const Home = () => {
         <div className="space-y-4 min-w-[500px] text-white ">
         <div className="flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
           <div  className="relative pl-10 text-white w-40   ">
-                <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full border-2 border-lime-500"></div>
+                <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full "></div>
                 <div className="text-lg font-semibold">Copenhagen</div>
                
           </div>
