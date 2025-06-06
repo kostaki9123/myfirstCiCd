@@ -8,6 +8,7 @@ import { MdHotel } from "react-icons/md"
 import { BiSolidMessageAltAdd } from "react-icons/bi";
 import { FaNotesMedical } from "react-icons/fa6";
 import { FaNoteSticky } from "react-icons/fa6";
+import { MdAddLocationAlt } from "react-icons/md";
 import {
   Sheet,
   SheetContent,
@@ -17,6 +18,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import Sheetnotes from "./components/sheet";
+import Checklist from "./components/checklist";
 
 
 
@@ -24,9 +26,11 @@ const Home = () => {
   return (
     <div className=" absolute top-0 inset-0 flex items-start justify-start 426:overflow-x-hidden 535:overflow-x-auto  bg-[#010038] ">
       
+    
       
       <div className="relative   flex items-start justify-start   h-full w-full">
           
+       <Checklist/>
         
           
       <div className="flex 535:flex-col flex-col 535:mt-0 relative  max-w-[200px]   535:max-w-conent   justify-start items-start   gap-6 min-w-max p-6  ">
@@ -62,7 +66,7 @@ const Home = () => {
         <div className="space-y-4 min-w-[500px] text-white ">
         <div className="flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
           <div  className="relative pl-10 text-white w-40   ">
-                <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full "></div>
+                <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full border-2 border-lime-500 "></div>
                 <div className="text-lg font-semibold">Copenhagen</div>
                
           </div>
@@ -277,7 +281,7 @@ const Home = () => {
                       </div>
              
                       <div className=" flex flex-col " >
-                        <h2 className=" text-base py-3 min-h-[44px] font-semibold"></h2>
+                        <h2 className=" text-base py-3 min-h-[46px] font-semibold"></h2>
                         <Card className="min-w-[250px] relative  ">
                           <CardHeader>
                             <CardTitle>calsberg musuem</CardTitle>
@@ -290,6 +294,22 @@ const Home = () => {
                           </CardContent>
                         </Card>
                       </div>
+                      <div className=" flex flex-col " >
+                        
+                      <h2 className=" text-base py-3 min-h-[46px] font-semibold"></h2>
+                      <button
+                        className="group flex min-w-[250px] h-full items-center justify-center rounded-2xl bg-white p-10 shadow-md transition hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        aria-label="Start planning your trip"
+                      >
+                        <div className="flex flex-col items-center space-y-2">
+                          <MdAddLocationAlt className="text-5xl text-blue-600 transition-transform group-hover:scale-110" />
+                          <span className="text-base font-semibold text-gray-700 group-hover:text-blue-600">
+                            Plan Your Trip
+                          </span>
+                        </div>
+                       </button>
+                      </div>
+                    
                </div>
            
             </div>
