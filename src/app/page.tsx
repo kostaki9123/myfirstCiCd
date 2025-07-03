@@ -6,9 +6,7 @@ import Createtripmodal from "./component/create-trip-modal";
 import DeleteAlertDialog from "./component/delete-trip-modal";
 import { clerkClient } from "@clerk/clerk-sdk-node";
 import { signIn } from "./action";
-import { Toaster } from "@/components/ui/sonner";
-import { toast } from "sonner";
-import { redirect } from "next/navigation";
+
 
 
 export default async function Home() {
@@ -47,11 +45,11 @@ export default async function Home() {
           const username = `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim()
     
           let freshuser = await signIn(user.id,email,username);
-          console.log(freshuser)
+       //   console.log(freshuser)
           
         }
      }catch(err){
-      console.log(err)
+      // console.log(err)
        if (sessionId) {
         await clerkClient.sessions.revokeSession(sessionId);
         }

@@ -30,13 +30,13 @@ export const signInUseCase = async (input: {
     }
 
     if (!existingUser) {
-       console.error('Sign in useCase: User could not be created');
+    //   console.error('Sign in useCase: User could not be created');
        throw new Error(' User could not be created')
     }
    
      return existingUser;
   } catch (err) {
-    console.error('Sign in use case:',err);
+   // console.error('Sign in use case:',err);
     throw new Error(`Ops something went wrong:'${(err as Error).message}`)
   }
 };
