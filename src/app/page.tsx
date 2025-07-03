@@ -1,7 +1,15 @@
+import { auth } from "@clerk/nextjs/server";
+
 import Createtripmodal from "./component/create-trip-modal";
 import DeleteAlertDialog from "./component/delete-trip-modal";
+import { clerkClient } from "@clerk/clerk-sdk-node";
+import { signIn } from "./action";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+
+export default async function Home() {
   const trips = [
     {
       id: 1,
@@ -23,7 +31,33 @@ export default function Home() {
       cost: 1600,
       startsInDays: 20,
     },
+   
   ];
+    
+
+    const { userId ,sessionId  } = await auth()
+  
+    try{
+       if (userId) {
+          const user = await clerkClient.users.getUser(userId) // ✅ No need to await clerkClient itself
+      
+          const email = user.emailAddresses[0]?.emailAddress
+          const username = `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim()
+    
+          let freshuser = await signIn(user.id,email,username);
+          console.log(freshuser)
+          
+        }
+     }catch(err){
+      console.log(err)
+       if (sessionId) {
+        await clerkClient.sessions.revokeSession(sessionId);
+        }
+      
+      throw new Error(`Ops something went wrong:'${(err as Error).message}`)
+      
+      //redi
+     }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-gray-200 pt-20">
@@ -34,6 +68,8 @@ export default function Home() {
         </h1>
        
       </header>
+
+    
 
       {/* Action Buttons */}
       <div className="mt-10 flex justify-center space-x-6">
