@@ -14,14 +14,14 @@ const  Navbar = async (props : props) => {
   const expensiveAI = await allowExpensiveAI();
 
   return (
-    <div className= 'h-20 fixed bg-[#010038] top-0 left-0 right-0    justify-center flex   items-center z-50 md:min-w-screen shadow-lg'>
+    <div className= 'h-14 fixed bg-[#010038] top-0 left-0 right-0    justify-center flex   items-center z-50 md:min-w-screen shadow-lg'>
           
 
        <div className='absolute left-0 min-w-fit h-full flex  text-white  '> 
            <Humburger/>
 
            <div className='md:w-[249px] w-[180px] justify-center items-center flex  '>
-               <h3 className=" scroll-m-20 text-xl md:text-2xl font-semibold tracking-tight ">
+               <h3 className=" scroll-m-20 text-xl md:text-xl font-semibold tracking-tight ">
                    Trip planner
                </h3>
            </div>

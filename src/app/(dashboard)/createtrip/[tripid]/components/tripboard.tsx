@@ -10,7 +10,7 @@ type props = {
 
 const Tripboard = (props : props) => {
   return (
-    <div   style={{ minHeight: "256px"  ,minWidth: "344px" ,display: "grid",gridTemplateRows : "49px 69px" ,gridTemplateColumns: `70px repeat(${props.cyrclesArr?.length + 1}, 132px)`, backgroundColor: "grey", width: "100%", height: "100%", overflowX : "auto" , overflowY : "hidden"}}    >
+    <div   style={{ minHeight: "256px"  ,minWidth: "344px" ,display: "grid",gridTemplateRows : "20px 69px" ,gridTemplateColumns: `70px repeat(${props.cyrclesArr?.length + 1}, 132px)`, backgroundColor: "grey", width: "100%", height: "100%", overflowX : "auto" , overflowY : "hidden"}}    >
        {
              props.cyrclesArr?.length === 0 
              ? <Addnewcyrcle  index={0} tripId={props.tripId} cyrcleArrId={undefined} withcurveline /> 

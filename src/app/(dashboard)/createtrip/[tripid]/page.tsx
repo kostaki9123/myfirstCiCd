@@ -87,10 +87,10 @@ const page = () => {
   return (
     <div className=' xxs:border-4   h-full bottom-0 absolute right-0 left-0  flex flex-col  '>
         
-        <div className=' h-[41%]  xxs:block hidden  ' >
+        <div className=' h-[43%]  xxs:block hidden  ' >
            <Tripboard  tripId='' cyrclesArr={points} />
         </div>
-        <div className=' h-[59%]  w-full xxs:block hidden bg-slate-500 ' >
+        <div className=' h-[57%]  w-full xxs:block hidden bg-slate-500 ' >
            <Mapprovider/>
         </div>
 

@@ -25,7 +25,7 @@ export default async function RootLayout({
   >
     <html lang="en  " className="bg-[#010038]  ">
       <body
-         className=""
+         className=" "
       >
         <Navbar/>
         {children}
