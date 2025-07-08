@@ -4,6 +4,9 @@ import "./globals.css";
 import { ClerkProvider, SignedIn, SignedOut, SignIn, SignInButton, UserButton } from "@clerk/nextjs";
 import Navbar from "./component-custom/bars/navbar";
 import { Toaster } from "@/components/ui/sonner";
+import { clerkClient } from "@clerk/clerk-sdk-node";
+import { signIn } from "./action";
+import { auth } from "@clerk/nextjs/server";
 
 
 export const metadata: Metadata = {
@@ -17,6 +20,29 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>)
 {
+      const { userId ,sessionId  } = await auth()
+  
+    try{
+       if (userId) {
+          const user = await clerkClient.users.getUser(userId) // ✅ No need to await clerkClient itself
+      
+          const email = user.emailAddresses[0]?.emailAddress
+          const username = `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim()
+    
+          let freshuser = await signIn(user.id,email,username);
+       //   console.log(freshuser)
+          
+        }
+     }catch(err){
+      // console.log(err)
+       if (sessionId) {
+        await clerkClient.sessions.revokeSession(sessionId);
+        }
+      
+      throw new Error(`Ops something went wrong:'${(err as Error).message}`)
+      
+      
+     }
    
   return (
   <ClerkProvider 
