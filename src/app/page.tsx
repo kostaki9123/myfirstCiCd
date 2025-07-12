@@ -103,7 +103,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="flex flex-col text-center">
-                  <small className="text-sm text-gray-400">Starts in</small>
+                  <small className="text-sm text-gray-400">Start in</small>
                   <div className="text-lg font-semibold text-gray-300">
                     {trip.startsInDays} days
                   </div>
