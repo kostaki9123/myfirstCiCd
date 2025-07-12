@@ -1,11 +1,7 @@
 //export const dynamic = 'force-dynamic';
 
-
-
 import Createtripmodal from "./component/create-trip-modal";
 import DeleteAlertDialog from "./component/delete-trip-modal";
-import { clerkClient } from "@clerk/clerk-sdk-node";
-import { signIn } from "./action";
 
 
 
