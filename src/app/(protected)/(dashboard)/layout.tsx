@@ -1,6 +1,7 @@
+import Navbar from '@/app/component-custom/bars/navbar'
+import Sidebar from '@/app/component-custom/bars/sidebar'
 import React, { ReactNode } from 'react'
-import Navbar from '../component-custom/bars/navbar'
-import Sidebar from '../component-custom/bars/sidebar'
+
 
 
 type props = {
