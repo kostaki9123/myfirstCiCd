@@ -1,10 +1,10 @@
 import React from 'react'
-import Amounts from './components/amount'
-import Allexpenses from './components/allexpenses'
-import Expenseschart from './components/expenseschart'
-import Setbudgetamount from './components/setbudgetamount'
-import Avgproductprice from './components/Avgpruductprice/avgproductprice'
-import Currency from './components/currency'
+import Amounts from './component/amount'
+import Expenseschart from './component/expenseschart'
+import Setbudgetamount from './component/setbudgetamount'
+import Allexpenses from './component/allexpenses'
+import Currency from './component/currency'
+
 
 const page = () => {
   return (

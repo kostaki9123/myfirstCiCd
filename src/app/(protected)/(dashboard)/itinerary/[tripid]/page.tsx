@@ -1,5 +1,6 @@
 import React from 'react'
-import Itineraryboard from './component/itineraryboard';
+import Itineraryboard from './components/itineraryboard';
+
 
 const points = [
   {

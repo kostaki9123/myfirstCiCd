@@ -1,7 +1,8 @@
 import React from 'react'
-import Tripboard from './components/tripboard'
-import Tripboardphone from './components/tripboardphone';
+
 import Mapprovider from '@/app/component/map/map-provider';
+import Tripboard from './components/tripboard';
+import Tripboardphone from './components/tripboardphone';
 
 const points = [
   {
