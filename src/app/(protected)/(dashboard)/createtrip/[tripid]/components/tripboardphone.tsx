@@ -1,7 +1,8 @@
 import React from 'react'
-import Point from './point'
 import Addnewcyrcle from './addnewcyrcle'
+import Point from './point'
 import Movingbox from './movingbox'
+
 
 type props = {
     tripId : string
