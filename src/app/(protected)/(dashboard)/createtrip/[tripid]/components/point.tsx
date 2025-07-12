@@ -1,6 +1,5 @@
 import React from 'react'
 import { IoLocationSharp } from "react-icons/io5";
-import Addnewcyrcle from './addnewcyrcle';
 import Curveline from './curveline';
 // import Actionsmenu from '../actionsmenu/actionsmenu';
 import { 
@@ -13,6 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import CurvelinePhone from './curvelinephone';
+import Addnewcyrcle from './addnewcyrcle';
 // import ViewPlaceMoadal from '../viewcyrclemodal/viewplacemodal';
 
 // import Savebtn from '../viewcyrclemodal/deletebtn';

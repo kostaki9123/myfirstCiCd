@@ -14,7 +14,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import CurvelinePhone from './curvelinephone';
+import CurvelinePhone from '../../../../(protected)/(dashboard)/createtrip/[tripid]/components/curvelinephone';
 //import Createplaceform from '../createtripforms/createplaceform';
 //import Createmovingform from '../createtripforms/createmovingform';
 

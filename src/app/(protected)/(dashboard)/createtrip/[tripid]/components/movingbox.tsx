@@ -9,7 +9,7 @@ import { FaCar , FaBusAlt , FaBicycle, FaShip,FaWalking } from "react-icons/fa";
 import { FaTrainTram, FaMotorcycle , FaTrainSubway , FaTaxi , FaFerry  } from "react-icons/fa6";
 import { FaHelicopter } from "react-icons/fa";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import CurvelinePhone from './curvelinephone';
+import CurvelinePhone from '../../../../(protected)/(dashboard)/createtrip/[tripid]/components/curvelinephone';
 //import Savebtn from '../viewcyrclemodal/deletebtn';
 //import ViewPlaceMoadal from '../viewcyrclemodal/viewplacemodal';
 
