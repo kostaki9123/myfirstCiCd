@@ -24,7 +24,7 @@ const page = () => {
       <Allexpenses/> 
 
       {/**Avarage product price */}
-      <div className='bg-[#ACA7CB] p-2 rounded-md overflow-hidden relative    base:row-start-5 base:row-end-6 base:col-start-1 base:col-end-2       535:row-start-3 535:row-end-4 535:col-start-1 535:col-end-2     986:row-start-1 986:row-end-5 986:col-start-3 986:col-end-4   lg:row-start-5 lg:row-end-9 lg:col-start-3 lg:col-end-4  '>omo</div>
+      <div className='bg-[#ACA7CB] p-2 rounded-md overflow-hidden relative    base:row-start-5 base:row-end-6 base:col-start-1 base:col-end-2       535:row-start-3 535:row-end-4 535:col-start-1 535:col-end-2     986:row-start-1 986:row-end-5 986:col-start-3 986:col-end-4   lg:row-start-1 lg:row-end-5 lg:col-start-3 lg:col-end-4   xl:row-start-5 xl:row-end-9 xl:col-start-3 xl:col-end-4  '>omo</div>
        
       {/** Example static div to test scrolling */}
       <Currency/>

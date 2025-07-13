@@ -12,7 +12,7 @@
     "@clerk/clerk-sdk-node": "^5.1.6",
     "@clerk/nextjs": "^6.3.1",
     "@evyweb/ioctopus": "^1.2.0",
-    "@prisma/client": "^6.10.1",
+    "@prisma/client": "^6.11.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
     "@radix-ui/react-checkbox": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.14",
@@ -46,7 +46,7 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18",
     "postcss": "^8",
-    "prisma": "^6.10.1",
+    "prisma": "^6.11.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

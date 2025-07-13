@@ -1,13 +1,6 @@
 //export const dynamic = 'force-dynamic';
-
-
-
 import Createtripmodal from "../component/create-trip-modal";
 import DeleteAlertDialog from "../component/delete-trip-modal";
-import { currentUser } from "@clerk/nextjs/server";
-import { signIn } from "../action";
-import { auth } from "@clerk/nextjs/server";
-
 
 
 export default async function Home() {

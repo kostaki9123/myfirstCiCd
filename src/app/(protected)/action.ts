@@ -2,7 +2,7 @@
 
 
 import { redirect } from 'next/navigation';
-import { signInController } from '../../backend/interface-adapters/controllers/auth/sign-in.controller';
+import { signInController } from '../../../backend/interface-adapters/controllers/auth/sign-in.controller';
 
 
 export async function signIn(userId:string, email:string, username:string ) {
