@@ -18,5 +18,17 @@ datasource db {
 model User {
   id   String @id @default(cuid()) @unique
   username String 
-  email String @unique
+  email String 
+  trips    Trip[]
 }
+
+model Trip {
+  id   String @id @default(cuid()) @unique
+  userId  String
+  tripName String
+  tripBudget String
+  travelingWith String
+  tripTypes  String[]
+  user      User   @relation(fields: [userId], references: [id])
+}
+
