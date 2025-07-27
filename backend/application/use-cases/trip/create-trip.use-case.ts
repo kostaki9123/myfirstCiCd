@@ -23,6 +23,7 @@ export const createTripUseCase = async (input: props) => {
 
   try {
 
+
     let createTrip = await tripsRepository.createTrip({
         tripName : input?.tripName , 
         travelingWith : input?.travelingWith ,

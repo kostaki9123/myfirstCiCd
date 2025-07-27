@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useState } from 'react'
+import React, {  useState } from 'react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,12 +12,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { MdOutlineDeleteOutline } from "react-icons/md";
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { deleteTrip } from '../(protected)/action'
 
-import { HiDotsHorizontal } from "react-icons/hi";
 
 
 type props = {
@@ -26,6 +22,26 @@ type props = {
 
 const DeleteAlertDialog = (props : props) => {
   const [open, setOpen] = useState(false);
+
+  function onSubmit(
+  ) {
+    return async () => {
+
+      try {
+            
+         await deleteTrip(props.tripId);
+         setOpen(false);
+         return;
+
+      } catch (err) {
+         if (err instanceof Error && err.name === "DatabaseOperationError") {
+            
+         }
+      //    setErrorMessage(err.message); 
+         console.error("Unexpected error:", err);
+       }
+    };
+  }
 
 
   return (
@@ -44,7 +60,11 @@ const DeleteAlertDialog = (props : props) => {
        </AlertDialogHeader>
        <AlertDialogFooter>
          <AlertDialogCancel>Cancel</AlertDialogCancel>
-         <AlertDialogAction >Delete</AlertDialogAction>
+         <form action={onSubmit()}>
+           <AlertDialogAction type='submit'>
+               Delete
+           </AlertDialogAction>
+         </form>
        </AlertDialogFooter>
      </AlertDialogContent>
    </AlertDialog>

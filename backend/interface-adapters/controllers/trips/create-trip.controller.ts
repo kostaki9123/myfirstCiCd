@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { InputParseError } from "../../../entities/errors/common";
-import { createTripUseCase } from "../../../application/use-cases/auth/create-trip.use-case";
+import { createTripUseCase } from "../../../application/use-cases/trip/create-trip.use-case";
 
 const inputSchema = z.object({
     userId: z.string(),
@@ -15,7 +15,7 @@ export const createTripController =
          
          //input validation
          const { data, error: inputParseError } = inputSchema.safeParse(input);
-
+          console.log('create trip controller')
          if (inputParseError) {
               throw new InputParseError('Invalid data', { cause: inputParseError });
          }

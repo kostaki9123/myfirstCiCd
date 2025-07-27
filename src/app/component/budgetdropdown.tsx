@@ -18,7 +18,7 @@ const Budgetdropdown = ({ deafaultOption, allOptions, value, onChange }: Props) 
           <IoIosArrowDown />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[160px] rounded-md">
+      <DropdownMenuContent className=" w-[135px] 950:w-[160px]  rounded-md">
         {allOptions.map((option, key) => (
           <DropdownMenuItem
             key={key}

@@ -105,12 +105,19 @@ function onSubmit(
         });
         return;
       }
-
+      console.log('run front')
       await createTrip(formData);
+     
 
       setErrorMessages({});
       setOpen(false);
     } catch (err) {
+       if (err instanceof Error && err.name === "DatabaseOperationError") {
+            setErrorMessages({
+               GeneralError: 'Trip could not created.There was problem with database',
+             })
+       }
+    //    setErrorMessage(err.message); 
        if (err instanceof InputParseError && err.cause instanceof ZodError) {
          const flattened = err.cause.flatten();
          setErrorMessages({
@@ -135,9 +142,9 @@ function onSubmit(
           + Create Trip    
       </DialogTrigger>
 
-      <DialogContent className="h-fit w-fit  text-black   p-0">
+      <DialogContent className=" w-[300px] 535:w-fit  h-fit  text-black   p-0">
         <form action={onSubmit(tripBudget, travelingWith, selectedTypes, setOpen)}>
-          <Card className="w-full text-black">
+          <Card className=" w-[300px] 535:w-fit  text-black">
             <CardHeader>
               <DialogTitle>
                 Create trip
@@ -152,7 +159,7 @@ function onSubmit(
                  {errorMessages.tripName && <p className="text-red-500">{errorMessages.tripName}</p>}
                 </div>
               </div>
-              <div className=' w-[400px]  pt-2 flex'>
+              <div className=' pt-2 flex '>
                  <div className=' w-1/2 ' >
                      <Label htmlFor="name" >Trip Budget</Label>
                      <Budgetdropdown
@@ -164,7 +171,7 @@ function onSubmit(
                      {errorMessages.tripBudget && <p className="text-red-500">{errorMessages.tripBudget}</p>}
                  </div>
 
-                 <div className=' w-1/2 ' >
+                 <div className=' w-1/2  ' >
                      <Label htmlFor="name" >Traveling with</Label>
                      <Budgetdropdown
                         deafaultOption="Select"
@@ -195,6 +202,7 @@ function onSubmit(
                     </div>
                   ))}    
                    {errorMessages.tripTypes && <p className="text-red-500">{errorMessages.tripTypes}</p>}      
+                   {errorMessages.GeneralError && <p className="text-red-500">{errorMessages.GeneralError}</p>}      
                      </div>
               </div> 
             </CardContent>

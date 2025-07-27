@@ -13,7 +13,7 @@ export const signInUseCase = async (input: {
 }) => {
   // Choose repository based on environment
   const usersRepository: IUsersRepository =
-    process.env.NODE_ENV === 'test'
+    process.env.NODE_ENV === 'development'
       ? new MockUsersRepository()
       : new UsersRepository();
 

@@ -13,7 +13,7 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
 
   try {
     const user = await currentUser();
-
+   
     if (!user) {
       throw new Error("User not found");
     }

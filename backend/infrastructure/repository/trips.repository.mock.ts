@@ -28,7 +28,7 @@ export class MockTripsRepository implements ITripsRepository {
   {
     id: "3",
     tripName: "Tokyo Solo Travel",
-    userId: "user_789",
+    userId: "user_2zB4zA1PWJ3DmsP5INT5D8lp5HN",
     tripBudget: "3000",
     travelingWith: "solo",
     tripTypes: ["tech", "food", "city"]
@@ -36,7 +36,7 @@ export class MockTripsRepository implements ITripsRepository {
   {
     id: "4",
     tripName: "Safari in Kenya",
-    userId: "user_101",
+    userId: "user_2zB4zA1PWJ3DmsP5INT5D8lp5HN",
     tripBudget: "3500",
     travelingWith: "partner",
     tripTypes: ["wildlife", "adventure"]
@@ -44,7 +44,7 @@ export class MockTripsRepository implements ITripsRepository {
   {
     id: "5",
     tripName: "Road Trip USA",
-    userId: "user_112",
+    userId: "user_2zB4zA1PWJ3DmsP5INT5D8lp5HN",
     tripBudget: "2000",
     travelingWith: "friends",
     tripTypes: ["roadtrip", "nature", "culture"]
