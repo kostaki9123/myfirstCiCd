@@ -17,7 +17,7 @@ export const signInController =
   async (input: Partial<z.infer<typeof inputSchema>>) : Promise<ReturnType<typeof signInUseCase >> => {  
          
         const { data, error: inputParseError } = inputSchema.safeParse(input);
-
+         
         if (inputParseError) {
           throw new InputParseError('Invalid data', { cause: inputParseError });
         }
