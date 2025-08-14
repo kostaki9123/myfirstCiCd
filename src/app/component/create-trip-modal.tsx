@@ -145,7 +145,7 @@ function onSubmit(
           + Create Trip    
       </DialogTrigger>
 
-      <DialogContent className=" w-[300px] 535:w-fit  h-fit  text-black   p-0">
+      <DialogContent className=" w-[300px] 535:w-fit  h-fit  text-black rounded-lg   p-0">
         <form
          onSubmit={async (e) => {
            e.preventDefault();
@@ -157,7 +157,7 @@ function onSubmit(
            setisLoading(false);
          }}
          >
-          <Card className=" w-[300px] 535:w-fit  text-black">
+          <Card className=" w-[300px] 535:w-fit  text-black ">
             <CardHeader>
               <DialogTitle>
                 Create trip

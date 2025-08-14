@@ -40,12 +40,12 @@ const DeleteAlertDialog = ({ tripId }: Props) => {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <div className="px-4 py-2 text-[#f87171] border border-[#f87171] rounded-lg hover:bg-[#f87171] hover:text-white transition cursor-pointer">
+        <div className="px-4 py-2 text-[#f87171] border border-[#f87171] rounded-lg hover:bg-[#f87171]  hover:text-white transition cursor-pointer">
           Delete
         </div>
       </AlertDialogTrigger>
 
-      <AlertDialogContent>
+      <AlertDialogContent className=" w-3/4 674:w-full " >
         <AlertDialogHeader>
           <AlertDialogTitle>Confirm delete</AlertDialogTitle>
           <AlertDialogDescription>
@@ -66,7 +66,7 @@ const DeleteAlertDialog = ({ tripId }: Props) => {
               setIsLoading(false);
             }}
           >
-            <AlertDialogAction type="submit" disabled={isLoading}>
+            <AlertDialogAction type="submit" disabled={isLoading} className="w-full">
               {isLoading ? "Deleting..." : "Delete"}
             </AlertDialogAction>
           </form>
