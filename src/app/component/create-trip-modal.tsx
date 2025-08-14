@@ -30,11 +30,11 @@ export const formSchema = z.object({
     .max(25, { message: "Trip name too long (max 25 characters)." }),
 
   tripBudget: z.enum(["Economy traveler", "Balanced Traveler", "Luxury traveler"], {
-    errorMap: () => ({ message: "You must select a valid trip budget" }),
+    errorMap: () => ({ message: "Select trip budget" }),
   }),
 
   travelingWith: z.enum(["Solo", "Friends", "Couple", "Family", "Group"], {
-    errorMap: () => ({ message: "You must select who you're traveling with" }),
+    errorMap: () => ({ message: "Select traveling with" }),
   }),
 
   tripTypes: z
@@ -46,14 +46,14 @@ export const formSchema = z.object({
 const Createtripmodal = () => {
   const [open, setOpen] = useState(false);
   const [errorMessages, setErrorMessages] = useState<{ [key: string]: string }>({})
+  const [isLoading, setisLoading] = useState<boolean>(false)
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [tripBudget, setTripBudget] = useState<string>(""); // controlled
   const [travelingWith, setTravelingWith] = useState<string>(""); // controlled
 
   const { user } = useUser();
-  let currentUserId = user?.id
   
-
+  
   const handleCheckboxChange = (value: string) => {
     setSelectedTypes((prev) => {
       if (prev.includes(value)) {
@@ -76,6 +76,7 @@ function onSubmit(
   setOpen: (open: boolean) => void
 ) {
   return async (formData: FormData) => {
+
     formData.append("tripBudget", tripBudget);
     formData.append("travelingWith", travelingWith);
     selectedTypes.forEach((type) => {
@@ -105,9 +106,11 @@ function onSubmit(
         });
         return;
       }
-      console.log('run front')
+
+    
+  
       await createTrip(formData);
-     
+      
 
       setErrorMessages({});
       setOpen(false);
@@ -143,7 +146,17 @@ function onSubmit(
       </DialogTrigger>
 
       <DialogContent className=" w-[300px] 535:w-fit  h-fit  text-black   p-0">
-        <form action={onSubmit(tripBudget, travelingWith, selectedTypes, setOpen)}>
+        <form
+         onSubmit={async (e) => {
+           e.preventDefault();
+           setisLoading(true);
+
+           const formData = new FormData(e.currentTarget);
+           await onSubmit(tripBudget, travelingWith, selectedTypes, setOpen)(formData);
+
+           setisLoading(false);
+         }}
+         >
           <Card className=" w-[300px] 535:w-fit  text-black">
             <CardHeader>
               <DialogTitle>
@@ -156,7 +169,7 @@ function onSubmit(
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="name" className="pb-2">Trip Name</Label>
                   <Input id="name" name="tripName" placeholder="Name of your trip" maxLength={28} />
-                 {errorMessages.tripName && <p className="text-red-500">{errorMessages.tripName}</p>}
+                 {errorMessages.tripName && <p className="text-red-500 text-sm">{errorMessages.tripName}</p>}
                 </div>
               </div>
               <div className=' pt-2 flex '>
@@ -168,7 +181,7 @@ function onSubmit(
                        value={tripBudget}
                        onChange={setTripBudget}
                      />
-                     {errorMessages.tripBudget && <p className="text-red-500">{errorMessages.tripBudget}</p>}
+                     {errorMessages.tripBudget && <p className="text-red-500 text-sm">{errorMessages.tripBudget}</p>}
                  </div>
 
                  <div className=' w-1/2  ' >
@@ -179,7 +192,7 @@ function onSubmit(
                         value={travelingWith}
                         onChange={setTravelingWith}
                       />
-                      {errorMessages.travelingWith && <p className="text-red-500">{errorMessages.travelingWith}</p>}
+                      {errorMessages.travelingWith && <p className="text-red-500 text-sm">{errorMessages.travelingWith}</p>}
                  </div>     
               </div>
               <div className=' w-full pt-2 ' >
@@ -201,13 +214,19 @@ function onSubmit(
                       </label>
                     </div>
                   ))}    
-                   {errorMessages.tripTypes && <p className="text-red-500">{errorMessages.tripTypes}</p>}      
-                   {errorMessages.GeneralError && <p className="text-red-500">{errorMessages.GeneralError}</p>}      
+                   {errorMessages.tripTypes && <p className="text-red-500 text-sm">{errorMessages.tripTypes}</p>}      
+                   {errorMessages.GeneralError && <p className="text-red-500 text-sm ">{errorMessages.GeneralError}</p>}      
                      </div>
               </div> 
             </CardContent>
             <CardFooter className="flex justify-end">
-              <Button type="submit">Create trip</Button>
+              <Button type="submit" 
+                disabled={
+                isLoading 
+              }
+              >
+                  {isLoading ? "Creating..." : "Create trip"}
+              </Button>
             </CardFooter>
           </Card>
         </form>
