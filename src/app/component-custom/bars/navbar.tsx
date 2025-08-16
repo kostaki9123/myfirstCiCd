@@ -1,9 +1,11 @@
 import React from 'react'
-import {  SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import {  SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import { allowExpensiveAI } from '@/app/flags/flags';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Humburger from './humburger';
+import { Skeleton } from '@/components/ui/skeleton';
+import UserAvatarWithLoading from './UserAvatarWithLoading';
 
 type props = {
   withtripname? : boolean
@@ -53,15 +55,13 @@ const  Navbar = async (props : props) => {
             <SignedOut >
                 <SignInButton />
             </SignedOut>
-            <SignedIn  >
-            <UserButton      
-            appearance={{
-              elements: {
-                userButtonAvatarBox: "w-10 h-10" ,
-              },
-            }}
-          />
-            </SignedIn>
+            <div className='w-11  flex items-center justify-center h-full '>
+              <SignedIn >
+                      
+                    <UserAvatarWithLoading/>
+                       
+              </SignedIn>
+            </div>
             
         </div>
     </div>
