@@ -1,4 +1,5 @@
 //export const dynamic = 'force-dynamic';
+import Link from "next/link";
 import Createtripmodal from "../component/create-trip-modal";
 import DeleteAlertDialog from "../component/delete-trip-modal";
 import { getTrips } from "./action";
@@ -53,7 +54,8 @@ export default async function Home() {
             </div>
 
             {/* Features */}
-            <div key={key} className="mt-6 flex flex-wrap gap-3">
+            
+            <div key={key} className="mt-6 flex flex-wrap gap-3 ">
               <span className="px-3 py-1 bg-[#16a34a]/20 text-[#16a34a] text-sm rounded-full">
                 💵 {trip.tripBudget }
               </span>
@@ -91,9 +93,11 @@ export default async function Home() {
 
             {/* Actions */}
             <div className="mt-6 flex justify-between items-center">
-              <button className="px-4 py-2 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white rounded-lg shadow-lg hover:scale-105 transition-transform">
-                Join Dashboard
-              </button>
+              <Link href={`/home/${trip.id}`}>
+                 <button className="px-4 py-2 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white rounded-lg shadow-lg hover:scale-105 transition-transform">
+                   Join Dashboard
+                 </button>
+              </Link>
               <DeleteAlertDialog tripId={trip.id} />
               
             </div>

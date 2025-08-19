@@ -109,8 +109,9 @@ function onSubmit(
 
     
   
-      await createTrip(formData);
+      const result =  await createTrip(formData);
       
+     
 
       setErrorMessages({});
       setOpen(false);
