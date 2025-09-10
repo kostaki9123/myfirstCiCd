@@ -14,7 +14,7 @@ import {z } from 'zod'
 //import { DateRange } from "react-day-picker"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import Places from "./locationinput/loadinginput"
+
 import DatePicker from "react-datepicker"
 import DatePickerExample from "./locationinput/datepicker"
 //import Places from "./locationinput/loadinginput"
@@ -64,7 +64,7 @@ const Createplaceform = () => {
       </p>
 
       <Label>Place</Label>
-      <Places inputName="place" setMapos={setMapos} setplaceId={setplaceId1} />
+    
 
       <Label>Dates</Label>
       <div className="  rounded-sm z-50 " >
