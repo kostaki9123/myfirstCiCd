@@ -12,4 +12,36 @@ body {
   }
 }
 
+  .pac-container {
+    z-index: 9999;
+    border: 2px solid red;
+    cursor: pointer;
+  }
 
+  .pac-container:after {
+  /* Disclaimer: not needed to show 'powered by Google' if also a Google Map is shown */
+  border: 2px solid lime;
+  background-image: none !important;
+  height: 0px;
+}
+
+.pac-container .pac-item {
+  height: 50px;
+  padding: 12px;
+}
+
+.autocomplete-dropdown {
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: white;
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+}
+
+.suggestion-item {
+  padding: 8px;
+  cursor: pointer;
+  border: "2px solid lime";
+}

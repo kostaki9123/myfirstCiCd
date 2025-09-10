@@ -14,6 +14,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import Createplaceform from './createplaceform';
 //import Createplaceform from '../createtripforms/createplaceform';
 //import Createmovingform from '../createtripforms/createmovingform';
 
@@ -100,17 +101,18 @@ const Addnewcyrcle = async (props : Props) => {
           </div>
          }
 
-        <DialogContent className=' h-fit w-[473px] absolute' >
+        <DialogContent className=' h-fit w-[275px] 290:w-[285px] 343:w-[325px] 360:w-[350px] xxs:w-[375px] 450:w-[400px] 535:w-[473px] 450:p-[9px] 535:p-6 p-0 absolute' >
           <DialogTitle></DialogTitle>
           <DialogDescription>
           </DialogDescription>
-          <Tabs defaultValue="account" className="w-[420px]">
-              <TabsList className="grid  grid-cols-2 w-[350px] mx-9">
+          <Tabs defaultValue="account" className="255:w-full 450:w-[380px] 535:w-[420px] border-2 border-red-600 ">
+              <TabsList className="grid  grid-cols-2 450:w-[350px] 450:mx-3 535:mx-9 border-2 border-red-600">
                    <TabsTrigger value="account">Place cyrcle </TabsTrigger>
                    <TabsTrigger value="password">Moving cyrcle</TabsTrigger>
               </TabsList>
               <TabsContent value="account" className='px-5  w-full '>
                 {/** <Createplaceform index={props.index} tripId={props.tripId} cyrcleArrId={props.cyrcleArrId}/>  {/** create place form */}
+                <Createplaceform/>
               </TabsContent>
               <TabsContent value="password" >
                 {/**  <Createmovingform index={props.index} tripId={props.tripId} cyrcleArrId={props.cyrcleArrId}/>  {/** create moving form */}

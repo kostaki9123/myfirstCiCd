@@ -35,9 +35,13 @@ const config: Config = {
 
 			'343': '343px',
 
+			'360': '360px',
+
 			'xxs' : '410px',
 
 			'426' : '426px',
+
+			'450' : '450px',
 			// => @media (min-width: 410px) { ... }
 			'535' : '535px',
 

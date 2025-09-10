@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function NotFound() {
   return <div className="h-full w-full absolute flex flex-col items-center justify-center text-white text-lg gap-4 font-semibold " >
@@ -8,9 +9,11 @@ export default function NotFound() {
             <div>
             Page Not Found
             </div>
-            <Button className=" bg-black">
-            Return To Home Page
-            </Button>
+            <Link href={'/'}>
+              <Button  className=" bg-black">
+              Return To Home Page
+              </Button>
+            </Link>
          </div>
 }
 
