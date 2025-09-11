@@ -28,7 +28,7 @@ export default function DateRangePicker() {
         selectsRange
         dateFormat="dd/MM/yyyy"
         placeholderText="Enter a date range"
-        className="border focus:border-black focus:outline-none  p-2 px-3  placeholder-gray-500  rounded w-60 text-sm  "
+        className="border focus:border-black focus:outline-none  p-2 px-3  placeholder-gray-500  rounded w-auto 343:w-60 text-sm  "
       />
 
       {/* State row */}

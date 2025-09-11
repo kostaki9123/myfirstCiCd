@@ -101,12 +101,12 @@ const Addnewcyrcle = async (props : Props) => {
           </div>
          }
 
-        <DialogContent className=' h-fit w-[275px] 290:w-[285px] 343:w-[325px] 360:w-[350px] xxs:w-[375px] 450:w-[400px] 535:w-[473px] 450:p-[9px] 535:p-6 p-0 absolute' >
+         <DialogContent className="w-[90vw] max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-1  360:p-2 sm:p-6 md:p-8 rounded-xl">
           <DialogTitle></DialogTitle>
           <DialogDescription>
           </DialogDescription>
-          <Tabs defaultValue="account" className="255:w-full 450:w-[380px] 535:w-[420px] border-2 border-red-600 ">
-              <TabsList className="grid  grid-cols-2 450:w-[350px] 450:mx-3 535:mx-9 border-2 border-red-600">
+          <Tabs defaultValue="account" className="  343:w-full  border-2 border-green-600 ">
+              <TabsList className="grid  grid-cols-2 w-full   border-2 border-red-600">
                    <TabsTrigger value="account">Place cyrcle </TabsTrigger>
                    <TabsTrigger value="password">Moving cyrcle</TabsTrigger>
               </TabsList>

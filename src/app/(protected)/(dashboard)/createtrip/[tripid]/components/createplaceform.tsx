@@ -64,8 +64,8 @@ const Createplaceform = () => {
       </p>
 
       <Label>Place</Label>
-    
-
+        <Input placeholder="Places autocomplete" className=" placeholder:text-sm"  />
+        
       <Label>Dates</Label>
       <div className="  rounded-sm z-50 " >
         <DatePickerExample/>   
