@@ -101,7 +101,7 @@ const Addnewcyrcle = async (props : Props) => {
           </div>
          }
 
-         <DialogContent className="w-[90vw] max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-1  360:p-2 sm:p-6 md:p-8 rounded-xl">
+         <DialogContent className=" min-w-[262px] w-[90vw] max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-1  360:p-2 sm:p-6 md:p-8 rounded-xl">
           <DialogTitle></DialogTitle>
           <DialogDescription>
           </DialogDescription>
