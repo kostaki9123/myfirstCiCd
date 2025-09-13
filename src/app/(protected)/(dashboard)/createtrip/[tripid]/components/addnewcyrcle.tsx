@@ -107,7 +107,7 @@ const Addnewcyrcle = async (props : Props) => {
           <DialogDescription>
           </DialogDescription>
           <Tabs defaultValue="account" className="  343:w-full   ">
-              <TabsList className="grid  grid-cols-2 w-full  ">
+              <TabsList className="grid  grid-cols-2 w-full   ">
                    <TabsTrigger value="account">Place cyrcle </TabsTrigger>
                    <TabsTrigger value="password">Moving cyrcle</TabsTrigger>
               </TabsList>

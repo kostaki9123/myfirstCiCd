@@ -28,11 +28,12 @@ const Createmovingboxform = () => {
       <Label>To</Label>
         <Input placeholder="Places autocomplete" className=" placeholder:text-sm"  />
       <Label>By</Label>
-        <Input placeholder="Places autocomplete" className=" placeholder:text-sm"  />
+        <Input placeholder="by" className=" placeholder:text-sm"  />
       <Label>Departure Date</Label>
         <DateRangePicker />   
       <Label>Arrival time</Label>
-        <DateRangePicker onlyTime/>    
+         <Input placeholder="time" className=" placeholder:text-sm"  />
+   
       <div className="  rounded-sm z-50 " >
       
       </div>
