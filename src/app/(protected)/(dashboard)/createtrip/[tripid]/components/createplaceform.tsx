@@ -66,9 +66,9 @@ const Createplaceform = () => {
       <Label>Place</Label>
         <Input placeholder="Places autocomplete" className=" placeholder:text-sm"  />
         
-      <Label>Dates</Label>
+      <Label>Dates</Label> 
       <div className="  rounded-sm z-50 " >
-        <DatePickerExample/>   
+        <DatePickerExample isRange />   
       </div>
       <div className=' h-14 flex justify-center items-end '>
           <Button type='submit' className='right-0 ml-4'>Create place cyrcle</Button>
