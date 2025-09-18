@@ -86,18 +86,18 @@ const points = [
 
 const page = () => {
   return (
-    <div className=' xxs:border-4   h-full bottom-0 absolute right-0 left-0  flex flex-col  '>
+    <div className=' min-h-[490px] xxs:border-4  bottom-0 absolute right-0 left-0 top-0  flex flex-col border-2 border-pink-500  '>
         
-        <div className=' h-[43%]  xxs:block hidden  ' >
+        <div className=' h-[45%]  xxs:block hidden    ' >
            <Tripboard  tripId='' cyrclesArr={points} />
         </div>
-        <div className=' h-[57%]  w-full xxs:block hidden bg-slate-500 ' >
+        <div className=' h-[55%]  w-full xxs:block hidden bg-slate-500  ' >
            <Mapprovider/>
         </div>
 
        
        
-        <div  className=' block xxs:hidden h-full'>
+        <div  className='  h-[43%] block xxs:hidden '>
            <Tripboardphone  tripId='' cyrclesArr={points} />
         </div>
     </div>
