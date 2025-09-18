@@ -19,10 +19,9 @@ const Createmovingboxform = () => {
       action={clientaction}
       className="w-full m-1 "
     >
-      <p className="leading-7 [&:not(:first-child)]:mt-6 text-gray-600 text-sm pb-3">
-      The place cyrcle represent a city,town or village you will stay.
-      </p>
-
+     <p className="leading-7 [&:not(:first-child)]:mt-6 text-gray-600 text-sm pb-3 whitespace-nowrap">
+         The moving box shows how you travel from one place to another.
+     </p>
       <Label>From</Label>
         <Input placeholder="Places autocomplete" className=" placeholder:text-sm"  />
       <Label>To</Label>

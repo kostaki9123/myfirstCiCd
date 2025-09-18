@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import Curveline from './curveline';
 import CurvelinePhone from './curvelinephone';
 import Addnewcyrcle from './addnewcyrcle';
+import Actionsmenu from './actionmenu/actionmenu';
 //import Savebtn from '../viewcyrclemodal/deletebtn';
 //import ViewPlaceMoadal from '../viewcyrclemodal/viewplacemodal';
 
@@ -168,8 +169,8 @@ const Movingbox = (props : Props) => {
                 </div>
              </div>
            </DialogTrigger>
-           <div className=' absolute bottom-2 right-[33px] text-white z-50'>
-                  {/** action menu */}{/**  <Actionsmenu cyrcleId={props.data.id}/> */}
+           <div className=' absolute  bottom-5 xxs:bottom-2 right-[40px] text-white  z-50'>
+                <Actionsmenu cyrcleId={props.data.id}/>
            </div>
            <div className=' relative '>
               {props.withcurveline ? 
