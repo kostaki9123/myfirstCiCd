@@ -14,6 +14,7 @@ import {
 import CurvelinePhone from './curvelinephone';
 import Addnewcyrcle from './addnewcyrcle';
 import Actionsmenu from './actionmenu/actionmenu';
+import ViewPlaceMoadal from './locationinput/viewplacemodal';
 // import ViewPlaceMoadal from '../viewcyrclemodal/viewplacemodal';
 
 // import Savebtn from '../viewcyrclemodal/deletebtn';
@@ -151,7 +152,7 @@ const Point = async (props:Props) => {
         </div>
 
 
-         <DialogContent className="  h-fit w-fit  absolute ">
+         <DialogContent className=" h-[300px] 820:h-fit 820:w-fit w-[90%] 450:w-[350px]  absolute ">
             <DialogHeader>
               <DialogTitle className=' text-xl'>
                   {props.data.location}
@@ -161,8 +162,8 @@ const Point = async (props:Props) => {
               </DialogDescription>
             </DialogHeader>
 
-            {/** <ViewPlaceMoadal/>
-           
+             <ViewPlaceMoadal/>
+            {/**
             <Savebtn  />  */}
           </DialogContent>
      </Dialog>

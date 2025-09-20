@@ -25,23 +25,29 @@ const points = [
     cyrcleArrId: "C1",
   },
   {
-    id: "2",
-    role: "MOVINGBOX",
-    index: 1,
-    startdate: "2024-12-02",
-    location: null,
-    enddate: "2024-12-03",
-    to: "Los Angeles, USA",
-    from: "New York, USA",
-    time: "4:00 PM",
-    moveIcon: "plane",
-    lat1: "40.7128",
-    lng1: "-74.0060",
-    lat2: "34.0522",
-    lng2: "-118.2437",
-    placeId1: "ChIJqaUj8fBLzEwRZ5UY3sHGz90",
-    placeId2: "ChIJE9on3F3HwoAR9AhGJW_fL-I",
-    cyrcleArrId: "C2",
+  id: "2",
+  role: "MOVINGBOX",
+  index: 1,
+  startdate: "2024-12-02",          // departure date
+  enddate: "2024-12-03",            // arrival date
+  from: "New York, USA",
+  to: "Los Angeles, USA",
+  departureTime: "2024-12-02T16:00:00", // ISO format recommended
+  arrivalTime: "2024-12-03T19:30:00",
+  transportType: "Plane",
+  duration: "5h 30m",
+  cost: "$320",
+  notes: "Direct flight, check-in 2 hours before departure.",
+  moveIcon: "plane",
+  location: null, // not needed here but you kept it in your schema
+  time: "4:00 PM", // consider replacing this with departureTime
+  lat1: "40.7128", // New York coords
+  lng1: "-74.0060",
+  lat2: "34.0522", // Los Angeles coords
+  lng2: "-118.2437",
+  placeId1: "ChIJqaUj8fBLzEwRZ5UY3sHGz90",
+  placeId2: "ChIJE9on3F3HwoAR9AhGJW_fL-I",
+  cyrcleArrId: "C2",
   },
   {
     id: "3",

@@ -12,6 +12,7 @@ import Curveline from './curveline';
 import CurvelinePhone from './curvelinephone';
 import Addnewcyrcle from './addnewcyrcle';
 import Actionsmenu from './actionmenu/actionmenu';
+import Viewmovingboxmodal from './locationinput/viewmovingbox';
 //import Savebtn from '../viewcyrclemodal/deletebtn';
 //import ViewPlaceMoadal from '../viewcyrclemodal/viewplacemodal';
 
@@ -195,17 +196,14 @@ const Movingbox = (props : Props) => {
         </div>
 
 
-         <DialogContent className="  h-fit w-fit  absolute ">
-            <DialogHeader>
+         <DialogContent className="  h-fit  820:w-fit w-[90%] 450:w-[350px]  absolute  ">
+            <DialogHeader className=''>
               <DialogTitle className=' text-xl'>
-                  {props.data.location}
-              </DialogTitle>   
-              <DialogDescription>
-               
-              </DialogDescription>
+                 Transport Details
+              </DialogTitle>             
             </DialogHeader>
 
-            {/**  <ViewPlaceMoadal/>  */}
+            <Viewmovingboxmodal data={props.data}/> 
            
            {/**  <Savebtn  /> */}
           </DialogContent>
