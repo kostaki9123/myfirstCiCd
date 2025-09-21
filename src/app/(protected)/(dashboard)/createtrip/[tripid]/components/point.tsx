@@ -152,7 +152,7 @@ const Point = async (props:Props) => {
         </div>
 
 
-         <DialogContent className=" h-[300px] 820:h-fit 820:w-fit w-[90%] 450:w-[350px]  absolute ">
+         <DialogContent className=" h-[400px] 820:h-fit 820:w-fit w-[90%] 450:w-[350px]  absolute ">
             <DialogHeader>
               <DialogTitle className=' text-xl'>
                   {props.data.location}

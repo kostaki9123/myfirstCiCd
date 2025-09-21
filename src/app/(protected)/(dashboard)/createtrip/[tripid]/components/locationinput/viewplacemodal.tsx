@@ -1,47 +1,42 @@
-import React from 'react'
+import React from "react";
 import { IoMdAdd } from "react-icons/io";
 
-const ViewPlaceMoadal = () => {
+const ViewPlaceModal = () => {
   return (
-    <div className='  820:h-fit  flex flex-col 820:flex-row overflow-y-auto justify-start items-center gap-5 '>
+    <div className="flex flex-col 820:flex-row gap-6 items-start justify-start w-full overflow-y-auto p-4">
       
-       <div className='  h-60 flex-grow flex  items-center justify-center   relative px-0'>
+      {/* Accommodation Card */}
+      <div className="relative flex flex-col items-center justify-center min-h-[15rem] max-h-[20rem] w-full rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 transition-all duration-200 cursor-pointer group">
+        <h4 className="absolute top-2 text-base font-semibold tracking-tight text-center">
+          Accommodation
+        </h4>
+        <div className="flex flex-col items-center justify-center gap-3">
+          <div className="h-20 w-20 flex items-center justify-center rounded-full bg-gray-500 text-white group-hover:bg-gray-600 transition-all duration-200">
+            <IoMdAdd size={28} />
+          </div>
+          <p className="w-3/4 text-center text-gray-500 font-medium group-hover:text-gray-700 transition-all duration-200">
+            Add a Place to Stay
+          </p>
+        </div>
+      </div>
 
-          <h4 className="scroll-m-20 text-base  font-semibold tracking-tight text-center absolute top-0">
-             Accomodation
-          </h4>
+      {/* Places Card */}
+      <div className="relative flex flex-col items-center justify-center min-h-[15rem] max-h-[20rem] w-full rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 transition-all duration-200 cursor-pointer group">
+        <h4 className="absolute top-2 text-base font-semibold tracking-tight text-center">
+          Places
+        </h4>
+        <div className="flex flex-col items-center justify-center gap-3">
+          <div className="h-20 w-20 flex items-center justify-center rounded-full bg-gray-500 text-white group-hover:bg-gray-600 transition-all duration-200">
+            <IoMdAdd size={28} />
+          </div>
+          <p className="w-3/4 text-center text-gray-500 font-medium group-hover:text-gray-700 transition-all duration-200">
+            Add a Place to Visit
+          </p>
+        </div>
+      </div>
 
-          
-          <div className=' rounded-md border-2 border-gray-500 border-dashed flex items-center justify-center flex-col gap-3 py-3 cursor-pointer'>
-              <div className='gray-500 rounded-full bg-gray-500 text-white h-20 w-20 flex items-center  justify-center  '>
-                   <IoMdAdd fontSize="27px"/>
-              </div>
-              <p className=' text-gray-500 text-center font-medium  w-3/4  '>
-                Add A Place To Stay
-              </p>
-           </div>
-          
-       </div>
+    </div>
+  );
+};
 
-       <div className='  h-60 flex-grow  flex items-center justify-center  relative'>
-          <h4 className="scroll-m-20 text-base  font-semibold tracking-tight text-center absolute top-0">
-             Places
-          </h4>
-
-          <div className=' rounded-md border-2 border-gray-500 border-dashed flex items-center justify-center flex-col gap-3 py-3 cursor-pointer'>
-              <div className='gray-500 rounded-full bg-gray-500 text-white h-20 w-20 flex items-center  justify-center  '>
-                   <IoMdAdd fontSize="27px"/>
-              </div>
-              <p className=' text-gray-500 text-center font-medium  w-3/4  '>
-                Add A Places To visit
-              </p>
-           </div>
-
-       </div>
-      
-
-</div> 
-  )
-}
-
-export default ViewPlaceMoadal
+export default ViewPlaceModal;
