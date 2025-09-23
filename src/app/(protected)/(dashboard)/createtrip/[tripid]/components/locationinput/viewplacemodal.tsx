@@ -4,10 +4,10 @@ import { IoMdAdd } from "react-icons/io";
 
 const ViewPlaceModal = () => {
   return (
-    <div className="flex flex-col 820:flex-row gap-6 items-start justify-start w-full overflow-y-auto p-4">
+    <div className="flex flex-col 820:flex-row gap-6 items-center justify-start w-full overflow-y-auto p-4">
       
       {/* Accommodation Card */}
-      <Link href={`/itinerary/8293`}>
+      <Link href={`/itinerary/8293`}  >
          <div className="relative flex flex-col items-center justify-center min-h-[13rem] max-h-[14rem] w-full rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 transition-all duration-200 cursor-pointer group">
            <h4 className="absolute top-2 text-base font-semibold tracking-tight text-center">
              Accommodation
