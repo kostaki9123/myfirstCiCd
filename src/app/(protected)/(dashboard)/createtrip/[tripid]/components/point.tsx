@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import { IoLocationSharp } from "react-icons/io5";
 import Curveline from './curveline';
 // import Actionsmenu from '../actionsmenu/actionsmenu';
@@ -15,6 +17,8 @@ import CurvelinePhone from './curvelinephone';
 import Addnewcyrcle from './addnewcyrcle';
 import Actionsmenu from './actionmenu/actionmenu';
 import ViewPlaceMoadal from './locationinput/viewplacemodal';
+import { Input } from '@/components/ui/input';
+import EditableText from './editableInput';
 // import ViewPlaceMoadal from '../viewcyrclemodal/viewplacemodal';
 
 // import Savebtn from '../viewcyrclemodal/deletebtn';
@@ -73,7 +77,9 @@ const positiongrid = [
   {gridColumn: 1, gridRow : 21 ,line : "right" , pl : '50px'} ,
   ]
 
-const Point = async (props:Props) => {
+const Point =  (props:Props) => {
+  const [location, setLocation] = useState(props.data.location || "");
+  const [startDate, setStartDate] = useState(props.data.startdate || "");
 
   // const fields = 'id,displayName';
 //
@@ -155,11 +161,21 @@ const Point = async (props:Props) => {
          <DialogContent className=" h-[400px] 820:h-fit 820:w-fit w-[90%] 450:w-[350px]  absolute ">
             <DialogHeader>
               <DialogTitle className=' text-xl'>
-                  {props.data.location}
-              </DialogTitle>   
-              <DialogDescription>
-                 {formattedStartDate}-{formattedEndDate}
-              </DialogDescription>
+                   <EditableText
+                     value={location}
+                     onChange={setLocation}
+                     placeholder="Enter location"
+                   />
+                 
+                  
+              </DialogTitle>
+
+              <EditableText
+                   value={startDate}
+                   onChange={setStartDate}
+                   placeholder="Enter Dates"
+                 />
+                 
             </DialogHeader>
 
              <ViewPlaceMoadal/>
