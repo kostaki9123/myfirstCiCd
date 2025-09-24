@@ -46,26 +46,20 @@ const Dropdowncontent = (props:props) => {
 
 
 
-  <DialogContent className='  xl:my-[2%] xl:mx-[8%] p-4   w-fit  z-50  text-black '>
-        <form >
-   
-          <Card className="w-full text-black ">
-            <CardHeader>
+  <DialogContent className=' h-fit w-[60%] 360:w-[50%]  600:w-auto min-w-[250px]  426::w-fit   absolute p-4     z-50  text-black  '>
+        <form className='  ' >
+        
               <DialogTitle>
                 Move cyrcle
               </DialogTitle>
-            </CardHeader>
-            <CardContent>
-                <div className="flex flex-col space-y-1.5 min-w-[350px]">
+            
+                <div className="flex flex-col space-y-1.5 600:min-w-[350px] py-6 ">
                     <Input type="number"  defaultValue={0} min={0} max={5} ></Input>
                 </div>
-                
-            </CardContent>
-            <CardFooter className="flex justify-end">
-              <Button type="submit">Move</Button>
-            </CardFooter>
-          </Card>
-    
+              <div className='flex justify-end' >
+                  <Button type="submit">Move</Button>
+              </div>
+              
         
         </form>
          
