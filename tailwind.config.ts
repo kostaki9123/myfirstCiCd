@@ -56,7 +56,7 @@ const config: Config = {
 
 			'787' : '787px',
 
-			'820' : '820px',
+			'820' : '820px',	
 			// => @media (min-width: 768px) { ... }
 			'950': '950px',
 

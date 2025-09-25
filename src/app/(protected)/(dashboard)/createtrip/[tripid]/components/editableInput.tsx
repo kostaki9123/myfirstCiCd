@@ -5,9 +5,10 @@ type EditableTextProps = {
   value: string;
   onChange: (val: string) => void;
   placeholder?: string;
+  divType: 'Title' | 'description'
 };
 
-const EditableText: React.FC<EditableTextProps> = ({ value, onChange, placeholder }) => {
+const EditableText: React.FC<EditableTextProps> = ({ value, onChange, placeholder, divType }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
@@ -28,7 +29,7 @@ const EditableText: React.FC<EditableTextProps> = ({ value, onChange, placeholde
           className=" w-[90%] text-lg font-medium text-gray-800 cursor-pointer hover:bg-gray-100 px-1 rounded"
           onClick={() => setIsEditing(true)}
         >
-          {value || <span className="text-gray-400">{placeholder}</span>}
+           {divType === 'Title' ? <h2>{value}</h2> : <div className=" text-sm" >{value}</div>}
         </div>
       )}
     </div>

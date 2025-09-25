@@ -2,44 +2,123 @@ import Link from "next/link";
 import React from "react";
 import { IoMdAdd } from "react-icons/io";
 
-const ViewPlaceModal = () => {
+type Place = {
+  id: string;
+  name: string;
+  description?: string;
+  image?: string;
+};
+
+type ViewPlaceModalProps = {
+  accommodations: Place[];
+  places: Place[];
+};
+
+const ActionRow = ({
+  href,
+  label,
+}: {
+  href: string;
+  label: string;
+}) => (
+  <Link href={href} className="w-full">
+     <div className="w-[194px] flex items-center gap-3 border-2 border-lime-500 bg-gray-100 rounded-md p-2 hover:bg-gray-200 cursor-pointer group">
+       <div className="w-12 h-12 flex items-center justify-center rounded-md text-gray-700 transition-all">
+         <IoMdAdd size={20} />
+       </div>
+       <p className="font-medium text-gray-600 group-hover:text-gray-800">{label}</p>
+     </div>
+  </Link>
+);
+
+const ViewPlaceModal: React.FC<ViewPlaceModalProps> = ({
+  accommodations,
+  places,
+}) => {
   return (
-    <div className="flex flex-col 820:flex-row gap-6 items-center justify-start w-full overflow-y-auto p-4">
+    <div className="  flex flex-col 820:flex-row gap-6 items-center justify-start w-full overflow-y-auto p-4">
       
       {/* Accommodation Card */}
-      <Link href={`/itinerary/8293`}  >
-         <div className="  relative flex flex-col items-center justify-center gap-2 min-h-[13rem] max-h-[14rem] w-full rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 transition-all duration-200 cursor-pointer group">
-           <h4 className="  text-base font-semibold tracking-tight text-center">
-             Accommodation
-           </h4>
-           <div className="   flex flex-col items-center justify-center gap-3">
-             <div className="  h-20 w-20 flex items-center justify-center rounded-full bg-gray-500 text-white group-hover:bg-gray-600 transition-all duration-200">
-               <IoMdAdd size={28} />
-             </div>
-             <p className="   w-3/4 text-center text-gray-500 font-medium group-hover:text-gray-700 transition-all duration-200">
-               Add a Place to Stay
-             </p>
-           </div>
-         </div>
-      </Link>
+      <div className="relative flex flex-col items-center justify-start gap-2 min-h-[13rem] max-h-[22rem] h-full rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 transition-all duration-200 p-4">
+        <h4 className="text-base font-semibold tracking-tight text-center mb-2">
+          Accommodation
+        </h4>
+        
+        {accommodations.length === 0 ? (
+           <ActionRow href="/itinerary/change-accommodation" label="Add Accommodation" />
+        ) : (
+          <div className="flex flex-col gap-3 w-full h-full">
+            {accommodations.map((acc) => (
+              <div
+                key={acc.id}
+                className="flex items-center gap-3 bg-gray-100 rounded-md p-2 hover:bg-gray-200 cursor-pointer"
+              >
+                {acc.image ? (
+                  <img
+                    src={acc.image}
+                    alt={acc.name}
+                    className="w-12 h-12 rounded-md object-cover"
+                  />
+                ) : (
+                  <div className="w-12 h-12 flex items-center justify-center rounded-md bg-gray-300 text-gray-700">
+                    🏨
+                  </div>
+                )}
+                <div>
+                  <p className="font-medium text-gray-800">{acc.name}</p>
+                  {acc.description && (
+                    <p className="text-sm text-gray-500">{acc.description}</p>
+                  )}
+                </div>
+              </div>
+            ))}
+
+            {/* Change Accommodation */}
+            <ActionRow href="/itinerary/change-accommodation" label="Add Accommodation" />
+          </div>
+        )}
+      </div>
 
       {/* Places Card */}
-      <Link  href={`/itinerary/8293`}>
-        <div className="relative flex flex-col items-center justify-center gap-2 min-h-[13rem] max-h-[14rem] w-full rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 transition-all duration-200 cursor-pointer group">
-          <h4 className=" text-base font-semibold tracking-tight text-center">
-            Places
-          </h4>
-          <div className="flex flex-col items-center justify-center gap-3">
-            <div className="h-20 w-20 flex items-center justify-center rounded-full bg-gray-500 text-white group-hover:bg-gray-600 transition-all duration-200">
-              <IoMdAdd size={28} />
-            </div>
-            <p className="w-3/4 text-center text-gray-500 font-medium group-hover:text-gray-700 transition-all duration-200">
-              Add a Place to Visit
-            </p>
-          </div>
-        </div>
-      </Link>
+      <div className="relative flex flex-col items-center justify-start gap-2 min-h-[13rem] max-h-[22rem] h-full rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 transition-all duration-200 p-4">
+        <h4 className="text-base font-semibold tracking-tight text-center mb-2">
+          Places
+        </h4>
 
+        {places.length === 0 ? (
+          <ActionRow href="/itinerary/add-place" label="Add Place" />
+        ) : (
+          <div className="flex flex-col gap-3 w-full">
+            {places.map((place) => (
+              <div
+                key={place.id}
+                className="flex items-center gap-3 bg-gray-100 rounded-md p-2 hover:bg-gray-200 cursor-pointer"
+              >
+                {place.image ? (
+                  <img
+                    src={place.image}
+                    alt={place.name}
+                    className="w-12 h-12 rounded-md object-cover"
+                  />
+                ) : (
+                  <div className="w-12 h-12 flex items-center justify-center rounded-md bg-gray-300 text-gray-700">
+                    📍
+                  </div>
+                )}
+                <div>
+                  <p className="font-medium text-gray-800">{place.name}</p>
+                  {place.description && (
+                    <p className="text-sm text-gray-500">{place.description}</p>
+                  )}
+                </div>
+              </div>
+            ))}
+
+            {/* Add Another Place */}
+            <ActionRow href="/itinerary/add-place" label="Add Place" />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

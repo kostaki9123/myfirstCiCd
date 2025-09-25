@@ -31,6 +31,30 @@ type Props = {
   withcurveline : boolean
 } 
 
+const fakeAccommodations = [
+    {
+      id: "1",
+      name: "Cozy Airbnb",
+      description: "Perfect for couples",
+      image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=300&fit=crop",
+    },
+  ];
+
+  const fakePlaces = [
+    {
+      id: "1",
+      name: "Eiffel Tower",
+      description: "Iconic landmark in Paris",
+      image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=300&h=300&fit=crop",
+    },
+    {
+      id: "2",
+      name: "Notre Dame",
+      description: "Famous medieval cathedral",
+      image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=300&h=300&fit=crop",
+    },
+  ];
+
 const positiongrid = [
   {gridColumn: 2, gridRow : 3 ,line : "up"   },  //grid colunm delte if not needded
   {gridColumn: 3, gridRow : 2 ,line : "down" },
@@ -165,6 +189,7 @@ const Point =  (props:Props) => {
                      value={location}
                      onChange={setLocation}
                      placeholder="Enter location"
+                     divType='Title'
                    />
                  
                   
@@ -174,12 +199,14 @@ const Point =  (props:Props) => {
                    value={startDate}
                    onChange={setStartDate}
                    placeholder="Enter Dates"
+                   divType='description'
                  />
                  
             </DialogHeader>
 
-             <ViewPlaceMoadal/>
+             <ViewPlaceMoadal  accommodations={fakeAccommodations}   places={fakePlaces}  />
             {/**
+             * 
             <Savebtn  />  */}
           </DialogContent>
      </Dialog>
