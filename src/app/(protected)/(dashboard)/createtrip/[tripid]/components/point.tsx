@@ -188,7 +188,7 @@ const Point =  (props:Props) => {
         </div>
 
 
-         <DialogContent className=" h-[400px] 820:h-fit 820:w-fit w-[90%] 450:w-[350px]  absolute ">
+         <DialogContent className=" ml-2 450:ml-0 min-w-[280px] h-[400px] 820:h-fit 820:w-fit w-[90%] 450:w-[350px]  absolute ">
             <DialogHeader>
               <DialogTitle className=' text-xl'>
                    <EditableText
