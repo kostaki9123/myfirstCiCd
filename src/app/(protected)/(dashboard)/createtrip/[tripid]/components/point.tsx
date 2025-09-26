@@ -53,6 +53,12 @@ const fakeAccommodations = [
       description: "Famous medieval cathedral",
       image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=300&h=300&fit=crop",
     },
+    {
+      id: "3",
+      name: "Notre Dame",
+      description: "Famous medieval cathedral",
+      image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=300&h=300&fit=crop",
+    },
   ];
 
 const positiongrid = [
