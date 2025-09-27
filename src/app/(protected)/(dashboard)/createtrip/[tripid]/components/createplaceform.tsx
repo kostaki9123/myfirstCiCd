@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input"
 
 import DatePicker from "react-datepicker"
 import DatePickerExample from "./locationinput/datepicker"
+import PlaceSearchWrapper from "./locationinput/locationinput"
 //import Places from "./locationinput/loadinginput"
 //import { createcyrcleplace, CyrcleArr } from "./actions"
 
@@ -63,8 +64,9 @@ const Createplaceform = () => {
       The place cyrcle represent a city,town or village you will stay.
       </p>
 
-      <Label>Place</Label>
-        <Input placeholder="Places autocomplete" className=" placeholder:text-sm"  />
+      <Label >Place</Label>
+         <PlaceSearchWrapper apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}/>
+       { /**  <Input placeholder="Places autocomplete" className=" placeholder:text-sm"  /> */}
         
       <Label>Dates</Label> 
       <div className="  rounded-sm z-50 " >
