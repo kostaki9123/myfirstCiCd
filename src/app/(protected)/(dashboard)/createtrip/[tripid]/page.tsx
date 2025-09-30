@@ -98,7 +98,7 @@ const page = () => {
            <Tripboard  tripId='' cyrclesArr={points} />
         </div>
         <div className=' h-[55%]  w-full xxs:block hidden bg-slate-500  ' >
-           <Mapprovider cyrclesArr={points} />
+          {/**   <Mapprovider cyrclesArr={points} /> */}
         </div>
 
        
