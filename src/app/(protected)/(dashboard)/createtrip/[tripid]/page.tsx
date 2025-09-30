@@ -92,13 +92,13 @@ const points = [
 
 const page = () => {
   return (
-    <div className=' min-h-[490px] xxs:border-4  bottom-0 absolute right-0 left-0 top-0  flex flex-col border-2 border-pink-500  '>
+    <div className=' min-h-[490px] xxs:border-4  bottom-0 absolute right-0 left-0 top-0  flex flex-col '>
         
         <div className=' h-[45%]  xxs:block hidden    ' >
            <Tripboard  tripId='' cyrclesArr={points} />
         </div>
         <div className=' h-[55%]  w-full xxs:block hidden bg-slate-500  ' >
-           <Mapprovider/>
+           <Mapprovider cyrclesArr={points} />
         </div>
 
        

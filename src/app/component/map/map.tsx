@@ -1,46 +1,137 @@
 "use client";
 
-import { APIProvider, useMap, Map, Marker, useMapsLibrary } from '@vis.gl/react-google-maps';
+import { useEffect, useRef } from "react";
+import { Map, Marker, useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
+
+type Props = {
+cyrclesArr: any[];
+};
+
+// ✅ Polyline overlay wrapper
+function PolylineOverlay({
+path,
+options,
+}: {
+path: { lat: number; lng: number }[];
+options?: google.maps.PolylineOptions;
+}) {
+const map = useMap();
+const maps = useMapsLibrary("maps");
+const polylineRef = useRef<google.maps.Polyline | null>(null);
+
+useEffect(() => {
+if (!map || !maps) return;
 
 
-
-const fakeCoordinates = [
-  { lat: 40.7128, lng: -74.0060 }, // New York
-  { lat: 34.0522, lng: -118.2437 }, // Los Angeles
-  { lat: 41.8781, lng: -87.6298 }, // Chicago
-  { lat: 29.7604, lng: -95.3698 }, // Houston
-  { lat: 33.4484, lng: -112.0740 } // Phoenix
-];
-
-type props = {
-cyrclesArr : any
+if (polylineRef.current) {
+  polylineRef.current.setMap(null);
 }
 
-function App(props : props) {
-  const map = useMap();
-  const maps = useMapsLibrary("maps");
+const polyline = new maps.Polyline({
+  path,
+  ...options,
+});
 
-  console.log(props)
+polyline.setMap(map);
+polylineRef.current = polyline;
 
-  if (!maps) {
-    return null;
-  }
+return () => {
+  polyline.setMap(null);
+};
 
-  const customMarkerIcon = {
-    url: '/location-pin.png', // URL to your custom icon
-    scaledSize: new google.maps.Size(30, 30), // Scale the icon
-    origin: new google.maps.Point(0, 0), // Origin point
-    anchor: new google.maps.Point(16, 32), // Anchor point
-  };
 
-  return (
-    <Map className='h-[100%] w-full z-50' defaultCenter={{ lat: 39.8283, lng: -98.5795 }} // Centered roughly in the US
-    defaultZoom={4}  >
-      {fakeCoordinates.map((coord, index) => (
-        <Marker key={index} position={coord}  />
-      ))}
-    </Map>
-  );
+}, [map, maps, path, options]);
+
+return null;
+}
+
+function App({ cyrclesArr }: Props) {
+const transportStyles: Record<
+string,
+{ color: string; icon: string }
+
+> = {
+ plane: { color: "#1E90FF", icon: "✈️" },
+ train: { color: "#228B22", icon: "🚆" },
+ bus: { color: "#FFA500", icon: "🚌" },
+ car: { color: "#DC143C", icon: "🚗" },
+ default: { color: "#555", icon: "➡️" },
+ };
+
+// Utility: midpoint between two coords
+const getMidpoint = (
+lat1: number,
+lng1: number,
+lat2: number,
+lng2: number
+) => {
+return { lat: (lat1 + lat2) / 2, lng: (lng1 + lng2) / 2 };
+};
+
+return (
+<Map
+className="h-[100%] w-full z-50"
+defaultCenter={{ lat: 39.8283, lng: -98.5795 }}
+defaultZoom={4}
+>
+{/* POINT markers */}
+{cyrclesArr
+.filter((item) => item.role === "POINT")
+.map((point) => (
+<Marker
+key={point.id}
+position={{
+lat: parseFloat(point.lat1),
+lng: parseFloat(point.lng1),
+}}
+/>
+))}
+
+
+  {/* MOVINGBOX polylines + midpoint icons */}
+  {cyrclesArr
+    .filter((item) => item.role === "MOVINGBOX")
+    .map((move) => {
+      const style = transportStyles[move.moveIcon || "default"];
+      const startLat = parseFloat(move.lat1);
+      const startLng = parseFloat(move.lng1);
+      const endLat = parseFloat(move.lat2);
+      const endLng = parseFloat(move.lng2);
+      const midpoint = getMidpoint(startLat, startLng, endLat, endLng);
+
+      return (
+        <>
+          <PolylineOverlay
+            key={`line-${move.id}`}
+            path={[
+              { lat: startLat, lng: startLng },
+              { lat: endLat, lng: endLng },
+            ]}
+            options={{
+              strokeColor: style.color,
+              strokeOpacity: 0.9,
+              strokeWeight: 3,
+            }}
+          />
+          {/* Transport icon at midpoint */}
+          <Marker
+            key={`icon-${move.id}`}
+            position={midpoint}
+            label={{
+              text: style.icon,
+              fontSize: "20px",
+            }}
+            icon={{
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 0, // hide actual marker graphic
+            }}
+          />
+        </>
+      );
+    })}
+</Map>
+
+);
 }
 
 export default App;

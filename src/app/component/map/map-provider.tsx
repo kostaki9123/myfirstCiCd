@@ -6,7 +6,7 @@ import App from './map'
 
 
 type props = {
-  cyrclesArr? : any
+  cyrclesArr : any
 }
 
 const Mapprovider = (props : props) => {
