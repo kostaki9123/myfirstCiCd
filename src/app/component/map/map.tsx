@@ -48,14 +48,14 @@ return null;
 function App({ cyrclesArr }: Props) {
 const transportStyles: Record<
 string,
-{ color: string; icon: string }
+{ color: string; }
 
 > = {
- plane: { color: "#1E90FF", icon: "✈️" },
- train: { color: "#228B22", icon: "🚆" },
- bus: { color: "#FFA500", icon: "🚌" },
- car: { color: "#DC143C", icon: "🚗" },
- default: { color: "#555", icon: "➡️" },
+ plane: { color: "#1E90FF", },
+ train: { color: "#228B22", },
+ bus: { color: "#FFA500", },
+ car: { color: "#DC143C",  },
+ default: { color: "#555",},
  };
 
 // Utility: midpoint between two coords
@@ -117,10 +117,6 @@ lng: parseFloat(point.lng1),
           <Marker
             key={`icon-${move.id}`}
             position={midpoint}
-            label={{
-              text: style.icon,
-              fontSize: "20px",
-            }}
             icon={{
               path: google.maps.SymbolPath.CIRCLE,
               scale: 0, // hide actual marker graphic
