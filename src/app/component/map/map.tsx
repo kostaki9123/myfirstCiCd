@@ -113,14 +113,12 @@ function App({ cyrclesArr }: Props) {
               {typeof google !== "undefined" && (
                 <Marker
                   position={midpoint}
+                  
                   label={{
                     text: style.icon,
                     fontSize: "20px",
                   }}
-                  icon={{
-                    path: google.maps.SymbolPath.CIRCLE,
-                    scale: 0,
-                  }}
+                  
                 />
               )}
             </div>
