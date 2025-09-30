@@ -4,130 +4,130 @@ import { useEffect, useRef } from "react";
 import { Map, Marker, useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
 
 type Props = {
-cyrclesArr: any[];
+  cyrclesArr: any[];
 };
 
 // ✅ Polyline overlay wrapper
 function PolylineOverlay({
-path,
-options,
-}: {
-path: { lat: number; lng: number }[];
-options?: google.maps.PolylineOptions;
-}) {
-const map = useMap();
-const maps = useMapsLibrary("maps");
-const polylineRef = useRef<google.maps.Polyline | null>(null);
-
-useEffect(() => {
-if (!map || !maps) return;
-
-
-if (polylineRef.current) {
-  polylineRef.current.setMap(null);
-}
-
-const polyline = new maps.Polyline({
   path,
-  ...options,
-});
+  options,
+}: {
+  path: { lat: number; lng: number }[];
+  options?: google.maps.PolylineOptions;
+}) {
+  const map = useMap();
+  const maps = useMapsLibrary("maps");
+  const polylineRef = useRef<google.maps.Polyline | null>(null);
 
-polyline.setMap(map);
-polylineRef.current = polyline;
+  useEffect(() => {
+    if (!map || !maps) return;
 
-return () => {
-  polyline.setMap(null);
-};
+    if (polylineRef.current) {
+      polylineRef.current.setMap(null);
+    }
 
+    const polyline = new maps.Polyline({
+      path,
+      ...options,
+    });
 
-}, [map, maps, path, options]);
+    polyline.setMap(map);
+    polylineRef.current = polyline;
 
-return null;
+    return () => {
+      polyline.setMap(null);
+    };
+  }, [map, maps, path, options]);
+
+  return null;
 }
 
 function App({ cyrclesArr }: Props) {
-const transportStyles: Record<
-string,
-{ color: string; }
+  const maps = useMapsLibrary("maps");
 
-> = {
- plane: { color: "#1E90FF", },
- train: { color: "#228B22", },
- bus: { color: "#FFA500", },
- car: { color: "#DC143C",  },
- default: { color: "#555",},
- };
+  const transportStyles: Record<
+    string,
+    { color: string; icon: string }
+  > = {
+    plane: { color: "#1E90FF", icon: "✈️" },
+    train: { color: "#228B22", icon: "🚆" },
+    bus: { color: "#FFA500", icon: "🚌" },
+    car: { color: "#DC143C", icon: "🚗" },
+    default: { color: "#555", icon: "➡️" },
+  };
 
-// Utility: midpoint between two coords
-const getMidpoint = (
-lat1: number,
-lng1: number,
-lat2: number,
-lng2: number
-) => {
-return { lat: (lat1 + lat2) / 2, lng: (lng1 + lng2) / 2 };
-};
+  const getMidpoint = (
+    lat1: number,
+    lng1: number,
+    lat2: number,
+    lng2: number
+  ) => {
+    return { lat: (lat1 + lat2) / 2, lng: (lng1 + lng2) / 2 };
+  };
 
-return (
-<Map
-className="h-[100%] w-full z-50"
-defaultCenter={{ lat: 39.8283, lng: -98.5795 }}
-defaultZoom={4}
->
-{/* POINT markers */}
-{cyrclesArr
-.filter((item) => item.role === "POINT")
-.map((point) => (
-<Marker
-key={point.id}
-position={{
-lat: parseFloat(point.lat1),
-lng: parseFloat(point.lng1),
-}}
-/>
-))}
-
-
-  {/* MOVINGBOX polylines + midpoint icons */}
-  {cyrclesArr
-    .filter((item) => item.role === "MOVINGBOX")
-    .map((move) => {
-      const style = transportStyles[move.moveIcon || "default"];
-      const startLat = parseFloat(move.lat1);
-      const startLng = parseFloat(move.lng1);
-      const endLat = parseFloat(move.lat2);
-      const endLng = parseFloat(move.lng2);
-      const midpoint = getMidpoint(startLat, startLng, endLat, endLng);
-
-      return (
-        <>
-          <PolylineOverlay
-            key={`line-${move.id}`}
-            path={[
-              { lat: startLat, lng: startLng },
-              { lat: endLat, lng: endLng },
-            ]}
-            options={{
-              strokeColor: style.color,
-              strokeOpacity: 0.9,
-              strokeWeight: 3,
-            }}
-          />
-          {/* Transport icon at midpoint */}
+  return (
+    <Map
+      className="h-[100%] w-full z-50"
+      defaultCenter={{ lat: 39.8283, lng: -98.5795 }}
+      defaultZoom={4}
+    >
+      {/* POINT markers */}
+      {cyrclesArr
+        .filter((item) => item.role === "POINT")
+        .map((point) => (
           <Marker
-            key={`icon-${move.id}`}
-            position={midpoint}
-            icon={{
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 0, // hide actual marker graphic
+            key={point.id}
+            position={{
+              lat: parseFloat(point.lat1),
+              lng: parseFloat(point.lng1),
             }}
           />
-        </>
-      );
-    })}
-</Map>
+        ))}
 
-);
+      {/* MOVINGBOX polylines + midpoint icons */}
+      {cyrclesArr
+        .filter((item) => item.role === "MOVINGBOX")
+        .map((move) => {
+          const style = transportStyles[move.moveIcon || "default"];
+          const startLat = parseFloat(move.lat1);
+          const startLng = parseFloat(move.lng1);
+          const endLat = parseFloat(move.lat2);
+          const endLng = parseFloat(move.lng2);
+          const midpoint = getMidpoint(startLat, startLng, endLat, endLng);
+
+          return (
+            <div key={move.id}>
+              <PolylineOverlay
+                path={[
+                  { lat: startLat, lng: startLng },
+                  { lat: endLat, lng: endLng },
+                ]}
+                options={{
+                  strokeColor: style.color,
+                  strokeOpacity: 0.9,
+                  strokeWeight: 3,
+                }}
+              />
+
+              {/* Transport icon at midpoint */}
+              {typeof google !== "undefined" && (
+                <Marker
+                  position={midpoint}
+                  label={{
+                    text: style.icon,
+                    fontSize: "20px",
+                  }}
+                  icon={{
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 0,
+                  }}
+                />
+              )}
+            </div>
+          );
+        })}
+    </Map>
+  );
 }
 
 export default App;
