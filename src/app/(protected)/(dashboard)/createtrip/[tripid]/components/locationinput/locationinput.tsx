@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { APIProvider, useMapsLibrary } from "@vis.gl/react-google-maps";
 import { Input } from "@/components/ui/input";
+import { X } from "lucide-react";
 
 interface PlaceResult {
   name: string;
@@ -43,7 +44,11 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
   >([]);
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [selectedPlace, setSelectedPlace] = useState<boolean>(false);
+  const [selectedPlace, setSelectedPlace] = useState(false);
+
+  const [mobileMode, setMobileMode] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   const acServiceRef = useRef<google.maps.places.AutocompleteService | null>(
     null
@@ -64,7 +69,7 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
     );
   }, [placesLib]);
 
-  // Fetch predictions only if query changes AND no place is selected
+  // Fetch predictions
   useEffect(() => {
     if (!acServiceRef.current || !query || selectedPlace) return;
 
@@ -90,11 +95,28 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
     return () => clearTimeout(handler);
   }, [query, selectedPlace]);
 
+  // Detect outside click for desktop/tablet dropdown
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   function handleSelect(prediction: google.maps.places.AutocompletePrediction) {
     setQuery(prediction.description);
-    setPredictions([]); // clear suggestions
+    setPredictions([]);
     setOpen(false);
-    setSelectedPlace(true); // mark that a place is selected
+    setSelectedPlace(true);
 
     if (!placesServiceRef.current) return;
 
@@ -119,12 +141,12 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
           });
           sessionTokenRef.current =
             new google.maps.places.AutocompleteSessionToken();
+          setMobileMode(false); // close modal on selection
         }
       }
     );
   }
 
-  // If user types after selecting a place, reset selection
   function handleInputChange(value: string) {
     setQuery(value);
     if (selectedPlace) setSelectedPlace(false);
@@ -148,47 +170,119 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
     }
   }
 
-  return (
-    <div className="relative">
-      <Input
-        value={query}
-        onChange={(e) => handleInputChange(e.target.value)}
-        onKeyDown={onKeyDown}
-        placeholder="Search address, business, or place"
-        className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-        aria-autocomplete="list"
-        aria-expanded={open}
-        aria-activedescendant={
-          activeIndex >= 0 ? `prediction-${activeIndex}` : undefined
-        }
-      />
+  function handleFocus() {
+    // If screen is small (mobile), open full screen modal
+    if (window.innerWidth < 768) {
+      setMobileMode(true);
+      setOpen(true);
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    }
+  }
 
-      {open && predictions.length > 0 && (
-        <ul className="absolute z-50 left-0 right-0 mt-2 bg-white rounded-lg shadow-lg max-h-52 820:max-h-56 overflow-auto">
-          {predictions.map((p, i) => (
-            <li
-              key={p.place_id}
-              id={`prediction-${i}`}
-              role="option"
-              aria-selected={i === activeIndex}
-              onMouseEnter={() => setActiveIndex(i)}
-              onMouseLeave={() => setActiveIndex(-1)}
-              onMouseDown={(e) => e.preventDefault()} // keep input focus
-              onClick={() => handleSelect(p)}
-              className={`px-3 py-2 cursor-pointer truncate ${
-                i === activeIndex ? "bg-indigo-50" : "hover:bg-gray-100"
-              }`}
-            >
-              <div className="font-medium text-sm">
-                {p.structured_formatting.main_text}
-              </div>
-              <div className="text-xs text-gray-500">
-                {p.structured_formatting.secondary_text}
-              </div>
-            </li>
-          ))}
-        </ul>
+  return (
+    <>
+      {/* Normal input (desktop / tablet) */}
+      {!mobileMode && (
+        <div className="relative" ref={wrapperRef}>
+          <Input
+            value={query}
+            onChange={(e) => handleInputChange(e.target.value)}
+            onKeyDown={onKeyDown}
+            onFocus={handleFocus}
+            placeholder="Search address, business, or place"
+            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+            aria-autocomplete="list"
+            aria-expanded={open}
+            aria-activedescendant={
+              activeIndex >= 0 ? `prediction-${activeIndex}` : undefined
+            }
+          />
+
+          {open && predictions.length > 0 && (
+            <ul className="absolute z-50 left-0 right-0 mt-2 bg-white rounded-lg shadow-lg max-h-52 overflow-auto">
+              {predictions.map((p, i) => (
+                <li
+                  key={p.place_id}
+                  id={`prediction-${i}`}
+                  role="option"
+                  aria-selected={i === activeIndex}
+                  onMouseEnter={() => setActiveIndex(i)}
+                  onMouseLeave={() => setActiveIndex(-1)}
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => handleSelect(p)}
+                  className={`px-3 py-2 cursor-pointer truncate ${
+                    i === activeIndex ? "bg-indigo-50" : "hover:bg-gray-100"
+                  }`}
+                >
+                  <div className="font-medium text-sm">
+                    {p.structured_formatting.main_text}
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    {p.structured_formatting.secondary_text}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       )}
+
+      {/* Mobile full-screen modal */}
+     {mobileMode && (
+  <div
+    className="fixed inset-0 z-50 bg-white flex flex-col"
+    onClick={() => setMobileMode(false)}
+  >
+    <div
+      className="flex flex-col flex-1 min-h-0"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Header with close button */}
+      <div className="flex items-center border-b p-2 shrink-0">
+        <Input
+          ref={inputRef}
+          value={query}
+          onChange={(e) => handleInputChange(e.target.value)}
+          onKeyDown={onKeyDown}
+          placeholder="Search address, business, or place"
+          className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+        />
+        <button
+          onClick={() => setMobileMode(false)}
+          className="ml-2 p-2 rounded-full hover:bg-gray-100"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
+
+      {/* Predictions list */}
+      <div className="flex-1 overflow-y-auto">
+        {predictions.length > 0 ? (
+          <ul>
+            {predictions.map((p) => (
+              <li
+                key={p.place_id}
+                onClick={() => handleSelect(p)}
+                className="px-4 py-3 border-b cursor-pointer hover:bg-gray-50"
+              >
+                <div className="font-medium text-sm">
+                  {p.structured_formatting.main_text}
+                </div>
+                <div className="text-xs text-gray-500">
+                  {p.structured_formatting.secondary_text}
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-400 text-center mt-6">No results found</p>
+        )}
+      </div>
     </div>
+  </div>
+)}
+    </>
   );
 }
