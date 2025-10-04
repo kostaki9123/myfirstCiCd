@@ -54,7 +54,7 @@ const fakeAccommodations = [
       image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=300&h=300&fit=crop",
     },
     {
-      id: "3",
+      id: "",
       name: "Notre Dame",
       description: "Famous medieval cathedral",
       image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=300&h=300&fit=crop",
@@ -188,7 +188,7 @@ const Point =  (props:Props) => {
         </div>
 
 
-         <DialogContent className=" ml-2 450:ml-0 min-w-[280px] h-[400px] 820:h-fit 820:w-fit w-[90%] 450:w-[350px]  absolute ">
+         <DialogContent className=" h-[400px] 820:h-fit 820:w-fit w-[90%] 450:w-[350px]  absolute ">
             <DialogHeader>
               <DialogTitle className=' text-xl'>
                    <EditableText

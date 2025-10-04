@@ -73,7 +73,7 @@ type Props = {
     {gridColumn: 2, gridRow : 21 },
     ]
 
-const Addnewcyrcle = async (props : Props) => {
+const Addnewcyrcle = (props : Props) => {
 
  // const cyrcleArrId = await prisma.cyrcleArr.create({
  //   data : {
