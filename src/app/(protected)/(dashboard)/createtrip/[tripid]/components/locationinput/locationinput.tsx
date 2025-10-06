@@ -273,12 +273,12 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
 
             {/* ✅ Adjust min-height when keyboard is open */}
             <div
-              className={`flex-1 overflow-y-auto transition-all duration-200 ${
-                keyboardOpen ? "min-h-[300px]" : ""
+              className={`flex-1 overflow-y-auto border-2 border-red-600 transition-all duration-200 ${
+                keyboardOpen ? "max-h-[300px]" : ""
               }`}
             >
               {predictions.length > 0 ? (
-                <ul className="h-[362px] flex flex-col">
+                <ul className="flex flex-col">
                   {predictions.map((p) => (
                     <li
                       key={p.place_id}
