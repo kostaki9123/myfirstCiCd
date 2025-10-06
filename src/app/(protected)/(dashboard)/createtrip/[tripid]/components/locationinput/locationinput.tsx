@@ -47,6 +47,8 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
   const [selectedPlace, setSelectedPlace] = useState(false);
 
   const [mobileMode, setMobileMode] = useState(false);
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
+
   const inputRef = useRef<HTMLInputElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -59,7 +61,22 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
     null
   );
 
-  // Initialize services
+  // ✅ Detect keyboard visibility on mobile
+  useEffect(() => {
+    const viewport = window.visualViewport;
+    if (!viewport) return;
+
+    const onResize = () => {
+      const heightDiff =
+        window.innerHeight - (viewport?.height ?? window.innerHeight);
+      setKeyboardOpen(heightDiff > 150);
+    };
+
+    viewport.addEventListener("resize", onResize);
+    return () => viewport.removeEventListener("resize", onResize);
+  }, []);
+
+  // ✅ Initialize Google Places services
   useEffect(() => {
     if (!placesLib) return;
     acServiceRef.current = new placesLib.AutocompleteService();
@@ -69,7 +86,7 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
     );
   }, [placesLib]);
 
-  // Fetch predictions
+  // ✅ Fetch predictions
   useEffect(() => {
     if (!acServiceRef.current || !query || selectedPlace) return;
 
@@ -95,23 +112,23 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
     return () => clearTimeout(handler);
   }, [query, selectedPlace]);
 
-  // Detect outside click for desktop/tablet dropdown
+  // ✅ Close dropdown when clicking outside (desktop/tablet)
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
         wrapperRef.current &&
         !wrapperRef.current.contains(event.target as Node)
       ) {
+        inputRef.current?.blur();
         setOpen(false);
       }
     }
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // ✅ Handle selection
   function handleSelect(prediction: google.maps.places.AutocompletePrediction) {
     setQuery(prediction.description);
     setPredictions([]);
@@ -141,7 +158,7 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
           });
           sessionTokenRef.current =
             new google.maps.places.AutocompleteSessionToken();
-          setMobileMode(false); // close modal on selection
+          setMobileMode(false);
         }
       }
     );
@@ -171,7 +188,6 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
   }
 
   function handleFocus() {
-    // If screen is small (mobile), open full screen modal
     if (window.innerWidth < 768) {
       setMobileMode(true);
       setOpen(true);
@@ -181,25 +197,29 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
     }
   }
 
+  // ✅ Handle "X" button (mobile close)
+  function handleMobileClose() {
+    setMobileMode(false);
+    setPredictions([]);
+    setQuery("");
+    setOpen(false);
+    setSelectedPlace(false);
+  }
+
   return (
     <>
-      {/* Normal input (desktop / tablet) */}
+      {/* ✅ Desktop/Tablet View */}
       {!mobileMode && (
         <div className="relative" ref={wrapperRef}>
           <Input
+            ref={inputRef}
             value={query}
             onChange={(e) => handleInputChange(e.target.value)}
             onKeyDown={onKeyDown}
             onFocus={handleFocus}
             placeholder="Search address, business, or place"
             className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-            aria-autocomplete="list"
-            aria-expanded={open}
-            aria-activedescendant={
-              activeIndex >= 0 ? `prediction-${activeIndex}` : undefined
-            }
           />
-
           {open && predictions.length > 0 && (
             <ul className="absolute z-50 left-0 right-0 mt-2 bg-white rounded-lg shadow-lg max-h-52 overflow-auto">
               {predictions.map((p, i) => (
@@ -207,14 +227,8 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
                   key={p.place_id}
                   id={`prediction-${i}`}
                   role="option"
-                  aria-selected={i === activeIndex}
-                  onMouseEnter={() => setActiveIndex(i)}
-                  onMouseLeave={() => setActiveIndex(-1)}
-                  onMouseDown={(e) => e.preventDefault()}
                   onClick={() => handleSelect(p)}
-                  className={`px-3 py-2 cursor-pointer truncate ${
-                    i === activeIndex ? "bg-indigo-50" : "hover:bg-gray-100"
-                  }`}
+                  className="px-3 py-2 cursor-pointer hover:bg-gray-100"
                 >
                   <div className="font-medium text-sm">
                     {p.structured_formatting.main_text}
@@ -229,60 +243,66 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
         </div>
       )}
 
-      {/* Mobile full-screen modal */}
-     {mobileMode && (
-  <div
-    className="fixed inset-0 z-50 bg-white top-[-110px] flex flex-col"
-    onClick={() => setMobileMode(false)}
-  >
-    <div
-      className="flex flex-col flex-1 min-h-0"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {/* Header with close button */}
-      <div className="flex items-center border-b p-2 shrink-0">
-        <Input
-          ref={inputRef}
-          value={query}
-          onChange={(e) => handleInputChange(e.target.value)}
-          onKeyDown={onKeyDown}
-          placeholder="Search address, business, or place"
-          className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-        />
-        <button
-          onClick={() => setMobileMode(false)}
-          className="ml-2 p-2 rounded-full hover:bg-gray-100"
+      {/* ✅ Mobile full-screen modal */}
+      {mobileMode && (
+        <div
+          className="fixed inset-0 z-50 bg-white top-[-110px] flex flex-col"
+          onClick={handleMobileClose}
         >
-          <X className="w-5 h-5" />
-        </button>
-      </div>
-
-      {/* Predictions list */}
-      <div className="flex-1 overflow-y-auto">
-        {predictions.length > 0 ? (
-          <ul>
-            {predictions.map((p) => (
-              <li
-                key={p.place_id}
-                onClick={() => handleSelect(p)}
-                className="px-4 py-3 border-b cursor-pointer hover:bg-gray-50"
+          <div
+            className="flex flex-col flex-1 min-h-0"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header with close button */}
+            <div className="flex items-center border-b p-2 shrink-0">
+              <Input
+                ref={inputRef}
+                value={query}
+                onChange={(e) => handleInputChange(e.target.value)}
+                onKeyDown={onKeyDown}
+                placeholder="Search address, business, or place"
+                className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+              />
+              <button
+                onClick={handleMobileClose}
+                className="ml-2 p-2 rounded-full hover:bg-gray-100"
               >
-                <div className="font-medium text-sm">
-                  {p.structured_formatting.main_text}
-                </div>
-                <div className="text-xs text-gray-500">
-                  {p.structured_formatting.secondary_text}
-                </div>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-400 text-center mt-6">No results found</p>
-        )}
-      </div>
-    </div>
-  </div>
-)}
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* ✅ Adjust min-height when keyboard is open */}
+            <div
+              className={`flex-1 overflow-y-auto transition-all duration-200 ${
+                keyboardOpen ? "min-h-[300px]" : ""
+              }`}
+            >
+              {predictions.length > 0 ? (
+                <ul className="h-[362px] flex flex-col">
+                  {predictions.map((p) => (
+                    <li
+                      key={p.place_id}
+                      onClick={() => handleSelect(p)}
+                      className="px-4 py-3 border-b flex-grow cursor-pointer hover:bg-gray-50"
+                    >
+                      <div className="font-medium text-sm">
+                        {p.structured_formatting.main_text}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {p.structured_formatting.secondary_text}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-400 text-center mt-6">
+                  No results found
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

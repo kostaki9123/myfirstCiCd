@@ -40,6 +40,7 @@ type props = {
   index : number 
   tripId : string
   cyrcleArrId : string | undefined
+  setDialog : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Createplaceform = () => {
