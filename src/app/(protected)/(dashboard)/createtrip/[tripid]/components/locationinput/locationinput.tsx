@@ -232,7 +232,7 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
       {/* Mobile full-screen modal */}
      {mobileMode && (
   <div
-    className="fixed inset-0 z-50 bg-white flex flex-col"
+    className="fixed borser-2 border-red-600 inset-0 z-50 bg-white top-[-100px] flex flex-col"
     onClick={() => setMobileMode(false)}
   >
     <div
