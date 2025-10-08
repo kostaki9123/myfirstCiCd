@@ -69,6 +69,7 @@ export default function DateRangePicker({ withTime, isRange, onlyTime }: Props) 
             withTime ? "Select date & time" : "Select date"
           }
           className="border focus:border-black focus:outline-none p-2 px-3 placeholder-gray-500 rounded w-auto 343:w-60 text-sm"
+          portalId="root-datepicker-portal"
         />
       )}
     </div>
