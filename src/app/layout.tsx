@@ -29,8 +29,7 @@
     >
       <html lang="en  " className="bg-[#010038]  ">
         <body
-        id="root-datepicker-portal"
-          className=" "
+          className=""
         >
           <Navbar/>
           {children}

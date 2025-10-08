@@ -1,20 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
 
 type Props = {
   withTime?: boolean;
   isRange?: boolean;
-  onlyTime?: boolean; // ⏰ new prop: time-only mode
+  onlyTime?: boolean;
 };
 
 export default function DateRangePicker({ withTime, isRange, onlyTime }: Props) {
-  // Single date/time
   const [date, setDate] = useState<Date | null>(null);
-
-  // Range dates
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
@@ -24,10 +22,12 @@ export default function DateRangePicker({ withTime, isRange, onlyTime }: Props) 
     setEndDate(end);
   };
 
+  const inputClass =
+    "border focus:border-black focus:outline-none px-3 rounded text-sm placeholder-gray-500 w-auto 343:w-60 h-[40px] sm:h-[44px]";
+
   return (
     <div className="flex flex-col gap-4">
       {onlyTime ? (
-        // 🔹 Time-only picker
         <DatePicker
           selected={date}
           onChange={(d) => setDate(d)}
@@ -37,10 +37,10 @@ export default function DateRangePicker({ withTime, isRange, onlyTime }: Props) 
           timeCaption="Time"
           dateFormat="HH:mm"
           placeholderText="Select time"
-          className="border focus:border-black focus:outline-none p-2 px-3 placeholder-gray-500 rounded w-auto 343:w-60 text-sm"
+          className={inputClass}
+          popperClassName="datepicker-popper"
         />
       ) : isRange ? (
-        // 🔹 Range picker
         <DatePicker
           selected={startDate}
           onChange={handleRangeChange}
@@ -54,10 +54,10 @@ export default function DateRangePicker({ withTime, isRange, onlyTime }: Props) 
           placeholderText={
             withTime ? "Enter a date & time range" : "Enter a date range"
           }
-          className="border focus:border-black focus:outline-none p-2 px-3 placeholder-gray-500 rounded w-auto 343:w-60 text-sm"
+          className={inputClass}
+          popperClassName="datepicker-popper"
         />
       ) : (
-        // 🔹 Single date/datetime picker
         <DatePicker
           selected={date}
           onChange={(d) => setDate(d)}
@@ -65,11 +65,9 @@ export default function DateRangePicker({ withTime, isRange, onlyTime }: Props) 
           timeIntervals={15}
           timeCaption="Time"
           dateFormat={withTime ? "dd/MM/yyyy HH:mm" : "dd/MM/yyyy"}
-          placeholderText={
-            withTime ? "Select date & time" : "Select date"
-          }
-          className="border focus:border-black focus:outline-none p-2 px-3 placeholder-gray-500 rounded w-auto 343:w-60 text-sm"
-          portalId="root-datepicker-portal"
+          placeholderText={withTime ? "Select date & time" : "Select date"}
+          className={inputClass}
+          popperClassName="datepicker-popper"
         />
       )}
     </div>

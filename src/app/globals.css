@@ -46,3 +46,31 @@ body {
   cursor: pointer;
   border: "2px solid lime";
 }
+
+/* ✅ Make popup smaller and properly positioned on mobile */
+@media (max-width: 640px) {
+  .datepicker-popper {
+    transform: scale(0.9) !important;
+    transform-origin: top center !important;
+    z-index: 9999 !important;
+  }
+
+  .react-datepicker {
+    font-size: 0.8rem !important;
+    width: 95vw !important;
+    max-width: 235px !important;
+  }
+
+  .react-datepicker__month-container {
+    width: 100% !important;
+  }
+
+  .react-datepicker__time-container {
+    width: 80px !important;
+  }
+
+  .react-datepicker__triangle {
+    display: none !important; /* hides the pointer arrow */
+  }
+}
+
