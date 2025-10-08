@@ -53,6 +53,7 @@ body {
     transform: scale(0.8) !important;
     transform-origin: top bottom !important;
     z-index: 9999 !important;
+    margin-top: 10px;
   }
 
   .react-datepicker {
