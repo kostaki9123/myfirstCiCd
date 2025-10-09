@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import DatePicker from 'react-datepicker'
 import DateRangePicker from './locationinput/datepicker'
+import PlaceSearchWrapper from './locationinput/locationinput'
 
 const Createmovingboxform = () => {
     const clientaction = async (formData : FormData) => {
@@ -23,9 +24,9 @@ const Createmovingboxform = () => {
          The moving box represents your journey between places.
      </p>
       <Label>From</Label>
-        <Input placeholder="Places autocomplete" className=" placeholder:text-sm"  />
+         <PlaceSearchWrapper apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}/>
       <Label>To</Label>
-        <Input placeholder="Places autocomplete" className=" placeholder:text-sm"  />
+         <PlaceSearchWrapper apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}/>
       <Label>By</Label>
         <Input placeholder="by" className=" placeholder:text-sm"  />
       <Label>Departure Date</Label>
