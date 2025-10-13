@@ -16,16 +16,18 @@ interface PlaceResult {
 interface PlaceSearchWrapperProps {
   apiKey: string;
   onPlaceSelected?: (place: PlaceResult) => void;
+  onMovingbox?: boolean
 }
 
 export default function PlaceSearchWrapper({
   apiKey,
   onPlaceSelected = () => {},
+  onMovingbox
 }: PlaceSearchWrapperProps) {
   return (
     <APIProvider apiKey={apiKey} libraries={["places"]}>
       <div className="max-w-md mx-auto">
-        <PlaceSearch onPlaceSelected={onPlaceSelected} />
+        <PlaceSearch onMovingbox onPlaceSelected={onPlaceSelected} />
       </div>
     </APIProvider>
   );
@@ -33,9 +35,10 @@ export default function PlaceSearchWrapper({
 
 interface PlaceSearchProps {
   onPlaceSelected: (place: PlaceResult) => void;
+  onMovingbox: boolean
 }
 
-function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
+function PlaceSearch({ onPlaceSelected, onMovingbox}: PlaceSearchProps) {
   const placesLib = useMapsLibrary("places");
 
   const [query, setQuery] = useState("");
@@ -246,7 +249,7 @@ function PlaceSearch({ onPlaceSelected }: PlaceSearchProps) {
       {/* ✅ Mobile full-screen modal */}
       {mobileMode && (
         <div
-          className="fixed inset-0 z-50 bg-white top-[-110px] flex flex-col"
+          className={`fixed inset-0 z-50  bg-white ${onMovingbox ? 'top-[-70px]' : 'top-[-110px]' }  flex flex-col`}
           onClick={handleMobileClose}
         >
           <div
