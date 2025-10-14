@@ -249,7 +249,7 @@ function PlaceSearch({ onPlaceSelected, onMovingbox}: PlaceSearchProps) {
       {/* ✅ Mobile full-screen modal */}
       {mobileMode && (
         <div
-          className={`fixed inset-0 z-50  bg-white ${onMovingbox ? 'top-[-70px]' : 'top-[-110px]' }  flex flex-col`}
+          className={`fixed inset-0 z-50  bg-white ${onMovingbox ? 'top-[-30px]' : 'top-[-110px]' }  flex flex-col`}
           onClick={handleMobileClose}
         >
           <div
