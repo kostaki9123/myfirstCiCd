@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { MdAddLocationAlt } from "react-icons/md";
 import {
@@ -18,27 +16,6 @@ import {
 } from "@/components/ui/tabs"
 import Createplaceform from './createplaceform';
 import Createmovingboxform from './createmovingboxform';
-import { useEffect, useState } from "react";
-
-function useKeyboardOpen() {
-  const [keyboardOpen, setKeyboardOpen] = useState(false);
-  const [vh, setVh] = useState(window.innerHeight);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const newVh = window.innerHeight;
-      const diff = vh - newVh;
-      if (diff > 150) setKeyboardOpen(true);
-      else if (diff < 100) setKeyboardOpen(false);
-      setVh(newVh);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [vh]);
-
-  return keyboardOpen;
-}
 //import Createplaceform from '../createtripforms/createplaceform';
 //import Createmovingform from '../createtripforms/createmovingform';
 
@@ -96,14 +73,14 @@ type Props = {
     {gridColumn: 2, gridRow : 21 },
     ]
 
-const Addnewcyrcle = (props : Props) => {
+const Addnewcyrcle = async (props : Props) => {
 
  // const cyrcleArrId = await prisma.cyrcleArr.create({
  //   data : {
  //       tripId : props.tripId
  //   }
  //})
- const keyboardOpen = useKeyboardOpen();
+ 
 
 
   return (
@@ -125,10 +102,7 @@ const Addnewcyrcle = (props : Props) => {
           </div>
          }
 
-         <DialogContent className={`xxs:mb-5 sm:max-h-[90%] min-w-[262px] w-[90vw] sm:w-auto
-              max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl
-              p-1 360:p-2 sm:p-2 rounded-xl transition-all duration-300
-              ${keyboardOpen ? "mt-20 sm:mt-0" : ""}`}>
+         <DialogContent className="  sm:max-h-[90%] min-w-[262px] w-[90vw] sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-1  360:p-2 sm:p-2 rounded-xl">
           <DialogTitle></DialogTitle>
           <DialogDescription>
           </DialogDescription>
