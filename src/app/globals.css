@@ -60,7 +60,7 @@ body {
 
   /* The datepicker container itself */
   .react-datepicker {
-    height: 170px !important;
+    height: 180px !important;
     font-size: 0.75rem !important; /* Base font size smaller */
     transform: scale(0.9);
     transform-origin: top center;
