@@ -49,11 +49,18 @@ body {
 
 /* ✅ Make popup smaller and properly positioned on mobile */
 @media (max-width: 640px) {
- 
+  .fixed, .modal-overlay {
+    position: absolute !important;
+  }
+
+  .datepicker-popper {
+    border: 2px solid pink;
+  }
 
   .react-datepicker {
     border: 2px solid blue;
     font-size: 0.8rem !important;
+  
   }
 
 
