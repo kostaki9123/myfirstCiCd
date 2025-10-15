@@ -49,21 +49,82 @@ body {
 
 /* ✅ Make popup smaller and properly positioned on mobile */
 @media (max-width: 640px) {
-  .fixed, .modal-overlay {
-    position: absolute !important;
-  }
-
+  /* Main popover wrapper */
+  .react-datepicker-popper,
   .datepicker-popper {
-    border: 2px solid pink;
+    margin-top: 4px;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    z-index: 9999 !important;
   }
 
+  /* The datepicker container itself */
   .react-datepicker {
-    border: 2px solid blue;
-    font-size: 0.8rem !important;
-  
+    height: 170px !important;
+    font-size: 0.75rem !important; /* Base font size smaller */
+    transform: scale(0.9);
+    transform-origin: top center;
   }
 
+  /* Header (month + year) */
+  .react-datepicker__header {
+    background-color: #f9fafb !important;
+    font-size: 0.7rem !important;
+    height: 28px !important;
+  }
 
+  /* Month name and year dropdown text */
+  .react-datepicker__current-month {
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+  }
 
+  .react-datepicker__month-dropdown-container,
+  .react-datepicker__year-dropdown-container {
+    font-size: 0.7rem !important;
+  }
+
+  /* Month grid */
+  .react-datepicker__month {
+    margin: 0 !important;
+    padding: 0 0.25rem !important;
+  }
+
+  /* Week row */
+  .react-datepicker__week {
+    height: 20px !important; /* shrink rows */
+  }
+
+  /* Individual day cells */
+  .react-datepicker__day {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    line-height: 1.5rem !important;
+    font-size: 0.65rem !important;
+    margin: 1px !important;
+  }
+
+  /* Today highlight + selected day */
+  .react-datepicker__day--selected {
+    background-color: #2563eb !important; /* Tailwind blue-600 */
+    color: white !important;
+  }
+
+  .react-datepicker__day--keyboard-selected {
+    background-color: #3b82f6 !important;
+    color: white !important;
+  }
+
+  /* Time selector (if used) */
+  .react-datepicker__time-container {
+    font-size: 0.7rem !important;
+    width: 60px !important;
+  }
+
+  .react-datepicker__time-list-item {
+    padding: 0.25rem !important;
+    line-height: 1rem !important;
+  }
 }
+
 
