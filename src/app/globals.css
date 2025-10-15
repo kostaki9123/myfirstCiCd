@@ -52,7 +52,6 @@ body {
   /* Main popover wrapper */
   .react-datepicker-popper,
   .datepicker-popper {
-    margin-top: 4px;
     border-radius: 0.75rem;
     overflow: hidden;
     z-index: 9999 !important;
