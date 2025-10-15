@@ -30,7 +30,9 @@ const Createmovingboxform = () => {
       <Label>By</Label>
         <Input placeholder="by" className=" placeholder:text-sm"  />
       <Label>Departure Date</Label>
-        <DateRangePicker />   
+        <div className=' relative ' >
+          <DateRangePicker />   
+        </div>
       <Label>Arrival time</Label>
          <Input placeholder="time" className=" placeholder:text-sm"  />
    
@@ -38,7 +40,7 @@ const Createmovingboxform = () => {
       
       </div>
       <div className=' h-14 flex justify-center items-end '>
-          <Button type='submit' className='right-0 ml-4'>Create place cyrcle</Button>
+          <Button type='submit' className='right-0 ml-4'>Create moving cyrcle</Button>
        </div>
     </form>
      

@@ -23,10 +23,10 @@ export default function DateRangePicker({ withTime, isRange, onlyTime }: Props) 
   };
 
   const inputClass =
-    "border focus:border-black focus:outline-none px-3 rounded text-sm placeholder-gray-500 w-auto 343:w-60 h-[40px] sm:h-[44px]";
+    "border relative focus:border-black focus:outline-none px-3 rounded text-sm placeholder-gray-500 w-auto 343:w-60 h-[40px] sm:h-[44px]";
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col ">
       {onlyTime ? (
         <DatePicker
           selected={date}
@@ -66,7 +66,7 @@ export default function DateRangePicker({ withTime, isRange, onlyTime }: Props) 
           timeCaption="Time"
           dateFormat={withTime ? "dd/MM/yyyy HH:mm" : "dd/MM/yyyy"}
           placeholderText={withTime ? "Select date & time" : "Select date"}
-          className={inputClass}
+          className="border  focus:border-black focus:outline-none px-3 rounded text-sm placeholder-gray-500 w-auto 343:w-60 h-[40px] sm:h-[44px]"
           popperClassName="datepicker-popper"
         />
       )}
