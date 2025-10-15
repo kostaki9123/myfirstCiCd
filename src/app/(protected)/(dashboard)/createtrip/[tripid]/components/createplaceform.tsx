@@ -66,7 +66,7 @@ const Createplaceform = () => {
       </p>
 
       <Label >Place</Label>
-         <PlaceSearchWrapper apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}/>
+         <PlaceSearchWrapper onMovingbox={false} apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}/>
        { /**  <Input placeholder="Places autocomplete" className=" placeholder:text-sm"  /> */}
         
       <Label>Dates</Label> 

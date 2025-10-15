@@ -24,9 +24,9 @@ const Createmovingboxform = () => {
          The moving box represents your journey between places.
      </p>
       <Label>From</Label>
-         <PlaceSearchWrapper onMovingbox apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}/>
+         <PlaceSearchWrapper onMovingbox={true} apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}/>
       <Label>To</Label>
-         <PlaceSearchWrapper onMovingbox apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}/>
+         <PlaceSearchWrapper onMovingbox={true} apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}/>
       <Label>By</Label>
         <Input placeholder="by" className=" placeholder:text-sm"  />
       <Label>Departure Date</Label>
