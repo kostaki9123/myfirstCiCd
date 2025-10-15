@@ -128,7 +128,7 @@ const Addnewcyrcle = (props : Props) => {
          <DialogContent className={`xxs:mb-5 sm:max-h-[90%] min-w-[262px] w-[90vw] sm:w-auto
               max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl
               p-1 360:p-2 sm:p-2 rounded-xl transition-all duration-300
-              ${keyboardOpen ? "mt-14 sm:mt-0" : ""}`}>
+              ${keyboardOpen ? "mt-20 sm:mt-0" : ""}`}>
           <DialogTitle></DialogTitle>
           <DialogDescription>
           </DialogDescription>
