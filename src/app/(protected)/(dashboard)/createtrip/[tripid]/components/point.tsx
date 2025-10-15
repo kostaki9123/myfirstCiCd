@@ -152,7 +152,7 @@ const Point =  (props:Props) => {
            ? props.index + 2  
             : positiongridphone[props.datalenght + 2 - props.index].gridColumn}`, display : "flex" , alignItems : "center", justifyItems : "center" , height : "100px" , width : "100px" , position : "relative"}} >
            <DialogTrigger asChild>
-             <div className=' text-white cursor-pointer bg-[#2E305B]  h-[100px] w-[100px] rounded-[50%] flex items-center justify-center gap-[3px] flex-col z-40'>
+             <div className=' text-white cursor-pointer bg-[#2E305B]  h-[100px] w-[100px] rounded-[50%] flex items-center justify-center gap-[3px] flex-col z-2'>
                 <IoLocationSharp className=' text-xl'/>
                 <h4 className=''>
                    {/**  {result.shortFormattedAddress ? <>{result.shortFormattedAddress}</> : */} 
@@ -162,7 +162,7 @@ const Point =  (props:Props) => {
                 </div>
              </div>
            </DialogTrigger>
-           <div className=' absolute  bottom-5 xxs:bottom-2 right-[40px] text-white  z-50'>
+           <div className=' absolute  bottom-5 xxs:bottom-2 right-[40px] text-white  z-49'>
                 <Actionsmenu cyrcleId={props.data.id}/>
            </div>
              
