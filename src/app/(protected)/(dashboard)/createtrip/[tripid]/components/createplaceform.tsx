@@ -59,7 +59,7 @@ const Createplaceform = () => {
  
     <form
       action={clientaction}
-      className="w-full m-1 "
+      className="w-full m-1"
     >
       <p className="leading-7 [&:not(:first-child)]:mt-6 text-gray-600 text-sm pb-5">
       The place cyrcle represent a city,town or village you will stay.
