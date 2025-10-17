@@ -27,7 +27,7 @@ const ActionRow = ({ href, label }: { href: string; label: string }) => (
 
 const ViewPlaceModal: React.FC<ViewPlaceModalProps> = ({ accommodations, places }) => {
   return (
-    <div className="flex flex-col 820:h-[370px] 820:flex-row gap-6 items-start justify-start w-full overflow-x-auto p-4">
+    <div className="  flex flex-col 820:h-auto 820:flex-row gap-6 items-start justify-start w-full overflow-x-auto p-4">
       {/* Accommodation Card */}
       <div className="flex-shrink-0 relative flex flex-col items-center justify-start gap-2 min-h-[13rem] max-h-[22rem] w-full sm:w-[250px] rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 transition-all duration-200 p-4">
         <h4 className="text-base font-semibold tracking-tight text-center mb-2">
@@ -64,39 +64,41 @@ const ViewPlaceModal: React.FC<ViewPlaceModalProps> = ({ accommodations, places 
       </div>
 
       {/* Places Card */}
-      <div className="flex-shrink-0 flex flex-col items-center justify-start gap-2 min-h-[13rem]  w-full sm:w-[250px] rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 transition-all duration-200 p-4">
-        <h4 className="text-base font-semibold tracking-tight text-center mb-2">
-          Places
-        </h4>
-
-        {places.length === 0 ? (
-          <ActionRow href="/itinerary/add-place" label="Add Place" />
-        ) : (
-          <div className="flex flex-col gap-3 w-full">
-            {places.map((place) => (
-              <div
-                key={place.id}
-                className="flex items-center gap-3 bg-gray-100 rounded-md p-2 hover:bg-gray-200 cursor-pointer w-full"
-              >
-                {place.image ? (
-                  <img src={place.image} alt={place.name} className="w-12 h-12 rounded-md object-cover" />
-                ) : (
-                  <div className="w-12 h-12 flex items-center justify-center rounded-md bg-gray-300 text-gray-700">
-                    📍
+      <div className="  max-h-fit flex-shrink-0 flex flex-col items-center justify-start gap-2 min-h-[13rem]  w-full sm:w-[250px] rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 transition-all duration-200 p-4">
+        
+            <h4 className="text-base font-semibold tracking-tight text-center mb-2">
+              Places
+            </h4>
+    
+            {places.length === 0 ? (
+              <ActionRow href="/itinerary/add-place" label="Add Place" />
+            ) : (
+              <div className="flex flex-col gap-3 w-full">
+                {places.map((place) => (
+                  <div
+                    key={place.id}
+                    className="flex items-center gap-3 bg-gray-100 rounded-md p-2 hover:bg-gray-200 cursor-pointer w-full"
+                  >
+                    {place.image ? (
+                      <img src={place.image} alt={place.name} className="w-12 h-12 rounded-md object-cover" />
+                    ) : (
+                      <div className="w-12 h-12 flex items-center justify-center rounded-md bg-gray-300 text-gray-700">
+                        📍
+                      </div>
+                    )}
+                    <div>
+                      <p className="font-medium text-gray-800">{place.name}</p>
+                      {place.description && <p className="text-sm text-gray-500">{place.description}</p>}
+                    </div>
                   </div>
-                )}
-                <div>
-                  <p className="font-medium text-gray-800">{place.name}</p>
-                  {place.description && <p className="text-sm text-gray-500">{place.description}</p>}
-                </div>
+                ))}
+    
+                {/* Add Another Place */}
+                <ActionRow href="/itinerary/add-place" label="Add Place" />
               </div>
-            ))}
-
-            {/* Add Another Place */}
-            <ActionRow href="/itinerary/add-place" label="Add Place" />
-          </div>
-        )}
-      </div>
+            )}
+         </div>
+      
     </div>
   );
 };

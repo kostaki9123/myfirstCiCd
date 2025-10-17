@@ -30,7 +30,7 @@ const ViewMovingBoxModal = ({ data, onChange }: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-6 overflow-y-auto p-2 h-[210px]   ">
+    <div className="flex flex-col gap-6 overflow-y-auto p-2    ">
       {/* Header */}
 
       {/* Main info grid */}

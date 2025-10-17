@@ -196,7 +196,7 @@ const Movingbox = (props : Props) => {
         </div>
 
 
-         <DialogContent className="  h-fit  820:w-fit w-[90%] 450:w-[350px]  absolute  ">
+         <DialogContent className=" z-[52]   h-[70%]  820:w-fit w-[90%] 450:w-[350px]  absolute  ">
             <DialogHeader className=''>
               <DialogTitle className=' text-xl'>
                  Transport Details
