@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input"; // assuming you have a styled input
 import { Label } from "@/components/ui/label"; // for consistency
+import TransportDropdown from "../transportdropdown";
+import PlaceSearchWrapper from "./locationinput";
+import { Button } from "@/components/ui/button";
 
-type MovingBoxData = {
+export type MovingBoxData = {
   from: string;
   to: string;
   departureTime: string;
@@ -30,29 +33,21 @@ const ViewMovingBoxModal = ({ data, onChange }: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-6 overflow-y-auto p-2    ">
+    <div className="flex flex-col gap-6 overflow-y-auto p-2 ">
       {/* Header */}
 
       {/* Main info grid */}
       <div className="grid grid-cols-1 820:grid-cols-2 gap-4">
         {/* From */}
-        <div className="flex flex-col gap-1  ">
-          <Label htmlFor="from ">From</Label>
-          <Input
-            id="from"
-            value={formData.from}
-            onChange={(e) => handleChange("from", e.target.value)}
-          />
+        <div className="flex flex-col gap-1     ">
+          <Label htmlFor="from">From</Label>
+          <PlaceSearchWrapper onMovingbox apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}/>
         </div>
 
         {/* To */}
         <div className="flex flex-col gap-1">
           <Label htmlFor="to">To</Label>
-          <Input
-            id="to"
-            value={formData.to}
-            onChange={(e) => handleChange("to", e.target.value)}
-          />
+          <PlaceSearchWrapper onMovingbox apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}/>
         </div>
 
         {/* Departure */}
@@ -79,19 +74,11 @@ const ViewMovingBoxModal = ({ data, onChange }: Props) => {
 
         {/* Transport Type */}
         <div className="flex flex-col gap-1">
-          <Label htmlFor="transportType">Transport Type</Label>
-          <select
-            id="transportType"
-            value={formData.transportType || ""}
-            onChange={(e) => handleChange("transportType", e.target.value)}
-            className="border rounded-md px-2 py-1 text-gray-800"
-          >
-            <option value="">Select</option>
-            <option value="Plane">Plane</option>
-            <option value="Train">Train</option>
-            <option value="Bus">Bus</option>
-            <option value="Car">Car</option>
-          </select>
+          <Label htmlFor="transportType">By</Label>
+          <TransportDropdown
+           value={formData.transportType!}
+           onChange={(value) => handleChange('transportType', value)}
+          />
         </div>
 
         {/* Duration */}
@@ -103,12 +90,13 @@ const ViewMovingBoxModal = ({ data, onChange }: Props) => {
             onChange={(e) => handleChange("duration", e.target.value)}
           />
         </div>
-
       
+        
       </div>
+        <div className="w-full flex items-end justify-end ">
+          <Button className="  ">Save</Button> 
+        </div>
 
-
-     
     </div>
   );
 };

@@ -196,7 +196,7 @@ const Movingbox = (props : Props) => {
         </div>
 
 
-         <DialogContent className=" z-[52]   h-[70%]  820:w-fit w-[90%] 450:w-[350px]  absolute  ">
+         <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} className=" z-[52] pb-2    h-[70%]  820:w-fit w-[90%] 450:w-[350px] absolute  ">
             <DialogHeader className=''>
               <DialogTitle className=' text-xl'>
                  Transport Details

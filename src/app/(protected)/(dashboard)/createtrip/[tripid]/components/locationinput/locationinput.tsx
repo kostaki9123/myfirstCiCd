@@ -26,7 +26,7 @@ export default function PlaceSearchWrapper({
 }: PlaceSearchWrapperProps) {
   return (
     <APIProvider apiKey={apiKey} libraries={["places"]}>
-      <div className="max-w-md mx-auto">
+      <div className="max-w-md ">
         <PlaceSearch  onMovingbox={onMovingbox!} onPlaceSelected={onPlaceSelected} />
       </div>
     </APIProvider>
@@ -191,15 +191,16 @@ function PlaceSearch({ onPlaceSelected, onMovingbox,}: PlaceSearchProps) {
     }
   }
 
-  function handleFocus() {
-    if (window.innerWidth < 768) {
-      setMobileMode(true);
-      setOpen(true);
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100);
-    }
+  function handleFocus(e: React.FocusEvent<HTMLInputElement>) {
+  if (!e.isTrusted) return; // only real user focus
+  if (window.innerWidth < 768) {
+    setMobileMode(true);
+    setOpen(true);
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
   }
+}
 
   // ✅ Handle "X" button (mobile close)
   function handleMobileClose() {
@@ -225,7 +226,7 @@ function PlaceSearch({ onPlaceSelected, onMovingbox,}: PlaceSearchProps) {
             className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
           />
           {open && predictions.length > 0 && (
-            <ul className="absolute z-50 left-0 right-0 mt-2 bg-white rounded-lg shadow-lg max-h-52 overflow-auto">
+            <ul className="absolute z-[57] left-0 right-0 mt-2 bg-white rounded-lg shadow-lg max-h-52 overflow-auto">
               {predictions.map((p, i) => (
                 <li
                   key={p.place_id}
@@ -250,7 +251,7 @@ function PlaceSearch({ onPlaceSelected, onMovingbox,}: PlaceSearchProps) {
       {/* ✅ Mobile full-screen modal */}
       {mobileMode && (
         <div
-          className={`fixed inset-0 z-[53] bg-white ${onMovingbox ? 'top-[-30px]' : 'top-[-100px]' }  flex flex-col`}
+          className={`fixed inset-0 border-2 border-red-600 z-[53] bg-white ${onMovingbox ? 'top-[-30px]' : 'top-[-100px]' }  flex flex-col`}
           onClick={handleMobileClose}
         >
           <div
