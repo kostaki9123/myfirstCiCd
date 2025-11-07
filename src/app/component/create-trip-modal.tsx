@@ -13,11 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React,{ useState } from 'react';
 import { z, ZodError } from 'zod';
-//import { createtrip } from './actions';
 import { MdAdd } from "react-icons/md";
-
 import { Checkbox } from '@/components/ui/checkbox';
-
 import { createTrip } from '../(protected)/action';
 import Budgetdropdown from './budgetdropdown';
 import { useUser } from '@clerk/nextjs';
@@ -107,11 +104,7 @@ function onSubmit(
         return;
       }
 
-    
-  
-      const result =  await createTrip(formData);
-      
-     
+      const result =  await createTrip(formData);     
 
       setErrorMessages({});
       setOpen(false);

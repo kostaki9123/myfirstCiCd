@@ -83,7 +83,7 @@ const ViewMovingBoxModal = ({ data, onChange }: Props) => {
 
         {/* Duration */}
         <div className="flex flex-col gap-1">
-          <Label htmlFor="duration">Duration</Label>
+          <Label htmlFor="duration">Notes</Label>
           <Input
             id="duration"
             value={formData.duration || ""}

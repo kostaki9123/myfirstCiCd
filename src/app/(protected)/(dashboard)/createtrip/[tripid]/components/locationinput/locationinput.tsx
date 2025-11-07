@@ -16,7 +16,7 @@ interface PlaceResult {
 interface PlaceSearchWrapperProps {
   apiKey: string;
   onPlaceSelected?: (place: PlaceResult) => void;
-  onMovingbox?: boolean
+  onMovingbox?: boolean;
 }
 
 export default function PlaceSearchWrapper({
@@ -24,10 +24,11 @@ export default function PlaceSearchWrapper({
   onPlaceSelected = () => {},
   onMovingbox,
 }: PlaceSearchWrapperProps) {
+  console.log('onPLaceSelected',onPlaceSelected)
   return (
     <APIProvider apiKey={apiKey} libraries={["places"]}>
-      <div className="max-w-md ">
-        <PlaceSearch  onMovingbox={onMovingbox!} onPlaceSelected={onPlaceSelected} />
+      <div className="max-w-md">
+        <PlaceSearch onMovingbox={onMovingbox!} onPlaceSelected={onPlaceSelected} />
       </div>
     </APIProvider>
   );
@@ -35,11 +36,10 @@ export default function PlaceSearchWrapper({
 
 interface PlaceSearchProps {
   onPlaceSelected: (place: PlaceResult) => void;
-  onMovingbox: boolean
- 
+  onMovingbox: boolean;
 }
 
-function PlaceSearch({ onPlaceSelected, onMovingbox,}: PlaceSearchProps) {
+function PlaceSearch({ onPlaceSelected, onMovingbox }: PlaceSearchProps) {
   const placesLib = useMapsLibrary("places");
 
   const [query, setQuery] = useState("");
@@ -92,7 +92,8 @@ function PlaceSearch({ onPlaceSelected, onMovingbox,}: PlaceSearchProps) {
 
   // ✅ Fetch predictions
   useEffect(() => {
-    if (!acServiceRef.current || !query || selectedPlace) return;
+    if (!acServiceRef.current || !query) return;
+    if (selectedPlace) return; // avoid firing while a place is “locked”
 
     const handler = setTimeout(() => {
       acServiceRef.current?.getPlacePredictions(
@@ -116,7 +117,7 @@ function PlaceSearch({ onPlaceSelected, onMovingbox,}: PlaceSearchProps) {
     return () => clearTimeout(handler);
   }, [query, selectedPlace]);
 
-  // ✅ Close dropdown when clicking outside (desktop/tablet)
+  // ✅ Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -168,10 +169,38 @@ function PlaceSearch({ onPlaceSelected, onMovingbox,}: PlaceSearchProps) {
     );
   }
 
-  function handleInputChange(value: string) {
-    setQuery(value);
-    if (selectedPlace) setSelectedPlace(false);
+  // ✅ Completely fixed input behavior
+function handleInputChange(value: string) {
+  const wasDeleting = value.length < query.length; // detect deletion
+  setQuery(value);
+
+  // If the user edits or deletes the query after selecting a place,
+  // clear the selection and notify parent
+  if (selectedPlace && (wasDeleting || value !== query)) {
+    setSelectedPlace(false);
+    onPlaceSelected({
+      name: "",
+      address: "",
+      placeId: "",
+      location: { lat: 0, lng: 0 },
+    });
   }
+
+  if (value.trim().length === 0) {
+    setOpen(false);
+    setPredictions([]);
+    setSelectedPlace(false);
+    onPlaceSelected({
+      name: "",
+      address: "",
+      placeId: "",
+      location: { lat: 0, lng: 0 },
+    });
+  } else {
+    setOpen(true);
+  }
+}
+
 
   function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (!open) return;
@@ -192,21 +221,27 @@ function PlaceSearch({ onPlaceSelected, onMovingbox,}: PlaceSearchProps) {
   }
 
   function handleFocus(e: React.FocusEvent<HTMLInputElement>) {
-  if (!e.isTrusted) return; // only real user focus
-  if (window.innerWidth < 768) {
-    setMobileMode(true);
-    setOpen(true);
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 100);
+    if (!e.isTrusted) return;
+    if (window.innerWidth < 768) {
+      setMobileMode(true);
+      setOpen(true);
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    }
   }
-}
 
   // ✅ Handle "X" button (mobile close)
   function handleMobileClose() {
     setMobileMode(false);
     setPredictions([]);
     setQuery("");
+     onPlaceSelected({
+      name: "",
+      address: "",
+      placeId: "",
+      location: { lat: 0, lng: 0 },
+    });
     setOpen(false);
     setSelectedPlace(false);
   }
@@ -251,7 +286,9 @@ function PlaceSearch({ onPlaceSelected, onMovingbox,}: PlaceSearchProps) {
       {/* ✅ Mobile full-screen modal */}
       {mobileMode && (
         <div
-          className={`fixed inset-0 z-[53] bg-white ${onMovingbox ? 'top-[-30px]' : 'top-[-100px]' }  flex flex-col`}
+          className={`fixed inset-0 z-[53] bg-white ${
+            onMovingbox ? "top-[-30px]" : "top-[-100px]"
+          } flex flex-col`}
           onClick={handleMobileClose}
         >
           <div
@@ -278,7 +315,7 @@ function PlaceSearch({ onPlaceSelected, onMovingbox,}: PlaceSearchProps) {
 
             {/* ✅ Adjust min-height when keyboard is open */}
             <div
-              className={`flex-1 overflow-y-auto  transition-all duration-200 ${
+              className={`flex-1 overflow-y-auto transition-all duration-200 ${
                 keyboardOpen ? "max-h-[260px]" : ""
               }`}
             >

@@ -1,6 +1,5 @@
 'use server';
 
-
 import { redirect } from 'next/navigation';
 import { signInController } from '../../../backend/interface-adapters/controllers/auth/sign-in.controller';
 import { createTripController } from '../../../backend/interface-adapters/controllers/trips/create-trip.controller';

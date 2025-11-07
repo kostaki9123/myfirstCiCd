@@ -30,5 +30,49 @@ model Trip {
   travelingWith String
   tripTypes  String[]
   user      User   @relation(fields: [userId], references: [id])
+
+  Point Point[]
+}
+
+model Point {
+  id             String   @id @default(cuid())
+  tripId         String
+  role           PointRole
+  index          Int
+
+  // for POINT role
+  placeName      String?
+  placeAddress   String?
+  placeId        String?
+  placeLat       Float?
+  placeLng       Float?
+  startDate      DateTime?
+  endDate        DateTime?
+
+  // for MOVING_BOX role
+  fromName       String?
+  fromAddress    String?
+  fromPlaceId    String?
+  fromLat        Float?
+  fromLng        Float?
+
+  toName         String?
+  toAddress      String?
+  toPlaceId      String?
+  toLat          Float?
+  toLng          Float?
+
+  transportType  String?
+  departureDate  DateTime?
+  departureTime  DateTime?
+
+  // relation
+  trip           Trip      @relation(fields: [tripId], references: [id])
+
+}
+
+enum PointRole {
+  POINT
+  MOVING_BOX
 }
 

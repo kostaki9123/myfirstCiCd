@@ -1,85 +1,173 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-//import { Calendar } from "@/components/ui/calendar"
-import { Button } from '@/components/ui/button'
-import {  useState } from 'react'
-import {z } from 'zod'
-//import { Form,FormField,FormItem,FormLabel,FormDescription,FormControl,FormMessage } from '@/components/ui/form'
-//import { Popover,PopoverTrigger,PopoverContent } from '@/components/ui/popover'
-//import { useForm } from 'react-hook-form'
-//import { zodResolver } from '@hookform/resolvers/zod'
-//import { CalendarIcon } from '@radix-ui/react-icons'
-//import { addDays, format } from "date-fns"
-//import { DateRange } from "react-day-picker"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
+import { useState } from "react";
+import { z, ZodError } from "zod";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import DatePickerExample from "./locationinput/datepicker";
+import PlaceSearchWrapper from "./locationinput/locationinput";
+import { InputParseError } from "../../../../../../../backend/entities/errors/common";
+import { createPoint } from "../action";
 
-import DatePicker from "react-datepicker"
-import DatePickerExample from "./locationinput/datepicker"
-import PlaceSearchWrapper from "./locationinput/locationinput"
-//import Places from "./locationinput/loadinginput"
-//import { createcyrcleplace, CyrcleArr } from "./actions"
+// --------------------
+// ✅ Zod Schema
+// --------------------
+export const formSchema = z.object({
+  place: z
+    .object({
+      name: z.string().min(1, "You must enter a place"),
+      address: z.string().optional(),
+      placeId: z.string().optional(),
+      location: z.object({
+        lat: z.number(),
+        lng: z.number(),
+      }),
+    })
+    .nullable()
+    .refine((val) => val !== null, { message: "You must select a place" }),
 
-type maposT = {
-  lat : string
-  lng : string
-}
+  dates: z
+    .array(z.date({ required_error: "You must select valid dates" }))
+    .length(2, { message: "You must select both start and end dates" })
+    .refine(([start, end]) => end >= start, {
+      message: "End date cannot be before start date",
+    }),
 
-const formSchema = z.object({
-  place: z.string().min(1, {
-    message: "You must enter a place",
-  }),
-  dates: z.object({
-    startdate: z.string({message : "You must enter a valid date"}),
-    enddate: z.string({message : 'You must enter a valid date'}),
-  })
 });
 
-type props = {
-  index : number 
-  tripId : string
-  cyrcleArrId : string | undefined
-  setDialog : React.Dispatch<React.SetStateAction<boolean>>;
-}
-
+// --------------------
+// ✅ Component
+// --------------------
 const Createplaceform = () => {
-  const [placeId1 , setplaceId1] = useState<string>()
-  const [mapos , setMapos] = useState<maposT>()
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedPlace, setSelectedPlace] = useState<{
+    name: string;
+    address: string;
+    placeId: string;
+    location: { lat: number; lng: number };
+  } | null>(null);
 
-  const clientaction = async (formData : FormData) => {
-  }
-  
+  // Type-safe date range
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null] | null>(
+    null
+  );
 
+  const [errorMessages, setErrorMessages] = useState<{ [key: string]: string }>(
+    {}
+  );
+  const [isLoading, setIsLoading] = useState(false);
 
+  console.log(selectedPlace)
 
+  // --------------------
+  // ✅ Submit Handler
+  // --------------------
+  const onSubmit = async () => {
+    const dates =
+      Array.isArray(dateRange) && dateRange[0] && dateRange[1]
+        ? [dateRange[0], dateRange[1]]
+        : [];
+
+    try {
+      const validation = formSchema.safeParse({
+        place: selectedPlace,
+        dates,
+      });
+
+      if (!validation.success) {
+        const errors = validation.error.flatten().fieldErrors;
+
+        setErrorMessages({
+          place: errors.place?.[0] || "",
+          dates: errors.dates?.[0] || "",
+        });
+        return;
+      }
+
+      console.log("✅ Validated data:", validation.data);
+       const formData = new FormData();
+      formData.append("tripId", 'cmdyi5gpi0001ky0486uxkn2q');
+      formData.append("role", 'POINT');
+      formData.append("index", '2');
+      formData.append("PlaceName", validation.data.place.name);
+      formData.append("PlaceId", validation.data.place.placeId!);
+      formData.append("PlaceAddress", validation.data.place.address!);
+      formData.append("PlaceLat", validation.data.place.location.lat.toString());
+      formData.append("PlaceLng", validation.data.place.location.lng.toString());
+      formData.append("startDate", validation.data.dates?.[0].toISOString());
+      formData.append("endDate", validation.data.dates?.[1].toISOString());
+
+      // TODO: send data to backend here
+      await createPoint(formData);
+
+      setErrorMessages({});
+    } catch (err) {
+      if (err instanceof InputParseError && err.cause instanceof ZodError) {
+        const flattened = err.cause.flatten();
+        setErrorMessages({
+          general: flattened.formErrors?.[0] || "Input parsing failed",
+        });
+      } else {
+        console.error("Unexpected error:", err);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // --------------------
+  // ✅ Render
+  // --------------------
   return (
-    <>
- 
     <form
-      action={clientaction}
+      onSubmit={async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        await onSubmit();
+      }}
       className="w-full m-1"
     >
-      <p className="leading-7 [&:not(:first-child)]:mt-6 text-gray-600 text-sm pb-5">
-      The place cyrcle represent a city,town or village you will stay.
+      <p className="text-gray-600 text-sm pb-5">
+        The place circle represents a city, town, or village you will stay.
       </p>
 
-      <Label >Place</Label>
-         <PlaceSearchWrapper onMovingbox={false} apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}/>
-       { /**  <Input placeholder="Places autocomplete" className=" placeholder:text-sm"  /> */}
-        
-      <Label>Dates</Label> 
-      <div className="  rounded-sm z-50 " >
-        <DatePickerExample isRange />   
-      </div>
-      <div className=' h-14 flex justify-center items-end '>
-          <Button type='submit' className='right-0 ml-4'>Create place cyrcle</Button>
-       </div>
-    </form>
-     
-    </>
-  )
-}
+      {/* PLACE */}
+      <Label>Place</Label>
+      <PlaceSearchWrapper
+        onPlaceSelected={(place) => setSelectedPlace(place)}
+        onMovingbox={false}
+        apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}
+      />
+      {errorMessages.place && (
+        <p className="text-red-500 text-sm mt-1">{errorMessages.place}</p>
+      )}
 
-export default Createplaceform
+      {/* DATES */}
+      <Label>Dates</Label>
+      <div className="rounded-sm z-50">
+        <DatePickerExample
+          isRange
+          onChange={(value) => {
+            if (Array.isArray(value)) {
+              setDateRange(value as [Date | null, Date | null]);
+            } else {
+              setDateRange([value as Date, null]);
+            }
+          }}
+          namePrefix="booking"
+        />
+      </div>
+      {errorMessages.dates && (
+        <p className="text-red-500 text-sm mt-1">{errorMessages.dates}</p>
+      )}
+
+      {/* SUBMIT BUTTON */}
+      <div className="h-14 flex justify-center items-end">
+        <Button type="submit" disabled={isLoading} className="ml-4">
+          {isLoading ? "Creating..." : "Create place circle"}
+        </Button>
+      </div>
+    </form>
+  );
+};
+
+export default Createplaceform;

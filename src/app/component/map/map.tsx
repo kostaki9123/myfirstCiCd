@@ -111,15 +111,20 @@ function App({ cyrclesArr }: Props) {
 
               {/* Transport icon at midpoint */}
               {typeof google !== "undefined" && (
-                <Marker
-                  position={midpoint}
-                  
-                  label={{
-                    text: style.icon,
-                    fontSize: "20px",
-                  }}
-                  
-                />
+               <Marker
+                position={midpoint}
+                icon={{
+                  path: window.google?.maps?.SymbolPath?.CIRCLE || "M 0,0 m -1,0 a 1,1 0 1,0 2,0 a 1,1 0 1,0 -2,0",
+                  scale: 0,
+                  fillOpacity: 0,
+                  strokeOpacity: 0,
+                }}
+                label={{
+                  text: style.icon,
+                  fontSize: "20px",
+                }}
+              />
+
               )}
             </div>
           );
