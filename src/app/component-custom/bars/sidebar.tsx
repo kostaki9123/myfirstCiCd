@@ -12,12 +12,14 @@ const Sidebar = () => {
 
   
     console.log("pathname",pathname)
+    const id = pathname.split("/").pop();
+    console.log(id);
   // Sidebar items
   const menuItems = [
-    { name: 'Home', path: '/home/289383'  },
-    { name: 'Create trip', path: '/createtrip/8293'  },
-    { name: 'Itinerary', path: '/itinerary/2390'  },
-    { name: 'Budget', path: '/budget/2389'  },
+    { name: 'Home', path: `/home/${id}` },
+    { name: 'Create trip', path: `/createtrip/${id}`  },
+    { name: 'Itinerary', path: `/itinerary/${id}`  },
+    { name: 'Budget', path: `/budget/${id}`  },
   ];
 
   return (

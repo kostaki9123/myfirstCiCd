@@ -38,7 +38,11 @@ export const formSchema = z.object({
 // --------------------
 // ✅ Component
 // --------------------
-const Createplaceform = () => {
+type props = {
+  index : number
+}
+
+const Createplaceform = (props : props) => {
   const [selectedPlace, setSelectedPlace] = useState<{
     name: string;
     address: string;
@@ -87,7 +91,7 @@ const Createplaceform = () => {
        const formData = new FormData();
       formData.append("tripId", 'cmdyi5gpi0001ky0486uxkn2q');
       formData.append("role", 'POINT');
-      formData.append("index", '2');
+      formData.append("index", `${props.index}`);
       formData.append("PlaceName", validation.data.place.name);
       formData.append("PlaceId", validation.data.place.placeId!);
       formData.append("PlaceAddress", validation.data.place.address!);

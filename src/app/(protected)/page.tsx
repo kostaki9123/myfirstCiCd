@@ -9,10 +9,7 @@ export default async function Home() {
     
   let trips =  await getTrips()
  
-    
-
-
-
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-gray-200 pt-20">
       {/* Header */}

@@ -2,7 +2,9 @@
 
 import React, { useState } from 'react'
 import { IoLocationSharp } from "react-icons/io5";
+import DatePickerExample from "./locationinput/datepicker";
 import Curveline from './curveline';
+import PlaceSearchWrapper from "./locationinput/locationinput";
 // import Actionsmenu from '../actionsmenu/actionsmenu';
 import { 
   Dialog,
@@ -22,9 +24,40 @@ import EditableText from './editableInput';
 // import ViewPlaceMoadal from '../viewcyrclemodal/viewplacemodal';
 
 // import Savebtn from '../viewcyrclemodal/deletebtn';
+type TripSegment = {
+  id: string;
+  tripId: string;
+  role: 'MOVING_BOX' | string; // enum-like if you have defined roles
+  index: number;
+
+  placeName: string | null;
+  placeAddress: string;
+  placeId: string;
+  placeLat: number | null;
+  placeLng: number | null;
+
+  startDate: Date | null;
+  endDate: Date | null;
+
+  fromName: string;
+  fromAddress: string;
+  fromPlaceId: string;
+  fromLat: number;
+  fromLng: number;
+
+  toName: string;
+  toAddress: string;
+  toPlaceId: string;
+  toLat: number;
+  toLng: number;
+
+  transportType: 'car' | 'bus' | 'train' | 'flight' | string; // expand as needed
+  departureDate: Date;
+  departureTime: Date;
+};
 
 type Props = {
-  data : any
+  data : TripSegment
   index : number  
   datalenght : number
   tripId : string
@@ -108,9 +141,21 @@ const positiongrid = [
   ]
 
 const Point =  (props:Props) => {
-  const [location, setLocation] = useState(props.data.location || "");
-  const [startDate, setStartDate] = useState(props.data.startdate || "");
+  
+const [placeName, setPlaceName] = useState<{
+  name: string;
+  location: { lat: number; lng: number };
+} | null>({
+  name: props.data.placeName ?? "",
+  location: {
+    lat: props.data.placeLat ?? 0,
+    lng: props.data.placeLng ?? 0,
+  },
+});
 
+ const [dateRange, setDateRange] = useState<[Date | null, Date | null] | null>(
+    null
+  );
   // const fields = 'id,displayName';
 //
   // 
@@ -128,12 +173,12 @@ const Point =  (props:Props) => {
   // const result = await response.json();
 
   //  console.log("Id data" ,result , props.data.placeId1)
-  const formattedStartDate = props.data.startdate.replace(/ /g, "/");
+  //const formattedStartDate = props.data.startDate.replace(/ /g, "/");
 
-  let formattedEndDate
-  if (props.data.enddate){
-  formattedEndDate = props.data.enddate.replace(/ /g, "/");
-  }
+// let formattedEndDate
+// if (props.data.enddate){
+// formattedEndDate = props.data.enddate.replace(/ /g, "/");
+// }
 
   function isSingleDigit(input : number) {
     if (typeof input === "number" && input >= 0 && input <= 9) {
@@ -156,14 +201,14 @@ const Point =  (props:Props) => {
                 <IoLocationSharp className=' text-xl'/>
                 <h4 className=''>
                    {/**  {result.shortFormattedAddress ? <>{result.shortFormattedAddress}</> : */} 
-                   <>Place</>  
+                   <>{props.data.placeName}</>  
                 </h4>
                 <div className=' h-5'>
                 </div>
              </div>
            </DialogTrigger>
            <div className=' absolute  bottom-5 xxs:bottom-2 right-[40px] text-white  z-50'>
-                <Actionsmenu cyrcleId={props.data.id}/>
+                <Actionsmenu pointId={props.data.id}/>
            </div>
              
            <div className=' relative '>
@@ -181,34 +226,37 @@ const Point =  (props:Props) => {
                 </> 
                 :
                 <>
-                  <CurvelinePhone isthefirst={props.index === 0} color={false} line={positiongridphone[props.datalenght + 2 - props.index].line} />
+                  <CurvelinePhone isthefirst={props.data.index === 0} color={false} line={positiongridphone[props.datalenght + 2 - props.index].line} />
                 </>
              }  
             </div>    
         </div>
 
 
-         <DialogContent className=" z-[52]  h-[70%]  820:w-fit w-[90%] 450:w-[350px]  absolute ">
-            <DialogHeader>
-              <DialogTitle className=' text-xl'>
-                   <EditableText
-                     value={location}
-                     onChange={setLocation}
-                     placeholder="Enter location"
-                     divType='Title'
-                   />
-                 
-                  
+         <DialogContent  onOpenAutoFocus={(e) => e.preventDefault()} className=" z-[52]  h-[70%]  820:w-fit w-[90%] 450:w-[350px]  absolute ">
+            <DialogHeader className='flex justify-start  items-start'>
+              <DialogTitle className=' text-xl w-[90%] '>
+                  <PlaceSearchWrapper
+                      onPlaceSelected={(place) => setPlaceName(place)}
+                      onMovingbox
+                      apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}
+                    />              
               </DialogTitle>
-
-              <EditableText
-                   value={startDate}
-                   onChange={setStartDate}
-                   placeholder="Enter Dates"
-                   divType='description'
-                 />
-                 
             </DialogHeader>
+                 
+                    <DatePickerExample
+                        isRange
+                        onChange={(value) => {
+                          if (Array.isArray(value)) {
+                            setDateRange(value as [Date | null, Date | null]);
+                          } else {
+                            setDateRange([value as Date, null]);
+                          }
+                        }}
+                        namePrefix="booking"
+                     />  
+                 
+        
 
              <ViewPlaceMoadal  accommodations={fakeAccommodations}   places={fakePlaces}  />
             {/**
@@ -218,7 +266,7 @@ const Point =  (props:Props) => {
      </Dialog>
      {props.datalenght === props.index + 1 && props.withcurveline && (
           <>  
-            <Addnewcyrcle index={ props.index + 1} tripId={props.tripId} cyrcleArrId={props.data.cyrcleArrId} withcurveline={props.withcurveline} />
+            <Addnewcyrcle index={ props.data.index + 1} tripId={props.data.tripId} withcurveline={props.withcurveline} />
           </>
       )}
 

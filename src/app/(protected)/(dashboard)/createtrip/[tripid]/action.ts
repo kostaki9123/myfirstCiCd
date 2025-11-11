@@ -8,6 +8,9 @@ import { IUsersRepository } from "../../../../../../backend/application/reposito
 import { MockUsersRepository } from "../../../../../../backend/infrastructure/repository/users.repository.mock";
 import { UsersRepository } from "../../../../../../backend/infrastructure/repository/users.repository";
 import { createPointController } from "../../../../../../backend/interface-adapters/controllers/points/create-point.controller";
+import { getPointsController } from "../../../../../../backend/interface-adapters/controllers/points/get-points.controllers";
+import { deleteTripController } from "../../../../../../backend/interface-adapters/controllers/trips/delete-trip.controller";
+import { deletePointController } from "../../../../../../backend/interface-adapters/controllers/points/delete-point.controller";
 
 export async function createPoint(formData: FormData) {
   console.log("🟡 createPoint action called");
@@ -61,7 +64,7 @@ export async function createPoint(formData: FormData) {
       input.from = {
         name: formData.get("fromName") as string,
         address: (formData.get("fromAddress") as string) ?? "",
-        placeId: (formData.get("fromPlaceId") as string) ?? "",
+        placeId: (formData.get("fromId") as string) ?? "",
         location: {
           lat: Number(formData.get("fromLat")),
           lng: Number(formData.get("fromLng")),
@@ -70,7 +73,7 @@ export async function createPoint(formData: FormData) {
       input.to = {
         name: formData.get("toName") as string,
         address: (formData.get("toAddress") as string) ?? "",
-        placeId: (formData.get("toPlaceId") as string) ?? "",
+        placeId: (formData.get("toId") as string) ?? "",
         location: {
           lat: Number(formData.get("toLat")),
           lng: Number(formData.get("toLng")),
@@ -86,8 +89,9 @@ export async function createPoint(formData: FormData) {
 
     console.log("✅ Point created successfully:", result);
  
-
+    revalidatePath('/')
     return result;
+   
   } catch (err) {
     console.error("❌ Error creating point:", err);
     throw new Error(
@@ -95,3 +99,72 @@ export async function createPoint(formData: FormData) {
     );
   }
 }
+
+
+export async function getPoints(tripId : string) {
+  const { userId } = await auth(); // 🔐 Auth check
+
+  if (!userId) {
+    redirect('/sign-in'); // ✅ Έξω από try/catch
+  }
+
+  const usersRepository: IUsersRepository =
+    process.env.NODE_ENV === 'test'
+      ? new MockUsersRepository()
+      : new UsersRepository();
+
+  const existingUser = await usersRepository.getUser(userId);
+
+  if (!existingUser) {
+    redirect('/sign-in'); // ✅ Έξω από try/catch
+  }
+
+  try {
+    const points = await getPointsController(tripId);
+    return points;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Ops something went wrong: '${(err as Error).message}'`);
+  }
+}
+
+
+
+export async function deletePoint(pointId:string) {
+    //const instrumentationService = getInjection('IInstrumentationService');
+    //return await instrumentationService.instrumentServerAction(
+    //  'signIn',
+    //  { recordResponse: true },
+        const { userId } = await auth(); // 🔐 Auth check
+
+        if (!userId) {
+          redirect('/')
+        }
+        
+        const usersRepository: IUsersRepository =
+            process.env.NODE_ENV === 'test'
+              ? new MockUsersRepository()
+              : new UsersRepository();
+
+        try { 
+           let existingUser = await usersRepository.getUser(userId);
+
+           if (!existingUser) {
+             redirect('/')
+           }
+           console.log('run action')
+          const result =  await deletePointController(pointId);
+
+           revalidatePath('/')
+         
+           return result
+        
+                  
+        } catch (err) {
+          console.log(err)
+          throw new Error(`Ops something went wrong:'${(err as Error).message}`)
+          
+        }
+  
+   //  );
+  }

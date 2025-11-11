@@ -58,7 +58,11 @@ export const formSchema = z.object({
 // --------------------
 // ✅ Component
 // --------------------
-const Createmovingboxform = () => {
+type props = {
+  index: number
+}
+
+const Createmovingboxform = (props : props) => {
   const [fromPlace, setFromPlace] = useState<{
     name: string;
     location: { lat: number; lng: number };
@@ -98,7 +102,7 @@ const Createmovingboxform = () => {
       const formData = new FormData();
       formData.append("tripId", 'cmdyi5gpi0001ky0486uxkn2q');
       formData.append("role", 'MOVING_BOX');
-      formData.append("index", '1');
+      formData.append("index", `${props.index}`);
       formData.append("fromName", validation.data.from.name);
       formData.append("fromId", validation.data.from.placeId!);
       formData.append("fromAddress", validation.data.from.address!);

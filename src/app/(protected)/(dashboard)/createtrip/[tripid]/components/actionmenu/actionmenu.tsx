@@ -15,7 +15,7 @@ import {
 import Dropdowncontent from './dropdowncontent';
 
 type props = {
-  cyrcleId : string 
+  pointId : string 
 }
 
 const Actionsmenu = (props : props) => {
@@ -30,7 +30,7 @@ const Actionsmenu = (props : props) => {
         <DropdownMenuTrigger asChild className=' cursor-pointer h-full w-full text-sm'>
              <HiDotsHorizontal className=' text-xl z-10'/>
         </DropdownMenuTrigger>
-        <Dropdowncontent cyrcleId={props.cyrcleId} />
+        <Dropdowncontent pointId={props.pointId} />
     </DropdownMenu>
 
 

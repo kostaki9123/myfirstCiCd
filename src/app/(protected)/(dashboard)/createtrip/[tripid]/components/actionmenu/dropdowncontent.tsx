@@ -16,10 +16,11 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import Deletebtn from './deletebtn'
 
 
 type props = {
-  cyrcleId : string 
+  pointId : string 
 }
 
 const Dropdowncontent = (props:props) => {
@@ -37,8 +38,7 @@ const Dropdowncontent = (props:props) => {
                     </DropdownMenuItem>
                  </DialogTrigger>
                  <DropdownMenuItem className=' w-[240px] py-[6px] px-3 '>
-                    Delete point
-                   {/**   <Deletbtn cyrcleId={props.cyrcleId} /> */ }
+                     <Deletebtn pointId={props.pointId}/>
                  </DropdownMenuItem>
     
               </DropdownMenuGroup>

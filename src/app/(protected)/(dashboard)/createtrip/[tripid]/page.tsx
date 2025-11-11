@@ -1,8 +1,9 @@
 import React from 'react'
-
 import Mapprovider from '@/app/component/map/map-provider';
 import Tripboard from './components/tripboard';
 import Tripboardphone from './components/tripboardphone';
+import { getPoints } from './action';
+
 
 const points = [
   {
@@ -89,13 +90,25 @@ const points = [
   },
 
 ];
+interface PageProps {
+  params: { id: string }
+}
 
-const page = () => {
+const Page = async ({ params }: PageProps) => {
+  const { id } = params;
+
+  console.log("Server-side ID:", id); 
+
+    let pointss =  await getPoints(id)
+
+    console.log(pointss)
+  
+
   return (
     <div className=' min-h-[490px] xxs:border-4  bottom-0 absolute right-0 left-0 top-0  flex flex-col '>
         
         <div className=' h-[45%]  xxs:block hidden    ' >
-           <Tripboard  tripId='' cyrclesArr={points} />
+           <Tripboard  tripId={id} cyrclesArr={pointss} />
         </div>
         <div className=' h-[55%]  w-full xxs:block hidden bg-slate-500  ' >
              <Mapprovider cyrclesArr={points} /> 
@@ -104,10 +117,10 @@ const page = () => {
        
        
         <div  className='  h-[43%] block xxs:hidden '>
-           <Tripboardphone  tripId='' cyrclesArr={points} />
+           <Tripboardphone  tripId={id} cyrclesArr={points} />
         </div>
     </div>
   )
 }
 
-export default page
+export default Page

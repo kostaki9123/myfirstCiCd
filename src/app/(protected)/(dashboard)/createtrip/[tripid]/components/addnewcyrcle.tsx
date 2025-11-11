@@ -22,7 +22,6 @@ import Createmovingboxform from './createmovingboxform';
 type Props = {
     index : number
     tripId : string
-    cyrcleArrId : string | undefined
     withcurveline : boolean
     lengtharr? : number
   }
@@ -113,11 +112,11 @@ const Addnewcyrcle =  (props : Props) => {
               </TabsList>
               <TabsContent value="account" className='px-5  w-full'>
                 {/** <Createplaceform index={props.index} tripId={props.tripId} cyrcleArrId={props.cyrcleArrId}/>  {/** create place form */}
-                <Createplaceform/>
+                <Createplaceform index={props.index}/>
               </TabsContent>
               <TabsContent value="password" className='px-5  w-full ' >
                 {/**  <Createmovingform index={props.index} tripId={props.tripId} cyrcleArrId={props.cyrcleArrId}/>  {/** create moving form */}
-                <Createmovingboxform/>
+                <Createmovingboxform index={props.index}/>
               </TabsContent>
          </Tabs>
       </DialogContent>

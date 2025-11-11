@@ -16,10 +16,41 @@ import Viewmovingboxmodal from './locationinput/viewmovingbox';
 //import Savebtn from '../viewcyrclemodal/deletebtn';
 //import ViewPlaceMoadal from '../viewcyrclemodal/viewplacemodal';
 
+export type TripSegment = {
+  id: string;
+  tripId: string;
+  role: 'MOVING_BOX' | string; // enum-like if you have defined roles
+  index: number;
+
+  placeName: string | null;
+  placeAddress: string;
+  placeId: string;
+  placeLat: number | null;
+  placeLng: number | null;
+
+  startDate: Date | null;
+  endDate: Date | null;
+
+  fromName: string;
+  fromAddress: string;
+  fromPlaceId: string;
+  fromLat: number;
+  fromLng: number;
+
+  toName: string;
+  toAddress: string;
+  toPlaceId: string;
+  toLat: number;
+  toLng: number;
+
+  transportType: 'car' | 'bus' | 'train' | 'flight' | string; // expand as needed
+  departureDate: Date;
+  departureTime: Date;
+};
 
 
 type Props = {
-  data : any
+  data : TripSegment
   index : number  
   datalenght : number
   tripId : string
@@ -95,10 +126,10 @@ const Movingbox = (props : Props) => {
 
 
 
-
+//  TASK need change
   let icon
 
-  switch (props.data.moveIcon) {
+  switch (props.data.transportType) {
     case 'Airplane':   
       icon = <IoAirplaneOutline />;
       break;
@@ -148,7 +179,7 @@ const Movingbox = (props : Props) => {
       icon = <FaShip />;
       break;
     default:
-      icon = props.data.moveIcon; // Handle default case or provide a default icon
+      icon = props.data.transportType; // Handle default case or provide a default icon
       break;
 }
 
@@ -171,7 +202,7 @@ const Movingbox = (props : Props) => {
              </div>
            </DialogTrigger>
            <div className=' absolute  bottom-5 xxs:bottom-2 right-[40px] text-white  z-50'>
-                <Actionsmenu cyrcleId={props.data.id}/>
+                <Actionsmenu pointId={props.data.id}/>
            </div>
            <div className=' relative '>
               {props.withcurveline ? 
@@ -210,7 +241,7 @@ const Movingbox = (props : Props) => {
      </Dialog>
      {props.datalenght === props.index + 1 && props.withcurveline && (
           <>  
-            <Addnewcyrcle  withcurveline={props.withcurveline} index={ props.index + 1} tripId={props.tripId} cyrcleArrId={props.data.cyrcleArrId} />
+            <Addnewcyrcle  withcurveline={props.withcurveline} index={ props.index + 1} tripId={props.tripId}  />
           </>
       )}
 
