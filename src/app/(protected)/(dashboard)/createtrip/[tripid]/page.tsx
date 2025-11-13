@@ -91,24 +91,22 @@ const points = [
 
 ];
 interface PageProps {
-  params: { id: string }
+  params: Promise<{ tripid: string }>; // ✅ params is now async
 }
 
 const Page = async ({ params }: PageProps) => {
-  const { id } = params;
+  const { tripid } = await params; 
 
-  console.log("Server-side ID:", id); 
+  console.log("Server-side ID:", tripid); 
 
-    let pointss =  await getPoints(id)
-
-    console.log(pointss)
-  
+  const points = await getPoints(tripid);
+  console.log(points);
 
   return (
     <div className=' min-h-[490px] xxs:border-4  bottom-0 absolute right-0 left-0 top-0  flex flex-col '>
         
         <div className=' h-[45%]  xxs:block hidden    ' >
-           <Tripboard  tripId={id} cyrclesArr={pointss} />
+           <Tripboard  tripId={tripid} cyrclesArr={points} />
         </div>
         <div className=' h-[55%]  w-full xxs:block hidden bg-slate-500  ' >
              <Mapprovider cyrclesArr={points} /> 
@@ -117,7 +115,7 @@ const Page = async ({ params }: PageProps) => {
        
        
         <div  className='  h-[43%] block xxs:hidden '>
-           <Tripboardphone  tripId={id} cyrclesArr={points} />
+           <Tripboardphone  tripId={tripid} cyrclesArr={points} />
         </div>
     </div>
   )
