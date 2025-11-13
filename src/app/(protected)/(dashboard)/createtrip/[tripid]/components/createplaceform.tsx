@@ -40,6 +40,7 @@ export const formSchema = z.object({
 // --------------------
 type props = {
   index : number
+  tripId : string
 }
 
 const Createplaceform = (props : props) => {
@@ -89,7 +90,7 @@ const Createplaceform = (props : props) => {
 
       console.log("✅ Validated data:", validation.data);
        const formData = new FormData();
-      formData.append("tripId", 'cmdyi5gpi0001ky0486uxkn2q');
+      formData.append("tripId", `${props.tripId}`);
       formData.append("role", 'POINT');
       formData.append("index", `${props.index}`);
       formData.append("PlaceName", validation.data.place.name);

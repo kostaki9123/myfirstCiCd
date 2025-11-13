@@ -79,7 +79,7 @@ const Addnewcyrcle =  (props : Props) => {
  //       tripId : props.tripId
  //   }
  //})
- 
+  console.log('tripId add',props.tripId)
 
 
   return (
@@ -112,11 +112,11 @@ const Addnewcyrcle =  (props : Props) => {
               </TabsList>
               <TabsContent value="account" className='px-5  w-full'>
                 {/** <Createplaceform index={props.index} tripId={props.tripId} cyrcleArrId={props.cyrcleArrId}/>  {/** create place form */}
-                <Createplaceform index={props.index}/>
+                <Createplaceform index={props.index} tripId={props.tripId} />
               </TabsContent>
               <TabsContent value="password" className='px-5  w-full ' >
                 {/**  <Createmovingform index={props.index} tripId={props.tripId} cyrcleArrId={props.cyrcleArrId}/>  {/** create moving form */}
-                <Createmovingboxform index={props.index}/>
+                <Createmovingboxform tripId={props.tripId} index={props.index}/>
               </TabsContent>
          </Tabs>
       </DialogContent>

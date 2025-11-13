@@ -60,6 +60,7 @@ export const formSchema = z.object({
 // --------------------
 type props = {
   index: number
+  tripId : string
 }
 
 const Createmovingboxform = (props : props) => {
@@ -100,7 +101,7 @@ const Createmovingboxform = (props : props) => {
 
       console.log("✅ Validated Moving Box Data:", validation.data);
       const formData = new FormData();
-      formData.append("tripId", 'cmdyi5gpi0001ky0486uxkn2q');
+      formData.append("tripId",  `${props.tripId}`);
       formData.append("role", 'MOVING_BOX');
       formData.append("index", `${props.index}`);
       formData.append("fromName", validation.data.from.name);

@@ -100,7 +100,7 @@ const Page = async ({ params }: PageProps) => {
   console.log("Server-side ID:", tripid); 
 
   const points = await getPoints(tripid);
-  console.log(points);
+  console.log('ποιντσ',points);
 
   return (
     <div className=' min-h-[490px] xxs:border-4  bottom-0 absolute right-0 left-0 top-0  flex flex-col '>
