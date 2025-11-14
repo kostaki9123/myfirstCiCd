@@ -89,6 +89,7 @@ const Createplaceform = (props : props) => {
       }
 
       console.log("✅ Validated data:", validation.data);
+      console.log("✅ Index:",`${props.index}`);
        const formData = new FormData();
       formData.append("tripId", `${props.tripId}`);
       formData.append("role", 'POINT');

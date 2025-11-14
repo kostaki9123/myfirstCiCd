@@ -53,8 +53,8 @@ const Tripboard = (props : props) => {
              :
              props.cyrclesArr?.map(( point: any , key:number ) => (
              point.role === "POINT" 
-             ? <Point withcurveline key={key} index={key} datalenght={props.cyrclesArr.length} data={point} tripId={props.tripId} />
-             : <Movingbox withcurveline key={key} index={key} datalenght={props.cyrclesArr.length} data={point} tripId={props.tripId} />
+             ? <Point withcurveline key={point.id} index={key} datalenght={props.cyrclesArr.length} data={point} tripId={props.tripId} />
+             : <Movingbox withcurveline key={point.id} index={key} datalenght={props.cyrclesArr.length} data={point} tripId={props.tripId} />
              )) 
             
         }

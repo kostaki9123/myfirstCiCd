@@ -156,6 +156,8 @@ const [placeName, setPlaceName] = useState<{
  const [dateRange, setDateRange] = useState<[Date | null, Date | null] | null>(
     null
   );
+
+ 
   // const fields = 'id,displayName';
 //
   // 
@@ -179,6 +181,10 @@ const [placeName, setPlaceName] = useState<{
 // if (props.data.enddate){
 // formattedEndDate = props.data.enddate.replace(/ /g, "/");
 // }
+console.log(props.index)
+console.log(props.datalenght)
+console.log(props.withcurveline)
+
 
   function isSingleDigit(input : number) {
     if (typeof input === "number" && input >= 0 && input <= 9) {
@@ -264,7 +270,7 @@ const [placeName, setPlaceName] = useState<{
             <Savebtn  />  */}
           </DialogContent>
      </Dialog>
-     {props.datalenght === props.index + 1 && props.withcurveline && (
+     {props.datalenght === props.index + 1 && (
           <>  
             <Addnewcyrcle index={ props.data.index + 1} tripId={props.data.tripId} withcurveline={props.withcurveline} />
           </>

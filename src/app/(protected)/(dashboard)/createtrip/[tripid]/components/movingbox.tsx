@@ -239,7 +239,7 @@ const Movingbox = (props : Props) => {
            {/**  <Savebtn  /> */}
           </DialogContent>
      </Dialog>
-     {props.datalenght === props.index + 1 && props.withcurveline && (
+     {props.datalenght === props.index + 1  && (
           <>  
             <Addnewcyrcle  withcurveline={props.withcurveline} index={ props.index + 1} tripId={props.tripId}  />
           </>

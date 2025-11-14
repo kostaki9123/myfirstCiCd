@@ -79,8 +79,7 @@ const Addnewcyrcle =  (props : Props) => {
  //       tripId : props.tripId
  //   }
  //})
-  console.log('tripId add',props.tripId)
-
+  console.log('tripId add',props.tripId)  
 
   return (
     <Dialog >
