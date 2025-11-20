@@ -59,7 +59,7 @@ const Sheetnotes = () => {
         <FaNotesMedical />
       </SheetTrigger>
 
-      <SheetContent autoFocus={false} className="p-0 bg-white">
+      <SheetContent autoFocus={false} className="p-0 bg-white z-[59]">
         <SheetHeader className="bg-gray-200 p-3">
           <SheetTitle>
             <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">

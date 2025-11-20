@@ -15,15 +15,16 @@ import { cn } from '@/lib/utils'
 
 // Transport options (you can expand this)
 const transportModes = [
+  { value: 'flight', label: 'Flight', icon: '✈️' },
+  { value: 'bus', label: 'Bus', icon: '🚌' },
+  { value: 'train', label: 'Train', icon: '🚆' },
+  { value: 'subway', label: 'Subway', icon: '🚇' },
   { value: 'walking', label: 'Walking', icon: '🚶' },
   { value: 'bicycle', label: 'Bicycle', icon: '🚲' },
   { value: 'motorbike', label: 'Motorbike', icon: '🏍️' },
   { value: 'car', label: 'Car', icon: '🚗' },
-  { value: 'bus', label: 'Bus', icon: '🚌' },
-  { value: 'train', label: 'Train', icon: '🚆' },
-  { value: 'subway', label: 'Subway', icon: '🚇' },
-  { value: 'plane', label: 'Plane', icon: '✈️' },
   { value: 'boat', label: 'Boat', icon: '⛴️' },
+  { value: 'other', label: 'Other', icon: '➡️' },
 ]
 
 export default function TransportDropdown({
