@@ -1,5 +1,7 @@
 "use client";
 
+import { MiddlewareReturn } from "@floating-ui/core";
+import { MiddlewareState } from "@floating-ui/dom";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -54,9 +56,10 @@ export default function DateRangePicker({
             timeCaption="Time"
             dateFormat="HH:mm"
             placeholderText="Select time"
-            className={inputClass}
-            popperClassName="datepicker-popper"
-          />
+            className="border relative focus:border-black focus:outline-none px-3 rounded text-sm placeholder-gray-500 w-auto 343:w-60 h-[40px] sm:h-[44px]"
+            popperClassName="timepicker-popper"
+/>
+          
           {/* Hidden input for FormData */}
           <input
             type="hidden"
@@ -65,7 +68,7 @@ export default function DateRangePicker({
           />
         </>
       ) : isRange ? (
-        <>
+        <div className="date-only">
           {/* ✅ Date range mode */}
           <DatePicker
             selected={startDate}
@@ -94,9 +97,9 @@ export default function DateRangePicker({
             name={`${namePrefix}_end`}
             value={endDate ? endDate.toISOString() : ""}
           />
-        </>
+       </div>
       ) : (
-        <>
+        <div className="date-only">
           {/* ✅ Single date or date-time mode */}
           <DatePicker
             selected={date}
@@ -116,7 +119,7 @@ export default function DateRangePicker({
             name={namePrefix}
             value={date ? date.toISOString() : ""}
           />
-        </>
+        </div>
       )}
     </div>
   );
