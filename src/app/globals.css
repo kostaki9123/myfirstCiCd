@@ -121,7 +121,32 @@ body {
   }
 }
 
+@media (max-width: 640px) {
 
+  /* Hide the time picker completely */
+  .react-datepicker__time-container,
+  .react-datepicker__time-container *,
+  .react-datepicker__time-box,
+  .react-datepicker__time-list {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Fix extra space caused by layout */
+  .react-datepicker {
+    display: inline-block !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .react-datepicker__triangle {
+    display: none !important;
+  }
+}
 /* ------------------------------
    TIME PICKER POPPER MOBILE FIX ONLY
 --------------------------------*/
