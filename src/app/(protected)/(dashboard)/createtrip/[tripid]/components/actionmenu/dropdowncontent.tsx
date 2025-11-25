@@ -17,14 +17,40 @@ import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Deletebtn from './deletebtn'
+import { MovePoint } from '../../action'
 
 
 type props = {
-  pointId : string 
+  pointId: string;
+  tripId: string;
+  pointIndex: number;
+  pointslength: number; 
 }
 
-const Dropdowncontent = (props:props) => {
-   const [dialogtype , setDialogtype ] = useState<string>("")
+const Dropdowncontent = ({ pointId, tripId, pointIndex, pointslength }: props) => {
+
+  console.log('point index ww',pointIndex)
+
+  
+  const handleMove = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.currentTarget); // extract data from form
+
+  const newIndex = formData.get("newIndex"); // <-- get input value here
+
+  const sendData = new FormData();
+  sendData.append("tripId", tripId);
+  sendData.append("pointId", pointId);
+  sendData.append("newIndex", String(newIndex));
+
+  try {
+    console.log('runn1')
+    await MovePoint(sendData);
+  } catch (err) {
+    console.error("Move error:", err);
+  }
+};
 
   return (
     <Dialog>
@@ -33,12 +59,12 @@ const Dropdowncontent = (props:props) => {
              
               <DropdownMenuGroup>
                  <DialogTrigger>       
-                    <DropdownMenuItem className=' w-[240px] py-[6px] px-3 ' onSelect={()=>setDialogtype("move cyrcle")}>
+                    <DropdownMenuItem className=' w-[240px] py-[6px] px-3 ' >
                        Move cyrcle  
                     </DropdownMenuItem>
                  </DialogTrigger>
                  <DropdownMenuItem className=' w-[240px] py-[6px] px-3 '>
-                     <Deletebtn pointId={props.pointId}/>
+                     <Deletebtn pointId={pointId}/>
                  </DropdownMenuItem>
     
               </DropdownMenuGroup>
@@ -46,15 +72,21 @@ const Dropdowncontent = (props:props) => {
 
 
 
-  <DialogContent className=' h-fit w-[60%] 360:w-[50%]  600:w-auto min-w-[250px]  426::w-fit   absolute p-4     z-50  text-black  '>
-        <form className='  ' >
+  <DialogContent className=' h-fit w-[60%] 360:w-[50%]  600:w-auto min-w-[250px]  426::w-fit    p-4    z-50  text-black  '>
+        <form onSubmit={handleMove} className="space-y-4" >
         
               <DialogTitle>
                 Move cyrcle
               </DialogTitle>
             
                 <div className="flex flex-col space-y-1.5 600:min-w-[350px] py-6 ">
-                    <Input type="number"  defaultValue={0} min={0} max={5} ></Input>
+                    <Input
+                       name="newIndex" 
+                       type="number"
+                       min={1}
+                       max={pointslength}
+                       defaultValue={pointIndex}
+                     />
                 </div>
               <div className='flex justify-end' >
                   <Button type="submit">Move</Button>

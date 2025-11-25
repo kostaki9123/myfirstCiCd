@@ -11,6 +11,7 @@ import { createPointController } from "../../../../../../backend/interface-adapt
 import { getPointsController } from "../../../../../../backend/interface-adapters/controllers/points/get-points.controllers";
 import { deleteTripController } from "../../../../../../backend/interface-adapters/controllers/trips/delete-trip.controller";
 import { deletePointController } from "../../../../../../backend/interface-adapters/controllers/points/delete-point.controller";
+import { movePointController } from "../../../../../../backend/interface-adapters/controllers/points/move-point.controller";
 
 export async function createPoint(formData: FormData) {
   console.log("🟡 createPoint action called");
@@ -158,6 +159,56 @@ export async function deletePoint(pointId:string) {
            revalidatePath('/')
          
            return result
+        
+                  
+        } catch (err) {
+          console.log(err)
+          throw new Error(`Ops something went wrong:'${(err as Error).message}`)
+          
+        }
+  
+   //  );
+  }
+
+
+export async function MovePoint(formData: FormData) {
+    //const instrumentationService = getInjection('IInstrumentationService');
+    //return await instrumentationService.instrumentServerAction(
+    //  'signIn',
+    //  { recordResponse: true },
+        const { userId } = await auth(); // 🔐 Auth check
+
+        if (!userId) {
+          redirect('/')
+        }
+        
+        const usersRepository: IUsersRepository =
+            process.env.NODE_ENV === 'test'
+              ? new MockUsersRepository()
+              : new UsersRepository();
+        
+        const tripId = formData.get("tripId") as string;
+        const pointId = formData.get("pointId") as string;    
+        const newIndex = Number(formData.get("newIndex"));
+
+        try { 
+           let existingUser = await usersRepository.getUser(userId);
+
+           if (!existingUser) {
+             redirect('/')
+           }
+
+          const result =  await movePointController({
+             tripId : tripId ,
+             pointId : pointId,
+             newIndex : newIndex - 1
+          })
+
+          console.log('conre')
+
+          revalidatePath(`/createtrip/${tripId}`);
+         
+          return result
         
                   
         } catch (err) {

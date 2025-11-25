@@ -6,5 +6,5 @@ export interface IPointsRepository {
   getPointsForUser(tripId: string): Promise<Point[]>;
   updatePoint(id: string, input: Partial<PointInsert>, tx?: any): Promise<Point>;
   deletePoint(id: string, tx?: any): Promise<void>;
-  //move point
+  updateMany(points: Point[]): Promise<void>;
 }

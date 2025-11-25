@@ -150,9 +150,11 @@ export class PointsRepository implements IPointsRepository {
             const Points = await prisma.point.findMany({
                where:{
                    tripId : tripId
-               }
+               },
+                orderBy: {
+                 index: 'asc', // ✅ sort ascending by index
+                 },
            }) 
-
             return Points
   
         }catch(err){
@@ -161,6 +163,19 @@ export class PointsRepository implements IPointsRepository {
         
     }
 
-// move point
+     async updateMany(points: Point[]): Promise<void> {
+        try {
+            const operations = points.map(p =>
+                prisma.point.update({
+                    where: { id: p.id },
+                    data: { index: p.index }
+                })
+            );
+
+            await prisma.$transaction(operations);
+        } catch (err) {
+            throw err;
+        }
+    }
     
 }

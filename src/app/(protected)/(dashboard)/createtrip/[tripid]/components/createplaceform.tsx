@@ -61,8 +61,6 @@ const Createplaceform = (props : props) => {
   );
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(selectedPlace)
-
   // --------------------
   // ✅ Submit Handler
   // --------------------

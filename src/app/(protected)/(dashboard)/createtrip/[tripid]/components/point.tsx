@@ -213,8 +213,8 @@ console.log(props.withcurveline)
                 </div>
              </div>
            </DialogTrigger>
-           <div className=' absolute  bottom-5 xxs:bottom-2 right-[40px] text-white  z-50'>
-                <Actionsmenu pointId={props.data.id}/>
+           <div key={props.data.id} className=' absolute  bottom-5 xxs:bottom-2 right-[40px] text-white  z-50'>
+                <Actionsmenu tripId={props.tripId} pointslength={props.datalenght} pointIndex={props.index + 1} pointId={props.data.id}/>
            </div>
              
            <div className=' relative '>
@@ -239,7 +239,7 @@ console.log(props.withcurveline)
         </div>
 
 
-         <DialogContent  onOpenAutoFocus={(e) => e.preventDefault()} className=" z-[52]  h-[70%]  820:w-fit w-[90%] 450:w-[350px]  absolute ">
+         <DialogContent  onOpenAutoFocus={(e) => e.preventDefault()} className=" z-[52]  h-[70%]  820:w-fit w-[90%] 450:w-[350px]   ">
             <DialogHeader className='flex justify-start  items-start'>
               <DialogTitle className=' text-xl w-[90%] '>
                   <PlaceSearchWrapper

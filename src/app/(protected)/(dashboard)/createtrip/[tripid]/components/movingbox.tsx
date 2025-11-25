@@ -202,7 +202,7 @@ const Movingbox = (props : Props) => {
              </div>
            </DialogTrigger>
            <div className=' absolute  bottom-5 xxs:bottom-2 right-[40px] text-white  z-50'>
-                <Actionsmenu pointId={props.data.id}/>
+                <Actionsmenu tripId={props.tripId} pointIndex={props.index + 1} pointslength={props.datalenght} pointId={props.data.id}/>
            </div>
            <div className=' relative '>
               {props.withcurveline ? 
@@ -227,7 +227,7 @@ const Movingbox = (props : Props) => {
         </div>
 
 
-         <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} className=" z-[52] pb-2    h-[70%]  820:w-fit w-[90%] 450:w-[350px] absolute  ">
+         <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} className=" z-[52] pb-2    h-[70%]  820:w-fit w-[90%] 450:w-[350px]   ">
             <DialogHeader className=''>
               <DialogTitle className=' text-xl'>
                  Transport Details

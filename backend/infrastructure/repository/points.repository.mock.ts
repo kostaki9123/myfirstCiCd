@@ -64,4 +64,22 @@ export class MockPointsRepository implements IPointsRepository {
     const points = this.points.filter((p) => p.tripId === tripId);
     return Promise.resolve(points);
   }
+
+  async updateMany(points: Point[]): Promise<void> {
+    try {
+      for (const updated of points) {
+        const index = this.points.findIndex((p) => p.id === updated.id);
+        if (index === -1) {
+          throw new DatabaseOperationError(`Point with ID ${updated.id} not found`);
+        }
+
+        // only update the index (same behavior as Prisma version)
+        this.points[index].index = updated.index;
+      }
+
+      return Promise.resolve();
+    } catch (err) {
+      throw err;
+    }
+   }
 }

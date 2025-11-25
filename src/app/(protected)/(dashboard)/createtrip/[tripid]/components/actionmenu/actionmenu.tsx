@@ -15,14 +15,15 @@ import {
 import Dropdowncontent from './dropdowncontent';
 
 type props = {
+  pointIndex : number
+  pointslength : number
   pointId : string 
+  tripId : string
 }
 
+
+
 const Actionsmenu = (props : props) => {
-
-  const onSubmit = () => {
-
-  }
 
   return (
 
@@ -30,7 +31,7 @@ const Actionsmenu = (props : props) => {
         <DropdownMenuTrigger asChild className=' cursor-pointer h-full w-full text-sm'>
              <HiDotsHorizontal className=' text-xl z-10'/>
         </DropdownMenuTrigger>
-        <Dropdowncontent pointId={props.pointId} />
+        <Dropdowncontent tripId={props.tripId} pointIndex={props.pointIndex} pointId={props.pointId} pointslength={props.pointslength} />
     </DropdownMenu>
 
 
