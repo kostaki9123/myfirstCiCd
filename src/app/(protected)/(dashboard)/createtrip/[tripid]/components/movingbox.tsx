@@ -123,65 +123,26 @@ const Movingbox = (props : Props) => {
 //        document.removeEventListener('mousedown', handleClickOutside);
 //    };
 //  }, []);
+const transportModes = [
+  { value: "flight", icon: <IoAirplaneOutline /> },
+  { value: "bus", icon: <FaBusAlt /> },
+  { value: "train", icon: <IoTrain /> },
+  { value: "subway", icon: <FaTrainSubway /> },
+  { value: "car", icon: <FaCar /> },
+  { value: "walking", icon: <FaWalking /> },
+  { value: "bicycle", icon: <FaBicycle /> },
+  { value: "motorbike", icon: <FaMotorcycle /> },
+  { value: "boat", icon: <FaShip /> },
+  { value: "other", icon: <FaShip /> },
+];
 
 
+const getTransportIcon = (type: string) => {
+  const found = transportModes.find((m) => m.value === type);
+  return found ? found.icon : type;
+};
 
-//  TASK need change
-  let icon
-
-  switch (props.data.transportType) {
-    case 'Airplane':   
-      icon = <IoAirplaneOutline />;
-      break;
-    case 'Train':
-      icon = <IoTrain />;
-      break;
-    case 'Car':
-      icon = <FaCar />;
-      break;
-    case 'Bus':
-      icon = <FaBusAlt />;
-      break;
-    case 'Other':
-      icon = <FaBicycle />;
-      break;
-    case 'Ship':
-      icon = <FaShip />;
-      break;
-    case 'Motorcycle':
-      icon = <FaMotorcycle />;
-      break;
-    case 'Tram':
-      icon = <FaTrainTram />;
-      break;
-    case 'Subway (Metro)':
-      icon = <FaTrainSubway />;
-      break;
-    case 'Taxi':
-      icon = <FaTaxi />;
-      break;
-    case 'Rideshare (e.g., Uber, Lyft)':
-      icon = <FaTaxi />;
-      break;
-    case 'Walking':
-      icon = <FaWalking />;
-      break;
-    case 'Helicopter':
-      icon = <FaHelicopter />;
-      break;
-    case 'Ferry':
-      icon = <FaFerry />;
-      break;
-    case 'Boat':
-      icon = <FaShip />;
-      break;
-    case 'Cruise Ship':
-      icon = <FaShip />;
-      break;
-    default:
-      icon = props.data.transportType; // Handle default case or provide a default icon
-      break;
-}
+const icon = getTransportIcon(props.data.transportType);
 
 //const formattedDate = props.data.startdate.replace(/ /g, "/");
   
@@ -192,16 +153,14 @@ const Movingbox = (props : Props) => {
        <div style={{ paddingBottom: `${props.withcurveline === false && '20px'}`, marginLeft: props.withcurveline    ? '0px' : positiongridphone[props.datalenght + 2 - props.index].pl,gridRow :`${props.withcurveline ?positiongrid[props.index].gridRow : props.datalenght + 2 - props.index}`  ,gridColumn : `${props.withcurveline ? props.index + 2 : positiongridphone[props.datalenght + 2 - props.index].gridColumn} `, display : "flex" , alignItems : "center", justifyItems : "center" , height : "100px" , width : "100px" , position: 'relative' }} >
            <DialogTrigger asChild>
              <div className=' text-white cursor-pointer bg-[#2E305B] h-[100px] w-[100px] rounded-[50%] flex items-center justify-center gap-[3px] z-50 flex-col'>
-                <IoAirplaneOutline className=' text-xl' />
-                <h4 className=''>
-                   {/**  {result.shortFormattedAddress ? <>{result.shortFormattedAddress}</> : */} 
-                   <>moving box</>  
-                </h4>
+                  <div className=' text-xl ' >
+                    {icon}
+                  </div>
                 <div className=' h-5'>
                 </div>
              </div>
            </DialogTrigger>
-           <div className=' absolute  bottom-5 xxs:bottom-2 right-[40px] text-white  z-50'>
+           <div className=' absolute  bottom-5 xxs:bottom-5 right-[40px] text-white  z-50'>
                 <Actionsmenu tripId={props.tripId} pointIndex={props.index + 1} pointslength={props.datalenght} pointId={props.data.id}/>
            </div>
            <div className=' relative '>

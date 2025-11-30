@@ -17,18 +17,28 @@ interface PlaceSearchWrapperProps {
   apiKey: string;
   onPlaceSelected?: (place: PlaceResult) => void;
   onMovingbox?: boolean;
+
+  /** NEW optional defaults */
+  defaultQuery?: string;
+  defaultPlace?: PlaceResult;
 }
 
 export default function PlaceSearchWrapper({
   apiKey,
   onPlaceSelected = () => {},
   onMovingbox,
+  defaultQuery,
+  defaultPlace,
 }: PlaceSearchWrapperProps) {
-  console.log('onPLaceSelected',onPlaceSelected)
   return (
     <APIProvider apiKey={apiKey} libraries={["places"]}>
       <div className="max-w-md">
-        <PlaceSearch onMovingbox={onMovingbox!} onPlaceSelected={onPlaceSelected} />
+        <PlaceSearch
+          onMovingbox={onMovingbox ?? false}
+          onPlaceSelected={onPlaceSelected}
+          defaultQuery={defaultQuery}
+          defaultPlace={defaultPlace}
+        />
       </div>
     </APIProvider>
   );
@@ -37,9 +47,16 @@ export default function PlaceSearchWrapper({
 interface PlaceSearchProps {
   onPlaceSelected: (place: PlaceResult) => void;
   onMovingbox: boolean;
+  defaultQuery?: string;
+  defaultPlace?: PlaceResult;
 }
 
-function PlaceSearch({ onPlaceSelected, onMovingbox }: PlaceSearchProps) {
+function PlaceSearch({
+  onPlaceSelected,
+  onMovingbox,
+  defaultQuery,
+  defaultPlace,
+}: PlaceSearchProps) {
   const placesLib = useMapsLibrary("places");
 
   const [query, setQuery] = useState("");
@@ -65,7 +82,22 @@ function PlaceSearch({ onPlaceSelected, onMovingbox }: PlaceSearchProps) {
     null
   );
 
-  // ✅ Detect keyboard visibility on mobile
+  // -------------------------------
+  // 🔹 Apply default values on mount
+  // -------------------------------
+  useEffect(() => {
+    if (defaultPlace) {
+      setQuery(defaultPlace.address || defaultPlace.name || "");
+      setSelectedPlace(true);
+      onPlaceSelected(defaultPlace);
+    } else if (defaultQuery) {
+      setQuery(defaultQuery);
+    }
+  }, [defaultPlace, defaultQuery]);
+
+  // -------------------------------
+  // 🔹 Detect mobile keyboard
+  // -------------------------------
   useEffect(() => {
     const viewport = window.visualViewport;
     if (!viewport) return;
@@ -80,7 +112,9 @@ function PlaceSearch({ onPlaceSelected, onMovingbox }: PlaceSearchProps) {
     return () => viewport.removeEventListener("resize", onResize);
   }, []);
 
-  // ✅ Initialize Google Places services
+  // -------------------------------
+  // 🔹 Init Google services
+  // -------------------------------
   useEffect(() => {
     if (!placesLib) return;
     acServiceRef.current = new placesLib.AutocompleteService();
@@ -90,10 +124,12 @@ function PlaceSearch({ onPlaceSelected, onMovingbox }: PlaceSearchProps) {
     );
   }, [placesLib]);
 
-  // ✅ Fetch predictions
+  // -------------------------------
+  // 🔹 Fetch autocomplete predictions
+  // -------------------------------
   useEffect(() => {
     if (!acServiceRef.current || !query) return;
-    if (selectedPlace) return; // avoid firing while a place is “locked”
+    if (selectedPlace) return;
 
     const handler = setTimeout(() => {
       acServiceRef.current?.getPlacePredictions(
@@ -117,7 +153,9 @@ function PlaceSearch({ onPlaceSelected, onMovingbox }: PlaceSearchProps) {
     return () => clearTimeout(handler);
   }, [query, selectedPlace]);
 
-  // ✅ Close dropdown when clicking outside
+  // -------------------------------
+  // 🔹 Click outside to close dropdown
+  // -------------------------------
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -133,7 +171,9 @@ function PlaceSearch({ onPlaceSelected, onMovingbox }: PlaceSearchProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ✅ Handle selection
+  // -------------------------------
+  // 🔹 Select a prediction
+  // -------------------------------
   function handleSelect(prediction: google.maps.places.AutocompletePrediction) {
     setQuery(prediction.description);
     setPredictions([]);
@@ -155,12 +195,14 @@ function PlaceSearch({ onPlaceSelected, onMovingbox }: PlaceSearchProps) {
         ) {
           const lat = place.geometry.location?.lat() ?? 0;
           const lng = place.geometry.location?.lng() ?? 0;
+
           onPlaceSelected({
             name: place.name ?? "",
             address: place.formatted_address ?? "",
             placeId: place.place_id ?? "",
             location: { lat, lng },
           });
+
           sessionTokenRef.current =
             new google.maps.places.AutocompleteSessionToken();
           setMobileMode(false);
@@ -169,39 +211,41 @@ function PlaceSearch({ onPlaceSelected, onMovingbox }: PlaceSearchProps) {
     );
   }
 
-  // ✅ Completely fixed input behavior
-function handleInputChange(value: string) {
-  const wasDeleting = value.length < query.length; // detect deletion
-  setQuery(value);
+  // -------------------------------
+  // 🔹 Input change handler
+  // -------------------------------
+  function handleInputChange(value: string) {
+    const wasDeleting = value.length < query.length;
+    setQuery(value);
 
-  // If the user edits or deletes the query after selecting a place,
-  // clear the selection and notify parent
-  if (selectedPlace && (wasDeleting || value !== query)) {
-    setSelectedPlace(false);
-    onPlaceSelected({
-      name: "",
-      address: "",
-      placeId: "",
-      location: { lat: 0, lng: 0 },
-    });
+    if (selectedPlace && (wasDeleting || value !== query)) {
+      setSelectedPlace(false);
+      onPlaceSelected({
+        name: "",
+        address: "",
+        placeId: "",
+        location: { lat: 0, lng: 0 },
+      });
+    }
+
+    if (value.trim().length === 0) {
+      setOpen(false);
+      setPredictions([]);
+      setSelectedPlace(false);
+      onPlaceSelected({
+        name: "",
+        address: "",
+        placeId: "",
+        location: { lat: 0, lng: 0 },
+      });
+    } else {
+      setOpen(true);
+    }
   }
 
-  if (value.trim().length === 0) {
-    setOpen(false);
-    setPredictions([]);
-    setSelectedPlace(false);
-    onPlaceSelected({
-      name: "",
-      address: "",
-      placeId: "",
-      location: { lat: 0, lng: 0 },
-    });
-  } else {
-    setOpen(true);
-  }
-}
-
-
+  // -------------------------------
+  // 🔹 Keyboard navigation
+  // -------------------------------
   function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (!open) return;
     if (e.key === "ArrowDown") {
@@ -231,12 +275,14 @@ function handleInputChange(value: string) {
     }
   }
 
-  // ✅ Handle "X" button (mobile close)
+  // -------------------------------
+  // 🔹 Mobile "X" close
+  // -------------------------------
   function handleMobileClose() {
     setMobileMode(false);
     setPredictions([]);
     setQuery("");
-     onPlaceSelected({
+    onPlaceSelected({
       name: "",
       address: "",
       placeId: "",
@@ -246,9 +292,12 @@ function handleInputChange(value: string) {
     setSelectedPlace(false);
   }
 
+  // -------------------------------
+  // 🔹 Render
+  // -------------------------------
   return (
     <>
-      {/* ✅ Desktop/Tablet View */}
+      {/* Desktop */}
       {!mobileMode && (
         <div className="relative" ref={wrapperRef}>
           <Input
@@ -265,8 +314,6 @@ function handleInputChange(value: string) {
               {predictions.map((p, i) => (
                 <li
                   key={p.place_id}
-                  id={`prediction-${i}`}
-                  role="option"
                   onClick={() => handleSelect(p)}
                   className="px-3 py-2 cursor-pointer hover:bg-gray-100"
                 >
@@ -283,7 +330,7 @@ function handleInputChange(value: string) {
         </div>
       )}
 
-      {/* ✅ Mobile full-screen modal */}
+      {/* Mobile modal */}
       {mobileMode && (
         <div
           className={`fixed inset-0 z-[53] bg-white ${
@@ -295,8 +342,7 @@ function handleInputChange(value: string) {
             className="flex flex-col flex-1 min-h-0"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header with close button */}
-            <div className="flex items-center border-b p-2 shrink-0">
+            <div className="flex items-center border-b p-2">
               <Input
                 ref={inputRef}
                 value={query}
@@ -313,7 +359,6 @@ function handleInputChange(value: string) {
               </button>
             </div>
 
-            {/* ✅ Adjust min-height when keyboard is open */}
             <div
               className={`flex-1 overflow-y-auto transition-all duration-200 ${
                 keyboardOpen ? "max-h-[260px]" : ""
@@ -325,7 +370,7 @@ function handleInputChange(value: string) {
                     <li
                       key={p.place_id}
                       onClick={() => handleSelect(p)}
-                      className="px-4 py-3 border-b flex-grow cursor-pointer hover:bg-gray-50"
+                      className="px-4 py-3 border-b cursor-pointer hover:bg-gray-50"
                     >
                       <div className="font-medium text-sm">
                         {p.structured_formatting.main_text}
@@ -342,7 +387,7 @@ function handleInputChange(value: string) {
                 </p>
               )}
             </div>
-          </div>
+          </div>         
         </div>
       )}
     </>

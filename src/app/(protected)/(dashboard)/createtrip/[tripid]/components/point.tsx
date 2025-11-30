@@ -21,9 +21,37 @@ import Actionsmenu from './actionmenu/actionmenu';
 import ViewPlaceMoadal from './locationinput/viewplacemodal';
 import { Input } from '@/components/ui/input';
 import EditableText from './editableInput';
-// import ViewPlaceMoadal from '../viewcyrclemodal/viewplacemodal';
+import { Button } from '@/components/ui/button';
+import { z } from "zod";
+import { updatePoint } from '../action';
 
 // import Savebtn from '../viewcyrclemodal/deletebtn';
+
+const updateSchema = z.object({
+  place: z
+    .object({
+      name: z.string().min(1),
+      address: z.string().optional(),
+      placeId: z.string().optional(),
+      location: z.object({
+        lat: z.number(),
+        lng: z.number(),
+      }),
+    })
+    .nullable()
+    .refine((v) => v !== null, "Place is required"),
+
+  dates: z
+    .array(z.date())
+    .length(2, "Start and end dates are required")
+    .refine(([s, e]) => e >= s, "End date cannot be before start date"),
+
+  id: z.string(),
+  tripId: z.string(),
+  index: z.number(),
+});
+
+
 type TripSegment = {
   id: string;
   tripId: string;
@@ -142,20 +170,102 @@ const positiongrid = [
 
 const Point =  (props:Props) => {
   
-const [placeName, setPlaceName] = useState<{
-  name: string;
-  location: { lat: number; lng: number };
-} | null>({
-  name: props.data.placeName ?? "",
-  location: {
-    lat: props.data.placeLat ?? 0,
-    lng: props.data.placeLng ?? 0,
-  },
-});
+ const [selectedPlace, setSelectedPlace] = useState<{
+    name: string;
+    address: string;
+    placeId: string;
+    location: { lat: number; lng: number };
+  } | null>({
+    name: props.data.placeName ?? "",
+    address: props.data.placeAddress,
+    placeId: props.data.placeId,
+    location: {
+      lat: props.data.placeLat ?? 0,
+      lng: props.data.placeLng ?? 0,
+    },
+  });
 
- const [dateRange, setDateRange] = useState<[Date | null, Date | null] | null>(
-    null
-  );
+  // DATE RANGE
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
+    props.data.startDate ?? null,
+    props.data.endDate ?? null,
+  ]);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  // SHOW SAVE BUTTON ONLY IF USER CHANGED SOMETHING
+  const [isDirty, setIsDirty] = useState(false);
+
+  const [error, setError] = useState<string | null>(null);
+
+  const handleModalChange = (open: boolean) => {
+  if (!open) {
+    // Reset everything to initial values when modal closes
+    setSelectedPlace({
+      name: props.data.placeName ?? "",
+      address: props.data.placeAddress,
+      placeId: props.data.placeId,
+      location: {
+        lat: props.data.placeLat ?? 0,
+        lng: props.data.placeLng ?? 0,
+      },
+    });
+    setDateRange([props.data.startDate ?? null, props.data.endDate ?? null]);
+    setIsDirty(false);
+    setError(null);
+  }
+  setIsOpen(open);
+  };
+
+  // -------------------------------------------------
+  // ⭐ HANDLE UPDATE
+  // -------------------------------------------------
+  const handleSave = async () => {
+    setError(null);
+
+    const dates =
+      dateRange[0] && dateRange[1] ? [dateRange[0], dateRange[1]] : [];
+
+      console.log('selected place 1' , selectedPlace )
+    const validation = updateSchema.safeParse({
+      place: selectedPlace,
+      dates,
+      id: props.data.id,
+      tripId: props.data.tripId,
+      index: props.data.index,
+    });
+
+    if (!validation.success) {
+      setError(validation.error.errors[0].message);
+      return;
+    }
+
+    const d = validation.data;
+
+    const fd = new FormData();
+    fd.append("id", d.id);
+    fd.append("tripId", d.tripId);
+    fd.append("index", String(d.index));
+    fd.append("role", "POINT");
+
+    fd.append("placeName", d.place.name);
+    fd.append("placeId", d.place.placeId || "");
+    fd.append("placeAddress", d.place.address || "");
+    fd.append("placeLat", String(d.place.location.lat));
+    fd.append("placeLng", String(d.place.location.lng));
+
+    fd.append("startDate", d.dates[0].toISOString());
+    fd.append("endDate", d.dates[1].toISOString());
+
+    try {
+       console.log('selected place 2' , selectedPlace )
+      await updatePoint(fd); // <--- your backend update
+      setIsDirty(false);
+    } catch (e) {
+      setError("Failed to update.");
+      console.error(e);
+    }
+  };
 
  
   // const fields = 'id,displayName';
@@ -196,14 +306,14 @@ console.log(props.withcurveline)
   
   return (
     <>
-    <Dialog >
+    <Dialog open={isOpen} onOpenChange={handleModalChange} >
        <div style={{ paddingBottom: `${props.withcurveline === false && '20px'}` , marginLeft: props.withcurveline  ? '0px' 
       : positiongridphone[props.datalenght + 2 - props.index].pl ,gridRow :` ${props.withcurveline ?positiongrid[props.index].gridRow : props.datalenght + 2 - props.index}`  ,gridColumn :
        `${props.withcurveline 
            ? props.index + 2  
             : positiongridphone[props.datalenght + 2 - props.index].gridColumn}`, display : "flex" , alignItems : "center", justifyItems : "center" , height : "100px" , width : "100px" , position : "relative"}} >
            <DialogTrigger asChild>
-             <div className=' text-white cursor-pointer bg-[#2E305B]  h-[100px] w-[100px] rounded-[50%] flex items-center justify-center gap-[3px] flex-col z-50'>
+             <div onClick={() => setIsOpen(true)}  className=' text-white cursor-pointer bg-[#2E305B]  h-[100px] w-[100px] rounded-[50%] flex items-center justify-center gap-[3px] flex-col z-50'>
                 <IoLocationSharp className=' text-xl'/>
                 <h4 className=''>
                    {/**  {result.shortFormattedAddress ? <>{result.shortFormattedAddress}</> : */} 
@@ -243,9 +353,13 @@ console.log(props.withcurveline)
             <DialogHeader className='flex justify-start  items-start'>
               <DialogTitle className=' text-xl w-[90%] '>
                   <PlaceSearchWrapper
-                      onPlaceSelected={(place) => setPlaceName(place)}
+                      onPlaceSelected={(place) => {
+                        setSelectedPlace(place)
+                        setIsDirty(true);
+                      }}
                       onMovingbox
                       apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}
+                      defaultQuery={props.data?.placeName!}
                     />              
               </DialogTitle>
             </DialogHeader>
@@ -258,11 +372,17 @@ console.log(props.withcurveline)
                           } else {
                             setDateRange([value as Date, null]);
                           }
+                           setIsDirty(true);
                         }}
                         namePrefix="booking"
+                        defaultValue={dateRange}
                      />  
                  
-        
+            {isDirty && (
+            <div className="flex justify-end ">
+                <Button onClick={handleSave}>Save</Button>
+            </div>
+          )}
 
              <ViewPlaceMoadal  accommodations={fakeAccommodations}   places={fakePlaces}  />
             {/**

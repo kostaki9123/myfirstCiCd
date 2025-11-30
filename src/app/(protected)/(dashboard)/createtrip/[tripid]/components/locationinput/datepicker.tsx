@@ -1,8 +1,6 @@
 "use client";
 
-import { MiddlewareReturn } from "@floating-ui/core";
-import { MiddlewareState } from "@floating-ui/dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -11,7 +9,10 @@ type Props = {
   isRange?: boolean;
   onlyTime?: boolean;
   onChange?: (value: Date | [Date | null, Date | null] | null) => void;
-  namePrefix?: string; // optional, for form data field names
+  namePrefix?: string;
+
+  // NEW:
+  defaultValue?: Date | [Date | null, Date | null] | null;
 };
 
 export default function DateRangePicker({
@@ -20,12 +21,27 @@ export default function DateRangePicker({
   onlyTime,
   onChange,
   namePrefix = "date",
+  defaultValue = null,
 }: Props) {
   const [date, setDate] = useState<Date | null>(null);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
-  // ✅ Handle range selection
+  // ✅ Initialize on mount when defaultValue is provided
+  useEffect(() => {
+    if (isRange) {
+      if (Array.isArray(defaultValue)) {
+        setStartDate(defaultValue[0]);
+        setEndDate(defaultValue[1]);
+      }
+    } else {
+      if (defaultValue instanceof Date) {
+        setDate(defaultValue);
+      }
+    }
+  }, [defaultValue, isRange]);
+
+  // Handle range selection
   const handleRangeChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
     setStartDate(start);
@@ -33,7 +49,7 @@ export default function DateRangePicker({
     onChange?.(dates);
   };
 
-  // ✅ Handle single date or time
+  // Handle single date or time
   const handleSingleChange = (d: Date | null) => {
     setDate(d);
     onChange?.(d);
@@ -44,7 +60,8 @@ export default function DateRangePicker({
 
   return (
     <div className="flex flex-col">
-      {/* ✅ Time-only mode */}
+
+      {/* TIME-ONLY MODE */}
       {onlyTime ? (
         <>
           <DatePicker
@@ -56,11 +73,9 @@ export default function DateRangePicker({
             timeCaption="Time"
             dateFormat="HH:mm"
             placeholderText="Select time"
-            className="border relative focus:border-black focus:outline-none px-3 rounded text-sm placeholder-gray-500 w-auto 343:w-60 h-[40px] sm:h-[44px]"
-            popperClassName="timepicker-popper"
-/>
-          
-          {/* Hidden input for FormData */}
+            className={inputClass}
+          />
+
           <input
             type="hidden"
             name={`${namePrefix}_time`}
@@ -68,8 +83,9 @@ export default function DateRangePicker({
           />
         </>
       ) : isRange ? (
-        <div className="date-only">
-          {/* ✅ Date range mode */}
+
+        // DATE RANGE MODE
+        <div>
           <DatePicker
             selected={startDate}
             onChange={handleRangeChange}
@@ -84,9 +100,8 @@ export default function DateRangePicker({
               withTime ? "Enter a date & time range" : "Enter a date range"
             }
             className={inputClass}
-            popperClassName="datepicker-popper"
           />
-          {/* Hidden inputs for FormData */}
+
           <input
             type="hidden"
             name={`${namePrefix}_start`}
@@ -97,10 +112,11 @@ export default function DateRangePicker({
             name={`${namePrefix}_end`}
             value={endDate ? endDate.toISOString() : ""}
           />
-       </div>
+        </div>
       ) : (
-        <div className="date-only">
-          {/* ✅ Single date or date-time mode */}
+
+        // SINGLE DATE OR DATE+TIME
+        <div>
           <DatePicker
             selected={date}
             onChange={handleSingleChange}
@@ -109,11 +125,9 @@ export default function DateRangePicker({
             timeCaption="Time"
             dateFormat={withTime ? "dd/MM/yyyy HH:mm" : "dd/MM/yyyy"}
             placeholderText={withTime ? "Select date & time" : "Select date"}
-            popperPlacement="bottom-start"
             className={inputClass}
-            popperClassName="datepicker-popper"
           />
-          {/* Hidden input for FormData */}
+
           <input
             type="hidden"
             name={namePrefix}

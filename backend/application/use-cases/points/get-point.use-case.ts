@@ -17,11 +17,9 @@ export const getPointsUseCase = async (tripId:string) => {
       : new PointsRepository();
 
   try {
-   console.log(tripId)
     let Points = await pointsRepository.getPointsForUser(
         tripId 
     );
-    console.log('use case',Points)
     
     if (!Points) {
     //   console.error('Sign in useCase: User could not be created');

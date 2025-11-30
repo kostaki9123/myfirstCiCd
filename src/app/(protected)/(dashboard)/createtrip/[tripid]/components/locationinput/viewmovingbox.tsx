@@ -1,26 +1,28 @@
 'use client'
+
 import React, { useState } from "react";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input"; // assuming you have a styled input
-import { Label } from "@/components/ui/label"; // for consistency
+import { Label } from "@/components/ui/label";
 import TransportDropdown from "../transportdropdown";
 import PlaceSearchWrapper from "./locationinput";
 import { Button } from "@/components/ui/button";
+import DatePickerExample from "./datepicker";
+import { updatePoint } from "../../action";
+
+type PlaceData = {
+  name: string;
+  address: string;
+  placeId: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
+};
 
 type TripSegment = {
   id: string;
   tripId: string;
-  role: 'MOVING_BOX' | string; // enum-like if you have defined roles
+  role: "MOVING_BOX" | string;
   index: number;
-
-  placeName: string | null;
-  placeAddress: string;
-  placeId: string;
-  placeLat: number | null;
-  placeLng: number | null;
-
-  startDate: Date | null;
-  endDate: Date | null;
 
   fromName: string;
   fromAddress: string;
@@ -34,100 +36,151 @@ type TripSegment = {
   toLat: number;
   toLng: number;
 
-  transportType: 'car' | 'bus' | 'train' | 'flight' | string; // expand as needed
+  transportType: string;
   departureDate: Date;
   departureTime: Date;
 };
 
-
-//export type MovingBoxData = {
-//  from: string;
-//  to: string;
-//  departureTime: string;
-//  arrivalTime: string;
-//  transportType?: string; // e.g. "Plane", "Train", "Bus", "Car"
-//  duration?: string; // calculated or manual
-//  cost?: string; // optional
-//  notes?: string; // user notes
-//};
-
 type Props = {
   data: TripSegment;
-  onChange?: (updatedData: TripSegment) => void;
 };
 
-const ViewMovingBoxModal = ({ data, onChange }: Props) => {
+const ViewMovingBoxModal = ({ data }: Props) => {
   const [formData, setFormData] = useState<TripSegment>(data);
 
-  const handleChange = (field: keyof TripSegment, value: string) => {
-    const updated = { ...formData, [field]: value };
-    setFormData(updated);
-    onChange?.(updated);
+  // -----------------------------
+  // Generic value update
+  // -----------------------------
+  const handleChange = (field: keyof TripSegment, value: any) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  return (
-    <div className="flex flex-col gap-6 overflow-y-auto p-2 ">
-      {/* Header */}
+  // -----------------------------
+  // From / To update
+  // -----------------------------
+  const handlePlaceChange = (type: "from" | "to", place: PlaceData) => {
+    setFormData((prev) => ({
+      ...prev,
+      [`${type}Name`]: place.name,
+      [`${type}Address`]: place.address,
+      [`${type}PlaceId`]: place.placeId,
+      [`${type}Lat`]: place.location.lat,
+      [`${type}Lng`]: place.location.lng,
+    }));
+  };
 
-      {/* Main info grid */}
+  // -----------------------------
+  // Save handler
+  // -----------------------------
+  const handleSave = async () => {
+    const original = JSON.stringify(data);
+    const updated = JSON.stringify(formData);
+
+    if (original === updated) {
+      console.log("No changes — skipping backend update");
+      return;
+    }
+
+    // Prepare FormData for server action
+    const fd = new FormData();
+    fd.append("id", formData.id);
+    fd.append("tripId", formData.tripId);
+    fd.append("role", formData.role);
+    fd.append("index", String(formData.index));
+
+    fd.append("fromName", formData.fromName);
+    fd.append("fromId", formData.fromPlaceId);
+    fd.append("fromAddress", formData.fromAddress);
+    fd.append("fromLat", String(formData.fromLat));
+    fd.append("fromLng", String(formData.fromLng));
+
+    fd.append("toName", formData.toName);
+    fd.append("toId", formData.toPlaceId);
+    fd.append("toAddress", formData.toAddress);
+    fd.append("toLat", String(formData.toLat));
+    fd.append("toLng", String(formData.toLng));
+
+    fd.append("transportType", formData.transportType);
+    fd.append("departureDate", formData.departureDate.toISOString());
+    fd.append("departureTime", formData.departureTime.toISOString());
+
+    // TODO: call your server action
+    console.log("Sending update:", Object.fromEntries(fd));
+
+    // example:
+     await updatePoint(fd);
+
+    console.log("Saved!");
+  };
+
+  // -----------------------------
+  // Render
+  // -----------------------------
+  return (
+    <div className="flex flex-col gap-6 overflow-y-auto p-2">
       <div className="grid grid-cols-1 820:grid-cols-2 gap-4">
+
         {/* From */}
-        <div className="flex flex-col gap-1     ">
-          <Label htmlFor="from ">From</Label>
-          <PlaceSearchWrapper onMovingbox apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}/>
+        <div className="flex flex-col gap-1">
+          <Label>From</Label>
+          <PlaceSearchWrapper
+            onMovingbox
+            apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}
+            defaultQuery={data.fromName}
+            onPlaceSelected={(place) => handlePlaceChange("from", place)}
+          />
         </div>
 
         {/* To */}
         <div className="flex flex-col gap-1">
-          <Label htmlFor="to">To</Label>
-          <PlaceSearchWrapper onMovingbox apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}/>
-        </div>
-
-       {/* <div className="flex flex-col gap-1">
-          <Label htmlFor="arrival">Departure Date</Label>
-       <Input
-            id="arrival"
-            type="date"
-            value={formData.departureDate}
-            onChange={(e) => handleChange("departureDate", e.target.value)}
+          <Label>To</Label>
+          <PlaceSearchWrapper
+            onMovingbox
+            apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}
+            defaultQuery={data.toName}
+            onPlaceSelected={(place) => handlePlaceChange("to", place)}
           />
         </div>
-        **/}
-
-        {/* Departure */}
-         {/*
-        <div className="flex flex-col gap-1">
-          <Label htmlFor="departure">Departure Time</Label>
-          <Input
-            id="departure"
-            type="datetime-local"
-            value={formData.departureTime}
-            onChange={(e) => handleChange("departureTime", e.target.value)}
-          />
-        </div>
-         **/}
-
-        {/* Arrival */}
-        
 
         {/* Transport Type */}
         <div className="flex flex-col gap-1">
-          <Label htmlFor="transportType">By</Label>
+          <Label>By</Label>
           <TransportDropdown
-           value={formData.transportType!}
-           onChange={(value) => handleChange('transportType', value)}
+            value={formData.transportType}
+            onChange={(value) => handleChange("transportType", value)}
           />
         </div>
 
-        {/* Duration */}
-       
-      
-        
-      </div>
-        <div className="w-full flex items-end justify-end ">
-          <Button className="  ">Save</Button> 
+        {/* Departure Date */}
+        <div className="flex flex-col gap-1">
+          <Label>Departure Date</Label>
+          <DatePickerExample
+            defaultValue={data.departureDate}
+            onChange={(value) => {
+              const v = Array.isArray(value) ? value[0] : (value as Date);
+              handleChange("departureDate", v);
+            }}
+          />
         </div>
 
+        {/* Departure Time */}
+        <div className="flex flex-col gap-1">
+          <Label>Departure Time</Label>
+          <DatePickerExample
+            onlyTime
+            defaultValue={data.departureTime}
+            onChange={(value) => {
+              const v = Array.isArray(value) ? value[0] : (value as Date);
+              handleChange("departureTime", v);
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Save */}
+      <div className="w-full flex items-end justify-end">
+        <Button onClick={handleSave}>Save</Button>
+      </div>
     </div>
   );
 };
