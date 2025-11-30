@@ -20,12 +20,13 @@ const deleteSchema = z.object({
 // --------------------
 type Props = {
   pointId: string;
+  tripId: string
 };
 
 // --------------------
 // ✅ Component
 // --------------------
-const Deletebtn = ({ pointId }: Props) => {
+const Deletebtn = ({ pointId,tripId }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -43,7 +44,7 @@ const Deletebtn = ({ pointId }: Props) => {
       const formData = new FormData();
       formData.append("pointId", pointId);
 
-      await deletePoint(pointId);
+      await deletePoint(pointId,tripId);
 
       console.log("✅ Point deleted successfully");
     } catch (err) {

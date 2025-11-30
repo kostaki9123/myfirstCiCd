@@ -64,7 +64,7 @@ const Dropdowncontent = ({ pointId, tripId, pointIndex, pointslength }: props) =
                     </DropdownMenuItem>
                  </DialogTrigger>
                  <DropdownMenuItem className=' w-[240px] py-[6px] px-3 '>
-                     <Deletebtn pointId={pointId}/>
+                     <Deletebtn pointId={pointId} tripId={tripId}/>
                  </DropdownMenuItem>
     
               </DropdownMenuGroup>

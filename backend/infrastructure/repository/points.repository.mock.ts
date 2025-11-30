@@ -47,12 +47,34 @@ export class MockPointsRepository implements IPointsRepository {
   }
 
   async deletePoint(pointId: string): Promise<void> {
-    const index = this.points.findIndex((p) => p.id === pointId);
-    if (index === -1) throw new DatabaseOperationError(`Point with ID ${pointId} not found`);
-
-    this.points.splice(index, 1);
-    return Promise.resolve();
+  // 1. Find the point to delete
+  const idx = this.points.findIndex((p) => p.id === pointId);
+  if (idx === -1) {
+    throw new DatabaseOperationError(`Point with ID ${pointId} not found`);
   }
+
+  // 2. Remove the point from the array
+  const deletedPoint = this.points.splice(idx, 1)[0];
+
+  // 3. Only reassign indexes for points of the same trip (if you have tripId)
+  const tripId = deletedPoint.tripId;
+
+  const sameTripPoints = this.points
+    .filter((p) => p.tripId === tripId)
+    .sort((a, b) => a.index - b.index);
+
+  for (let i = 0; i < sameTripPoints.length; i++) {
+    // Update the index in the main array
+    const p = sameTripPoints[i];
+    const realIndex = this.points.findIndex((x) => x.id === p.id);
+    if (realIndex !== -1) {
+      this.points[realIndex].index = i;
+    }
+  }
+
+  return;
+}
+
 
   async getPoint(pointId: string): Promise<Point | undefined> {
     const point = this.points.find((p) => p.id === pointId);

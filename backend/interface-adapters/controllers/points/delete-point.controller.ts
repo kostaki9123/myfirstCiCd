@@ -3,9 +3,9 @@ import { deleteTripUseCase } from "../../../application/use-cases/trip/delete-tr
 
 
 export const deletePointController =
-    async (pointId : string) : Promise<void> => { 
-          console.log('run contro')
-          return await deletePointUseCase(pointId);
+    async (pointId : string,tripId: string) : Promise<void> => { 
+          
+          return await deletePointUseCase(pointId,tripId);
 
     }
       

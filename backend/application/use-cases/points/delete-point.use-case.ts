@@ -3,26 +3,23 @@
 import { PointsRepository } from '../../../infrastructure/repository/points.repository';
 import { MockPointsRepository } from '../../../infrastructure/repository/points.repository.mock';
 import { IPointsRepository } from '../../repositories/points.repository.interface';
-import { ITripsRepository } from '../../repositories/trips.repository.interface';
-import { IUsersRepository } from '../../repositories/users.repository.interface';
-
 
 
 export type IdeletePointUseCase = ReturnType<typeof deletePointUseCase>;
 
-export const deletePointUseCase = async (pointId: string) => {
+export const deletePointUseCase = async (pointId: string , tripId:string) => {
   // Choose repository based on environment
    const pointRepository: IPointsRepository =
      process.env.NODE_ENV === 'test'
        ? new MockPointsRepository() 
        : new PointsRepository();
 
-    console.log('useCase')
 
   try {
 
+
     let deletePoint = await pointRepository.deletePoint(
-        pointId
+        pointId,tripId
     );
 
     return deletePoint;

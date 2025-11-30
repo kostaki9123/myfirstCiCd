@@ -124,25 +124,45 @@ export class PointsRepository implements IPointsRepository {
               throw err
             }}
 
-     async deletePoint(pointId: string, tx?: any): Promise<void> {
-         try {     
-              const deletedPoint = await prisma.point.delete({
-                  where:{
-                      id : pointId
-                  }
-              }) 
-              
-               if (!deletedPoint) {
-                throw new Error(`Point with ID ${pointId} not found`);
-               }
+     async deletePoint(pointId: string,tripId: string , tx?: any): Promise<void> {
 
-                return 
-            }catch(err){
-              //capture error sentry
-              throw err
+            console.log('pointId:' ,pointId)
+            console.log('tripId:' ,tripId)
+
+            try {
+              // 1. Delete the point
+              const deletedPoint = await prisma.point.delete({
+                where: { id: pointId }
+              });
+          
+              if (!deletedPoint) {
+                throw new Error(`Point with ID ${pointId} not found`);
+              }
+          
+              // 2. Load remaining points for that trip ordered by index
+              const points = await prisma.point.findMany({
+                where: { tripId },
+                orderBy: { index: 'asc' }
+              });
+          
+              // 3. Prepare atomic updates to re-index all points
+              const updates = points.map((p: { id: any; }, newIndex: any) =>
+                prisma.point.update({
+                  where: { id: p.id },
+                  data: { index: newIndex }
+                })
+              );
+          
+              // 4. Execute all index updates inside a transaction
+              await prisma.$transaction(updates);
+          
+              return;
+          
+            } catch (err) {
+              throw err;
             }
-        
-    }
+          }
+
 
 
     async getPointsForUser(tripId: string): Promise<any[]> {

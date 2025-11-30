@@ -133,7 +133,7 @@ export async function getPoints(tripId : string) {
 
 
 
-export async function deletePoint(pointId:string) {
+export async function deletePoint(pointId:string,tripId: string) {
     //const instrumentationService = getInjection('IInstrumentationService');
     //return await instrumentationService.instrumentServerAction(
     //  'signIn',
@@ -155,8 +155,8 @@ export async function deletePoint(pointId:string) {
            if (!existingUser) {
              redirect('/')
            }
-           console.log('run action')
-          const result =  await deletePointController(pointId);
+         
+          const result =  await deletePointController(pointId,tripId);
 
            revalidatePath('/')
          
