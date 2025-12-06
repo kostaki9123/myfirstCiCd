@@ -89,7 +89,7 @@ const page = () => {
          <Itineraryboard cyrclesArr={points} />
       </div>
       <div className=' h-[100%]  w-[47%]   950:block hidden bg-slate-500 ' >
-           google map
+           google map                           
       </div>
     </div>
   )

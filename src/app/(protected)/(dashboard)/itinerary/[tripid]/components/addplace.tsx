@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Dialog,
     DialogContent,
@@ -54,39 +56,39 @@ const Addaplace = async (props:props) => {
 
 //const url = `https://places.googleapis.com/v1/places/${props.data.placeId1}?fields=*&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}`
 
-const url = `https://places.googleapis.com/v1/places:searchNearby`
-
- const requestBody = {
-   includedTypes: ["hostel" ], 
-   maxResultCount: 9,  
-   locationRestriction: {
-     circle: {
-       center: {
-         latitude:  34.9521888,
-         longitude: 33.5908529
-       },
-       radius: 10000.0
-     }
-   },
- };
-
- const response : any = await fetch(`${url}`, {
-     method: 'POST' ,
-     headers: {
-       'Content-Type': 'application/json',
-       'X-Goog-Api-Key': `${process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}`,
-       'X-Goog-FieldMask': '*'
+  const url = `https://places.googleapis.com/v1/places:searchNearby`
+  
+   const requestBody = {
+     includedTypes: ["hostel" ], 
+     maxResultCount: 9,  
+     locationRestriction: {
+       circle: {
+         center: {
+           latitude:  34.9521888,
+           longitude: 33.5908529
+         },
+         radius: 10000.0
+       }
      },
-     cache: 'no-store',
-     body: JSON.stringify(requestBody)
-       })
-
-  const result = await response.json();
-  console.log(result)
-
-  if (!response.ok) {
-    throw new Error('Error to get accomodation places:', result.error.message);
-  }
+   };
+  
+   const response : any = await fetch(`${url}`, {
+       method: 'POST' ,
+       headers: {
+         'Content-Type': 'application/json',
+         'X-Goog-Api-Key': `${process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}`,
+         'X-Goog-FieldMask': '*'
+       },
+       cache: 'no-store',
+       body: JSON.stringify(requestBody)
+         })
+  
+    const result = await response.json();
+    console.log(result)
+  
+    if (!response.ok) {
+      throw new Error('Error to get accomodation places:', result.error.message);
+    }
 
 //  console.log("result" , result)
 
@@ -105,7 +107,7 @@ const url = `https://places.googleapis.com/v1/places:searchNearby`
           </DialogTrigger>
          
       
-          <DialogContent  className={` h-[520px] w-[90%] sm:w-[70%] min-w-[320px]  sm:pl-4 mt-3  `}   >
+          <DialogContent  className={` h-[480px] w-[90%] sm:w-[70%] min-w-[320px] z-[60]  sm:pl-4 mt-6  `}   >
              <DialogTitle>Dialog title</DialogTitle>
              {/** <Input 
                className=" border-b-2 border-t-0 border-r-0 border-l-0 focus:border-t-0 focus-visible:ring-0  border-black rounded-none w-[90%] px-2" 
@@ -118,8 +120,8 @@ const url = `https://places.googleapis.com/v1/places:searchNearby`
                   <div className=" text-sm sm:text-md ">
                   These places to stay are highly recommended by our team for their prime location, affordability, and safety {/**na ginei prop */}
                   </div>
-                  <div className=" w-full flex gap-2 flex-col h-[387px]  pr-4 overflow-auto " >
-                        {
+                  <div className=" w-full flex gap-2 flex-col h-[370px]  pr-4 overflow-auto " >
+                        { 
                            result.places &&
                            Array.isArray(result.places) &&
                            result.places.map((place: any, index: number) => (
@@ -147,12 +149,12 @@ const url = `https://places.googleapis.com/v1/places:searchNearby`
                            </div>
                    
                         ))
-                      }                 
+                       }                 
                    </div> 
                 </div>
                 
-                <div className=" border-2 border-yellow-700 hidden 950:flex  w-[50%] h-[440px]  z-50 cursor-pointer ">
-                    <Mapprovider/>
+                <div className=" border-2 border-yellow-700 hidden 950:flex  w-[50%] h-[400px]  z-50 cursor-pointer ">
+                   {/**  <Mapprovider/> */}
                 </div>
            </div>
            
