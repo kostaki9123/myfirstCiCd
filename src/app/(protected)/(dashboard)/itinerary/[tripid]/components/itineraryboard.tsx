@@ -1,13 +1,69 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import Placesdropdown from './placesdropdown'
 import Addaplace from './addplace'
+import { TripSegment } from '../../../createtrip/[tripid]/components/movingbox';
+
+export interface ItineraryPoint {
+  id: string;
+  tripId: string;
+  role: "POINT" | "MOVING_BOX";
+  index: number;
+
+  // For POINT
+  placeName?: string | null;
+  placeAddress?: string;
+  placeId?: string;
+  placeLat?: number | null;
+  placeLng?: number | null;
+  startDate?: string | Date | null;
+  endDate?: string | Date | null;
+
+  // For MOVING_BOX (transport)
+  fromName?: string | null;
+  fromAddress?: string;
+  fromPlaceId?: string;
+  fromLat?: number | null;
+  fromLng?: number | null;
+
+  toName?: string | null;
+  toAddress?: string;
+  toPlaceId?: string;
+  toLat?: number | null;
+  toLng?: number | null;
+
+  transportType?: "flight" | "car" | "train" | "bus" | null| string;
+
+  // departure info
+  departureDate?: string | Date | null;
+  departureTime?: string | Date | null;
+}
+
 
 type props = {
-    cyrclesArr : any    
+    cyrclesArr : ItineraryPoint[]
     selectedPlacceId? : string
   }
 
+
+
 const Itineraryboard = (props : props) => {
+
+  const pointsOnly = props.cyrclesArr.filter(item => item.role === "POINT");
+
+  //save selected place if exist from props.selectedPlacceId
+  const selectedPlace: ItineraryPoint | undefined = pointsOnly.find(
+  (item) => item.id === props.selectedPlacceId
+  );
+ 
+  const [selectedPoint, setSelectedPoint] = useState<ItineraryPoint>(selectedPlace ? selectedPlace : pointsOnly[0])
+                             
+  console.log('sele:', selectedPoint)
+  //clean up and keep only the POINT
+
+ 
+
   return (
     <>
     <div className='  h-fit  base:w-[100%]   p-3   ' >
@@ -18,21 +74,19 @@ const Itineraryboard = (props : props) => {
             {/**Header  */}
             <div className=' w-full flex justify-between relative  mb-2 '>
 
-                <div className=' left-0 h-full py-[1px] gap-2    '>
-                 {props.selectedPlacceId ?
-                   <>{props.cyrclesArr.map((cyrcle : any , key : number) => 
-                      cyrcle.id === props.selectedPlacceId && cyrcle.role === "POINT" &&
-                      <div key={key}>{cyrcle.startdate}</div>
-                   )}
-                   </>  
-                  :
-                  <>{/**props.cyrclesArr[0].startdate */}12/6-18/6</> 
+               <div className='left-0 h-full py-[1px] gap-2'>
+                    {
+                    <div >{selectedPoint.startDate && selectedPoint.endDate
+                       ? `${new Date(selectedPoint.startDate).toLocaleDateString(undefined, { month: "2-digit", day: "2-digit" })} - ${new Date(selectedPoint.endDate).toLocaleDateString(undefined, { month: "2-digit", day: "2-digit" })}`
+                       : selectedPoint.startDate
+                         ? new Date(selectedPoint.startDate).toLocaleDateString(undefined, { month: "2-digit", day: "2-digit" })
+                         : "No date"}
+                    </div>
                    }
-                
-                 </div>
+               </div>
 
                 <div className=' min-h-8 '>
-                  <Placesdropdown cyrclesArr={props.cyrclesArr} selectedPlacceId={props.selectedPlacceId}/> 
+                  <Placesdropdown cyrclesArr={pointsOnly} selectedPlace={selectedPoint} setSelectedPoint={setSelectedPoint} /> 
                   {/** dropdown for change place */}             
                 </div>
 
@@ -49,13 +103,13 @@ const Itineraryboard = (props : props) => {
             <div className='flex justify-center flex-col items-center p-2 pt-7  relative  '>
                 <small className="text-sm font-semibold leading-none  absolute left-2 top-2">Accomodation</small>
                 {/** <StayDetailsCard/> */ }
-                <Addaplace triggerName='Add a place to stay' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={props.cyrclesArr[0].lat1} longitude={props.cyrclesArr[0].lng1}/> 
+                <Addaplace triggerName='Add a place to stay' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={selectedPoint.placeLat?.toString()!} longitude={selectedPoint.placeLng?.toString()!}/> 
               
             </div>
 
             <div className='flex justify-center flex-col items-center p-2 pt-7  relative  '>
                 <small className="text-sm font-semibold leading-none  absolute left-2 top-2">Places</small>               
-                <Addaplace triggerName='Add a place to visit' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={props.cyrclesArr[0].lat1} longitude={props.cyrclesArr[0].lng1}/> 
+                <Addaplace triggerName='Add a place to visit' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={selectedPoint.placeLat?.toString()!} longitude={selectedPoint.placeLng?.toString()!}/> 
 
                 {/** <StayDetailsCard/> */ }
                 {/** <Addaccomodationmodal triggerName='Add a place to stay' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={props.cyrclesArr[0].lat1} longitude={props.cyrclesArr[0].lng1}/> */}

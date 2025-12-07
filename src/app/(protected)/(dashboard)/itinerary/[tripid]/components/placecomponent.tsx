@@ -35,7 +35,7 @@ const Placecomponent = (props : props) => {
           </div>
           <p className="text-gray-600 text-sm">{props.type || "Type not specified"}</p>
           <div className="absolute left-4 top-0 text-blue-700 text-3xl font-bold">
-            {props.key}
+            
           </div>
         </div>
 

@@ -3,7 +3,7 @@ import Addnewcyrcle from './addnewcyrcle'
 import Point from './point'
 import Movingbox  from './movingbox'
 
-type TripSegment = {
+export type TripSegment = {
   id: string;
   tripId: string;
   role: 'POINT' | 'MOVING_BOX';
