@@ -8,7 +8,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { BsHouseAddFill } from "react-icons/bs";
-
+import { MdAddHome } from "react-icons/md";
+import { MdAddCircle } from "react-icons/md";
 import {
   TbSquareRoundedNumber1Filled,
   TbSquareRoundedNumber2Filled,
@@ -21,6 +22,8 @@ import {
   TbSquareRoundedNumber9Filled,
 } from "react-icons/tb";
 import Placecomponent from "./placecomponent";
+import LocationInput from "./inputauto";
+import { APIProvider } from "@vis.gl/react-google-maps";
 
 const numbersiconArr = [
   <TbSquareRoundedNumber1Filled />,
@@ -44,6 +47,7 @@ type props = {
 
 const Addaplace = (props: props) => {
   const [placesResult, setPlacesResult] = useState<any[]>([]);
+  const [inputLocation, setinputLocation] = useState<any>();
 
   useEffect(() => {
     async function fetchPlaces() {
@@ -94,17 +98,26 @@ const Addaplace = (props: props) => {
   return (
     <Dialog>
       <DialogTrigger className="bg-gray-400 rounded-md min-w-[260px] h-10 flex items-center justify-start gap-[22%] p-5 cursor-pointer">
-        <BsHouseAddFill fontSize="20px" />
+        {props.triggerName === 'Add a place to stay' 
+           ? <BsHouseAddFill fontSize="20px" /> 
+           :    <MdAddCircle fontSize="20px" />                       
+          }
         <div className="text-base font-medium">{props.triggerName}</div>
       </DialogTrigger>
 
-      <DialogContent className="h-[480px] w-[90%] sm:w-[70%] min-w-[320px] z-[60] sm:pl-4 mt-6">
-        <DialogTitle>{props.triggerName}</DialogTitle>
-
-        <div className="flex gap-2">
+      <DialogContent className=" flex gap-2 h-[480px] w-[90%] sm:w-[70%] min-w-[320px] z-[60] sm:pl-4 mt-6">
+       
           <div className="sm:w-full 950:w-[70%]">
+
+          <DialogTitle>
+            <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}>
+                <LocationInput inputName={""} setLocation={setinputLocation} deafultValue={undefined}/>
+             </APIProvider>
+          </DialogTitle>
+
+       
             <div className="text-sm sm:text-md">{props.descriptionName}</div>
-            <div className="w-full flex gap-2 flex-col h-[370px] pr-4 overflow-auto">
+            <div className="w-full flex gap-2 flex-col h-[345px] pr-4 overflow-auto">
               {placesResult.map((place: any, index: number) => (
                 <div key={index} className="relative">
                   <div className="absolute top-7 left-8 text-3xl text-blue-600">
@@ -124,11 +137,9 @@ const Addaplace = (props: props) => {
               ))}
             </div>
           </div>
-
-          <div className="border-2 border-yellow-700 hidden 950:flex w-[50%] h-[400px] z-50 cursor-pointer">
+        <div className="border-2 border-pink-700 hidden 950:flex w-[50%] mt-7 h-[407px] z-50 cursor-pointer">
             {/* <Mapprovider/> */}
-          </div>
-        </div>
+         </div>
       </DialogContent>
     </Dialog>
   );
