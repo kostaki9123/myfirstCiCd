@@ -3,9 +3,9 @@ import prisma from "../../../../../prisma/client";
 
 export async function GET(
   req: Request,
-  context: { params: { placeId: string } }
+  { params }: { params: any }
 ) {
-  const { placeId } = context.params;
+  const placeId = params.placeId;
 
   const link = await prisma.placeAffiliateLink.findUnique({
     where: { place_id: placeId },
