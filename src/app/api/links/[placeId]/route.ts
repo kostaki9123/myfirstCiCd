@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../../prisma/client";
 
-
 export async function GET(
   req: Request,
-  { params }: { params: { placeId: string } }
+  context: { params: { placeId: string } }
 ) {
-  const { placeId } = params;
+  const { placeId } = context.params;
 
   const link = await prisma.placeAffiliateLink.findUnique({
     where: { place_id: placeId },
