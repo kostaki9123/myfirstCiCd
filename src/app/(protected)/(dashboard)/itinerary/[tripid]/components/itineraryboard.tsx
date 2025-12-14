@@ -91,7 +91,7 @@ const Itineraryboard = (props : props) => {
                 </div>
 
                 <div className='  right-0  '>
-                    <div className='flex bg-[#5893D4] p-[2px] px-2 cursor-pointer rounded-sm'>Zoom</div>
+                    <div className=' p-[2px] px-2 cursor-pointer rounded-sm w-20'></div>
                 </div>
                 
             </div>

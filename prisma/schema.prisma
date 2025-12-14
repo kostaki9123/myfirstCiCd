@@ -10,8 +10,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 
@@ -74,5 +72,15 @@ model Point {
 enum PointRole {
   POINT
   MOVING_BOX
+}
+
+model PlaceAffiliateLink {
+  id           Int      @id @default(autoincrement())
+  place_id     String   @unique
+  affiliate_url String
+  source       String?
+  clicks       Int      @default(0)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
 }
 

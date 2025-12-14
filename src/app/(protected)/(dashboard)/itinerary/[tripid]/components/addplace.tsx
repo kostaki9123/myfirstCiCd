@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { BsHouseAddFill } from "react-icons/bs";
-import { MdAddHome } from "react-icons/md";
 import { MdAddCircle } from "react-icons/md";
 import {
   TbSquareRoundedNumber1Filled,
@@ -24,6 +23,17 @@ import {
 import Placecomponent from "./placecomponent";
 import LocationInput from "./inputauto";
 import { APIProvider } from "@vis.gl/react-google-maps";
+
+// Lodging types dropdown options
+const lodgingTypes = [
+  { label: "Hotel", value: "hotel" },
+  { label: "Hostel", value: "hostel" },
+  { label: "Motel", value: "motel" },
+  { label: "Guest House", value: "guest_house" },
+  { label: "Resort", value: "resort" },
+  { label: "Lodging", value: "lodging" },
+  { label: "Campground", value: "campground" },
+];
 
 const numbersiconArr = [
   <TbSquareRoundedNumber1Filled />,
@@ -45,101 +55,189 @@ type props = {
   descriptionName: string;
 };
 
+type AffiliateMap = Record<
+  string,
+  { affiliate_url: string; source?: string } | null
+>;
+
 const Addaplace = (props: props) => {
   const [placesResult, setPlacesResult] = useState<any[]>([]);
+  const [affiliateMap, setAffiliateMap] = useState<AffiliateMap>({});
   const [inputLocation, setinputLocation] = useState<any>();
+  const [selectedType, setSelectedType] = useState<string>("hotel");
+  const [loading, setLoading] = useState(false);
+  const [requestCount, setRequestCount] = useState<number>(0);
+  const maxRequests = 5;
 
-  useEffect(() => {
-    async function fetchPlaces() {
-      try {
-        const url = `https://places.googleapis.com/v1/places:searchNearby`;
-
-        const requestBody = {
-          includedTypes: ["hostel"],
-          maxResultCount: 9,
-          locationRestriction: {
-            circle: {
-              center: {
-                latitude: Number(props.latitude),
-                longitude: Number(props.longitude),
-              },
-              radius: 10000.0,
-            },
-          },
-        };
-
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Goog-Api-Key": process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
-            "X-Goog-FieldMask": "*",
-          },
-          cache: "no-store",
-          body: JSON.stringify(requestBody),
-        });
-
-        const result = await response.json();
-
-        if (!response.ok) {
-          console.error("Error fetching places:", result.error?.message);
-          return;
-        }
-
-        setPlacesResult(result.places || []);
-      } catch (error) {
-        console.error("Error fetching places:", error);
-      }
+  const fetchPlaces = async () => {
+    if (requestCount >= maxRequests) {
+      alert(`You have reached the maximum of ${maxRequests} searches.`);
+      return;
     }
 
+    try {
+      setLoading(true);
+
+      if (props.triggerName === "Add a place to visit") {
+        // --- GetYourGuide ---
+        const city = "berlin";
+        const affiliateLink = `https://www.getyourguide.com/s/?q=${encodeURIComponent(
+          city
+        )}&partner_id=R80OI9B`;
+
+        const mockActivities = Array.from({ length: 9 }).map((_, i) => ({
+          displayName: { text: `Activity ${i + 1} in ${city}` },
+          address: { freeformAddress: city },
+          primaryTypeDisplayName: { text: "Activity & Tickets" },
+          rating: Math.floor(Math.random() * 5) + 1,
+          url: affiliateLink,
+        }));
+
+        setPlacesResult(mockActivities);
+        setRequestCount((prev) => prev + 1);
+      } else {
+        // --- Google Places ---
+        const response = await fetch(
+          "https://places.googleapis.com/v1/places:searchNearby",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Goog-Api-Key": process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
+              "X-Goog-FieldMask":
+                "places.id,places.displayName,places.rating,places.primaryTypeDisplayName,places.location,places.websiteUri,places.googleMapsUri,places.shortFormattedAddress",
+            },
+            body: JSON.stringify({
+              includedTypes: [selectedType],
+              maxResultCount: 9,
+              locationRestriction: {
+                circle: {
+                  center: {
+                    latitude: Number(props.latitude),
+                    longitude: Number(props.longitude),
+                  },
+                  radius: 10000,
+                },
+              },
+            }),
+          }
+        );
+
+        const result = await response.json();
+        const places = result.places || [];
+        setPlacesResult(places);
+        setRequestCount((prev) => prev + 1);
+
+        // ✅ BULK affiliate lookup
+        const placeIds = places.map((p: any) => p.id);
+
+        if (placeIds.length) {
+          const res = await fetch("/api/links/bulk", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ placeIds }),
+          });
+
+          const affiliateData = await res.json();
+          setAffiliateMap(affiliateData);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching places:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchPlaces();
-  }, [props.latitude, props.longitude]);
+  }, []);
+
+  // ✅ URL resolver
+  const resolveUrl = (place: any) =>
+    affiliateMap[place.id]?.affiliate_url ||
+    place.websiteUri ||
+    place.googleMapsUri;
 
   return (
     <Dialog>
       <DialogTrigger className="bg-gray-400 rounded-md min-w-[260px] h-10 flex items-center justify-start gap-[22%] p-5 cursor-pointer">
-        {props.triggerName === 'Add a place to stay' 
-           ? <BsHouseAddFill fontSize="20px" /> 
-           :    <MdAddCircle fontSize="20px" />                       
-          }
+        {props.triggerName === "Add a place to stay" ? (
+          <BsHouseAddFill fontSize="20px" />
+        ) : (
+          <MdAddCircle fontSize="20px" />
+        )}
         <div className="text-base font-medium">{props.triggerName}</div>
       </DialogTrigger>
 
-      <DialogContent className=" flex gap-2 h-[480px] w-[90%] sm:w-[70%] min-w-[320px] z-[60] sm:pl-4 mt-6">
-       
-          <div className="sm:w-full 950:w-[70%]">
-
+      <DialogContent className="flex gap-2 h-[480px] w-[90%] sm:w-[70%] min-w-[320px] z-[60] sm:pl-4 mt-6">
+        <div className="sm:w-full 950:w-[70%]">
           <DialogTitle>
             <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}>
-                <LocationInput inputName={""} setLocation={setinputLocation} deafultValue={undefined}/>
-             </APIProvider>
+              <LocationInput
+                inputName=""
+                setLocation={setinputLocation}
+                deafultValue={undefined}
+              />
+            </APIProvider>
           </DialogTitle>
 
-       
-            <div className="text-sm sm:text-md">{props.descriptionName}</div>
-            <div className="w-full flex gap-2 flex-col h-[345px] pr-4 overflow-auto">
-              {placesResult.map((place: any, index: number) => (
-                <div key={index} className="relative">
-                  <div className="absolute top-7 left-8 text-3xl text-blue-600">
-                    {numbersiconArr[index]}
-                  </div>
-                  <Placecomponent
-                    key={index}
-                    longitude={22302493043}
-                    latitude={10930202}
-                    type={place.primaryTypeDisplayName?.text}
-                    rating={place.rating}
-                    description="life is wonderful even ..."
-                    address="xristou andreou"
-                    displayName={place.displayName?.text || "omonoia"}
-                  />
-                </div>
-              ))}
+          {props.triggerName === "Add a place to stay" && (
+            <div className="mt-3 px-2 flex items-center gap-3">
+              <select
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
+                className="w-[140px] border border-gray-300 rounded-md p-2 text-sm"
+              >
+                {lodgingTypes.map((type) => (
+                  <option key={type.value} value={type.value}>
+                    {type.label}
+                  </option>
+                ))}
+              </select>
+
+              <button
+                onClick={fetchPlaces}
+                className="px-3 py-2 bg-blue-500 text-white rounded-md text-sm"
+              >
+                {loading
+                  ? "Loading..."
+                  : `Search (${requestCount}/${maxRequests})`}
+              </button>
             </div>
+          )}
+
+          <div className="w-full flex gap-2 flex-col h-[345px] pt-2 pr-2 overflow-auto">
+            <div className="text-sm sm:text-md pl-2">
+              {props.descriptionName}
+            </div>
+
+            {placesResult.map((place: any, index: number) => (
+              <div key={index} className="relative">
+                <div className="absolute top-7 left-8 text-3xl text-blue-600">
+                  {numbersiconArr[index]}
+                </div>
+
+                <Placecomponent
+                  key={index}
+                  description={place.description ?? ""}
+                  longitude={place.location?.longitude ?? 0}
+                  latitude={place.location?.latitude ?? 0}
+                  type={place.primaryTypeDisplayName?.text}
+                  rating={place.rating ?? 0}
+                  address={place.shortFormattedAddress ?? ""}
+                  displayName={place.displayName?.text || "Unknown"}
+                  link={
+                    props.triggerName === "Add a place to stay"
+                      ? resolveUrl(place)
+                      : place.url
+                  }
+                />
+              </div>
+            ))}
           </div>
-        <div className="border-2 border-pink-700 hidden 950:flex w-[50%] mt-7 h-[407px] z-50 cursor-pointer">
-            {/* <Mapprovider/> */}
-         </div>
+        </div>
+        <div className="border-2 border-pink-700 hidden 950:flex w-[50%] mt-7 h-[407px] z-50 cursor-pointer"> {/* <Mapprovider/> */} </div>
       </DialogContent>
     </Dialog>
   );
