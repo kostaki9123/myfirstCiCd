@@ -9,17 +9,6 @@ import {
 } from "@/components/ui/dialog";
 import { BsHouseAddFill } from "react-icons/bs";
 import { MdAddCircle } from "react-icons/md";
-import {
-  TbSquareRoundedNumber1Filled,
-  TbSquareRoundedNumber2Filled,
-  TbSquareRoundedNumber3Filled,
-  TbSquareRoundedNumber4Filled,
-  TbSquareRoundedNumber5Filled,
-  TbSquareRoundedNumber6Filled,
-  TbSquareRoundedNumber7Filled,
-  TbSquareRoundedNumber8Filled,
-  TbSquareRoundedNumber9Filled,
-} from "react-icons/tb";
 import Placecomponent from "./placecomponent";
 import LocationInput from "./inputauto";
 import { APIProvider } from "@vis.gl/react-google-maps";
@@ -35,17 +24,7 @@ const lodgingTypes = [
   { label: "Campground", value: "campground" },
 ];
 
-const numbersiconArr = [
-  <TbSquareRoundedNumber1Filled />,
-  <TbSquareRoundedNumber2Filled />,
-  <TbSquareRoundedNumber3Filled />,
-  <TbSquareRoundedNumber4Filled />,
-  <TbSquareRoundedNumber5Filled />,
-  <TbSquareRoundedNumber6Filled />,
-  <TbSquareRoundedNumber7Filled />,
-  <TbSquareRoundedNumber8Filled />,
-  <TbSquareRoundedNumber9Filled />,
-];
+
 
 type props = {
   latitude: string;
@@ -214,12 +193,8 @@ const Addaplace = (props: props) => {
 
             {placesResult.map((place: any, index: number) => (
               <div key={index} className="relative">
-                <div className="absolute top-7 left-8 text-3xl text-blue-600">
-                  {numbersiconArr[index]}
-                </div>
-
                 <Placecomponent
-                  key={index}
+                  index={index}
                   description={place.description ?? ""}
                   longitude={place.location?.longitude ?? 0}
                   latitude={place.location?.latitude ?? 0}
