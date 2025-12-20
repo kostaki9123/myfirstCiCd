@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import Placesdropdown from './placesdropdown'
 import Addaplace from './addplace'
 import { TripSegment } from '../../../createtrip/[tripid]/components/movingbox';
+import PlaceToStayCard from './PlaceToStayCard';
 
 export interface ItineraryPoint {
   id: string;
@@ -100,11 +101,12 @@ const Itineraryboard = (props : props) => {
 
             {/** Main */}
 
-            <div className='flex justify-center flex-col items-center p-2 pt-7  relative  '>
+            <div className='flex justify-center gap-2 flex-col items-center p-2 pt-7  relative  '>
                 <small className="text-sm font-semibold leading-none  absolute left-2 top-2">Accomodation</small>
                 {/** <StayDetailsCard/> */ }
+                <PlaceToStayCard/>
                 <Addaplace triggerName='Add a place to stay' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={selectedPoint.placeLat?.toString()!} longitude={selectedPoint.placeLng?.toString()!}/> 
-              
+               
             </div>
 
             <div className='flex justify-center flex-col items-center p-2 pt-7  relative  '>

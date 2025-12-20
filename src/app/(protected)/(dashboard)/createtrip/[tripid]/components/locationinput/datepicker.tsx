@@ -13,6 +13,7 @@ type Props = {
 
   // NEW:
   defaultValue?: Date | [Date | null, Date | null] | null;
+  fromItinerary?: boolean
 };
 
 export default function DateRangePicker({
@@ -20,6 +21,7 @@ export default function DateRangePicker({
   isRange,
   onlyTime,
   onChange,
+  fromItinerary,
   namePrefix = "date",
   defaultValue = null,
 }: Props) {
@@ -56,10 +58,10 @@ export default function DateRangePicker({
   };
 
   const inputClass =
-    "border relative focus:border-black focus:outline-none px-3 rounded text-sm placeholder-gray-500 w-auto 343:w-60 h-[40px] sm:h-[44px]";
+    `border relative focus:border-black focus:outline-none px-3  text-sm placeholder-gray-500  ${fromItinerary ? 'w-full rounded-lg h-[37px] sm:h-[37px] ' : '343:w-60 w-auto rounded h-[40px] sm:h-[44px]' }  `;
 
   return (
-    <div className="flex flex-col">
+    <div className={`flex flex-col ${fromItinerary ? "w-full" : "w-auto"}`}>
 
       {/* TIME-ONLY MODE */}
       {onlyTime ? (

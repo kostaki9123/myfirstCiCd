@@ -58,22 +58,65 @@ const Addaplace = (props: props) => {
       setLoading(true);
 
       if (props.triggerName === "Add a place to visit") {
-        // --- GetYourGuide ---
-        const city = "berlin";
-        const affiliateLink = `https://www.getyourguide.com/s/?q=${encodeURIComponent(
-          city
-        )}&partner_id=R80OI9B`;
+        if (props.triggerName === "Add a place to visit") {
+               const response = await fetch(
+                 "https://places.googleapis.com/v1/places:searchNearby",
+                 {
+                   method: "POST",
+                   headers: {
+                     "Content-Type": "application/json",
+                     "X-Goog-Api-Key": process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
+                     "X-Goog-FieldMask":
+                       "places.id,places.displayName,places.rating,places.primaryTypeDisplayName,places.location,places.websiteUri,places.googleMapsUri,places.shortFormattedAddress",
+                   },
+                   body: JSON.stringify({
+                     includedTypes: [
+                       "tourist_attraction",
+                       "museum",
+                       "art_gallery",
+                       "park",
+                       "zoo",
+                       "amusement_park",
+                       "historical_landmark",
+                     ],
+                     maxResultCount: 9,
+                     locationRestriction: {
+                       circle: {
+                         center: {
+                           latitude: Number(props.latitude),
+                           longitude: Number(props.longitude),
+                         },
+                         radius: 10000,
+                       },
+                     },
+                   }),
+                 }
+               );
+              
+               const result = await response.json();
+               const places = result.places || [];
+              
+               setPlacesResult(places);
+               setRequestCount((prev) => prev + 1);
 
-        const mockActivities = Array.from({ length: 9 }).map((_, i) => ({
-          displayName: { text: `Activity ${i + 1} in ${city}` },
-          address: { freeformAddress: city },
-          primaryTypeDisplayName: { text: "Activity & Tickets" },
-          rating: Math.floor(Math.random() * 5) + 1,
-          url: affiliateLink,
-        }));
+               
+              
+               // ✅ BULK affiliate lookup (όπως σωστά κάνεις)
+               const placeIds = places.map((p: any) => p.id);
+              
+               if (placeIds.length) {
+                 const res = await fetch("/api/links/bulk", {
+                   method: "POST",
+                   headers: { "Content-Type": "application/json" },
+                   body: JSON.stringify({ placeIds }),
+                 });
+              
+                 const affiliateData = await res.json();
+                 
+                 setAffiliateMap(affiliateData);
+               }
+          }
 
-        setPlacesResult(mockActivities);
-        setRequestCount((prev) => prev + 1);
       } else {
         // --- Google Places ---
         const response = await fetch(
@@ -137,6 +180,8 @@ const Addaplace = (props: props) => {
     affiliateMap[place.id]?.affiliate_url ||
     place.websiteUri ||
     place.googleMapsUri;
+
+    console.log(placesResult ,'affiliate', affiliateMap )
 
   return (
     <Dialog>
@@ -202,11 +247,8 @@ const Addaplace = (props: props) => {
                   rating={place.rating ?? 0}
                   address={place.shortFormattedAddress ?? ""}
                   displayName={place.displayName?.text || "Unknown"}
-                  link={
-                    props.triggerName === "Add a place to stay"
-                      ? resolveUrl(place)
-                      : place.url
-                  }
+                  link={resolveUrl(place)}
+                  
                 />
               </div>
             ))}

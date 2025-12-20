@@ -9,6 +9,8 @@ export async function POST(req: Request) {
     return NextResponse.json({});
   }
 
+  console.log('placesss' , placeIds)
+
   const links = await prisma.placeAffiliateLink.findMany({
     where: {
       place_id: { in: placeIds },
