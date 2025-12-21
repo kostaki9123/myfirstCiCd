@@ -9,15 +9,6 @@ import { BiSolidMessageAltAdd } from "react-icons/bi";
 import { FaNotesMedical } from "react-icons/fa6";
 import { FaNoteSticky } from "react-icons/fa6";
 import { MdAddLocationAlt } from "react-icons/md";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import Sheetnotes from "./components/sheet";
 import Checklist from "./components/checklist";
 
 
@@ -84,7 +75,6 @@ const Home = () => {
                             </div>
                           </CardHeader>
                           <CardContent className="space-y-1 text-xs text-muted-foreground p-3 pt-0  ">
-                            <Sheetnotes/>
                             <div>Arrival at 9:00 AM ✈️</div>
                             <div>Visit: Eiffel Tower, Louvre</div>
                             <div>Stay: Hotel Parisian Dreams</div>
@@ -99,7 +89,6 @@ const Home = () => {
                             <CardTitle>Small mairmaed</CardTitle>
                           </CardHeader>
                           <CardContent className="space-y-1 p-3 pt-0 text-xs text-muted-foreground">
-                            <Sheetnotes/>
                             <div>Arrival at 9:00 AM ✈️</div>
                             <div>Visit: Eiffel Tower, Louvre</div>
                             <div>Stay: Hotel Parisian Dreams</div>
@@ -114,7 +103,6 @@ const Home = () => {
                             <CardTitle>calsberg musuem</CardTitle>
                           </CardHeader>
                           <CardContent className=" p-3 pt-0 space-y-1 text-xs text-muted-foreground">
-                            <Sheetnotes/>
                             <div>Time: 9:00 AM</div>
                             <div>Tickets: </div>
                             <div>Stay: Hotel Parisian Dreams</div>
@@ -140,7 +128,6 @@ const Home = () => {
               <CardTitle>Transport</CardTitle>    
             </CardHeader>
             <CardContent className=" p-2 pt-0 space-y-2 text-xs text-muted-foreground">
-              <Sheetnotes/>
               <div className="flex items-center gap-2">
                 <Plane className="h-4 w-4" />
                 <span>Bus: Copenhagen to Humburg</span>
@@ -174,7 +161,6 @@ const Home = () => {
                             </div>
                           </CardHeader>
                           <CardContent className="space-y-1 text-xs text-muted-foreground p-3 pt-0  ">
-                            <Sheetnotes/>
                             <div>Arrival at 9:00 AM ✈️</div>
                             <div>Visit: Eiffel Tower, Louvre</div>
                             <div>Stay: Hotel Parisian Dreams</div>
@@ -189,7 +175,6 @@ const Home = () => {
                             <CardTitle>Small mairmaed</CardTitle>
                           </CardHeader>
                           <CardContent className="space-y-1 p-3 pt-0 text-xs text-muted-foreground">
-                            <Sheetnotes/>
                             <div>Arrival at 9:00 AM ✈️</div>
                             <div>Visit: Eiffel Tower, Louvre</div>
                             <div>Stay: Hotel Parisian Dreams</div>
@@ -204,7 +189,6 @@ const Home = () => {
                             <CardTitle>calsberg musuem</CardTitle>
                           </CardHeader>
                           <CardContent className=" p-3 pt-0 space-y-1 text-xs text-muted-foreground">
-                            <Sheetnotes/>
                             <div>Time: 9:00 AM</div>
                             <div>Tickets: </div>
                             <div>Stay: Hotel Parisian Dreams</div>
@@ -227,7 +211,6 @@ const Home = () => {
               <CardTitle>Transport</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-sm text-muted-foreground">
-              <Sheetnotes/>
               <div className="flex items-center gap-2">
                 <Plane className="h-4 w-4" />
                 <span>Train: Berlin to cologne</span>
@@ -257,7 +240,6 @@ const Home = () => {
                             </div>
                           </CardHeader>
                           <CardContent className="space-y-1 text-sm text-muted-foreground">
-                            <Sheetnotes/>
                             <div>Arrival at 9:00 AM ✈️</div>
                             <div>Visit: Eiffel Tower, Louvre</div>
                             <div>Stay: Hotel Parisian Dreams</div>
@@ -272,7 +254,6 @@ const Home = () => {
                             <CardTitle>Small mairmaed</CardTitle>
                           </CardHeader>
                           <CardContent className="space-y-1 text-sm text-muted-foreground">
-                            <Sheetnotes/>
                             <div>Arrival at 9:00 AM ✈️</div>
                             <div>Visit: Eiffel Tower, Louvre</div>
                             <div>Stay: Hotel Parisian Dreams</div>
@@ -287,7 +268,6 @@ const Home = () => {
                             <CardTitle>calsberg musuem</CardTitle>
                           </CardHeader>
                           <CardContent className="space-y-1 text-sm text-muted-foreground">
-                            <Sheetnotes/>
                             <div>Time: 9:00 AM</div>
                             <div>Tickets: </div>
                             <div>Stay: Hotel Parisian Dreams</div>
@@ -325,7 +305,6 @@ const Home = () => {
                             </div>
                           </CardHeader>
                           <CardContent className="space-y-1 text-sm text-muted-foreground">
-                            <Sheetnotes/>
                             <div>Arrival at 9:00 AM ✈️</div>
                             <div>Visit: Eiffel Tower, Louvre</div>
                             <div>Stay: Hotel Parisian Dreams</div>
@@ -340,7 +319,6 @@ const Home = () => {
                             <CardTitle>Small mairmaed</CardTitle>
                           </CardHeader>
                           <CardContent className="space-y-1 text-sm text-muted-foreground">
-                            <Sheetnotes/>
                             <div>Arrival at 9:00 AM ✈️</div>
                             <div>Visit: Eiffel Tower, Louvre</div>
                             <div>Stay: Hotel Parisian Dreams</div>
@@ -355,7 +333,6 @@ const Home = () => {
                             <CardTitle>calsberg musuem</CardTitle>
                           </CardHeader>
                           <CardContent className="space-y-1 text-sm text-muted-foreground">
-                            <Sheetnotes/>
                             <div>Time: 9:00 AM</div>
                             <div>Tickets: </div>
                             <div>Stay: Hotel Parisian Dreams</div>
