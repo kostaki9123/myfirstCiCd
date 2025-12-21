@@ -22,56 +22,52 @@ const config: Config = {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
-		  screens: {
-			'base': '0px',
-
-			'150' : '150px',
-
-			'200' : '200px',
-
-			'255' : '255px',
-
-			'290' : '290px',
-
-			'343': '343px',
-
-			'360': '360px',
-
-			'xxs' : '410px',
-
-			'426' : '426px',
-
-			'450' : '450px',
-			// => @media (min-width: 410px) { ... }
-			'535' : '535px',
-
-			'600' : '600px',
-
-			'sm': '640px',
-
-			'674' : '674px',
-			// => @media (min-width: 640px) { ... }
-	  
-			'md': '768px',
-
-			'787' : '787px',
-
-			'820' : '820px',	
-			// => @media (min-width: 768px) { ... }
-			'950': '950px',
-
-			'986': '986px' ,
-	  
-			'lg': '1024px',
-			// => @media (min-width: 1024px) { ... }
-	  
-			'xl': '1280px',
-			// => @media (min-width: 1280px) { ... }
-	  
-			'2xl': '1536px',
-			// => @media (min-width: 1536px) { ... }
-		  }
-
+  		screens: {
+  			'150': '150px',
+  			'200': '200px',
+  			'255': '255px',
+  			'290': '290px',
+  			'343': '343px',
+  			'360': '360px',
+  			'426': '426px',
+  			'450': '450px',
+  			'535': '535px',
+  			'600': '600px',
+  			'674': '674px',
+  			'787': '787px',
+  			'820': '820px',
+  			'950': '950px',
+  			'986': '986px',
+  			'base': '0px',
+  			'xxs': '410px',
+  			'sm': '640px',
+  			'md': '768px',
+  			'lg': '1024px',
+  			'xl': '1280px',
+  			'2xl': '1536px'
+  		},
+  		keyframes: {
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
+  				}
+  			}
+  		},
+  		animation: {
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out'
+  		}
   	}
   },
   plugins: [require("tailwindcss-animate")],
