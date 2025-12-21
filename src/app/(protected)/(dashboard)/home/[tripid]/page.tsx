@@ -1,7 +1,6 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Calendar, MapPin, BedDouble, Plane } from "lucide-react";
 import { GoChecklist  } from "react-icons/go";
 import { MdHotel } from "react-icons/md"
