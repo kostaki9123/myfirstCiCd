@@ -7,6 +7,7 @@ import { CiClock2 } from "react-icons/ci";
 import { IoHome } from "react-icons/io5";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import DatePickerExample from "../../../createtrip/[tripid]/components/locationinput/datepicker";
+import NotesBox from "../../../home/[tripid]/components/edittextarea";
 
 type props = {
     placeName : string
@@ -87,14 +88,9 @@ export default function PlaceToStayCard() {
 
 
       {/* NOTES */}
-      <div className="flex flex-col">
-        <label className="text-xs text-gray-700">Notes</label>
-        <textarea
-          placeholder="Add notes here..."
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          className="border rounded-lg px-2 py-1 min-h-[50px] outline-none resize-none bg-white"
-        />
+      <div className="flex flex-col  ">
+        <label className="text-xs text-gray-700   ">Notes</label>
+        <NotesBox id="trip_1" defaultNotes="" showLabel={false} fromItinerary />
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import { FaNotesMedical } from "react-icons/fa6";
 import { FaNoteSticky } from "react-icons/fa6";
 import { MdAddLocationAlt } from "react-icons/md";
 import Checklist from "./components/checklist";
+import NotesBox from "./components/edittextarea";
 
 
 
@@ -64,22 +65,28 @@ const Home = () => {
              
              
                <div className="flex flex-col  535:flex-row  gap-4 w-max">
-               <div className=" flex flex-col" >
-                         <h2 className=" text-base pb-2 font-semibold hidden lg:block ">Accomodation</h2>
-                        <Card className="min-w-[250px] relative h-fit  p-2">
-                          <CardHeader className="flex flex-row gap-2 p-3  " >
-                            <div className="flex flex-row  items-center gap-2  ">
-                              <CardTitle className="">Downtonw hostel</CardTitle>
-                              <MdHotel className="  h-full text-xl" />
-                            </div>
-                          </CardHeader>
-                          <CardContent className="space-y-1 text-xs text-muted-foreground p-3 pt-0  ">
-                            <div>Arrival at 9:00 AM ✈️</div>
-                            <div>Visit: Eiffel Tower, Louvre</div>
-                            <div>Stay: Hotel Parisian Dreams</div>
-                          </CardContent>
-                        </Card>
+                       <div className=" flex flex-col" >
+                       <h2 className=" text-base pb-2 font-semibold hidden lg:block ">Accomodation</h2>
+                       
+                       <Card className="min-w-[250px] relative h-fit p-2">
+                         <CardHeader className="flex flex-row gap-2 p-3">
+                           <div className="flex flex-row items-center gap-2">
+                             <CardTitle className="">Downtonw hostel</CardTitle>
+                             <MdHotel className="h-full text-xl" />
+                           </div>
+                         </CardHeader>
+                      
+                         <CardContent className="space-y-1 text-xs text-muted-foreground p-3 pt-0">
+                           <div>Arrival at 9:00 AM ✈️</div>
+                           <div>Visit: Eiffel Tower, Louvre</div>
+                           <div>Stay: Hotel Parisian Dreams</div>
+                      
+                           {/* ⬇️ Notes box inserted here */}
+                           <NotesBox id="copenhagen-accommodation" defaultNotes="" />
+                         </CardContent>
+                       </Card>
                       </div>
+
 
                       <div className=" flex flex-col" >
                          <h2 className=" text-base pb-2 font-semibold  hidden lg:block">Places</h2>
