@@ -4,7 +4,9 @@ import React, { useState } from 'react'
 import Placesdropdown from './placesdropdown'
 import Addaplace from './addplace'
 import { TripSegment } from '../../../createtrip/[tripid]/components/movingbox';
+import DatePickerExample from "../../../createtrip/[tripid]/components/locationinput/datepicker";
 import PlaceToStayCard from './PlaceToStayCard';
+import PlaceToVisitCard from './PlaceToVisitCard';
 
 export interface ItineraryPoint {
   id: string;
@@ -48,8 +50,11 @@ type props = {
   }
 
 
-
 const Itineraryboard = (props : props) => {
+ 
+
+  
+  
 
   const pointsOnly = props.cyrclesArr.filter(item => item.role === "POINT");
 
@@ -101,16 +106,17 @@ const Itineraryboard = (props : props) => {
 
             {/** Main */}
 
-            <div className='flex justify-center gap-2 flex-col items-center p-2 pt-7  relative  '>
+            <div className='flex justify-center gap-2 flex-col items-center p-2 pt-7  relative z-0  '>
                 <small className="text-sm font-semibold leading-none  absolute left-2 top-2">Accomodation</small>
                 {/** <StayDetailsCard/> */ }
-                <PlaceToStayCard/>
+                <PlaceToStayCard placeName='Copenhagen downtown hostel' endDate={selectedPoint.endDate} startDate={selectedPoint.startDate}  />
                 <Addaplace triggerName='Add a place to stay' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={selectedPoint.placeLat?.toString()!} longitude={selectedPoint.placeLng?.toString()!}/> 
                
             </div>
 
-            <div className='flex justify-center flex-col items-center p-2 pt-7  relative  '>
-                <small className="text-sm font-semibold leading-none  absolute left-2 top-2">Places</small>               
+            <div className='flex justify-center flex-col items-center p-2 pt-7 gap-2 relative  '>
+                <small className="text-sm font-semibold leading-none  absolute left-2 top-2">Places</small> 
+                <PlaceToVisitCard placeName='Copenhagen downtown hostel' endDate={selectedPoint.endDate} startDate={selectedPoint.startDate}   />              
                 <Addaplace triggerName='Add a place to visit' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={selectedPoint.placeLat?.toString()!} longitude={selectedPoint.placeLng?.toString()!}/> 
 
                 {/** <StayDetailsCard/> */ }
@@ -120,6 +126,7 @@ const Itineraryboard = (props : props) => {
 
         </div>
     </div>
+
 </>
   )
 }

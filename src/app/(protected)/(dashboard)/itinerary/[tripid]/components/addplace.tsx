@@ -185,7 +185,7 @@ const Addaplace = (props: props) => {
 
   return (
     <Dialog>
-      <DialogTrigger className="bg-gray-400 rounded-md min-w-[260px] h-10 flex items-center justify-start gap-[22%] p-5 cursor-pointer">
+      <DialogTrigger className="bg-gray-400 rounded-md min-w-[260px] h-10 flex items-center justify-center w-full gap-7 p-5 cursor-pointer">
         {props.triggerName === "Add a place to stay" ? (
           <BsHouseAddFill fontSize="20px" />
         ) : (

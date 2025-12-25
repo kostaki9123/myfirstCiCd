@@ -67,6 +67,9 @@ export default function DateRangePicker({
       {onlyTime ? (
         <>
           <DatePicker
+            portalId="datepicker-portal"
+            popperPlacement="bottom-start"
+            popperClassName="z-[9999]"
             selected={date}
             onChange={handleSingleChange}
             showTimeSelect

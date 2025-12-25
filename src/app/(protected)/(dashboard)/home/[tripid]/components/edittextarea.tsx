@@ -7,14 +7,16 @@ type Props = {
   id: string;
   defaultNotes?: string;
   showLabel?: boolean;
-  fromItinerary?: boolean; // NEW
+  fromItinerary?: boolean;
+  placeholder?: string
 };
 
 const NotesBox = ({
   id,
   defaultNotes = "",
   showLabel = true,
-  fromItinerary = false, // default false
+  fromItinerary = false,
+  placeholder = ''
 }: Props) => {
   const [notes, setNotes] = useState("");
   const [mode, setMode] = useState<"hidden" | "edit" | "view">("hidden");
@@ -142,7 +144,7 @@ const NotesBox = ({
             maxLength={200}
             value={notes}
             onChange={handleSave}
-            placeholder="Add your note..."
+            placeholder={placeholder ? placeholder : 'Add notes here...'}
             className={`
               w-full 
               min-h-[18px]
