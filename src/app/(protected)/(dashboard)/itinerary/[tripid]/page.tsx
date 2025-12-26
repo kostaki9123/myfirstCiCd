@@ -16,11 +16,16 @@ const Page = async ({ params }: PageProps) => {
 
   console.log('Itinerary points',points);
 
+  const pointsOnly = points.filter(item => item.role === "POINT");
 
   return (
     <div className='   h-full bottom-0 absolute right-0 left-0  flex border-4 border-yellow-600 min-w-[344px] '>
       <div className=' h-[100%] 950:w-[53%] overflow-auto   w-[100%]  block  bg-lime-500 ' >
-         <Itineraryboard cyrclesArr={points} />
+        { pointsOnly.length === 0
+          ?  <>There is no destination yet</>
+          :  <Itineraryboard cyrclesArr={points} />
+        }
+        
       </div>
       <div className=' h-[100%]  w-[47%]   950:block hidden bg-slate-500 ' >
            google map                           
