@@ -16,7 +16,7 @@ const DashboardLayout = ({children} : props) => {
     <div className=' h-screen relative '>
        <Navbar withManageTripbtn withtripname/>
        <Sidebar/>
-       <div className=' bg-white top-14 absolute md:left-56 left-0 right-0 bottom-0  border-2 border-lime-600   '>
+       <div className=' bg-white top-14 absolute md:left-56 left-0 right-0 bottom-0 '>
        {children} 
        </div>
     </div>
