@@ -7,7 +7,7 @@ import { getPoints } from "../../createtrip/[tripid]/action";
 
 import Link from "next/link";
 import Transportui from "./components/transportui";
-import Placeui from "./placeui";
+import Placeui from "./components/placeui";
 
 
 interface PageProps {
@@ -96,8 +96,8 @@ const Home = async ({ params }: PageProps) => {
            <Placeui  id={point.id} index={point.index}
               placeName={point.placeName}  startDate={point.startDate}  endDate={point.endDate}   
              />
-        :
-          <Transportui id={point.id} index={point.index} departureTime fromName={point.fromName}  toName={point.toName} transportType={point.transportType} />    
+           :
+            <Transportui id={point.id} index={point.index}  fromName={point.fromName}  toName={point.toName} transportType={point.transportType} departureDate={point.departureDate} />    
         ))}
         
         </div>

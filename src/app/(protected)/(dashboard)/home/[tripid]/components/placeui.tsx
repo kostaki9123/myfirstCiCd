@@ -4,7 +4,7 @@ import { MdHotel } from "react-icons/md"
 import { BiSolidMessageAltAdd } from "react-icons/bi";
 import { FaNotesMedical } from "react-icons/fa6";
 import { FaNoteSticky } from "react-icons/fa6";
-import NotesBox from './components/edittextarea';
+import NotesBox from './edittextarea';
  
 
 type props = {
@@ -20,8 +20,23 @@ type props = {
 }
 
 const Placeui = (props : props) => {
+
+  const start = props.startDate.toLocaleString('en-US', { month: 'short', day: '2-digit' });
+  const end = props.endDate.toLocaleString('en-US', { month: 'short', day: '2-digit' });
+
+
   return (
-    <div className="flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
+    <div className="relative  flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
+               <div className="lg:absolute top-1 mt-1 lg:mt-0 left-[-6px] px-3 py-1.5 rounded-md
+                bg-gray-700 text-white text-[11px] shadow-lg flex items-center gap-1">
+                   <div className="uppercase tracking-wide text-gray-200">{start.split(' ')[0]}</div>
+                   <div className="font-semibold">{start.split(' ')[1]}</div>
+                   <span>-</span>
+                   <div className="uppercase tracking-wide text-gray-200">{end.split(' ')[0]}</div>
+                   <div className="font-semibold">{end.split(' ')[1]}</div>
+                </div>
+
+
 
               <div  className="relative pl-10 text-white w-40   ">
                     <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full border-2 border-lime-500 "></div>
@@ -41,10 +56,8 @@ const Placeui = (props : props) => {
                                </div>
                              </CardHeader>
                            
-                             <CardContent className="space-y-1 text-xs text-muted-foreground p-3 pt-0">
-                               <div>Arrival at 9:00 AM ✈️</div>
-                               <div>Visit: Eiffel Tower, Louvre</div>
-                               <div>Stay: Hotel Parisian Dreams</div>
+                             <CardContent className="space-y-1 text-xs text-muted-foreground p-3 pt-0"> 
+                               <div>Dates: 12/10 - 16/10</div>
                            
                                {/* ⬇️ Notes box inserted here */}
                                <NotesBox id="copenhagen-accommodation" defaultNotes="" />
@@ -60,9 +73,9 @@ const Placeui = (props : props) => {
                              <CardTitle>Small mairmaed</CardTitle>
                            </CardHeader>
                            <CardContent className="space-y-1 p-3 pt-0 text-xs text-muted-foreground">
-                             <div>Arrival at 9:00 AM ✈️</div>
-                             <div>Visit: Eiffel Tower, Louvre</div>
-                             <div>Stay: Hotel Parisian Dreams</div>
+                             <div>Visit Date: 13/10</div>
+                             <div>Visit Time: 9:00 AM</div>
+                             <NotesBox id="copenhagen-accommodation" defaultNotes="" />
                            </CardContent>
                          </Card>
                        </div>
@@ -74,9 +87,9 @@ const Placeui = (props : props) => {
                              <CardTitle>calsberg musuem</CardTitle>
                            </CardHeader>
                            <CardContent className=" p-3 pt-0 space-y-1 text-xs text-muted-foreground">
-                             <div>Time: 9:00 AM</div>
-                             <div>Tickets: </div>
-                             <div>Stay: Hotel Parisian Dreams</div>
+                             <div>Visit Date: 13/10</div>
+                             <div>Visit Time: 13:00 AM</div>
+                             <NotesBox id="copenhagen-accommodation" defaultNotes="" />
                            </CardContent>
                          </Card>
                        </div>
