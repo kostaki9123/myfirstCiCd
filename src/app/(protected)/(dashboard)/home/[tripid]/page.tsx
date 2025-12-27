@@ -74,17 +74,17 @@ const Home = async ({ params }: PageProps) => {
               <div className=" flex flex-col " >
                         
                   <h2 className=" text-base py-3 min-h-[46px] font-semibold"></h2>
-                  <button
-                    className="group flex min-w-[250px] h-full items-center justify-center rounded-2xl bg-white p-10 shadow-md transition hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  
+                  {/**   className="group flex min-w-[250px] h-full items-center justify-center rounded-2xl bg-white p-10 shadow-md transition hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     aria-label="Start planning your trip"
-                  >
+                  >*/}
                     <div className="flex flex-col items-center space-y-2">
                       <MdAddLocationAlt className="text-5xl text-blue-600 transition-transform group-hover:scale-110" />
                       <span className="text-base font-semibold text-gray-700 group-hover:text-blue-600">
                         Plan Your Trip
                       </span>
                     </div>
-                   </button>
+                   
                </div>
             </Link>
           }

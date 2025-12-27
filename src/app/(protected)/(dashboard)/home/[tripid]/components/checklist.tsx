@@ -48,11 +48,7 @@ const Checklist = () => {
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <button
-          className="fixed bottom-8 right-8 z-50 flex items-center gap-2 rounded-full bg-blue-600 px-5 py-3 text-white shadow-lg transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-          aria-label="Open checklist"
-        >
+      <DialogTrigger className="fixed bottom-8 right-8 z-50 flex items-center gap-2 rounded-full bg-blue-600 px-5 py-3 text-white shadow-lg transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300">    
           <svg
             className="w-5 h-5"
             fill="none"
@@ -68,7 +64,6 @@ const Checklist = () => {
             />
           </svg>
           <span className="font-semibold text-sm sm:text-base">Checklist</span>
-        </button>
       </DialogTrigger>
 
       <DialogContent className="w-[90vw] sm:w-[400px] max-w-full">
