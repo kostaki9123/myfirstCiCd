@@ -5,9 +5,9 @@ import { getPoints } from '../../createtrip/[tripid]/action';
 const Page = async ({
   params,
 }: {
-  params: { tripid: string };
+  params: Promise<{ tripid: string }>;
 }) => {
-  const { tripid } = params;
+  const { tripid } = await params;
 
   console.log('Server-side ID from itinerary:', tripid);
 
