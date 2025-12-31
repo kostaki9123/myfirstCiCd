@@ -64,6 +64,8 @@ model Point {
   departureDate  DateTime?
   departureTime  DateTime?
 
+   places         Place[]
+
   // relation
   trip           Trip      @relation(fields: [tripId], references: [id])
 
@@ -73,6 +75,34 @@ enum PointRole {
   POINT
   MOVING_BOX
 }
+
+model Place {
+  id         String     @id @default(cuid())
+  pointId    String
+
+  placeType  PlaceType
+  name       String
+
+  stayFrom   DateTime?
+  stayUntil DateTime?
+
+  cost       Float?
+  notes      String?
+
+  visitDate  DateTime?
+  visitTime  DateTime?
+
+  // ===== Relations =====
+  point      Point      @relation(fields: [pointId], references: [id])
+  
+  @@index([pointId])
+}
+
+enum PlaceType {
+  ACCOMMODATION
+  PLACE_TO_VISIT
+}
+
 
 model PlaceAffiliateLink {
   id           Int      @id @default(autoincrement())

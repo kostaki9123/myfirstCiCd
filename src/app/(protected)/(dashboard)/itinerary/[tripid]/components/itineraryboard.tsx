@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import Placesdropdown from './placesdropdown'
 import Addaplace from './addplace'
 import { TripSegment } from '../../../createtrip/[tripid]/components/movingbox';
@@ -47,6 +47,8 @@ export interface ItineraryPoint {
 type props = {
     cyrclesArr : ItineraryPoint[]
     selectedPlacceId? : string
+    focusplace?: any
+    setFocusplace?: Dispatch<SetStateAction<any>>;
   }
 
 
@@ -110,14 +112,14 @@ const Itineraryboard = (props : props) => {
                 <small className="text-sm font-semibold leading-none  absolute left-2 top-2">Accomodation</small>
                 {/** <StayDetailsCard/> */ }
                 <PlaceToStayCard placeName='Copenhagen downtown hostel' endDate={selectedPoint.endDate} startDate={selectedPoint.startDate}  />
-                <Addaplace triggerName='Add a place to stay' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={selectedPoint.placeLat?.toString()!} longitude={selectedPoint.placeLng?.toString()!}/> 
+                <Addaplace triggerName='Add a place to stay' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={selectedPoint.placeLat!} longitude={selectedPoint.placeLng!}/> 
                
             </div>
 
             <div className='flex justify-center flex-col items-center p-2 pt-7 gap-2 relative  '>
                 <small className="text-sm font-semibold leading-none  absolute left-2 top-2">Places</small> 
                 <PlaceToVisitCard placeName='Copenhagen downtown hostel' endDate={selectedPoint.endDate} startDate={selectedPoint.startDate}   />              
-                <Addaplace triggerName='Add a place to visit' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={selectedPoint.placeLat?.toString()!} longitude={selectedPoint.placeLng?.toString()!}/> 
+                <Addaplace triggerName='Add a place to visit' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={selectedPoint.placeLat!} longitude={selectedPoint.placeLng!}/> 
 
                 {/** <StayDetailsCard/> */ }
                 {/** <Addaccomodationmodal triggerName='Add a place to stay' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={props.cyrclesArr[0].lat1} longitude={props.cyrclesArr[0].lng1}/> */}

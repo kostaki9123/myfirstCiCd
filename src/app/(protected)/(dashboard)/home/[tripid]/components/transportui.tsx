@@ -3,6 +3,7 @@ import { IoAirplaneOutline , IoTrain } from "react-icons/io5";
 import { FaCar , FaBusAlt , FaBicycle, FaShip,FaWalking } from "react-icons/fa";
 import { FaTrainTram, FaMotorcycle , FaTrainSubway , FaTaxi , FaFerry  } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import NotesBox from '../../../../../component/notes/edittextarea';
 
 
 const transportModes = [
@@ -56,20 +57,24 @@ function capitalizeFirst(str : string) {
                        <div className="text-lg font-semibold">{capitalizeFirst(props.transportType)}</div>
                       
                  </div>
-              
-                 <Card className=" group min-w-[300px] lg:mt-5 535:min-w-[300px] relative ml-3 lg:ml-0 p-2 ">
-                   <CardHeader className="p-3">
-                     <CardTitle>Transport</CardTitle>    
-                   </CardHeader>
-                   <CardContent className=" p-2 pt-0 space-y-2 text-xs text-muted-foreground">
-                     <div className="flex items-center gap-2">
-                       <div className=" text-lg">
-                           {getTransportIcon(props.transportType)}
-                       </div>               
-                       <span>{capitalizeFirst(props.transportType)}:{props.fromName}  →  { props.toName}</span>
-                     </div>
-                   </CardContent>
-                 </Card>
+                    
+                 <div className='flex flex-col' >  
+                      <h2 className=" text-base h-[32px] font-semibold text-white hidden lg:block "></h2>
+
+                      <Card className=" group min-w-[250px] lg:mt-5 535:min-w-[250px] relative ml-3 lg:ml-0 p-2 ">
+                        <CardHeader className="p-3">
+                          <CardTitle>Transport</CardTitle>    
+                        </CardHeader>
+                        <CardContent className=" p-2 pt-0 space-y-2 text-xs text-muted-foreground">
+                          <div className="flex items-start px-2 flex-col gap-2">
+                                        
+                            <span>From:{props.fromName}</span>
+                            <span>To:{ props.toName}</span>
+                          </div>
+                          <NotesBox id="copenhagen-accommodationw" defaultNotes="" />
+                        </CardContent>
+                      </Card>
+                 </div> 
              </div>
   )
 }

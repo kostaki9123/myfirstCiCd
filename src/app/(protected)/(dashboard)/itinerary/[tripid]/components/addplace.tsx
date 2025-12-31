@@ -12,6 +12,7 @@ import { MdAddCircle } from "react-icons/md";
 import Placecomponent from "./placecomponent";
 import LocationInput from "./inputauto";
 import { APIProvider } from "@vis.gl/react-google-maps";
+import Mapprovider from "@/app/component/map/map-provider";
 
 // Lodging types dropdown options
 const lodgingTypes = [
@@ -25,10 +26,9 @@ const lodgingTypes = [
 ];
 
 
-
 type props = {
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   cyrclesArr: any;
   triggerName: string;
   descriptionName: string;
@@ -47,6 +47,8 @@ const Addaplace = (props: props) => {
   const [loading, setLoading] = useState(false);
   const [requestCount, setRequestCount] = useState<number>(0);
   const maxRequests = 5;
+
+  let LatLng = { lat: props.latitude , lng: props.longitude } 
 
   const fetchPlaces = async () => {
     if (requestCount >= maxRequests) {
@@ -183,6 +185,15 @@ const Addaplace = (props: props) => {
 
     console.log(placesResult ,'affiliate', affiliateMap )
 
+
+  const reccomendedforMapPlaces = placesResult.map(place => ({
+    id: place.id,
+    location: { lat: place.location.latitude ,
+                lng: place.location.longitude
+               },
+    name: place.displayName?.text ?? "",
+   }));
+
   return (
     <Dialog>
       <DialogTrigger className="bg-gray-400 rounded-md min-w-[260px] h-10 flex items-center justify-center w-full gap-7 p-5 cursor-pointer">
@@ -254,7 +265,14 @@ const Addaplace = (props: props) => {
             ))}
           </div>
         </div>
-        <div className="border-2 border-pink-700 hidden 950:flex w-[50%] mt-7 h-[407px] z-50 cursor-pointer"> {/* <Mapprovider/> */} </div>
+        <div className="border-2 border-pink-700 hidden 950:flex w-[50%] mt-7 h-[407px] z-50 cursor-pointer"> 
+          <Mapprovider
+          cyrclesArr={props.cyrclesArr}
+          focusplace={LatLng}
+          recommendedStays={props.triggerName === "Add a place to visit" ? [] : reccomendedforMapPlaces }
+          recommendedVisits={props.triggerName === "Add a place to visit" ? reccomendedforMapPlaces : []}
+          />
+        </div>
       </DialogContent>
     </Dialog>
   );

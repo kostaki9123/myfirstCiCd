@@ -8,7 +8,7 @@ import { CiClock2 } from "react-icons/ci";
 import { IoHome } from "react-icons/io5";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import DatePickerExample from "../../../createtrip/[tripid]/components/locationinput/datepicker";
-import NotesBox from "../../../home/[tripid]/components/edittextarea";
+import NotesBox from "../../../../../component/notes/edittextarea";
 import {
   Accordion,
   AccordionContent,

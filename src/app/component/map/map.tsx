@@ -24,6 +24,12 @@ type TripSegment = {
 
 type LatLng = { lat: number; lng: number };
 
+export type RecommendedPlace = {
+  id: string;
+  name: string;
+  location: LatLng;
+};
+
 /* ---------------------- SAFE POINT ---------------------- */
 function safePoint(lat: number | null, lng: number | null): LatLng | null {
   if (lat == null || lng == null) return null;
@@ -40,7 +46,6 @@ function PolylineOverlay({
 }) {
   const map = useMap();
   const maps = useMapsLibrary("maps");
-
   const ref = useRef<google.maps.Polyline | null>(null);
 
   useEffect(() => {
@@ -86,23 +91,35 @@ function TransportMarker({
 }
 
 /* ---------------------- MAIN COMPONENT ---------------------- */
-function App({ cyrclesArr }: { cyrclesArr: TripSegment[] }) {
+function App({
+  cyrclesArr,
+  focusplace,
+  recommendedVisits,
+  recommendedStays,
+}: {
+  cyrclesArr: TripSegment[];
+  focusplace?: LatLng | null;
+
+  // ✅ optional recommendation layers
+  recommendedVisits?: RecommendedPlace[];
+  recommendedStays?: RecommendedPlace[];
+}) {
   const sorted = [...cyrclesArr].sort((a, b) => a.index - b.index);
 
-  const COLOR_A = "#1E90FF"; // normal connections
-  const COLOR_B = "#FF0000"; // internal MOVING_BOX (from → to)
+  const COLOR_A = "#1E90FF";
+  const COLOR_B = "#FF0000";
 
   const transportIcons: Record<string, string> = {
     flight: "✈️",
     train: "🚆",
     bus: "🚌",
     car: "🚗",
-    subway: '🚇',
-    walking: '🚶',  
-    bicycle: '🚲',
+    subway: "🚇",
+    walking: "🚶",
+    bicycle: "🚲",
+    motorbike: "🏍️",
+    boat: "⛴️",
     other: "➡️",
-    motorbike: '🏍️',  
-    boat: '⛴️' 
   };
 
   const pathSegments: { path: LatLng[]; color: string }[] = [];
@@ -112,7 +129,6 @@ function App({ cyrclesArr }: { cyrclesArr: TripSegment[] }) {
   for (let i = 0; i < sorted.length; i++) {
     const item = sorted[i];
 
-    /* -------- 1. POINT → next segment -------- */
     if (item.role === "POINT") {
       const p = safePoint(item.placeLat, item.placeLng);
       if (!p) continue;
@@ -125,30 +141,20 @@ function App({ cyrclesArr }: { cyrclesArr: TripSegment[] }) {
             : safePoint(next.placeLat, next.placeLng);
 
         if (target) {
-          pathSegments.push({
-            path: [p, target],
-            color: COLOR_A,
-          });
+          pathSegments.push({ path: [p, target], color: COLOR_A });
         }
       }
     }
 
-    /* -------- 2. MOVING_BOX.from → MOVING_BOX.to (red) -------- */
     if (item.role === "MOVING_BOX") {
       const from: LatLng = { lat: item.fromLat, lng: item.fromLng };
       const to: LatLng = { lat: item.toLat, lng: item.toLng };
 
-      // segment inside the moving box
-      pathSegments.push({
-        path: [from, to],
-        color: COLOR_B,
-      });
+      pathSegments.push({ path: [from, to], color: COLOR_B });
 
-      // place icon
-      const icon = transportIcons[item.transportType] || transportIcons.default;
+      const icon = transportIcons[item.transportType] || transportIcons.other;
       transportMarkers.push({ pos: getMid(from, to), icon });
 
-      /* -------- 3. MOVING_BOX.to → next POINT/MOVING_BOX -------- */
       const next = sorted[i + 1];
       if (next) {
         const target =
@@ -157,10 +163,7 @@ function App({ cyrclesArr }: { cyrclesArr: TripSegment[] }) {
             : safePoint(next.placeLat, next.placeLng);
 
         if (target) {
-          pathSegments.push({
-            path: [to, target],
-            color: COLOR_A,
-          });
+          pathSegments.push({ path: [to, target], color: COLOR_A });
         }
       }
     }
@@ -173,7 +176,6 @@ function App({ cyrclesArr }: { cyrclesArr: TripSegment[] }) {
     sorted.forEach((i) => {
       const p = safePoint(i.placeLat, i.placeLng);
       if (p) pts.push(p);
-
       pts.push({ lat: i.fromLat, lng: i.fromLng });
       pts.push({ lat: i.toLat, lng: i.toLng });
     });
@@ -186,10 +188,16 @@ function App({ cyrclesArr }: { cyrclesArr: TripSegment[] }) {
     };
   }, [cyrclesArr]);
 
+  const finalCenter = focusplace ?? mapCenter;
+
   /* ---------------------- RENDER ---------------------- */
   return (
-    <Map className="h-[100%] w-full z-50" defaultCenter={mapCenter} defaultZoom={3}>
-      {/* LINES */}
+    <Map
+      className="h-[100%] w-full z-50"
+      defaultCenter={finalCenter}
+      defaultZoom={focusplace ? 11 : 3}
+    >
+      {/* ROUTES */}
       {pathSegments.map((seg, i) => (
         <PolylineOverlay
           key={i}
@@ -202,12 +210,12 @@ function App({ cyrclesArr }: { cyrclesArr: TripSegment[] }) {
         />
       ))}
 
-      {/* MOVING BOX ICONS */}
+      {/* TRANSPORT ICONS */}
       {transportMarkers.map((tm, i) => (
         <TransportMarker key={i} position={tm.pos} icon={tm.icon} />
       ))}
 
-      {/* POINT MARKERS */}
+      {/* TRIP POINTS */}
       {sorted
         .filter((i) => i.role === "POINT")
         .map((pt) => {
@@ -215,6 +223,26 @@ function App({ cyrclesArr }: { cyrclesArr: TripSegment[] }) {
           if (!pos) return null;
           return <Marker key={pt.id} position={pos} />;
         })}
+
+      {/* ⭐ RECOMMENDED VISITS */}
+      {recommendedVisits?.map((place) => (
+        <Marker
+          key={`visit-${place.id}`}
+          position={place.location}
+          label={{ text: "⭐", fontSize: "18px" }}
+          title={place.name}
+        />
+      ))}
+
+      {/* 🏨 RECOMMENDED STAYS */}
+      {recommendedStays?.map((place) => (
+        <Marker
+          key={`stay-${place.id}`}
+          position={place.location}
+          label={{ text: "🏨", fontSize: "18px" }}
+          title={place.name}
+        />
+      ))}
     </Map>
   );
 }
