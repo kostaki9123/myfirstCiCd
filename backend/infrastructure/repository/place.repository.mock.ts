@@ -25,13 +25,7 @@ export class MockPlaceRepository implements IPlaceRepository {
     return newPlace;
   }
 
-  async getPlace(placeId: string): Promise<Place> {
-    const place = this.places.find((p) => p.id === placeId);
-    if (!place) {
-      throw new DatabaseOperationError(`Place with ID ${placeId} not found`);
-    }
-    return place;
-  }
+  
 
   async getPlacesForUser(pointId: string): Promise<Place[]> {
     return this.places.filter((p) => p.pointId === pointId);
@@ -74,19 +68,4 @@ export class MockPlaceRepository implements IPlaceRepository {
     this.places.splice(index, 1);
   }
 
-  async updateMany(places: Place[]): Promise<void> {
-    for (const updated of places) {
-      const index = this.places.findIndex((p) => p.id === updated.id);
-      if (index === -1) {
-        throw new DatabaseOperationError(
-          `Place with ID ${updated.id} not found`
-        );
-      }
-
-      this.places[index] = {
-        ...this.places[index],
-        ...updated,
-      };
-    }
-  }
 }

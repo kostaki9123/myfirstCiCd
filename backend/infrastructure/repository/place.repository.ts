@@ -17,31 +17,19 @@ export class PlaceRepository implements IPlaceRepository {
       });
 
     if (!place) {
-       throw new DatabaseOperationError(`Place with ID  not found`);
-     }
+       throw new DatabaseOperationError(`Place not created`);
+    }
 
       return place;
     } catch (err) {
       throw new DatabaseOperationError("Place could not be created");
     }
   }
-
- async getPlace(placeId: string): Promise<Place> {
-  const place = await prisma.place.findFirst({
-    where: { id: placeId },
-  });
-
-  if (!place) {
-    throw new DatabaseOperationError(`Place with ID ${placeId} not found`);
-  }
-
-  return place;
-}
+ 
 
   async getPlacesForUser(pointId: string): Promise<Place[]> {
-     console.log('pointId repo' , pointId)
     return prisma.place.findMany({
-      where: { pointId : pointId },
+      where: { pointId },
       orderBy: { id: "asc" },
     });
   }
@@ -55,7 +43,7 @@ export class PlaceRepository implements IPlaceRepository {
 
     try {
       return await client.place.update({
-        where: { id: placeId },
+        where: { internalId : placeId },
         data: {
           pointId: input.pointId,
           placeType: input.placeType,
@@ -77,7 +65,7 @@ export class PlaceRepository implements IPlaceRepository {
     try {
       await client.place.delete({
         where: {
-          id: placeId,
+          internalId : placeId,
           pointId, // ensures ownership
         },
       });
@@ -86,22 +74,5 @@ export class PlaceRepository implements IPlaceRepository {
     }
   }
 
-  async updateMany(places: Place[]): Promise<void> {
-    try {
-      await prisma.$transaction(
-        places.map((place) =>
-          prisma.place.update({
-            where: { id: place.id },
-            data: {
-              pointId: place.pointId,
-              placeType: place.placeType,
-              name: place.name,
-            },
-          })
-        )
-      );
-    } catch {
-      throw new DatabaseOperationError("Failed to update places");
-    }
-  }
+ 
 }
