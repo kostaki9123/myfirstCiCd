@@ -3,14 +3,12 @@ import ItineraryClient from './components/itineraryClient';
 import { getPoints } from '../../createtrip/[tripid]/action';
 import { getPlaces } from './action';
 
-type PageProps = {
-  params: {
-    tripid: string;
-  };
-};
-
-const Page = async ({ params }: PageProps) => {
-  const { tripid } = params;
+const Page = async ({
+  params,
+}: {
+  params: Promise<{ tripid: string }>;
+}) => {
+  const { tripid } = await params;
 
   console.log('Server-side ID from itinerary:', tripid);
 
@@ -18,15 +16,14 @@ const Page = async ({ params }: PageProps) => {
   const points = await getPoints(tripid);
   const pointsOnly = points.filter((p) => p.role === 'POINT');
 
-  // 2️⃣ Fetch places for each point (parallel)
+  // 2️⃣ Fetch places per point (parallel)
   const placesPerPoint = await Promise.all(
     pointsOnly.map((point) => getPlaces(point.id))
   );
 
-  // 3️⃣ Flatten Place[][]
+  // 3️⃣ Flatten
   const allPlaces = placesPerPoint.flat();
 
-  // 4️⃣ Pass to client
   return (
     <ItineraryClient
       points={pointsOnly}
