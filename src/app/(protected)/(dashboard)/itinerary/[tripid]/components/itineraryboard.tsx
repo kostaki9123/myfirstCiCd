@@ -1,136 +1,175 @@
-'use client'
+'use client';
 
-import React, { Dispatch, SetStateAction, useState } from 'react'
-import Placesdropdown from './placesdropdown'
-import Addaplace from './addplace'
-import { TripSegment } from '../../../createtrip/[tripid]/components/movingbox';
-import DatePickerExample from "../../../createtrip/[tripid]/components/locationinput/datepicker";
+import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
+import Placesdropdown from './placesdropdown';
+import Addaplace from './addplace';
 import PlaceToStayCard from './PlaceToStayCard';
 import PlaceToVisitCard from './PlaceToVisitCard';
+import { Place } from '../../../../../../../backend/entities/models/place';
 
 export interface ItineraryPoint {
   id: string;
   tripId: string;
-  role: "POINT" | "MOVING_BOX";
+  role: 'POINT' | 'MOVING_BOX';
   index: number;
 
-  // For POINT
   placeName?: string | null;
   placeAddress?: string;
   placeId?: string;
   placeLat?: number | null;
   placeLng?: number | null;
-  startDate?: string | Date | null;
-  endDate?: string | Date | null;
+  startDate?: Date | null;
+  endDate?: Date | null;
 
-  // For MOVING_BOX (transport)
   fromName?: string | null;
-  fromAddress?: string;
-  fromPlaceId?: string;
-  fromLat?: number | null;
-  fromLng?: number | null;
-
   toName?: string | null;
-  toAddress?: string;
-  toPlaceId?: string;
-  toLat?: number | null;
-  toLng?: number | null;
-
-  transportType?: "flight" | "car" | "train" | "bus" | null| string;
-
-  // departure info
-  departureDate?: string | Date | null;
-  departureTime?: string | Date | null;
+  transportType?: string | null;
 }
 
+type Props = {
+  cyrclesArr: ItineraryPoint[];
+  selectedPlacceId?: string;
+  focusplace?: any;
+  setFocusplace?: Dispatch<SetStateAction<any>>;
+  places: Place[];
+};
 
-type props = {
-    cyrclesArr : ItineraryPoint[]
-    selectedPlacceId? : string
-    focusplace?: any
-    setFocusplace?: Dispatch<SetStateAction<any>>;
-  }
-
-
-const Itineraryboard = (props : props) => {
- 
-
-  
-  
-
-  const pointsOnly = props.cyrclesArr.filter(item => item.role === "POINT");
-
-  //save selected place if exist from props.selectedPlacceId
-  const selectedPlace: ItineraryPoint | undefined = pointsOnly.find(
-  (item) => item.id === props.selectedPlacceId
+const Itineraryboard = (props: Props) => {
+  /** Only POINT items */
+  const pointsOnly = useMemo(
+    () => props.cyrclesArr.filter((item) => item.role === 'POINT'),
+    [props.cyrclesArr]
   );
- 
-  const [selectedPoint, setSelectedPoint] = useState<ItineraryPoint>(selectedPlace ? selectedPlace : pointsOnly[0])
-                             
-  console.log('sele:', selectedPoint)
-  //clean up and keep only the POINT
 
- 
+  /** Selected point state */
+  const [selectedPoint, setSelectedPoint] = useState<ItineraryPoint>(
+    pointsOnly[0]
+  );
+
+  /** Sync selectedPoint when prop changes */
+  useEffect(() => {
+    if (!props.selectedPlacceId) return;
+
+    const nextPoint = pointsOnly.find(
+      (p) => p.id === props.selectedPlacceId
+    );
+
+    if (nextPoint) {
+      setSelectedPoint(nextPoint);
+    }
+  }, [props.selectedPlacceId, pointsOnly]);
+
+  /** Accommodation places (recomputed on change) */
+  const accommodationPlaces = useMemo(() => {
+    return props.places.filter(
+      (place) =>
+        place.pointId === selectedPoint.id &&
+        place.placeType === 'ACCOMMODATION'
+    );
+  }, [props.places, selectedPoint.id]);
+
+  /** Places to visit (recomputed on change) */
+  const placesToVisit = useMemo(() => {
+    return props.places.filter(
+      (place) =>
+        place.pointId === selectedPoint.id &&
+        place.placeType === 'PLACE_TO_VISIT'
+    );
+  }, [props.places, selectedPoint.id]);
 
   return (
-    <>
-    <div className='  h-fit  base:w-[100%]   p-3   ' >
+    <div className="h-fit w-full p-3">
+      <div className="w-full rounded-md p-2 bg-[#ACA7CB] min-w-[290px] relative">
 
-        <div className=' h-fit w-full rounded-md p-2 bg-[#ACA7CB] min-w-[290px]   '>
+        {/* HEADER */}
+        <div className="flex justify-center mb-2 relative">
+          <div className=' absolute top-1 left-2'>
+            {selectedPoint.startDate && selectedPoint.endDate
+              ? `${new Date(selectedPoint.startDate).toLocaleDateString(undefined, {
+                  month: '2-digit',
+                  day: '2-digit',
+                })} - ${new Date(selectedPoint.endDate).toLocaleDateString(undefined, {
+                  month: '2-digit',
+                  day: '2-digit',
+                })}`
+              : selectedPoint.startDate
+              ? new Date(selectedPoint.startDate).toLocaleDateString(undefined, {
+                  month: '2-digit',
+                  day: '2-digit',
+                })
+              : 'No date'}
+          </div>
 
-
-            {/**Header  */}
-            <div className=' w-full flex justify-between relative  mb-2 '>
-
-               <div className='left-0 h-full py-[1px] gap-2'>
-                    {
-                    <div >{selectedPoint.startDate && selectedPoint.endDate
-                       ? `${new Date(selectedPoint.startDate).toLocaleDateString(undefined, { month: "2-digit", day: "2-digit" })} - ${new Date(selectedPoint.endDate).toLocaleDateString(undefined, { month: "2-digit", day: "2-digit" })}`
-                       : selectedPoint.startDate
-                         ? new Date(selectedPoint.startDate).toLocaleDateString(undefined, { month: "2-digit", day: "2-digit" })
-                         : "No date"}
-                    </div>
-                   }
-               </div>
-
-                <div className=' min-h-8 '>
-                  <Placesdropdown cyrclesArr={pointsOnly} selectedPlace={selectedPoint} setSelectedPoint={setSelectedPoint} /> 
-                  {/** dropdown for change place */}             
-                </div>
-
-                <div className='  right-0  '>
-                    <div className=' p-[2px] px-2 cursor-pointer rounded-sm w-20'></div>
-                </div>
-                
-            </div>
-
-
-
-            {/** Main */}
-
-            <div className='flex justify-center gap-2 flex-col items-center p-2 pt-7  relative z-0  '>
-                <small className="text-sm font-semibold leading-none  absolute left-2 top-2">Accomodation</small>
-                {/** <StayDetailsCard/> */ }
-                <PlaceToStayCard placeName='Copenhagen downtown hostel' endDate={selectedPoint.endDate} startDate={selectedPoint.startDate}  />
-                <Addaplace triggerName='Add a place to stay' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={selectedPoint.placeLat!} longitude={selectedPoint.placeLng!}/> 
-               
-            </div>
-
-            <div className='flex justify-center flex-col items-center p-2 pt-7 gap-2 relative  '>
-                <small className="text-sm font-semibold leading-none  absolute left-2 top-2">Places</small> 
-                <PlaceToVisitCard placeName='Copenhagen downtown hostel' endDate={selectedPoint.endDate} startDate={selectedPoint.startDate}   />              
-                <Addaplace triggerName='Add a place to visit' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={selectedPoint.placeLat!} longitude={selectedPoint.placeLng!}/> 
-
-                {/** <StayDetailsCard/> */ }
-                {/** <Addaccomodationmodal triggerName='Add a place to stay' descriptionName='These places to stay are highly recommended by our team for their prime location, affordability, and safety' cyrclesArr={props.cyrclesArr} latitude={props.cyrclesArr[0].lat1} longitude={props.cyrclesArr[0].lng1}/> */}
-              
-            </div>
-
+          <Placesdropdown
+            cyrclesArr={pointsOnly}
+            selectedPlace={selectedPoint}
+            setSelectedPoint={setSelectedPoint}
+          />
         </div>
+
+        {/* ACCOMMODATION */}
+        <div className="flex flex-col items-center p-2 pt-7 relative">
+          <small className="absolute left-2 top-2 font-semibold">
+            Accommodation
+          </small>
+
+          {accommodationPlaces.map((place) => (
+            <PlaceToStayCard
+              key={place.internalId ?? place.id}
+              id={place.id}
+              pointId={place.pointId}
+              placeType={place.placeType}
+              name={place.name}
+              stayFrom={selectedPoint.startDate}
+              stayUntil={selectedPoint.endDate}
+            />
+          ))}
+
+          <Addaplace
+            addedPlaces={props.places.filter(
+              (p) => p.pointId === selectedPoint.id
+            )}
+            selectedPlace={selectedPoint}
+            triggerName="Add a place to stay"
+            descriptionName="Recommended accommodations based on location, safety, and price"
+            cyrclesArr={props.cyrclesArr}
+            latitude={selectedPoint.placeLat!}
+            longitude={selectedPoint.placeLng!}
+          />
+        </div>
+
+        {/* PLACES TO VISIT */}
+        <div className="flex flex-col items-center p-2 pt-7 relative gap-2">
+          <small className="absolute left-2 top-2 font-semibold">
+            Places to Visit
+          </small>
+
+          {placesToVisit.map((place) => (
+            <PlaceToVisitCard
+              key={place.internalId ?? place.id}
+              id={place.id}
+              pointId={place.pointId}
+              placeType={place.placeType}
+              name={place.name}
+              stayUntil={selectedPoint.endDate}
+            />
+          ))}
+
+          <Addaplace
+            addedPlaces={props.places.filter(
+              (p) => p.pointId === selectedPoint.id
+            )}
+            selectedPlace={selectedPoint}
+            triggerName="Add a place to visit"
+            descriptionName="Top attractions and must-see places nearby"
+            cyrclesArr={props.cyrclesArr}
+            latitude={selectedPoint.placeLat!}
+            longitude={selectedPoint.placeLng!}
+          />
+        </div>
+      </div>
     </div>
+  );
+};
 
-</>
-  )
-}
-
-export default Itineraryboard
+export default Itineraryboard;

@@ -12,7 +12,7 @@ import { ItineraryPoint } from './itineraryboard';
 
 type props = {
   cyrclesArr: ItineraryPoint[];
-  selectedPlace?: ItineraryPoint;
+  selectedPlace: ItineraryPoint;  
   setSelectedPoint: (point: ItineraryPoint) => void;
 }
 

@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import Itineraryboard from './itineraryboard';
 import Mapprovider from '@/app/component/map/map-provider';
+import { Place } from '../../../../../../../backend/entities/models/place';
 
-const ItineraryClient = ({ points }: { points: any[] }) => {
+const ItineraryClient = ({ points , places }: { points: any[], places: Place[] }) => {
 
   const location =
   points[0]?.placeLat != null && points[0]?.placeLng != null
@@ -24,6 +25,7 @@ const ItineraryClient = ({ points }: { points: any[] }) => {
           <>There is no destination yet</>
         ) : (
           <Itineraryboard
+            places={places}
             cyrclesArr={points}
             focusplace={focusplace}
             setFocusplace={setFocusplace}

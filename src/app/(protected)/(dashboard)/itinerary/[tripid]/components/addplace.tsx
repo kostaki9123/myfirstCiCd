@@ -13,6 +13,9 @@ import Placecomponent from "./placecomponent";
 import LocationInput from "./inputauto";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import Mapprovider from "@/app/component/map/map-provider";
+import { ItineraryPoint } from "./itineraryboard";
+import { Place } from "../../../../../../../backend/entities/models/place";
+
 
 // Lodging types dropdown options
 const lodgingTypes = [
@@ -27,11 +30,13 @@ const lodgingTypes = [
 
 
 type props = {
+  selectedPlace: ItineraryPoint
   latitude: number;
   longitude: number;
   cyrclesArr: any;
   triggerName: string;
   descriptionName: string;
+  addedPlaces : Place[]
 };
 
 type AffiliateMap = Record<
@@ -49,6 +54,15 @@ const Addaplace = (props: props) => {
   const maxRequests = 5;
 
   let LatLng = { lat: props.latitude , lng: props.longitude } 
+
+  const mergeAlreadyVisited = (results: any[]) => {
+    return results.map((place) => ({
+      ...place,
+      alreadyAdded: props.addedPlaces.some(
+        (p) => p.id === place.id && p.pointId === props.selectedPlace.id
+      ),
+    }));
+    };
 
   const fetchPlaces = async () => {
     if (requestCount >= maxRequests) {
@@ -96,8 +110,8 @@ const Addaplace = (props: props) => {
                );
               
                const result = await response.json();
-               const places = result.places || [];
-              
+               let places = result.places || [];
+               places = mergeAlreadyVisited(places); 
                setPlacesResult(places);
                setRequestCount((prev) => prev + 1);
 
@@ -148,7 +162,8 @@ const Addaplace = (props: props) => {
         );
 
         const result = await response.json();
-        const places = result.places || [];
+        let places = result.places || [];
+        places = mergeAlreadyVisited(places);
         setPlacesResult(places);
         setRequestCount((prev) => prev + 1);
 
@@ -186,6 +201,7 @@ const Addaplace = (props: props) => {
     console.log(placesResult ,'affiliate', affiliateMap )
 
 
+  //For map component
   const reccomendedforMapPlaces = placesResult.map(place => ({
     id: place.id,
     location: { lat: place.location.latitude ,
@@ -250,16 +266,19 @@ const Addaplace = (props: props) => {
             {placesResult.map((place: any, index: number) => (
               <div key={index} className="relative">
                 <Placecomponent
+                  tripId={props.selectedPlace.tripId}
+                  pointId={props.selectedPlace.id}
+                  placeId={place.id}
                   index={index}
                   description={place.description ?? ""}
                   longitude={place.location?.longitude ?? 0}
                   latitude={place.location?.latitude ?? 0}
-                  type={place.primaryTypeDisplayName?.text}
+                  type={props.triggerName === "Add a place to visit" ? 'PLACE_TO_VISIT' :'ACCOMMODATION'}
                   rating={place.rating ?? 0}
                   address={place.shortFormattedAddress ?? ""}
                   displayName={place.displayName?.text || "Unknown"}
                   link={resolveUrl(place)}
-                  
+                  alreadyAdded={place.alreadyAdded} // ✅ pass this
                 />
               </div>
             ))}

@@ -2,19 +2,25 @@
 
 import { PlaceRepository } from '../../../infrastructure/repository/place.repository';
 import { MockPlaceRepository } from '../../../infrastructure/repository/place.repository.mock';
-import { INotesRepository, IPlaceRepository } from '../../repositories/place.repository.interface';
+import { IPlaceRepository } from '../../repositories/place.repository.interface';
 import { ITripsRepository } from '../../repositories/trips.repository.interface';
 import { IUsersRepository } from '../../repositories/users.repository.interface';
 
+export type IplaceType  = {
+ placeType : 'ACCOMMODATION' | 'PLACE_TO_VISIT',
+}
+
 type props = {
   id : string
-  notes: string;
+  pointId: string,
+  placeType: any ,
+  placeName: string ,
 };
 
 
-export type IupdatePlaceUseCase = ReturnType<typeof updatePlaceUseCase>;
+export type IupdatePlaceUseCase = ReturnType<typeof createPlaceUseCase>;
 
-export const updatePlaceUseCase = async (input: props) => {
+export const createPlaceUseCase = async (input: props) => {
   // Choose repository based on environment
    const placeRepository: IPlaceRepository =
      process.env.NODE_ENV === 'test'
@@ -22,19 +28,18 @@ export const updatePlaceUseCase = async (input: props) => {
        : new PlaceRepository();
 
   try {
+    let createPlace = await placeRepository.createPlace({
+           id : input.id ,
+           pointId : input.pointId ,
+           placeType : input.placeType ,
+           name : input.placeName ,  
+  });
 
-    let updatedNotes = await pointsRepository.updatePoint(
-         input.id ,
-        {
-          notes : input.notes
-        }
-    );
-
-  if (!updatedNotes) {
-    throw new Error("Notes could not be updated");
+  if (!createPlace) {
+    throw new Error("Place could not be created");
   }
 
-  return updatedNotes;
+  return createPlace;
     
    
   } catch (err) {

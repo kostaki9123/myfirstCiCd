@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { FaNoteSticky } from "react-icons/fa6";
-import { updateNotes } from "./action"; // your backend action
 
 type Props = {
   id: string;
@@ -66,7 +65,7 @@ const NotesBox = ({
         const formData = new FormData();
           formData.append("id",  `${id}`);
           formData.append("notes", `${notes}`);
-          updateNotes(formData);
+       //   updateNotes(formData);
       }
     }, 500); // debounce
 

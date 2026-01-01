@@ -19,19 +19,23 @@ import AbleDatesDropdown from "./ableDatesDropdown";
 
 
 type props = {
-    placeName : string
-    startDate :  string | Date | null | undefined;
-    endDate :  string | Date | null | undefined;
+   id: string;
+   pointId: string;
+   placeType: "ACCOMMODATION" | "PLACE_TO_VISIT";
+   name: string;
+   stayFrom?: Date | null | undefined;
+   stayUntil?: Date | null | undefined;
+   cost?: number | null | undefined;
+   notes?: string | null | undefined;
+   visitDate?: Date | null | undefined;
+   visitTime?: Date | null | undefined;
 }
 
 export default function PlaceToStayCard(props : props) {
-  const [placeName, setPlaceName] = useState("Downtown Copenhagen Hostel");
+  const [placeName, setPlaceName] = useState(props.name);
 
   const [checkIndate, setCheckIndate] = useState<Date | null>(null);
   const [checkOutdate, setCheckOutdate] = useState<Date | null>(null);
-
-  
-
   const [cost, setCost] = useState("");
   const [notes, setNotes] = useState("");
 
@@ -66,12 +70,12 @@ export default function PlaceToStayCard(props : props) {
 
               <div className="flex flex-col w-full min-w-[90px]">
                 <label className="text-xs text-gray-700">Check In</label>
-                  <AbleDatesDropdown value={checkIndate} startDate={props.startDate ? props.startDate : ''} endDate={props.endDate ? props.endDate : ''} onChange={setCheckIndate} />
+                  <AbleDatesDropdown value={checkIndate} startDate={props.stayFrom ? props.stayFrom : ''} endDate={props.stayUntil ? props.stayUntil : ''} onChange={setCheckIndate} />
               </div>
    
               <div className="flex flex-col w-full min-w-[90px]">
                  <label className="text-xs text-gray-700">Check Out</label>
-                  <AbleDatesDropdown value={checkOutdate} startDate={props.startDate ? props.startDate : ''} endDate={props.endDate ? props.endDate : ''} onChange={setCheckOutdate} />
+                  <AbleDatesDropdown value={checkOutdate} startDate={props.stayFrom ? props.stayFrom : ''} endDate={props.stayUntil ? props.stayUntil : ''} onChange={setCheckOutdate} />
               </div>
            </div>
 

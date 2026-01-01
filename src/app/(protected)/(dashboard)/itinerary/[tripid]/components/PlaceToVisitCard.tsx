@@ -19,14 +19,21 @@ import {
 import AbleDatesDropdown from "./ableDatesDropdown";
 
 type props = {
-    placeName : string
-    startDate :  string | Date | null | undefined;
-    endDate :  string | Date | null | undefined;
+   id: string;
+   pointId: string;
+   placeType: "ACCOMMODATION" | "PLACE_TO_VISIT";
+   name: string;
+   stayFrom?: Date | null | undefined;
+   stayUntil?: Date | null | undefined;
+   cost?: number | null | undefined;
+   notes?: string | null | undefined;
+   visitDate?: Date | null | undefined;
+   visitTime?: Date | null | undefined;
 }
 
 
 export default function PlaceToVisitCard(props:props) {
-  const [placeName, setPlaceName] = useState("Tivoli park");
+  const [placeName, setPlaceName] = useState(props.name);
   const [cost, setCost] = useState("");
   const [notes, setNotes] = useState("");
   const [checkIndate, setCheckIndate] = useState<Date | null>(null);
@@ -76,7 +83,7 @@ export default function PlaceToVisitCard(props:props) {
 
               <div className="flex flex-col w-full min-w-[90px]">
                 <label className="text-xs text-gray-700">Visit date</label>
-                  <AbleDatesDropdown value={checkIndate} startDate={props.startDate ? props.startDate : ''} endDate={props.endDate ? props.endDate : ''} onChange={setCheckIndate} />   
+                  <AbleDatesDropdown value={checkIndate} startDate={props.stayFrom ? props.stayFrom : ''} endDate={props.stayUntil ? props.stayUntil : ''} onChange={setCheckIndate} />   
               </div>
    
            </div>

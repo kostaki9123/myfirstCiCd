@@ -77,7 +77,8 @@ enum PointRole {
 }
 
 model Place {
-  id         String     @id @default(cuid())
+  internalId Int @id @default(autoincrement())  // primary key
+  id String    
   pointId    String
 
   placeType  PlaceType
