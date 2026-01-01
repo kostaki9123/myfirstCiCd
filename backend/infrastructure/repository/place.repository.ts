@@ -26,17 +26,17 @@ export class PlaceRepository implements IPlaceRepository {
     }
   }
 
-  async getPlace(placeId: string): Promise<Place | undefined> {
-    const place = await prisma.place.findUnique({
-      where: { id: placeId },
-    });
+ async getPlace(placeId: string): Promise<Place> {
+  const place = await prisma.place.findFirst({
+    where: { id: placeId },
+  });
 
-    if (!place) {
-      throw new DatabaseOperationError(`Place with ID ${placeId} not found`);
-    }
-
-    return place;
+  if (!place) {
+    throw new DatabaseOperationError(`Place with ID ${placeId} not found`);
   }
+
+  return place;
+}
 
   async getPlacesForUser(pointId: string): Promise<Place[]> {
      console.log('pointId repo' , pointId)
