@@ -111,6 +111,7 @@ const Addaplace = (props: props) => {
               
                const result = await response.json();
                let places = result.places || [];
+               console.log('runninggg')
                places = mergeAlreadyVisited(places); 
                setPlacesResult(places);
                setRequestCount((prev) => prev + 1);
@@ -162,6 +163,7 @@ const Addaplace = (props: props) => {
         );
 
         const result = await response.json();
+        console.log('result reccomended' ,props.addedPlaces)
         let places = result.places || [];
         places = mergeAlreadyVisited(places);
         setPlacesResult(places);
@@ -190,7 +192,7 @@ const Addaplace = (props: props) => {
 
   useEffect(() => {
     fetchPlaces();
-  }, []);
+  }, [props.addedPlaces]);
 
   // ✅ URL resolver
   const resolveUrl = (place: any) =>
@@ -209,6 +211,10 @@ const Addaplace = (props: props) => {
                },
     name: place.displayName?.text ?? "",
    }));
+
+   console.log('Added places' ,props.addedPlaces)
+
+   
 
   return (
     <Dialog>
