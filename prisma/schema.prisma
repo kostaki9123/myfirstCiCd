@@ -95,7 +95,8 @@ model Place {
 
   // ===== Relations =====
   point      Point      @relation(fields: [pointId], references: [id])
-  
+
+  @@unique([pointId, id])
   @@index([pointId])
 }
 

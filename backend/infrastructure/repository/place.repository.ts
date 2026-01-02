@@ -7,34 +7,34 @@ export class PlaceRepository implements IPlaceRepository {
 
   async createPlace(insert: PlaceInsert): Promise<Place> {
     try {
-      const place = await prisma.place.create({
+      return await prisma.place.create({
         data: {
-          id: insert.id,
+          id: insert.id,           // Google place id
           pointId: insert.pointId,
           placeType: insert.placeType,
           name: insert.name,
         },
       });
-
-    if (!place) {
-       throw new DatabaseOperationError(`Place not created`);
-    }
-
-      return place;
-    } catch (err) {
+    } catch (err: any) {
+      // Prisma unique constraint violation
+      if (err.code === "P2002") {
+        throw new DatabaseOperationError(
+          "This place already exists for this point"
+        );
+      }
       throw new DatabaseOperationError("Place could not be created");
     }
   }
- 
 
-  async getPlacesForUser(pointId: string): Promise<Place[]> {
+  async getPlacesForPoint(pointId: string): Promise<Place[]> {
     return prisma.place.findMany({
       where: { pointId },
-      orderBy: { id: "asc" },
+      orderBy: { internalId : "asc" },
     });
   }
 
   async updatePlace(
+    pointId: string,
     placeId: string,
     input: Partial<PlaceInsert>,
     tx?: any
@@ -43,21 +43,27 @@ export class PlaceRepository implements IPlaceRepository {
 
     try {
       return await client.place.update({
-        where: { internalId : placeId },
+        where: {
+          pointId_id: {
+            pointId,
+            id: placeId,
+          },
+        },
         data: {
-          pointId: input.pointId,
           placeType: input.placeType,
           name: input.name,
         },
       });
     } catch {
-      throw new DatabaseOperationError(`Place with ID ${placeId} not found`);
+      throw new DatabaseOperationError(
+        `Place ${placeId} not found for point ${pointId}`
+      );
     }
   }
 
   async deletePlace(
-    placeId: string,
     pointId: string,
+    placeId: string,
     tx?: any
   ): Promise<void> {
     const client = tx ?? prisma;
@@ -65,14 +71,16 @@ export class PlaceRepository implements IPlaceRepository {
     try {
       await client.place.delete({
         where: {
-          internalId : placeId,
-          pointId, // ensures ownership
+          pointId_id: {
+            pointId,
+            id: placeId,
+          },
         },
       });
     } catch {
-      throw new DatabaseOperationError(`Place with ID ${placeId} not found`);
+      throw new DatabaseOperationError(
+        `Place ${placeId} not found for point ${pointId}`
+      );
     }
   }
-
- 
 }
