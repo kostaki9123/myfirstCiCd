@@ -6,13 +6,22 @@ export class MockPlaceRepository implements IPlaceRepository {
   private places: Place[] = [];
 
   async createPlace(input: PlaceInsert): Promise<Place> {
+    const exists = this.places.some(
+      (p) => p.id === input.id && p.pointId === input.pointId
+    );
+
+    if (exists) {
+      throw new DatabaseOperationError(
+        "Place already exists for this point"
+      );
+    }
+
     const newPlace: Place = {
-      id: input.id ?? (Math.random() * 1_000_000).toFixed(0),
+      id: input.id,
       pointId: input.pointId,
       placeType: input.placeType,
       name: input.name,
 
-      // Prisma-style nullable fields
       stayFrom: null,
       stayUntil: null,
       cost: null,
@@ -25,26 +34,30 @@ export class MockPlaceRepository implements IPlaceRepository {
     return newPlace;
   }
 
-  
-
-  async getPlacesForUser(pointId: string): Promise<Place[]> {
+  async getPlacesForPoint(pointId: string): Promise<Place[]> {
     return this.places.filter((p) => p.pointId === pointId);
   }
 
   async updatePlace(
+    pointId: string,
     placeId: string,
-    input: Partial<PlaceInsert>
+    input: Partial<PlaceInsert>,
+    tx?: any
   ): Promise<Place> {
-    const index = this.places.findIndex((p) => p.id === placeId);
+    const index = this.places.findIndex(
+      (p) => p.id === placeId && p.pointId === pointId
+    );
+
     if (index === -1) {
-      throw new DatabaseOperationError(`Place with ID ${placeId} not found`);
+      throw new DatabaseOperationError(
+        `Place ${placeId} not found for point ${pointId}`
+      );
     }
 
     const existing = this.places[index];
 
     const updated: Place = {
       ...existing,
-      pointId: input.pointId ?? existing.pointId,
       placeType: input.placeType ?? existing.placeType,
       name: input.name ?? existing.name,
     };
@@ -54,18 +67,20 @@ export class MockPlaceRepository implements IPlaceRepository {
   }
 
   async deletePlace(
+    pointId: string,
     placeId: string,
-    pointId: string
+    tx?: any
   ): Promise<void> {
     const index = this.places.findIndex(
       (p) => p.id === placeId && p.pointId === pointId
     );
 
     if (index === -1) {
-      throw new DatabaseOperationError(`Place with ID ${placeId} not found`);
+      throw new DatabaseOperationError(
+        `Place ${placeId} not found for point ${pointId}`
+      );
     }
 
     this.places.splice(index, 1);
   }
-
 }

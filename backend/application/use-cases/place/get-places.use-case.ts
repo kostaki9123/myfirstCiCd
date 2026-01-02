@@ -20,7 +20,7 @@ export const getPlacesUseCase = async (pointId:string) => {
       : new PlaceRepository();
 
   try {
-    let Places = await placesRepository.getPlacesForUser(
+    let Places = await placesRepository.getPlacesForPoint(
         pointId
     );
     
