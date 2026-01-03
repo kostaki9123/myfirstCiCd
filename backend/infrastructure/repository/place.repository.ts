@@ -50,8 +50,12 @@ export class PlaceRepository implements IPlaceRepository {
           },
         },
         data: {
-          placeType: input.placeType,
-          name: input.name,
+           stayFrom: input.stayFrom ?? null,
+           stayUntil: input.stayUntil ?? null,
+           visitDate: input.visitDate ?? null,
+           visitTime: input.visitTime ?? null,
+           cost: input.cost ?? null,
+           notes: input.notes ?? null,
         },
       });
     } catch {

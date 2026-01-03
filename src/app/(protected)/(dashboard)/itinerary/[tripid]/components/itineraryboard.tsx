@@ -108,7 +108,7 @@ const Itineraryboard = (props: Props) => {
         </div>
 
         {/* ACCOMMODATION */}
-        <div className="flex flex-col items-center p-2 pt-7 relative">
+        <div className="flex flex-col items-center p-2 pt-7 relative gap-2 ">
           <small className="absolute left-2 top-2 font-semibold">
             Accommodation
           </small>
@@ -120,8 +120,9 @@ const Itineraryboard = (props: Props) => {
               pointId={place.pointId}
               placeType={place.placeType}
               name={place.name}
-              stayFrom={selectedPoint.startDate}
-              stayUntil={selectedPoint.endDate}
+              stayFrom={place.stayFrom}
+              stayUntil={place.stayUntil}
+              notes={place.notes}
             />
           ))}
 
@@ -151,7 +152,8 @@ const Itineraryboard = (props: Props) => {
               pointId={place.pointId}
               placeType={place.placeType}
               name={place.name}
-              stayUntil={selectedPoint.endDate}
+              visitDate={place.visitDate}
+              notes={place.notes}
             />
           ))}
 
