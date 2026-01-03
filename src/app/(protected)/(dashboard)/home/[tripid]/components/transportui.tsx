@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import { IoAirplaneOutline , IoTrain } from "react-icons/io5";
 import { FaCar , FaBusAlt , FaBicycle, FaShip,FaWalking } from "react-icons/fa";
 import { FaTrainTram, FaMotorcycle , FaTrainSubway , FaTaxi , FaFerry  } from "react-icons/fa6";
@@ -28,9 +30,11 @@ type props = {
    transportType: string,
    departureDate?: any,
    departureTime?: any
+   notes?: string
 }
 
 const Transportui = (props : props) => {
+   const [notes, setNotes] = useState(props.notes ?? "");
 
  const getTransportIcon = (type: string) => {
     const found = transportModes.find((m) => m.value === type);
@@ -71,7 +75,12 @@ function capitalizeFirst(str : string) {
                             <span>From:{props.fromName}</span>
                             <span>To:{ props.toName}</span>
                           </div>
-                          <NotesBox id="copenhagen-accommodationw" defaultNotes="" />
+                          <NotesBox 
+                          onChange={(v: string) => {
+                                   setNotes(v);
+                                 }}
+                          value={notes}
+                          />
                         </CardContent>
                       </Card>
                  </div> 

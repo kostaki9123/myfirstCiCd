@@ -1,5 +1,7 @@
+'use'
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import React from 'react'
+import React, { useState } from 'react'
 import { MdHotel } from "react-icons/md"
 import { BiSolidMessageAltAdd } from "react-icons/bi";
 import { FaNotesMedical } from "react-icons/fa6";
@@ -17,9 +19,13 @@ type props = {
     placeLng?: number,
     startDate: Date,
     endDate: Date,
+    notes?: string
 }
 
 const Placeui = (props : props) => {
+  const [notes1, setNotes1] = useState(props.notes ?? "");
+  const [notes2, setNotes2] = useState(props.notes ?? "");
+  const [notes3, setNotes3] = useState(props.notes ?? "");
 
   const start = props.startDate.toLocaleString('en-US', { month: 'short', day: '2-digit' });
   const end = props.endDate.toLocaleString('en-US', { month: 'short', day: '2-digit' });
@@ -63,7 +69,12 @@ const Placeui = (props : props) => {
                                </div>
                            
                                {/* ⬇️ Notes box inserted here */}
-                               <NotesBox id="copenhagen-accommodationw" defaultNotes="" />
+                               <NotesBox 
+                                onChange={(v: string) => {
+                                   setNotes1(v);
+                                 }}
+                                 value={notes1}
+                                />
                              </CardContent>
                             </Card>
                        </div>
@@ -81,7 +92,12 @@ const Placeui = (props : props) => {
                                <div>Visit Date: 13/10</div>
                                <div>Visit Time: 9:00 AM</div>
                              </div>
-                             <NotesBox id="copenhagen-accommodatione" defaultNotes="" />
+                             <NotesBox
+                               onChange={(v: string) => {
+                                   setNotes2(v);
+                                 }}
+                                 value={notes2}
+                                />
                            </CardContent>
                          </Card>
                        </div>
@@ -95,7 +111,12 @@ const Placeui = (props : props) => {
                            <CardContent className=" p-3 pt-0 space-y-1 text-xs text-muted-foreground">
                              <div>Visit Date: 13/10</div>
                              <div>Visit Time: 13:00 AM</div>
-                             <NotesBox id="copenhagen-accommodationt" defaultNotes="" />
+                             <NotesBox 
+                              onChange={(v: string) => {
+                                   setNotes3(v);
+                                 }}
+                                 value={notes3}
+                             />
                            </CardContent>
                          </Card>
                        </div>
