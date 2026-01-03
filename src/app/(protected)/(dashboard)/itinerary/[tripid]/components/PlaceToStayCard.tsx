@@ -142,7 +142,6 @@ export default function PlaceToStayCard(props: Props) {
               <ChevronDown className="h-4 w-4 text-neutral-500" />
             </div>
           </div>
-
           <Deleteplacebtn placeId={props.id} pointId={props.pointId} />
         </AccordionTrigger>
 

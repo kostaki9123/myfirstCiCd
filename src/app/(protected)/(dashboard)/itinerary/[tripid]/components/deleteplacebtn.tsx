@@ -45,19 +45,37 @@ const Deleteplacebtn = ({ placeId, pointId }: Props) => {
 
   return (
     <div className="flex flex-col gap-1 top-3 right-2 absolute">
-      <button
-        onClick={onDelete}
-        disabled={isLoading}
-        className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white transition p-2 rounded-full disabled:opacity-50"
-        aria-label="Delete place"
-      >
-        <MdDelete size={20} className={isLoading ? "animate-spin" : ""} />
-      </button>
+  <div
+    role="button"
+    tabIndex={0}
+    aria-label="Delete place"
+    aria-disabled={isLoading}
+    onClick={() => {
+      if (!isLoading) onDelete();
+    }}
+    onKeyDown={(e) => {
+      if (isLoading) return;
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        onDelete();
+      }
+    }}
+    className={`
+      bg-red-600 hover:bg-red-700 active:bg-red-800
+      text-white transition p-2 rounded-full
+      cursor-pointer select-none
+      focus:outline-none focus:ring-2 focus:ring-red-400
+      ${isLoading ? "opacity-50 pointer-events-none" : ""}
+    `}
+  >
+    <MdDelete size={20} className={isLoading ? "animate-spin" : ""} />
+  </div>
 
-      {errorMessage && (
-        <span className="text-xs text-red-500">{errorMessage}</span>
-      )}
-    </div>
+  {errorMessage && (
+    <span className="text-xs text-red-500">{errorMessage}</span>
+  )}
+</div>
+
   );
 };
 
