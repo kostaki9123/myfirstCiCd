@@ -49,7 +49,7 @@ function capitalizeFirst(str : string) {
  const date = props.departureDate.toLocaleString('en-US', { month: 'short', day: '2-digit' });
 
   return (
-     <div className="relative flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
+     <div className="relative min-h-32 flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
                  <div className=" lg:absolute top-1 mt-1 lg:mt-0s left-[-6px] px-3 py-1.5 rounded-md
                 bg-gray-700 text-white text-[11px] shadow-lg flex items-center gap-1">
                    <div className="uppercase tracking-wide text-gray-200">{date.split(' ')[0]}</div>

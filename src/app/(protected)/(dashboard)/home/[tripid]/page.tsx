@@ -2,7 +2,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, MapPin, BedDouble, Plane } from "lucide-react";
 import { GoChecklist  } from "react-icons/go";
 import { MdAddLocationAlt } from "react-icons/md";
-import Checklist from "./components/checklist";
 import { getPoints } from "../../createtrip/[tripid]/action";
 
 import Link from "next/link";
@@ -23,6 +22,38 @@ const Home = async ({ params }: PageProps) => {
   const points = await getPoints(tripid);
 
   console.log('herreeee',points)
+  function formatDateRange(points: any[]) {
+  const dates = points
+    .filter((p) => p.role === "POINT" && p.startDate && p.endDate)
+    .flatMap((p) => [new Date(p.startDate), new Date(p.endDate)]);
+
+  if (dates.length === 0) return "No dates";
+
+  const min = new Date(Math.min(...dates.map((d) => d.getTime())));
+  const max = new Date(Math.max(...dates.map((d) => d.getTime())));
+
+  return `${min.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  })} - ${max.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  })}`;
+}
+
+function formatRoute(points: any[]) {
+  return points
+    .filter((p) => p.role === "POINT" && p.placeName)
+    .sort((a, b) => a.index - b.index)
+    .map((p) => p.placeName)
+    .join(" → ");
+}
+
+const dateRange = formatDateRange(points);
+const route = formatRoute(points);
+
 
  
   
@@ -34,8 +65,6 @@ const Home = async ({ params }: PageProps) => {
       
       <div className="relative   flex items-start justify-start   h-full w-full">
           
-       <Checklist/>
-        
           
       <div className="  flex 535:flex-col flex-col 535:mt-0 relative  max-w-[200px]  535:max-w-conent   justify-start items-start   gap-2 min-w-max p-6  ">
            <div className=" absolute left-[-9px] top-0   pl-4 h-full ">
@@ -51,16 +80,16 @@ const Home = async ({ params }: PageProps) => {
           
            <Card className=" w-[250px]  535:min-w-[300px] p-2  ">
             <CardHeader className=" p-3"> 
-              <CardTitle >Summer Adventure 🌍</CardTitle>
+              <CardTitle >Trip Summary 🌍</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 p p-3  text-xs text-muted-foreground">
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
-                <span>June 10 - June 20, 2025</span>
+                <span>{dateRange}</span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4" />
-                <span>Paris → Rome → Barcelona</span>
+                <span>{route || "No places yet"}</span>
               </div>
             </CardContent>
           </Card>
