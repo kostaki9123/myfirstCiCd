@@ -349,7 +349,7 @@ console.log(props.withcurveline)
         </div>
 
 
-         <DialogContent  onOpenAutoFocus={(e) => e.preventDefault()} className=" z-[52]  h-[70%]  820:w-fit w-[90%] 450:w-[350px]   ">
+         <DialogContent  onOpenAutoFocus={(e) => e.preventDefault()} className=" z-[52]  h-[70%]  820:w-fit w-[90%] 450:w-[350px] pr-2">
             <DialogHeader className='flex justify-start  items-start'>
               <DialogTitle className=' text-xl w-[90%] '>
                   <PlaceSearchWrapper

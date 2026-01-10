@@ -27,9 +27,9 @@ const ActionRow = ({ href, label }: { href: string; label: string }) => (
 
 const ViewPlaceModal: React.FC<ViewPlaceModalProps> = ({ accommodations, places }) => {
   return (
-    <div className="  flex flex-col 820:h-auto 820:flex-row gap-6 items-start justify-start w-full overflow-x-auto p-4">
+    <div className="  pl-0  flex flex-col 820:h-auto 820:flex-row gap-6 items-start justify-start w-full overflow-x-auto p-4">
       {/* Accommodation Card */}
-      <div className="flex-shrink-0 relative flex flex-col items-center justify-start gap-2 min-h-[13rem] max-h-[22rem] w-full sm:w-[250px] rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 transition-all duration-200 p-4">
+      <div className="flex-shrink-0 relative flex flex-col items-center justify-start gap-2  min-h-[13rem] max-h-[22rem] w-full sm:w-[250px] rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 transition-all duration-200 p-4">
         <h4 className="text-base font-semibold tracking-tight text-center mb-2">
           Accommodation
         </h4>
