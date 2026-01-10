@@ -61,11 +61,9 @@ const Placeui = async (props : props) => {
                   :
                     data.map(( place:Place , key:number ) => ( 
                       place.placeType === "ACCOMMODATION" ?
-                       <Accomodationplace id={place.id} pointId={place.pointId} notes={place.notes} name={place.name} stayFrom={place.stayFrom!} stayUntil={place.stayUntil!} />
+                      <Accomodationplace id={place.id} pointId={place.pointId} notes={place.notes} name={place.name} stayFrom={place.stayFrom!} stayUntil={place.stayUntil!} />
                       :
-
-                      <Visitplace id={place.id} pointId={place.pointId} notes={place.notes} name={place.name} visitdate={place.visitDate!} visitTime={place.visitTime ? place.visitTime : undefined} />
-                         
+                      <Visitplace id={place.id} pointId={place.pointId} notes={place.notes} name={place.name} visitdate={place.visitDate!} visitTime={place.visitTime ? place.visitTime : undefined} />                       
                     ))}
                 </div>  
              </div>

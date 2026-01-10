@@ -79,7 +79,7 @@ const NotesBox = ({
     <div ref={wrapperRef} className="w-full">
       {/* ---------- ADD BUTTON ---------- */}
       {mode === "hidden" && (
-         <button onClick={() => setMode("edit")} className=" flex items-center justify-center gap-2 w-full max-w-[202px] bg-white border rounded-lg py-2 text-[14px] text-gray-700 hover:bg-gray-100 active:scale-95 transition shadow-sm " > <FaNoteSticky className="text-lg text-blue-600" /> Add notes </button>
+         <button onClick={() => setMode("edit")} className={`flex items-center justify-center gap-2 w-full ${fromItinerary ? 'max-w-[202px]' : 'max-w-[152px]' }  bg-white border rounded-lg py-2 text-[14px] text-gray-700 hover:bg-gray-100 active:scale-95 transition shadow-sm`} > <FaNoteSticky className="text-lg text-blue-600" /> Add notes </button>
       )}
 
       {/* ---------- VIEW MODE ---------- */}

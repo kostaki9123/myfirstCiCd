@@ -6,6 +6,8 @@ import { FaCar , FaBusAlt , FaBicycle, FaShip,FaWalking } from "react-icons/fa";
 import { FaTrainTram, FaMotorcycle , FaTrainSubway , FaTaxi , FaFerry  } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import NotesBox from '../../../../../component/notes/edittextarea';
+import Notes from './note';
+import { RiExternalLinkLine } from 'react-icons/ri';
 
 
 const transportModes = [
@@ -65,7 +67,7 @@ function capitalizeFirst(str : string) {
                  <div className='flex flex-col' >  
                       <h2 className=" text-base h-[32px] font-semibold text-white hidden lg:block "></h2>
 
-                      <Card className=" group min-w-[250px] lg:mt-5 535:min-w-[250px] relative ml-3 lg:ml-0 p-2 ">
+                      <Card className=" group  w-72 426:w-auto lg:mt-5  relative ml-3 lg:ml-0 p-2 ">
                         <CardHeader className="p-3">
                           <CardTitle>Transport</CardTitle>    
                         </CardHeader>
@@ -74,13 +76,24 @@ function capitalizeFirst(str : string) {
                                         
                             <span>From:{props.fromName}</span>
                             <span>To:{ props.toName}</span>
+                            <a
+                                  href=''
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-muted-foreground hover:text-blue-600 transition flex gap-1 items-center"
+                                  title="Open in map"
+                                  ><RiExternalLinkLine className=' text-lg'/>
+                                    <span className='pt-[2px]'> Open In Map</span>
+                                  
+                            </a>
                           </div>
-                          <NotesBox 
-                          onChange={(v: string) => {
-                                   setNotes(v);
-                                 }}
-                          value={notes}
-                          />
+                          { /** 
+                          <Notes
+                            id={props.id}
+                            pointId={props.pointId}
+                            notes={props.notes}
+                          /> */
+                          }
                         </CardContent>
                       </Card>
                  </div> 

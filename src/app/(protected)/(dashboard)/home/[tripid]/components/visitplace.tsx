@@ -19,9 +19,9 @@ const Visitplace = (props : props) => {
               <div className=" flex flex-col" >
                            <h2 className=" text-base py-2 font-semibold text-white hidden lg:block ">Places</h2>
                            
-                           <Card className="min-w-[250px] relative h-fit p-2">
+                           <Card className=" w-72 426:w-auto relative h-fit p-2">
                              <CardHeader className="flex flex-row gap-2 p-3">
-                               <div className="flex flex-row items-center gap-2">
+                               <div className=" flex flex-row items-center gap-2">
                                  <CardTitle className="">{props.name}</CardTitle>
                                </div>
                              </CardHeader>
