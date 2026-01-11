@@ -8,9 +8,84 @@ import { TripInsert, Trip } from "../../entities/models/trip";
 
   export class PointsRepository implements IPointsRepository {
 
-    async updatePoint(pointId: string, input: Partial<PointInsert>, tx?: any): Promise<any> {
-          
-    }
+ async updatePoint(
+  pointId: string,
+  input: Partial<PointInsert>,
+  tx?: any
+): Promise<any> {
+  const db = tx ?? prisma;
+
+  console.log('Look',input)
+
+  if (input.role === 'POINT') {
+    return db.point.update({
+      where: { id: pointId },
+      data: {
+        role: 'POINT',
+
+        startDate: input.startDate,
+        endDate: input.endDate,
+
+        placeName: input.place?.name ?? null,
+        placeAddress: input.place?.address ?? '',
+        placeId: input.place?.placeId ?? '',
+        placeLat: input.place?.location?.lat ?? null,
+        placeLng: input.place?.location?.lng ?? null,
+
+        // 🔥 clear transport fields
+        transportType: null,
+        departureDate: null,
+        departureTime: null,
+        fromName: null,
+        fromAddress: '',
+        fromPlaceId: '',
+        fromLat: null,
+        fromLng: null,
+        toName: null,
+        toAddress: '',
+        toPlaceId: '',
+        toLat: null,
+        toLng: null,
+      },
+    });
+  }
+
+  // MOVING_BOX
+  return db.point.update({
+    where: { id: pointId },
+    data: {
+      role: 'MOVING_BOX',
+
+      transportType: input.transportType ?? null,
+      departureDate: input.departureDate ?? null,
+      notes:input.notes ?? null,
+      
+
+      fromName: input.from?.name ?? null,
+      fromAddress: input.from?.address ?? '',
+      fromPlaceId: input.from?.placeId ?? '',
+      fromLat: input.from?.location?.lat ?? null,
+      fromLng: input.from?.location?.lng ?? null,
+
+      toName: input.to?.name ?? null,
+      toAddress: input.to?.address ?? '',
+      toPlaceId: input.to?.placeId ?? '',
+      toLat: input.to?.location?.lat ?? null,
+      toLng: input.to?.location?.lng ?? null,
+
+      // 🔥 clear place fields
+      placeName: null,
+      placeAddress: '',
+      placeId: '',
+      placeLat: null,
+      placeLng: null,
+      startDate: null,
+      endDate: null,
+    },
+  });
+}
+
+
 
     async getPoint(pointId: string): Promise<any | undefined> {
           try {     
@@ -60,10 +135,10 @@ import { TripInsert, Trip } from "../../entities/models/trip";
                 toLat: input.to?.location.lat ,
                 toLng: input.to?.location.lng , 
                
+                notes : input.notes,
                 departureDate: input.departureDate ,
-                departureTime: input.departureTime ,
                 transportType: input.transportType ,
- 
+                
             }
               })
               

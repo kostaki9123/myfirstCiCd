@@ -10,6 +10,7 @@ import { MockUsersRepository } from '../../../backend/infrastructure/repository/
 import { UsersRepository } from '../../../backend/infrastructure/repository/users.repository';
 import { getTripsController } from '../../../backend/interface-adapters/controllers/trips/get-trips.controller';
 import { deleteTripController } from '../../../backend/interface-adapters/controllers/trips/delete-trip.controller';
+import { getTripController } from '../../../backend/interface-adapters/controllers/trips/get-trip.controllet';
 
 
 export async function signIn(userId:string, email:string, username:string ) {
@@ -115,6 +116,33 @@ export async function getTrips() {
 
   try {
     const result = await getTripsController(userId);
+    return result;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Ops something went wrong: '${(err as Error).message}'`);
+  }
+}
+
+export async function getTrip(tripId : string) {
+  const { userId } = await auth(); // 🔐 Auth check
+
+  if (!userId) {
+    redirect('/sign-in'); // ✅ Έξω από try/catch
+  }
+
+  const usersRepository: IUsersRepository =
+    process.env.NODE_ENV === 'test'
+      ? new MockUsersRepository()
+      : new UsersRepository();
+
+  const existingUser = await usersRepository.getUser(userId);
+
+  if (!existingUser) {
+    redirect('/sign-in'); // ✅ Έξω από try/catch
+  }
+
+  try {
+    const result = await getTripController(tripId);
     return result;
   } catch (err) {
     console.error(err);

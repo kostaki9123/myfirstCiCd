@@ -45,7 +45,7 @@ export type TripSegment = {
 
   transportType: 'car' | 'bus' | 'train' | 'flight' | string; // expand as needed
   departureDate: Date;
-  departureTime: Date;
+  notes: string;
 };
 
 

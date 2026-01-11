@@ -17,7 +17,7 @@ export class MockPointsRepository implements IPointsRepository {
       startDate: input.startDate ,
       endDate: input.endDate ,
       departureDate: input.departureDate ,
-      departureTime: input.departureTime ,
+      notes: input.notes ,
       transportType: input.transportType ,
     };
     this.points.push(newPoint);
@@ -38,7 +38,7 @@ export class MockPointsRepository implements IPointsRepository {
       startDate: input.startDate ?? existing.startDate,
       endDate: input.endDate ?? existing.endDate,
       departureDate: input.departureDate ?? existing.departureDate,
-      departureTime: input.departureTime ?? existing.departureTime,
+      notes: input.notes ?? existing.notes,
       transportType: input.transportType ?? existing.transportType,
     };
 

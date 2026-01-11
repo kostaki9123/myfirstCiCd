@@ -21,4 +21,8 @@ export interface IPlaceRepository {
     placeId: string,
     tx?: any
   ): Promise<void>;
+
+  deletePlacesByPointId(
+    pointId: string,
+  ): Promise<void>;
 }

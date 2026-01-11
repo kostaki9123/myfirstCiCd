@@ -87,4 +87,19 @@ export class PlaceRepository implements IPlaceRepository {
       );
     }
   }
+
+   async deletePlacesByPointId(pointId: string): Promise<void> {
+      try {
+      await prisma.place.deleteMany({
+        where: {
+          pointId : pointId,
+        },
+      });
+    } catch {
+      throw new DatabaseOperationError(
+        `Places not deleted with these pointId: ${pointId}`
+      );
+    } 
+  }
+
 }

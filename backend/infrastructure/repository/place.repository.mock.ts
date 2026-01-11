@@ -83,4 +83,18 @@ export class MockPlaceRepository implements IPlaceRepository {
 
     this.places.splice(index, 1);
   }
+
+  async deletePlacesByPointId(pointId: string): Promise<void> {
+  const initialLength = this.places.length;
+
+  this.places = this.places.filter(
+    (p) => p.pointId !== pointId
+  );
+
+  if (this.places.length === initialLength) {
+    throw new DatabaseOperationError(
+      `No places found for point ${pointId}`
+    );
+  }
+}
 }

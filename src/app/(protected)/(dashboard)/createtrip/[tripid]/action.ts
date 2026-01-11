@@ -14,6 +14,7 @@ import { deletePointController } from "../../../../../../backend/interface-adapt
 import { movePointController } from "../../../../../../backend/interface-adapters/controllers/points/move-point.controller";
 import { updatePointUseCase } from "../../../../../../backend/application/use-cases/points/update.point.use-case";
 import { updatePointController } from "../../../../../../backend/interface-adapters/controllers/points/update-point.controller";
+import { Point } from "@prisma/client";
 
 export async function createPoint(formData: FormData) {
   console.log("🟡 createPoint action called");
@@ -84,7 +85,7 @@ export async function createPoint(formData: FormData) {
       };
       input.transportType = formData.get("transportType") as string;
       input.departureDate = new Date(formData.get("departureDate") as string);
-      input.departureTime = new Date(formData.get("departureTime") as string);
+      input.notes =(formData.get("notes") as string);
     }
 
     // 5️⃣ Call controller
@@ -292,18 +293,19 @@ export async function MovePoint(formData: FormData) {
       };
       input.transportType = formData.get("transportType") as string;
       input.departureDate = new Date(formData.get("departureDate") as string);
-      input.departureTime = new Date(formData.get("departureTime") as string);
+      input.notes = (formData.get("notes") as string);
     }
-
+    
+    console.log('controller run')
     const result = await updatePointController(input);
 
-    console.log("✅ Point created successfully:", result);
+    console.log("✅ Point updating successfully:", result);
  
     revalidatePath('/')
     return result;
    
   } catch (err) {
-    console.error("❌ Error creating point:", err);
+    console.error("❌ Error updating point:", err);
     throw new Error(
       `Oops, something went wrong: ${(err as Error).message}`
     );

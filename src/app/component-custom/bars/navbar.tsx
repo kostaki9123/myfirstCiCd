@@ -10,6 +10,7 @@ import UserAvatarWithLoading from './UserAvatarWithLoading';
 type props = {
   withtripname? : boolean
   withManageTripbtn? : boolean
+  tripName : string
 } 
 
 const  Navbar = async (props : props) => {
@@ -30,7 +31,7 @@ const  Navbar = async (props : props) => {
            {props.withtripname &&
            <div className='  justify-center items-center h-full hidden lg:flex '>
                <h4 className="scroll-m-20 text-xl font-semibold tracking-tight  ml-14">
-              Demark-Germany-Belgium Trip
+                 {props.tripName}
               </h4>
            </div>
            }

@@ -46,7 +46,7 @@ type props = {
 
   transportType?: string;
   departureDate?: Date;
-  departureTime?: Date;
+  notes?: string;
 };
 
 
@@ -54,7 +54,7 @@ export type IcreatePointUseCase = ReturnType<typeof createPointUseCase>;
 
 export const createPointUseCase = async (input: props) => {
   // Choose repository based on environment
-   const tripsRepository: IPointsRepository =
+   const pointsRepository: IPointsRepository =
      process.env.NODE_ENV === 'test'
        ? new MockPointsRepository() 
        : new PointsRepository();
@@ -63,7 +63,7 @@ export const createPointUseCase = async (input: props) => {
 
   try {
 
-    let createPoint = await tripsRepository.createPoint({
+    let createPoint = await pointsRepository.createPoint({
           tripId: input.tripId ,
           role: input.role  ,
           index: input.index  ,
@@ -97,7 +97,7 @@ export const createPointUseCase = async (input: props) => {
           : undefined,
          
           departureDate: input.departureDate ,
-          departureTime: input.departureTime ,
+          notes: input.notes ?? "",
           transportType: input.transportType ,
     });
 

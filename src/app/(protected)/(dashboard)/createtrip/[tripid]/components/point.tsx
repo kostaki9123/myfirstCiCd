@@ -315,7 +315,7 @@ console.log(props.withcurveline)
            <DialogTrigger asChild>
              <div onClick={() => setIsOpen(true)}  className=' text-white cursor-pointer bg-[#2E305B]  h-[100px] w-[100px] rounded-[50%] flex items-center justify-center gap-[3px] flex-col z-50'>
                 <IoLocationSharp className=' text-xl'/>
-                <h4 className=''>
+                <h4 className=' text-center'>
                    {/**  {result.shortFormattedAddress ? <>{result.shortFormattedAddress}</> : */} 
                    <>{props.data.placeName}</>  
                 </h4>

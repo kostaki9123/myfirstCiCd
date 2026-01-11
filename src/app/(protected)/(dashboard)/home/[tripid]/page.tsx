@@ -73,10 +73,7 @@ const route = formatRoute(points);
 
         {/* Trip Overview */}
         <div className="flex w-full gap-12 ">
-          <div  className="relative pl-10 text-white w-40 hidden lg:flex ">
-              
-               
-          </div>
+         
           
            <Card className=" w-[250px]  535:min-w-[300px] p-2  ">
             <CardHeader className=" p-3"> 
@@ -100,10 +97,7 @@ const route = formatRoute(points);
         {/* Itinerary */}
           {points.length === 0 && 
             <Link href={`/createtrip/${tripid}`} >
-              <div className=" flex flex-col " >
-                        
-                  <h2 className=" text-base py-3 min-h-[46px] font-semibold"></h2>
-                  
+              <div className=" w-[250px]  535:min-w-[300px] min-h-32 flex items-center justify-center flex-col  " >        
                   {/**   className="group flex min-w-[250px] h-full items-center justify-center rounded-2xl bg-white p-10 shadow-md transition hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     aria-label="Start planning your trip"
                   >*/}

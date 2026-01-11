@@ -67,8 +67,8 @@ function capitalizeFirst(str : string) {
                  <div className='flex flex-col' >  
                       <h2 className=" text-base h-[32px] font-semibold text-white hidden lg:block "></h2>
 
-                      <Card className=" group  w-72 426:w-auto lg:mt-5  relative ml-3 lg:ml-0 p-2 ">
-                        <CardHeader className="p-3">
+                      <Card className=" group  w-72  lg:mt-5  relative ml-3 lg:ml-0 p-2 ">
+                        <CardHeader className="p-3">  
                           <CardTitle>Transport</CardTitle>    
                         </CardHeader>
                         <CardContent className=" p-2 pt-0 space-y-2 text-xs text-muted-foreground">

@@ -7,6 +7,8 @@ import PlaceSearchWrapper from "./locationinput";
 import { Button } from "@/components/ui/button";
 import DatePickerExample from "./datepicker";
 import { updatePoint } from "../../action";
+import NotesBox from "@/app/component/notes/edittextarea";
+import CreateTripNotesBox from "../notes";
 
 type PlaceData = {
   name: string;
@@ -38,7 +40,7 @@ type TripSegment = {
 
   transportType: string;
   departureDate: Date;
-  departureTime: Date;
+  notes: string;
 };
 
 type Props = {
@@ -47,6 +49,7 @@ type Props = {
 
 const ViewMovingBoxModal = ({ data }: Props) => {
   const [formData, setFormData] = useState<TripSegment>(data);
+  const [notes, setNotes] = useState<string>(data.notes); 
 
   // -----------------------------
   // Generic value update
@@ -75,12 +78,15 @@ const ViewMovingBoxModal = ({ data }: Props) => {
   const handleSave = async () => {
     const original = JSON.stringify(data);
     const updated = JSON.stringify(formData);
+    let oldNotes = data.notes
+    let newNotes = notes
 
-    if (original === updated) {
+    if (original === updated && oldNotes === newNotes ) {
       console.log("No changes — skipping backend update");
       return;
     }
 
+    console.log('run 1')
     // Prepare FormData for server action
     const fd = new FormData();
     fd.append("id", formData.id);
@@ -102,7 +108,8 @@ const ViewMovingBoxModal = ({ data }: Props) => {
 
     fd.append("transportType", formData.transportType);
     fd.append("departureDate", formData.departureDate.toISOString());
-    fd.append("departureTime", formData.departureTime.toISOString());
+    fd.append("notes", notes);
+    console.log('run 2')
 
     // TODO: call your server action
     console.log("Sending update:", Object.fromEntries(fd));
@@ -163,19 +170,16 @@ const ViewMovingBoxModal = ({ data }: Props) => {
           />
         </div>
 
-        {/* Departure Time */}
-        <div className="flex flex-col gap-1">
-          <Label>Departure Time</Label>
-          <DatePickerExample
-            onlyTime
-            defaultValue={data.departureTime}
-            onChange={(value) => {
-              const v = Array.isArray(value) ? value[0] : (value as Date);
-              handleChange("departureTime", v);
-            }}
-          />
+       
+      </div> 
+       {/*Transport notes*/}
+          <div className="flex flex-col gap-1 ">
+          <Label>Notes</Label>
+            <CreateTripNotesBox
+             value={notes}
+             onChange={setNotes}
+            />
         </div>
-      </div>
 
       {/* Save */}
       <div className="w-full flex items-end justify-end">

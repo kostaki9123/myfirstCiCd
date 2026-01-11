@@ -9,6 +9,7 @@ import PlaceSearchWrapper from "./locationinput/locationinput";
 import TransportDropdown from "./transportdropdown";
 import { InputParseError } from "../../../../../../../backend/entities/errors/common";
 import { createPoint } from "../action";
+import CreateTripNotesBox from "./notes";
 
 // --------------------
 // ✅ Zod Schema
@@ -49,10 +50,8 @@ export const formSchema = z.object({
     .nullable()
     .refine((val) => val !== null, { message: "You must select a departure date" }),
 
-  departureTime: z
-    .date({ required_error: "You must select a departure time" })
-    .nullable()
-    .refine((val) => val !== null, { message: "You must select a departure time" }),
+  notes: z
+    .string().optional(),
 });
 
 // --------------------
@@ -76,7 +75,7 @@ const Createmovingboxform = (props : props) => {
 
   const [transportType, setTransportType] = useState<string>("");
   const [departureDate, setDepartureDate] = useState<Date | null>(null);
-  const [departureTime, setDepartureTime] = useState<Date | null>(null);
+  const [notes, setNotes] = useState<string>('');
 
   const [generalError, setGeneralError] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
@@ -91,7 +90,7 @@ const Createmovingboxform = (props : props) => {
         to: toPlace,
         transportType,
         departureDate,
-        departureTime,
+        notes,
       });
 
       if (!validation.success) {
@@ -116,7 +115,7 @@ const Createmovingboxform = (props : props) => {
       formData.append("toLng", validation.data.to.location.lng.toString());
       formData.append("transportType", validation.data.transportType);
       formData.append("departureDate", validation.data.departureDate.toISOString());
-      formData.append("departureTime", validation.data.departureTime.toISOString());
+      formData.append("notes", validation.data.notes!);
 
       await createPoint(formData);
 
@@ -192,17 +191,11 @@ const Createmovingboxform = (props : props) => {
       </div>
 
       {/* DEPARTURE TIME */}
-      <Label>Departure Time</Label>
-      <DatePickerExample
-        onlyTime
-        onChange={(value) => {
-          if (Array.isArray(value)) {
-            setDepartureTime(value[0] ?? null);
-          } else {
-            setDepartureTime(value as Date);
-          }
-        }}
-      />
+      <Label>Notes</Label>
+         <CreateTripNotesBox
+             value={notes}
+             onChange={setNotes}
+         />
 
       {/* GLOBAL ERROR MESSAGE */}
       {generalError && (

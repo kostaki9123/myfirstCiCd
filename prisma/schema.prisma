@@ -62,7 +62,7 @@ model Point {
 
   transportType  String?
   departureDate  DateTime?
-  departureTime  DateTime?
+  notes          String?
 
    places         Place[]
 

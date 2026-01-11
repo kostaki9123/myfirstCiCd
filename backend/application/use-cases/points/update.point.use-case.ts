@@ -1,7 +1,10 @@
 
 
+import { PlaceRepository } from '../../../infrastructure/repository/place.repository';
+import { MockPlaceRepository } from '../../../infrastructure/repository/place.repository.mock';
 import { PointsRepository } from '../../../infrastructure/repository/points.repository';
 import { MockPointsRepository } from '../../../infrastructure/repository/points.repository.mock';
+import { IPlaceRepository } from '../../repositories/place.repository.interface';
 import { IPointsRepository } from '../../repositories/points.repository.interface';
 import { ITripsRepository } from '../../repositories/trips.repository.interface';
 import { IUsersRepository } from '../../repositories/users.repository.interface';
@@ -47,7 +50,7 @@ type props = {
 
   transportType?: string;
   departureDate?: Date;
-  departureTime?: Date;
+  notes?: string;
 };
 
 
@@ -60,8 +63,22 @@ export const updatePointUseCase = async (input: props) => {
        ? new MockPointsRepository() 
        : new PointsRepository();
 
+    const placeRepository:IPlaceRepository =
+      process.env.NODE_ENV === 'test'
+        ? new MockPlaceRepository() 
+        : new PlaceRepository();
+
   try {
 
+    //get old point
+    let oldPoint = await pointsRepository.getPoint(input.id)
+
+    //compare it to new update point
+     //if is different 
+    if(oldPoint?.place?.name !== input.place?.name ){
+       await placeRepository.deletePlacesByPointId(input.id)
+    }
+   
     let updatedPoint = await pointsRepository.updatePoint(
          input.id ,
         {
@@ -98,7 +115,7 @@ export const updatePointUseCase = async (input: props) => {
           : undefined,
          
           departureDate: input.departureDate ,
-          departureTime: input.departureTime ,
+          notes: input.notes ,
           transportType: input.transportType ,
     });
 

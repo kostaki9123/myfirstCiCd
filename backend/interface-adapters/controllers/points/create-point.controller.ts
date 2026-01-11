@@ -76,11 +76,7 @@ const inputSchema = z.object({
     .refine((val) => val !== null, { message: "You must select a departure date" })
     .optional(),
 
-  departureTime: z
-    .date({ required_error: "You must select a departure time" })
-    .nullable()
-    .refine((val) => val !== null, { message: "You must select a departure time" })
-    .optional(),
+   notes: z.string().optional(),
 });
 
 export const createPointController =
@@ -131,7 +127,7 @@ export const createPointController =
               },
               transportType: data.transportType,
               departureDate: data.departureDate,
-              departureTime: data.departureTime
+              notes: data.notes
           });
     }
     

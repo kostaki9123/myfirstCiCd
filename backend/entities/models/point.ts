@@ -65,11 +65,8 @@ export const selectPointSchema = z.object({
     .refine((val) => val !== null, { message: "You must select a departure date" })
     .optional(),
 
-  departureTime: z
-    .date({ required_error: "You must select a departure time" })
-    .nullable()
-    .refine((val) => val !== null, { message: "You must select a departure time" })
-    .optional(),
+  notes: z
+     .string().nullable().optional(),
 });
 
 export type Point = z.infer<typeof selectPointSchema>;
@@ -86,7 +83,7 @@ export const insertCreatePointSchema = selectPointSchema.pick({
  to: true ,
  transportType : true ,
  departureDate : true ,
- departureTime : true ,
+ notes : true ,
 });
 
 export type PointInsert = z.infer<typeof insertCreatePointSchema>;
