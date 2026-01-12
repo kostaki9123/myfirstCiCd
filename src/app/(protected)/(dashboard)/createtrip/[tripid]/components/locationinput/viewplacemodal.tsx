@@ -131,7 +131,7 @@ if (loading) {
         </h4>
 
         {accommodations.length === 0 ? (
-          <ActionRow href="/itinerary/change-accommodation" label="Add Accommodation" />
+          <ActionRow href={`/itinerary/${tripId}`} label="Add Accommodation" />
         ) : (
          
           <div className="flex flex-col gap-3 w-full  ">
