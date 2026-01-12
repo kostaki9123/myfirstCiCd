@@ -10,7 +10,7 @@ import UserAvatarWithLoading from './UserAvatarWithLoading';
 type props = {
   withtripname? : boolean
   withManageTripbtn? : boolean
-  tripName : string
+  tripName? : string
 } 
 
 const  Navbar = async (props : props) => {
