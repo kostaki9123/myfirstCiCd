@@ -384,7 +384,7 @@ console.log(props.withcurveline)
             </div>
           )}
 
-             <ViewPlaceMoadal  accommodations={fakeAccommodations}   places={fakePlaces}  />
+             <ViewPlaceMoadal pointId={props.data.id} tripId={props.tripId}  />
             {/**
              * 
             <Savebtn  />  */}
