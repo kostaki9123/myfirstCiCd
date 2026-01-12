@@ -35,7 +35,6 @@ import { TripInsert, Trip } from "../../entities/models/trip";
         // 🔥 clear transport fields
         transportType: null,
         departureDate: null,
-        departureTime: null,
         fromName: null,
         fromAddress: '',
         fromPlaceId: '',
