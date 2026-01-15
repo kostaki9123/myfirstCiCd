@@ -31,7 +31,7 @@
         <body
           id="datepicker-portal"
         >
-          <Navbar/>
+          <Navbar withtripname={false}/>
           {children}
           <Analytics />
         </body>

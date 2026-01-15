@@ -33,9 +33,10 @@ const  Navbar =  (props : props) => {
                    Trip planner
                </h3>
            </div>
-         
+           
+           {props.withtripname &&
              <Ded/>
-          
+           }
        </div>
 
       {/**  <header className="w-full py-6 text-center hidden lg:flex justify-center ">
