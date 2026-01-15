@@ -6,15 +6,20 @@ import { Button } from '@/components/ui/button';
 import Humburger from './humburger';
 import { Skeleton } from '@/components/ui/skeleton';
 import UserAvatarWithLoading from './UserAvatarWithLoading';
+import TripHeader from './ded';
+import Tripdeader from './ded';
+import Ded from './ded';
+
 
 type props = {
   withtripname? : boolean
   withManageTripbtn? : boolean
-  tripName? : string
 } 
 
-const  Navbar = async (props : props) => {
-  const expensiveAI = await allowExpensiveAI();
+const  Navbar =  (props : props) => {
+ // const expensiveAI = await allowExpensiveAI();
+
+  
 
   return (
     <div className= 'h-14 fixed bg-[#010038] top-0 left-0 right-0    justify-center flex   items-center z-[51] md:min-w-screen shadow-lg'>
@@ -28,13 +33,9 @@ const  Navbar = async (props : props) => {
                    Trip planner
                </h3>
            </div>
-           {props.withtripname &&
-           <div className='  justify-center items-center h-full hidden lg:flex '>
-               <h4 className="scroll-m-20 text-xl font-semibold tracking-tight  ml-14">
-                 {props.tripName}
-              </h4>
-           </div>
-           }
+         
+             <Ded/>
+          
        </div>
 
       {/**  <header className="w-full py-6 text-center hidden lg:flex justify-center ">

@@ -3,6 +3,8 @@ import Mapprovider from '@/app/component/map/map-provider';
 import Tripboard from './components/tripboard';
 import Tripboardphone from './components/tripboardphone';
 import { getPoints } from './action';
+import Navbar from '@/app/component-custom/bars/navbar';
+import { getTrip } from '@/app/(protected)/action';
 
 
 interface PageProps {
@@ -14,12 +16,13 @@ const Page = async ({ params }: PageProps) => {
 
   console.log("Server-side ID:", tripid); 
 
-  const points = await getPoints(tripid);
-  console.log('ποιντσ',points);
+    const points = await  getPoints(tripid)
+     
+    console.log('ποιντσ',points);
+
 
   return (
-    <div className=' min-h-[490px] xxs:border-4  bottom-0 absolute right-0 left-0 top-0  flex flex-col '>
-        
+     <div className=' min-h-[490px] xxs:border-4  bottom-0 absolute right-0 left-0 top-0  flex flex-col '>
         <div className=' h-[45%]  xxs:block hidden    ' >
            <Tripboard  tripId={tripid} cyrclesArr={points} />
         </div>

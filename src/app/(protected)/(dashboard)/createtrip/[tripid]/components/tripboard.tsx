@@ -36,7 +36,7 @@ export type TripSegment = {
 
   transportType?: 'car' | 'bus' | 'train' | 'flight' | string;
   departureDate?: Date;
-  departureTime?: Date;
+  notes?: any;
 };
 
 type props = {

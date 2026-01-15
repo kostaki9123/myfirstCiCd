@@ -9,6 +9,7 @@ export default async function Home() {
     
   let trips =  await getTrips()
  
+
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-gray-200 pt-20">
@@ -90,7 +91,11 @@ export default async function Home() {
 
             {/* Actions */}
             <div className="mt-6 flex justify-between items-center">
-              <Link href={`/home/${trip.id}`}>
+            <Link
+                href={{
+                  pathname: `/home/${trip.id}`,
+                }}
+              >
                  <button className="px-4 py-2 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white rounded-lg shadow-lg hover:scale-105 transition-transform">
                    Join Dashboard
                  </button>
