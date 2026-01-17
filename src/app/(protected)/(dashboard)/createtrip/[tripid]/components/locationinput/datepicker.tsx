@@ -14,6 +14,8 @@ type Props = {
   // NEW:
   defaultValue?: Date | [Date | null, Date | null] | null;
   fromItinerary?: boolean
+  minDate?: Date;
+
 };
 
 export default function DateRangePicker({
@@ -24,6 +26,7 @@ export default function DateRangePicker({
   fromItinerary,
   namePrefix = "date",
   defaultValue = null,
+  minDate,
 }: Props) {
   const [date, setDate] = useState<Date | null>(null);
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -79,6 +82,7 @@ export default function DateRangePicker({
             dateFormat="HH:mm"
             placeholderText="Select time"
             className={inputClass}
+            minDate={minDate}
           />
 
           <input
@@ -97,6 +101,7 @@ export default function DateRangePicker({
             startDate={startDate}
             endDate={endDate}
             selectsRange
+            minDate={minDate}
             showTimeSelect={withTime}
             timeIntervals={15}
             timeCaption="Time"
@@ -125,6 +130,7 @@ export default function DateRangePicker({
           <DatePicker
             selected={date}
             onChange={handleSingleChange}
+            minDate={minDate}
             showTimeSelect={withTime}
             timeIntervals={15}
             timeCaption="Time"

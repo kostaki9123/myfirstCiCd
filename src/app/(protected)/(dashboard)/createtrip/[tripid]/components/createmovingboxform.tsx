@@ -60,6 +60,7 @@ export const formSchema = z.object({
 type props = {
   index: number
   tripId : string
+  minDate?: Date
 }
 
 const Createmovingboxform = (props : props) => {
@@ -187,6 +188,7 @@ const Createmovingboxform = (props : props) => {
               setDepartureDate(value as Date);
             }
           }}
+            minDate={props.minDate}
         />
       </div>
 

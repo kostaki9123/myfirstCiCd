@@ -41,6 +41,7 @@ export const formSchema = z.object({
 type props = {
   index : number
   tripId : string
+  minDate?: Date
 }
 
 const Createplaceform = (props : props) => {
@@ -158,6 +159,7 @@ const Createplaceform = (props : props) => {
             }
           }}
           namePrefix="booking"
+          minDate={props.minDate}
         />
       </div>
       {errorMessages.dates && (

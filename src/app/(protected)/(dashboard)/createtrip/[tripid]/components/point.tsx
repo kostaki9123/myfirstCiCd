@@ -90,6 +90,7 @@ type Props = {
   datalenght : number
   tripId : string
   withcurveline : boolean
+  minDate?: Date
 } 
 
 const fakeAccommodations = [
@@ -392,7 +393,7 @@ console.log(props.withcurveline)
      </Dialog>
      {props.datalenght === props.index + 1 && (
           <>  
-            <Addnewcyrcle index={ props.data.index + 1} tripId={props.data.tripId} withcurveline={props.withcurveline} />
+            <Addnewcyrcle minDate={props.data.endDate!} index={ props.data.index + 1} tripId={props.data.tripId} withcurveline={props.withcurveline} />
           </>
       )}
 

@@ -49,11 +49,11 @@ const Tripboard = (props : props) => {
     <div   style={{   minWidth: "344px" ,display: "grid",gridTemplateRows : "20px 69px" ,gridTemplateColumns: `70px repeat(${props.cyrclesArr?.length + 1}, 132px)`, backgroundColor: "grey", width: "100%", height: "100%", overflowX : "auto" , overflowY : "hidden"}}    >
        {
              props.cyrclesArr?.length === 0 
-             ? <Addnewcyrcle  index={0} tripId={props.tripId}  withcurveline /> 
+             ? <Addnewcyrcle  index={0} tripId={props.tripId}  withcurveline minDate={new Date()} /> 
              :
              props.cyrclesArr?.map(( point: any , key:number ) => (
              point.role === "POINT" 
-             ? <Point withcurveline key={point.id} index={key} datalenght={props.cyrclesArr.length} data={point} tripId={props.tripId} />
+             ? <Point  withcurveline key={point.id} index={key} datalenght={props.cyrclesArr.length} data={point} tripId={props.tripId} />
              : <Movingbox withcurveline key={point.id} index={key} datalenght={props.cyrclesArr.length} data={point} tripId={props.tripId} />
              )) 
             

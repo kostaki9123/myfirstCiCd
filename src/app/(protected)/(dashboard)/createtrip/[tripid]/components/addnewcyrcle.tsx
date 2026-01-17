@@ -24,6 +24,7 @@ type Props = {
     tripId : string
     withcurveline : boolean
     lengtharr? : number
+    minDate?: Date
   }
   
   const positiongrid = [
@@ -111,11 +112,11 @@ const Addnewcyrcle =  (props : Props) => {
               </TabsList>
               <TabsContent value="account" className='px-5  w-full'>
                 {/** <Createplaceform index={props.index} tripId={props.tripId} cyrcleArrId={props.cyrcleArrId}/>  {/** create place form */}
-                <Createplaceform index={props.index} tripId={props.tripId} />
+                <Createplaceform index={props.index} tripId={props.tripId} minDate={props.minDate} />
               </TabsContent>
               <TabsContent value="password" className='px-5  w-full ' >
                 {/**  <Createmovingform index={props.index} tripId={props.tripId} cyrcleArrId={props.cyrcleArrId}/>  {/** create moving form */}
-                <Createmovingboxform tripId={props.tripId} index={props.index}/>
+                <Createmovingboxform tripId={props.tripId} index={props.index} minDate={props.minDate}/>
               </TabsContent>
          </Tabs>
       </DialogContent>
