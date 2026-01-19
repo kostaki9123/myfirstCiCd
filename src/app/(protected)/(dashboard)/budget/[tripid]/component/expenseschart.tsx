@@ -1,8 +1,8 @@
 "use client"
 
 import React from 'react'
-// import { Bar } from 'react-chartjs-2';
-//import "chart.js/auto";
+import { Bar } from 'react-chartjs-2';
+import "chart.js/auto";
 
 
 const userdata = {
@@ -35,7 +35,7 @@ const userdata = {
 const Expenseschart = () => {
   return (
     <div className='border-2 border-purple-400  xl:flex items-center rounded-md justify-center p-2 hidden    base:row-start-3 base:row-end-4 base:col-start-1 base:col-end-2       535:row-start-2 535:row-end-3 535:col-start-1 535:col-end-3      986:row-start-1 986:row-end-5 986:col-start-2 986:col-end-4 '>    
-         {/*  <Bar data={userdata}/> */}
+           <Bar data={userdata}/> 
     </div>
   )
 }

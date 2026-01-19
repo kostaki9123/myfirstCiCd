@@ -1,87 +1,118 @@
-import React from 'react'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@/components/ui/table"
-import { FaBottleWater } from "react-icons/fa6";
-import { BsCupHotFill } from "react-icons/bs";
-import { CiBeerMugFull } from "react-icons/ci";
+'use client'
 
-//import { pointT } from '@/types/next-authd';
-import Avgproductdropdown from './avgproductdropdown';
+import { useEffect, useState } from "react"
+import Avgproductdropdown from "./avgproductdropdown"
+import { countryBudgetProfilesEUR } from "@/lib/countryBudgetProfiles"
 
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Water",
-    totalAmount: "$250.00",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Cappuccino",
-    totalAmount: "$150.00",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Beer",
-    totalAmount: "$350.00",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Water",
-    totalAmount: "$450.00",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Water",
-    totalAmount: "$550.00",
-  },
-]
 
-const getIcon = (paymentStatus: any) => {
-  switch (paymentStatus) {
-    case 'Water':
-      return <FaBottleWater fontSize="20px" />;
-    case 'Cappuccino':
-      return <BsCupHotFill fontSize="20px" />;
-    case 'Beer':
-      return <CiBeerMugFull fontSize="20px" />;
-    default:
-      return null;
+
+
+type Props = {
+  pointsArr: any[]
+}
+
+// Helper to get country code from lat/lng
+const getCountryCodeFromLatLng = async (lat: number, lng: number) => {
+  if (!lat || !lng) return null
+  try {
+    const res = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API}`
+    )
+    const data = await res.json()
+    const country = data.results[0]?.address_components?.find(
+      (c: any) => c.types.includes("country")
+    )
+    return country?.short_name ?? null
+  } catch (err) {
+    console.error("Failed to geocode", err)
+    return null
   }
 }
 
-type Props = {
-  tripId: string
-  cyrclesArr: any[]
-  selectedAvgpcountry?: string
-}
+const TripBudgetCard = ({ pointsArr }: Props) => {
+  const [pointsWithCountries, setPointsWithCountries] = useState<({ countryCode: string | null })[]>([])
+  const [selectedCountryCode, setSelectedCountryCode] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-const Avgproductprice = (props: Props) => {
+  // Geocode all points on mount
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        setLoading(true)
+        const updated = await Promise.all(
+          pointsArr.map(async (point) => {
+            const code = point.placeLat && point.placeLng 
+              ? await getCountryCodeFromLatLng(point.placeLat, point.placeLng) 
+              : null
+            return { ...point, countryCode: code }
+          })
+        )
+        setPointsWithCountries(updated)
+      } catch {
+        setError("Failed to fetch countries")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchCountries()
+  }, [pointsArr])
+
+  // Determine active country
+  const activeCountryCode = selectedCountryCode ?? pointsWithCountries[0]?.countryCode ?? null
+
+  const profile = activeCountryCode
+    ? countryBudgetProfilesEUR[activeCountryCode]
+    : null
+
+  // Dropdown only contains unique countries from pointsWithCountries
+  const dropdownCountries = Array.from(
+    new Set(pointsWithCountries.map(p => p.countryCode).filter((c): c is string => !!c))
+  ).map(code => ({
+    code,
+  }))
+
   return (
-    <div className='bg-[#ACA7CB] p-2 rounded-md overflow-hidden relative    base:row-start-5 base:row-end-6 base:col-start-1 base:col-end-2       535:row-start-4 535:row-end-5 535:col-start-1 535:col-end-2     787:row-start-5 787:row-end-9 787:col-start-3 787:col-end-4 '>
-      <h4 className="scroll-m-20 text-xl font-semibold tracking-tight ">
-        Average prices
+    <div className="bg-[#ACA7CB] relative p-2 rounded-md base:row-start-5 base:row-end-6 base:col-start-1 base:col-end-2 535:row-start-4 535:row-end-5 535:col-start-1 535:col-end-2 787:row-start-5 787:row-end-9 787:col-start-3 787:col-end-4 ">
+      <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+        Avg Daily Budget
       </h4>
+      <Avgproductdropdown
+            arrayOfCountries={dropdownCountries}
+            selectedCountryCode={activeCountryCode}
+            setSelectedCountry={setSelectedCountryCode}
+        />
+       
+      {loading && <p className="text-sm mt-2">Loading budget...</p>}
+      {error && <p className="text-sm text-red-600">{error}</p>}
 
-      {/* Removed the recursive call here */}
-      <Avgproductdropdown />
+      {profile && (
+        <>
+          {/* Dropdown for manual country selection */}
+          
 
-      <Table className='mt-4'>
-        <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium hover:bg-[#ACA7CB]"> {getIcon(invoice.paymentStatus)}</TableCell>
-              <TableCell>{invoice.paymentStatus}</TableCell>
-              <TableCell className="text-right">{invoice.totalAmount}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          {/* Display budget tiers */}
+          <div className="mt-4 space-y-3 text-sm px-5 flex flex-col">
+            <div className="flex justify-between">
+              <span>💸 Budget traveler</span>
+              <span>€ {profile.budget} / day</span>
+            </div>
+
+            <div className="flex justify-between">
+              <span>💼 Mid-range traveler</span>
+              <span>€ {profile.mid} / day</span>
+            </div>
+
+            <div className="flex justify-between">
+              <span>💎 Luxury traveler</span>
+              <span>€ {profile.luxury} / day</span>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
 
-export default Avgproductprice
+export default TripBudgetCard

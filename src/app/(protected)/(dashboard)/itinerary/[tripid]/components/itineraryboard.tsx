@@ -83,7 +83,7 @@ const Itineraryboard = (props: Props) => {
 
         {/* HEADER */}
         <div className="flex justify-center mb-2 relative">
-          <div className=' absolute top-1 left-2'>
+          <div className=' absolute top-1 left-2 max-w-20 450:max-w-max  '>
             {selectedPoint.startDate && selectedPoint.endDate
               ? `${new Date(selectedPoint.startDate).toLocaleDateString(undefined, {
                   month: '2-digit',
@@ -108,7 +108,7 @@ const Itineraryboard = (props: Props) => {
         </div>
 
         {/* ACCOMMODATION */}
-        <div className="flex flex-col items-center p-2 pt-7 relative gap-2 ">
+        <div className="flex flex-col items-center p-2 mt-5 450:mt-0 pt-7 relative gap-2 ">
           <small className="absolute left-2 top-2 font-semibold">
             Accommodation
           </small>

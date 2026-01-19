@@ -7,15 +7,12 @@ const Amounts = () => {
              Amounts
            </h4>
 
-           <div className=' border-2 border-red-50 flex  absolute bottom-2 top-8 left-2 right-2 flex-col items-center justify-center gap-[30px] 986:gap-[10px] '>
+           <div className='  flex  absolute bottom-2 top-8 left-2 right-2 flex-col items-center justify-center gap-[30px] 986:gap-[10px] '>
                 <div  className='flex h-[70px] w-[50%] flex-col border-dashed border-2 border-gray-500 rounded-sm'  >
                      <div className='flex h-[35%] w-full pt-[3px] pl-[9px] text-gray-500 font-normal'  >Expenses</div>
                      <div className='flex h-[35%] w-full pb-[10px] mt-2 text-black items-start justify-center font-medium' >$1750</div>
                 </div>
-                <div  className='flex h-[70px] w-[50%] flex-col border-dashed border-2 border-gray-500 rounded-sm'  >
-                     <div className='flex h-[35%] w-full pt-[3px] pl-[9px] text-gray-500 font-normal'  >Expenses</div>
-                     <div className='flex h-[35%] w-full mt-2  text-black items-start justify-center font-medium' >$1750</div>
-                </div>
+               
            </div>
            
        </div>
