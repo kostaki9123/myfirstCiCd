@@ -11,7 +11,7 @@ type Place = {
   pointId: string;
   placeType: "ACCOMMODATION" | "PLACE_TO_VISIT";
   name: string;
-  internalId?: number;
+  internalId?: string;
   stayFrom?: Date | null;
   stayUntil?: Date | null;
   cost?: number | null;
