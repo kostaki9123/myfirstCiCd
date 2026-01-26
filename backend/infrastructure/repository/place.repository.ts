@@ -7,7 +7,8 @@ export class PlaceRepository implements IPlaceRepository {
 
   async createPlace(insert: PlaceInsert): Promise<Place> {
     try {
-      return await prisma.place.create({
+      console.log( insert.id,insert.pointId, insert.placeType,insert.name)
+      return await prisma.place.create({  
         data: {
           id: insert.id,           // Google place id
           pointId: insert.pointId,

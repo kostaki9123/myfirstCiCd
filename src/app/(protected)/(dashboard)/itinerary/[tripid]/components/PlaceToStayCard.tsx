@@ -18,6 +18,7 @@ import NotesBox from "../../../../../component/notes/edittextarea";
 import Deleteplacebtn from "./deleteplacebtn";
 import { Button } from "@/components/ui/button";
 import { updatePlace } from "../action";
+import AddExpenseDialog from "../../../budget/[tripid]/component/expenseDialog";
 //import { updatePlaceToStay } from "../actions"; // 👈 your server action
 
 /* -------------------------------------------------------
@@ -178,9 +179,10 @@ export default function PlaceToStayCard(props: Props) {
             </div>
 
             {/* COST (optional) */}
-            <button className="flex items-center justify-center gap-2 w-full max-w-[202px] bg-white border rounded-lg py-2 text-sm hover:bg-gray-100 active:scale-95 transition" > <MdOutlineAttachMoney className="text-lg" /> 
-                Add cost 
-            </button>
+            <div className="flex flex-col">
+            <label className="text-xs text-gray-700  ">Cost</label>
+                  <AddExpenseDialog budgetId='' fromItinerary/>
+            </div>
 
             {/* NOTES */}
             <div className="flex flex-col">

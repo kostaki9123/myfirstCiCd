@@ -30,10 +30,40 @@ model Trip {
   user      User   @relation(fields: [userId], references: [id])
 
   Point Point[]
+
+  Budget Budget[]
+}
+
+model Budget {
+  id             String   @id @default(cuid()) @unique
+  tripId         String
+  Amount         Int
+  genCurrency    String
+  budgetAmount   Int
+  budgetCurrency String
+
+  trip           Trip      @relation(fields: [tripId], references: [id])
+
+  Expense Expense[]
+
+}
+
+model Expense {
+  id             String @id @default(cuid()) @unique
+  budgetId       String 
+  description    String
+  connectedToId  String?
+  category       String
+  amount         Int
+  expenseCurrency String
+
+  // relation
+  Budget           Budget      @relation(fields: [budgetId], references: [id])
+
 }
 
 model Point {
-  id             String   @id @default(cuid())
+  id             String   @id @default(cuid()) @unique
   tripId         String
   role           PointRole
   index          Int
@@ -77,7 +107,7 @@ enum PointRole {
 }
 
 model Place {
-  internalId Int @id @default(autoincrement())  // primary key
+  internalId String   @id @default(cuid()) 
   id String    
   pointId    String
 
@@ -96,7 +126,6 @@ model Place {
   // ===== Relations =====
   point      Point      @relation(fields: [pointId], references: [id])
 
-  @@unique([pointId, id])
   @@index([pointId])
 }
 

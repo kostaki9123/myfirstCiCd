@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import AddExpenseDialog from './expenseDialog'
 
 
 const invoices = [
@@ -42,6 +43,7 @@ const Allexpenses = () => {
          <h4 className=" bg-[#ACA7CB] scroll-m-20 text-xl font-semibold tracking-tight   z-10  ">
              Expenses
          </h4>
+         <AddExpenseDialog budgetId=''/>
             <Table>
              <TableHeader>
                <TableRow>

@@ -10,7 +10,7 @@ export const PlaceTypeEnum = z.nativeEnum(PlaceType);
  * Base schema (NO effects)
  */
 const placeBaseSchema = z.object({
-  internalId: z.number().optional(), // primary key, optional for inserts
+  internalId: z.string().optional(), // primary key, optional for inserts
   id: z.string(),                    // no longer cuid(), can repeat
   pointId: z.string().cuid(),        // still cuid for points
   placeType: PlaceTypeEnum,

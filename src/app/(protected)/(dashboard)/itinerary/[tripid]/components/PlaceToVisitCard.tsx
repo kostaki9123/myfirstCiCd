@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { FaLocationPin } from "react-icons/fa6";
-import { MdOutlineAttachMoney } from "react-icons/md";
 import { ChevronDown } from "lucide-react";
 import { z } from "zod";
 
@@ -20,6 +19,7 @@ import Deleteplacebtn from "./deleteplacebtn";
 import { Button } from "@/components/ui/button";
 import NotesBox from "@/app/component/notes/edittextarea";
 import { updatePlace } from "../action";
+import AddExpenseDialog from "../../../budget/[tripid]/component/expenseDialog";
 
 /* -------------------------------------------------------
    TYPES
@@ -177,21 +177,26 @@ export default function PlaceToVisitCard(props: Props) {
             </div>
 
             {/* TIME + COST */}
-            <button className="flex items-center justify-center gap-2 w-full max-w-[202px] bg-white border rounded-lg py-2 text-sm hover:bg-gray-100 active:scale-95 transition" > <MdOutlineAttachMoney className="text-lg" /> 
-                          Add cost 
-            </button>
+            <div className="flex flex-col">
+                 <label className="text-xs text-gray-700  ">Cost</label>
+                 <AddExpenseDialog budgetId='' fromItinerary/>
+            </div>
+
 
             {/* NOTES */}
-            <NotesBox
-              value={notes}
-              onChange={(v) => {
-                setNotes(v);
-                setIsDirty(true);
-              }}
-              placeholder="Opening hours, ticket info, best time to visit…"
-              showLabel={false}
-              fromItinerary
-            />
+            <div className="flex flex-col">
+              <label className="text-xs text-gray-700">Notes</label>
+              <NotesBox
+                value={notes}
+                onChange={(v) => {
+                  setNotes(v);
+                  setIsDirty(true);
+                }}
+                placeholder="Opening hours, ticket info, best time to visit…"
+                showLabel={false}
+                fromItinerary
+              />
+            </div>
 
             {/* SAVE */}
             {isDirty && (
