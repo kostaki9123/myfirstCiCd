@@ -179,7 +179,7 @@ export default function PlaceToVisitCard(props: Props) {
             {/* TIME + COST */}
             <div className="flex flex-col">
                  <label className="text-xs text-gray-700  ">Cost</label>
-                 <AddExpenseDialog budgetId='' fromItinerary/>
+               {/*   <AddExpenseDialog budgetId='' fromItinerary/> */}
             </div>
 
 
