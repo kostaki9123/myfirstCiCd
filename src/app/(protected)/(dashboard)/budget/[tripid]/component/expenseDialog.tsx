@@ -20,6 +20,7 @@ import { Label } from '@/components/ui/label'
 import ExpenseCategorydropdown from './expensecategorydropdown'
 import CurrencyDropdown from './currencydropdown'
 import { MdOutlineAttachMoney } from "react-icons/md";
+import { createExpense } from '../action'
 // import { createExpense } from '../actions/createExpense'
 
 /* ---------------------------------- */
@@ -64,7 +65,8 @@ const expenseSchema = z.object({
 /* ---------------------------------- */
 
 type Props = {
-  budgetId: string
+  tripId : string
+  budgedId: string
   connectedToId?: string
   fromItinerary? : boolean
 }
@@ -74,9 +76,10 @@ type Props = {
 /* ---------------------------------- */
 
 const AddExpenseDialog = ({
-  budgetId,
+  budgedId,
   connectedToId,
-  fromItinerary
+  fromItinerary,
+  tripId
 }: Props) => {
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -84,6 +87,7 @@ const AddExpenseDialog = ({
   const [category, setCategory] = useState('')
   const [currency, setCurrency] = useState('USD')
   const [errors, setErrors] = useState<Record<string, string>>({})
+
 
   async function handleSubmit(formData: FormData) {
     const payload = {
@@ -111,12 +115,13 @@ const AddExpenseDialog = ({
     /* ---------------------------------- */
 
     const actionFormData = new FormData()
-
+    ;
     actionFormData.append('description', validation.data.description)
     actionFormData.append('category', validation.data.category)
     actionFormData.append('amount', validation.data.amount.toString())
     actionFormData.append('expenseCurrency', validation.data.expenseCurrency)
-    actionFormData.append('budgetId', budgetId)
+    actionFormData.append('budgedId', budgedId)
+    actionFormData.append('tripId', tripId)
 
     if (connectedToId) {
       actionFormData.append('connectedToId', connectedToId)
@@ -125,10 +130,8 @@ const AddExpenseDialog = ({
     try {
       setIsLoading(true)
       setErrors({})
-
-      console.log('dame koumpare', actionFormData)
-      // TODO: send data to backend here
-      // await createExpense(actionFormData)
+    
+       await createExpense(actionFormData)
 
       setOpen(false)
     } catch {

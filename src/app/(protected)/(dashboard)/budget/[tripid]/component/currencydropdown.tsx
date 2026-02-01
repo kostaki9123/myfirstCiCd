@@ -1,4 +1,4 @@
-
+'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
 import {
@@ -8,41 +8,9 @@ import {
   DropdownMenuTrigger,
 } from '@radix-ui/react-dropdown-menu'
 import { RiArrowDropDownLine } from 'react-icons/ri'
+import { CURRENCIES } from '@/lib/currency'
 
 
-
-const CURRENCIES = [
-  { code: "USD", name: "US Dollar" },
-  { code: "EUR", name: "Euro" },
-  { code: "GBP", name: "British Pound" },
-  { code: "JPY", name: "Japanese Yen" },
-  { code: "AUD", name: "Australian Dollar" },
-  { code: "CAD", name: "Canadian Dollar" },
-  { code: "CHF", name: "Swiss Franc" },
-  { code: "CNY", name: "Chinese Yuan" },
-  { code: "INR", name: "Indian Rupee" },
-  { code: "KRW", name: "South Korean Won" },
-  { code: "SGD", name: "Singapore Dollar" },
-  { code: "HKD", name: "Hong Kong Dollar" },
-  { code: "NZD", name: "New Zealand Dollar" },
-  { code: "MXN", name: "Mexican Peso" },
-  { code: "BRL", name: "Brazilian Real" },
-  { code: "ZAR", name: "South African Rand" },
-  { code: "SEK", name: "Swedish Krona" },
-  { code: "NOK", name: "Norwegian Krone" },
-  { code: "DKK", name: "Danish Krone" },
-  { code: "PLN", name: "Polish Zloty" },
-  { code: "TRY", name: "Turkish Lira" },
-  { code: "THB", name: "Thai Baht" },
-  { code: "IDR", name: "Indonesian Rupiah" },
-  { code: "MYR", name: "Malaysian Ringgit" },
-  { code: "PHP", name: "Philippine Peso" },
-  { code: "VND", name: "Vietnamese Dong" },
-  { code: "AED", name: "UAE Dirham" },
-  { code: "SAR", name: "Saudi Riyal" },
-  { code: "ILS", name: "Israeli Shekel" },
-  { code: "EGP", name: "Egyptian Pound" },
-]
 
 type Props = {
   value?: string
@@ -83,7 +51,7 @@ const CurrencyDropdown = ({
     <div ref={dropdownRef} className="relative">
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger className={`pl-1 rounded-md  ${fromGeneralCurrency ? '' : 'border-input border' }  flex items-center justify-between w-full h-9 text-sm`}>
-          <span>{value || 'EUR' }</span>
+          <span>{value || 'None' }</span>
           <RiArrowDropDownLine fontSize="20px" />
         </DropdownMenuTrigger>
 

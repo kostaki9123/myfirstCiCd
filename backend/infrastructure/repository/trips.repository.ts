@@ -98,9 +98,22 @@ export class TripsRepository implements ITripsRepository {
                       travelingWith: input.travelingWith,
                       tripTypes: input.tripTypes
                   }
+                  
+              })
+
+
+              const newbudget = await prisma.budget.create({
+                  data:{
+                      tripId : newTrip.id ,
+                      Amount : 0,
+                      genCurrency : 'EUR',   
+                      budgetAmount : 0,  
+                      budgetCurrency : 'EUR'           
+                }
+                  
               })
               
-              if(newTrip){
+              if(newTrip && newbudget){
                  return newTrip
               }else{
                   throw new DatabaseOperationError("Cannot create user.");

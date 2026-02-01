@@ -78,11 +78,17 @@ const TripBudgetCard = ({ pointsArr }: Props) => {
       <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
         Avg Daily Budget
       </h4>
-      <Avgproductdropdown
+      {activeCountryCode ?
+       <Avgproductdropdown
             arrayOfCountries={dropdownCountries}
             selectedCountryCode={activeCountryCode}
             setSelectedCountry={setSelectedCountryCode}
-        />
+        /> 
+        :
+        <p className="text-sm mt-2 absolute bottom-0 left-0 right-0 top-2 flex justify-center items-center">
+          There is no place yet
+        </p>
+      }
        
       {loading && <p className="text-sm mt-2">Loading budget...</p>}
       {error && <p className="text-sm text-red-600">{error}</p>}

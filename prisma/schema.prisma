@@ -31,18 +31,18 @@ model Trip {
 
   Point Point[]
 
-  Budget Budget[]
+  Budget Budget?
 }
 
 model Budget {
-  id             String   @id @default(cuid()) @unique
-  tripId         String
+  id             String   @id @default(cuid())
+  tripId         String    @unique
   Amount         Int
   genCurrency    String
   budgetAmount   Int
   budgetCurrency String
 
-  trip           Trip      @relation(fields: [tripId], references: [id])
+  trip           Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
 
   Expense Expense[]
 

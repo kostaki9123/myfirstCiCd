@@ -45,12 +45,13 @@ const Avgproductdropdown = ({ setSelectedCountry, arrayOfCountries, selectedCoun
         <DropdownMenuTrigger
           className='absolute  flex items-center top-[-28px] right-[-6px] h-7 w-9 cursor-pointer select-none text-sm outline-none z-50'
         >
+          
              <ReactCountryFlag countryCode={selectedCountryCode ?? "US"} svg /> 
           <RiArrowDropDownLine fontSize="20px"/>
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
-          className='w-20 h-auto max-h-44 rounded-md bg-white z-50 overflow-hidden border shadow-md
+          className='w-20 h-auto max-h-44 rounded-md bg-white z-[68] overflow-hidden border shadow-md
                      data-[state=open]:animate-in data-[state=closed]:animate-out
                      data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
                      data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95
