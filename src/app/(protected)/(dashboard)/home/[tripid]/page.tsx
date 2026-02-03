@@ -63,10 +63,10 @@ const route = formatRoute(points);
       
     
       
-      <div className="relative   flex items-start justify-start   h-full w-full">
+      <div className="relative   flex items-start justify-start border-2 border-red-600   h-full w-full">
           
           
-      <div className="  flex 535:flex-col flex-col 535:mt-0 relative  max-w-[200px]  535:max-w-conent   justify-start items-start   gap-2 min-w-max p-6  ">
+      <div className=" border-2 border-blue-600  flex 535:flex-col flex-col 535:mt-0 relative  w-full  535:max-w-[200px]  535:max-w-content   justify-start items-start   gap-2 min-w-max p-6  ">
            <div className=" absolute left-[-9px] top-0   pl-4 h-full ">
                   <div className=" bottom-0 w-1 bg-gray-500 rounded-full h-[98%] my-5 "></div>
            </div>
@@ -75,7 +75,7 @@ const route = formatRoute(points);
         <div className="flex w-full gap-12 ">
          
           
-           <Card className=" w-[250px]  535:min-w-[300px] p-2  ">
+           <Card className=" w-full  p-2  ">
             <CardHeader className=" p-3"> 
               <CardTitle >Trip Summary 🌍</CardTitle>
             </CardHeader>

@@ -41,7 +41,6 @@ export async function createExpense(formData: FormData) {
     const expenseCurrency = formData.get("expenseCurrency") as string
     const amount = Number(formData.get("amount"))
     const connectedToId = formData.get("connectedToId") as string | null
-    const tripId = formData.get("tripId") as string | null
 
     // 4️⃣ Validate required fields
     if (!budgetId || !description || !category || !expenseCurrency || Number.isNaN(amount)) {
@@ -62,7 +61,7 @@ export async function createExpense(formData: FormData) {
     const result = await createExpenseController(input)
 
     console.log("✅ Expense created successfully:", result)
-    revalidatePath(`/budget/${tripId}`)
+    revalidatePath(`/`)
     return result
   } catch (err) {
     console.error("❌ Error creating expense:", err)

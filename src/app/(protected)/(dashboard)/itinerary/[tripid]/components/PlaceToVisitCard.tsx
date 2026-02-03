@@ -26,8 +26,10 @@ import AddExpenseDialog from "../../../budget/[tripid]/component/expenseDialog";
 ------------------------------------------------------- */
 
 type Props = {
+  internalId : string
   id: string;
   pointId: string;
+  budgetid: string
   placeType: "ACCOMMODATION" | "PLACE_TO_VISIT";
   name: string;
   stayFrom?: Date | null;
@@ -179,7 +181,7 @@ export default function PlaceToVisitCard(props: Props) {
             {/* TIME + COST */}
             <div className="flex flex-col">
                  <label className="text-xs text-gray-700  ">Cost</label>
-               {/*   <AddExpenseDialog budgetId='' fromItinerary/> */}
+               <AddExpenseDialog connectedToId={props.internalId} budgedId={props.budgetid} fromItinerary/> 
             </div>
 
 

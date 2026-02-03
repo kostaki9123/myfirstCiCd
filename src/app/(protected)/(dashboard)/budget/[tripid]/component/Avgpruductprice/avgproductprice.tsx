@@ -74,7 +74,7 @@ const TripBudgetCard = ({ pointsArr }: Props) => {
   }))
 
   return (
-    <div className="bg-[#ACA7CB] relative p-2 rounded-md base:row-start-5 base:row-end-6 base:col-start-1 base:col-end-2 535:row-start-3 535:row-end-4 535:col-start-1 535:col-end-2   787:row-start-3 787:row-end-4 787:col-start-1 787:col-end-2 986:row-start-1 986:row-end-5 986:col-start-3 986:col-end-4  xl:row-start-5 xl:row-end-9 xl:col-start-3 xl:col-end-4  ">
+    <div className="bg-[#ACA7CB] relative p-2 rounded-md base:row-start-4 base:row-end-5 base:col-start-1 base:col-end-2 535:row-start-3 535:row-end-4 535:col-start-1 535:col-end-2   787:row-start-3 787:row-end-4 787:col-start-1 787:col-end-2 986:row-start-1 986:row-end-5 986:col-start-3 986:col-end-4  xl:row-start-5 xl:row-end-9 xl:col-start-3 xl:col-end-4  ">
       <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
         Avg Daily Budget
       </h4>

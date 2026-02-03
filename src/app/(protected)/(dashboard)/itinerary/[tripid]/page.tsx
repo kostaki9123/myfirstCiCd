@@ -2,6 +2,7 @@
 import ItineraryClient from './components/itineraryClient';
 import { getPoints } from '../../createtrip/[tripid]/action';
 import { getPlaces } from './action';
+import { getBudgetByTripId } from '../../budget/[tripid]/action';
 
 const Page = async ({
   params,
@@ -20,6 +21,7 @@ const Page = async ({
   const placesPerPoint = await Promise.all(
     pointsOnly.map((point) => getPlaces(point.id))
   );
+   const budget = await getBudgetByTripId(tripid)
 
   // 3️⃣ Flatten
   const allPlaces = placesPerPoint.flat();
@@ -28,6 +30,7 @@ const Page = async ({
     <ItineraryClient
       points={pointsOnly}
       places={allPlaces}
+      budgetId={budget.id!}
     />
   );
 };

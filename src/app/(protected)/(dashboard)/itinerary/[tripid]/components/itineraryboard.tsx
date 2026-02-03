@@ -32,6 +32,7 @@ type Props = {
   focusplace?: any;
   setFocusplace?: Dispatch<SetStateAction<any>>;
   places: Place[];
+  budgetId: string
 };
 
 const Itineraryboard = (props: Props) => {
@@ -116,6 +117,8 @@ const Itineraryboard = (props: Props) => {
           {accommodationPlaces.map((place) => (
             <PlaceToStayCard
               key={place.internalId ?? place.id}
+              budgetid={props.budgetId}
+              internalId={place.internalId!}
               id={place.id}
               pointId={place.pointId}
               placeType={place.placeType}
@@ -148,6 +151,8 @@ const Itineraryboard = (props: Props) => {
           {placesToVisit.map((place) => (
             <PlaceToVisitCard
               key={place.internalId ?? place.id}
+              budgetid={props.budgetId}
+              internalId={place.internalId!}
               id={place.id}
               pointId={place.pointId}
               placeType={place.placeType}

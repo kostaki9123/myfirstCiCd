@@ -13,7 +13,7 @@ const Tripboardphone = (props : props) => {
 
     
   return (
-    <div style={{gridTemplateRows : `70px repeat(${props.cyrclesArr?.length}, 132px)`,gridTemplateColumns:'200px 200px' ,minWidth: '344px' , display: 'grid', gap: '7px' , width: '100%',paddingTop: '7px', paddingBottom: '7px', background : 'grey' , height:'fit-content' , minHeight: '100%' }}  >
+    <div style={{gridTemplateRows : `70px repeat(${props.cyrclesArr?.length}, 132px)`,gridTemplateColumns:'200px 200px' ,minWidth: '344px' , display: 'grid', gap: '7px' , width: '100%',paddingTop: '7px', paddingBottom: '7px', background : ' #6B7280' , height:'fit-content' , minHeight: '100%' }}  >
          {
              props.cyrclesArr?.length === 0 
              ?   <Addnewcyrcle withcurveline={false} lengtharr={props.cyrclesArr.length} index={0} tripId={props.tripId}  /> 

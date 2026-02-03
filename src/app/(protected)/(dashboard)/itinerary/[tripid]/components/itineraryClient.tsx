@@ -5,7 +5,7 @@ import Itineraryboard from './itineraryboard';
 import Mapprovider from '@/app/component/map/map-provider';
 import { Place } from '../../../../../../../backend/entities/models/place';
 
-const ItineraryClient = ({ points , places }: { points: any[], places: Place[] }) => {
+const ItineraryClient = ({ points , places, budgetId }: { points: any[], places: Place[], budgetId : string }) => {
 
   const location =
   points[0]?.placeLat != null && points[0]?.placeLng != null
@@ -33,6 +33,8 @@ const ItineraryClient = ({ points , places }: { points: any[], places: Place[] }
             cyrclesArr={points}
             focusplace={focusplace}
             setFocusplace={setFocusplace}
+            budgetId={budgetId}
+
           />
         )}
       </div>

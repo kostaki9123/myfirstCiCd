@@ -22,7 +22,7 @@ const Page = async ({ params }: PageProps) => {
 
 
   return (
-     <div className=' min-h-[490px] xxs:border-4  bottom-0 absolute right-0 left-0 top-0  flex flex-col '>
+     <div className=' min-h-[490px] xxs:border-4 bg-gray-500  bottom-0 absolute right-0 left-0 top-0  flex flex-col '>
         <div className=' h-[45%]  xxs:block hidden    ' >
            <Tripboard  tripId={tripid} cyrclesArr={points} />
         </div>

@@ -26,7 +26,9 @@ import AddExpenseDialog from "../../../budget/[tripid]/component/expenseDialog";
 ------------------------------------------------------- */
 
 type Props = {
+  internalId : string
   id: string;
+  budgetid: string
   pointId: string;
   placeType: "ACCOMMODATION" | "PLACE_TO_VISIT";
   name: string;
@@ -71,6 +73,7 @@ export default function PlaceToStayCard(props: Props) {
   const [isDirty, setIsDirty] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  console.log('id',props.id)
   /* ------------------ RESET ------------------ */
 
   const resetState = () => {
@@ -181,7 +184,7 @@ export default function PlaceToStayCard(props: Props) {
             {/* COST (optional) */}
             <div className="flex flex-col">
             <label className="text-xs text-gray-700  ">Cost</label>
-                 {/*  <AddExpenseDialog budgetId={} fromItinerary/> */}
+                 <AddExpenseDialog connectedToId={props.internalId} budgedId={props.budgetid} fromItinerary/> 
             </div>
 
             {/* NOTES */}
