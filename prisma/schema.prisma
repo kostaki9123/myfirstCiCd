@@ -1,147 +1,147 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+  // This is your Prisma schema file,
+  // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+  // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+  // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-generator client {
-  provider = "prisma-client-js"
-}
+  generator client {
+    provider = "prisma-client-js"
+  }
 
-datasource db {
-  provider = "postgresql"
-}
-
-
-model User {
-  id   String @id @default(cuid()) @unique
-  username String 
-  email String 
-  trips    Trip[]
-}
-
-model Trip {
-  id   String @id @default(cuid()) @unique
-  userId  String
-  tripName String
-  tripBudget String
-  travelingWith String
-  tripTypes  String[]
-  user      User   @relation(fields: [userId], references: [id])
-
-  Point Point[]
-
-  Budget Budget?
-}
-
-model Budget {
-  id             String   @id @default(cuid())
-  tripId         String    @unique
-  Amount         Int
-  genCurrency    String
-  budgetAmount   Int
-  budgetCurrency String
-
-  trip           Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
-
-  Expense Expense[]
-
-}
-
-model Expense {
-  id             String @id @default(cuid()) @unique
-  budgetId       String 
-  description    String
-  connectedToId  String?
-  category       String
-  amount         Int
-  expenseCurrency String
-
-  // relation
-  Budget           Budget      @relation(fields: [budgetId], references: [id])
-
-}
-
-model Point {
-  id             String   @id @default(cuid()) @unique
-  tripId         String
-  role           PointRole
-  index          Int
-
-  // for POINT role
-  placeName      String?
-  placeAddress   String?
-  placeId        String?
-  placeLat       Float?
-  placeLng       Float?
-  startDate      DateTime?
-  endDate        DateTime?
-
-  // for MOVING_BOX role
-  fromName       String?
-  fromAddress    String?
-  fromPlaceId    String?
-  fromLat        Float?
-  fromLng        Float?
-
-  toName         String?
-  toAddress      String?
-  toPlaceId      String?
-  toLat          Float?
-  toLng          Float?
-
-  transportType  String?
-  departureDate  DateTime?
-  notes          String?
-
-   places         Place[]
-
-  // relation
-  trip           Trip      @relation(fields: [tripId], references: [id])
-
-}
-
-enum PointRole {
-  POINT
-  MOVING_BOX
-}
-
-model Place {
-  internalId String   @id @default(cuid()) 
-  id String    
-  pointId    String
-
-  placeType  PlaceType
-  name       String
-
-  stayFrom   DateTime?
-  stayUntil DateTime?
-
-  cost       Float?
-  notes      String?
-
-  visitDate  DateTime?
-  visitTime  DateTime?
-
-  // ===== Relations =====
-  point      Point      @relation(fields: [pointId], references: [id])
-
-  @@index([pointId])
-}
-
-enum PlaceType {
-  ACCOMMODATION
-  PLACE_TO_VISIT
-}
+  datasource db {
+    provider = "postgresql"
+  }
 
 
-model PlaceAffiliateLink {
-  id           Int      @id @default(autoincrement())
-  place_id     String   @unique
-  affiliate_url String
-  source       String?
-  clicks       Int      @default(0)
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
-}
+  model User {
+    id   String @id @default(cuid()) @unique
+    username String 
+    email String 
+    trips    Trip[]
+  }
+
+  model Trip {
+    id   String @id @default(cuid()) @unique
+    userId  String
+    tripName String
+    tripBudget String
+    travelingWith String
+    tripTypes  String[]
+    user      User   @relation(fields: [userId], references: [id])
+
+    Point Point[]
+
+    Budget Budget?
+  }
+
+  model Budget {
+    id             String   @id @default(cuid())
+    tripId         String    @unique
+    Amount         Int
+    genCurrency    String
+    budgetAmount   Int
+    budgetCurrency String
+
+    trip           Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+    Expense Expense[]
+
+  }
+
+  model Expense {
+    id             String @id @default(cuid()) @unique
+    budgetId       String 
+    description    String
+    connectedToId  String?
+    category       String
+    amount         Int
+    expenseCurrency String
+
+    // relation
+    Budget           Budget      @relation(fields: [budgetId], references: [id])
+
+  }
+
+  model Point {
+    id             String   @id @default(cuid()) @unique
+    tripId         String
+    role           PointRole
+    index          Int
+
+    // for POINT role
+    placeName      String?
+    placeAddress   String?
+    placeId        String?
+    placeLat       Float?
+    placeLng       Float?
+    startDate      DateTime?
+    endDate        DateTime?
+
+    // for MOVING_BOX role
+    fromName       String?
+    fromAddress    String?
+    fromPlaceId    String?
+    fromLat        Float?
+    fromLng        Float?
+
+    toName         String?
+    toAddress      String?
+    toPlaceId      String?
+    toLat          Float?
+    toLng          Float?
+
+    transportType  String?
+    departureDate  DateTime?
+    notes          String?
+
+    places         Place[]
+
+    // relation
+    trip           Trip      @relation(fields: [tripId], references: [id],onDelete: Cascade)
+
+  }
+
+  enum PointRole {
+    POINT
+    MOVING_BOX
+  }
+
+  model Place {
+    internalId String   @id @default(cuid()) 
+    id String    
+    pointId    String
+
+    placeType  PlaceType
+    name       String
+
+    stayFrom   DateTime?
+    stayUntil DateTime?
+
+    cost       Float?
+    notes      String?
+
+    visitDate  DateTime?
+    visitTime  DateTime?
+
+    // ===== Relations =====
+    point      Point      @relation(fields: [pointId], references: [id], onDelete: Cascade)
+
+    @@index([pointId])
+  }
+
+  enum PlaceType {
+    ACCOMMODATION
+    PLACE_TO_VISIT
+  }
+
+
+  model PlaceAffiliateLink {
+    id           Int      @id @default(autoincrement())
+    place_id     String   @unique
+    affiliate_url String
+    source       String?
+    clicks       Int      @default(0)
+    created_at   DateTime @default(now())
+    updated_at   DateTime @updatedAt
+  }
 

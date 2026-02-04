@@ -16,10 +16,10 @@ type props = {
 
 const Visitplace = (props : props) => {
   return (
-              <div className=" flex flex-col" >
+              <div className=" flex flex-col  " >
                            <h2 className=" text-base py-2 font-semibold text-white hidden lg:block ">Places</h2>
                            
-                           <Card className=" w-72 426:w-auto relative h-fit p-2">
+                           <Card className=" w-72 426:w-auto relative h-full p-2 535:max-w-[370px] max-w-[350px]">
                              <CardHeader className="flex flex-row gap-2 p-3">
                                <div className=" flex flex-row items-center gap-2">
                                  <CardTitle className="">{props.name}</CardTitle>

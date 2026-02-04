@@ -154,8 +154,8 @@ import { TripInsert, Trip } from "../../entities/models/trip";
 
      async deletePoint(pointId: string,tripId: string , tx?: any): Promise<void> {
 
-            console.log('pointId:' ,pointId)
-            console.log('tripId:' ,tripId)
+            console.log('delete pointId:' ,pointId)
+            console.log('delete tripId:' ,tripId)
 
             try {
               // 1. Delete the point
