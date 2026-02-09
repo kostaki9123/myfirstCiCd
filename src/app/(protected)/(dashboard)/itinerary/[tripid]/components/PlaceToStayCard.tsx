@@ -129,9 +129,7 @@ export default function PlaceToStayCard(props: Props) {
   return (
     <Accordion
       type="single"
-      collapsible
       className="w-full bg-gray-400 rounded-md"
-      defaultValue="item-1"
       onValueChange={(v) => {
         if (!v) resetState();
       }}

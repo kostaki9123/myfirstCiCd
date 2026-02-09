@@ -76,16 +76,6 @@ function capitalizeFirst(str : string) {
                                         
                             <span>From:{props.fromName}</span>
                             <span>To:{ props.toName}</span>
-                            <a
-                                  href=''
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-muted-foreground hover:text-blue-600 transition flex gap-1 items-center"
-                                  title="Open in map"
-                                  ><RiExternalLinkLine className=' text-lg'/>
-                                    <span className='pt-[2px]'> Open In Map</span>
-                                  
-                            </a>
                           </div>
                           { /** 
                           <Notes

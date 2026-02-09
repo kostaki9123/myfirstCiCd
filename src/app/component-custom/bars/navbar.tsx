@@ -14,6 +14,7 @@ import Ded from './ded';
 type props = {
   withtripname? : boolean
   withManageTripbtn? : boolean
+  withoutHumburger? : boolean
 } 
 
 const  Navbar =  (props : props) => {
@@ -26,8 +27,10 @@ const  Navbar =  (props : props) => {
           
 
        <div className='absolute left-0 min-w-fit h-full flex  text-white  '> 
-           <Humburger/>
-
+           {props.withoutHumburger ?
+            <></>
+           :<Humburger/>
+           }
            <div className='md:w-[249px] w-[180px] justify-center items-center flex  '>
                <h3 className=" scroll-m-20 text-xl md:text-xl font-semibold tracking-tight ">
                    Trip planner

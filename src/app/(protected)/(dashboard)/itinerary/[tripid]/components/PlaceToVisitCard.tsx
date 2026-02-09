@@ -123,7 +123,6 @@ export default function PlaceToVisitCard(props: Props) {
       type="single"
       collapsible
       className="w-full bg-gray-400 rounded-md"
-      defaultValue="item-1"
       onValueChange={(v) => !v && resetState()}
     >
       <AccordionItem value="item-1">

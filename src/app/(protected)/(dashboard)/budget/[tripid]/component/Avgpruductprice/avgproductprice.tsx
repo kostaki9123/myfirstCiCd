@@ -99,7 +99,8 @@ const TripBudgetCard = ({ pointsArr }: Props) => {
           
 
           {/* Display budget tiers */}
-          <div className="mt-4 space-y-3 text-sm px-5 flex flex-col">
+        <div className="absolute bottom-0 left-0 right-0 top-5 flex items-center justify-center" >
+          <div className="mt-4 space-y-3 text-sm px-5 flex flex-col gap-3 986:gap-0 ">
             <div className="flex justify-between">
               <span>💸 Budget traveler</span>
               <span>€ {profile.budget} / day</span>
@@ -115,6 +116,7 @@ const TripBudgetCard = ({ pointsArr }: Props) => {
               <span>€ {profile.luxury} / day</span>
             </div>
           </div>
+        </div>
         </>
       )}
     </div>
