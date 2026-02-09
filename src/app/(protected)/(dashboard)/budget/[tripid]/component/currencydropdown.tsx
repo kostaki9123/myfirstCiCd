@@ -16,6 +16,7 @@ type Props = {
   value?: string
   setCurrency: (value: string) => void
   fromGeneralCurrency? : boolean
+  fromSetBudget? : boolean
   placeholder?: string
 }
 
@@ -23,6 +24,7 @@ const CurrencyDropdown = ({
   value,
   setCurrency,
   fromGeneralCurrency,
+  fromSetBudget,
   placeholder = "Select currency",
 }: Props) => {
   const [open, setOpen] = useState(false)
@@ -50,7 +52,7 @@ const CurrencyDropdown = ({
   return (
     <div ref={dropdownRef} className="relative">
       <DropdownMenu open={open} onOpenChange={setOpen}>
-        <DropdownMenuTrigger className={`pl-1 rounded-md  ${fromGeneralCurrency ? '' : 'border-input border' }  flex items-center justify-between w-full h-9 text-sm`}>
+        <DropdownMenuTrigger className={` pl-1 rounded-md ${fromSetBudget && 'border-none'} ${fromGeneralCurrency ? 'border-2  border-black' : 'border-input border' }  flex items-center justify-between w-full h-9 text-sm`}>
           <span>{value || 'None' }</span>
           <RiArrowDropDownLine fontSize="20px" />
         </DropdownMenuTrigger>

@@ -99,7 +99,7 @@ const Setbudgetamount = ({
                 <CurrencyDropdown
                   setCurrency={setCurrency}
                   value={currency}
-                  fromGeneralCurrency={true}
+                  fromSetBudget
                 />
               </div>
             </div>

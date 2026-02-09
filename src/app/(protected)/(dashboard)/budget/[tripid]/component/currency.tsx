@@ -49,12 +49,12 @@ const Currency = ({ budgetId, Currency }: Props) => {
         Currency
       </h4>
 
-      <div className='flex flex-col items-center justify-center gap-7 absolute bottom-2 left-2 top-9 right-2'>
-        <div className='w-[100px] flex items-center justify-center'>
+      <div className='flex flex-col items-center justify-center gap-4 absolute bottom-2 left-2 top-9 right-2'>
+        <div className='w-[100px] h-[40px] text-2xl flex items-center justify-center '>
           {currencysymbol?.[0].symbol}
         </div>
 
-        <div className='cursor-pointer border-2 flex justify-center gap-2 border-black w-[80px] py-1'>
+        <div className='cursor-pointer flex justify-center gap-2  w-[80px] py-1'>
           <CurrencyDropdown 
             setCurrency={setCurrency} 
             value={currency} 
