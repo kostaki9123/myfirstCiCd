@@ -53,9 +53,13 @@ const  Navbar =  (props : props) => {
         <div className=" ml-[210px] 343:ml-0  343:absolute top-0 right-0 flex h-full items-center justify-around base:pl-36 150:pl-36 200:pl-28 255:pl-16  290:pl-10 343:px-6 text-white " >
 
            <div className=' hidden md:flex w-[158px] h-full  items-center justify-center   '>
+             {props.withManageTripbtn ? 
               <Link href="/" >
                 <Button className=' bg-zinc-600'> Manage Trips</Button>
               </Link>
+              :
+              <></>
+              }
             </div>
         
             <SignedOut >
