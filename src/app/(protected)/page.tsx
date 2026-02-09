@@ -68,7 +68,7 @@ export default async function Home() {
                )}
             </div>
 
-            {/* Cost and Details */}
+            {/* Cost and Details 
             <div className="mt-6">
               <h3 className="text-sm font-medium text-gray-400 uppercase">
                 Cost and Details:
@@ -77,17 +77,18 @@ export default async function Home() {
                 <div className="flex flex-col text-center">
                   <small className="text-sm text-gray-400">Cost</small>
                   <div className="text-lg font-semibold text-gray-300">
-                    $200 {/* trip.cost */}
+                    $200 { trip.}
                   </div>
                 </div>
                 <div className="flex flex-col text-center">
                   <small className="text-sm text-gray-400">Start in</small>
                   <div className="text-lg font-semibold text-gray-300">
-                    {/* trip.startsInDays */} days
+                   trip.startsInDays  days
                   </div>
                 </div>
               </div>
             </div>
+            */}
 
             {/* Actions */}
             <div className="mt-6 flex justify-between items-center">

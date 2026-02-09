@@ -54,6 +54,8 @@ export default function DateRangeDropdown({
     return result
   }, [startDate, endDate])
 
+  console.log('Datesss',dates)
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -68,7 +70,7 @@ export default function DateRangeDropdown({
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-48 max-h-64 overflow-y-auto">
+      <DropdownMenuContent className="w-48 max-h-64 overflow-y-auto z-[69] border-2 border-red-700">
         {dates.map((date) => {
           const isSelected =
             selectedDate?.toDateString() === date.toDateString()

@@ -124,11 +124,15 @@ export default function PlaceToStayCard(props: Props) {
     }
   };
 
+  console.log('from',props.stayFrom)
+  console.log(props.stayUntil)
+
   /* ------------------ RENDER ------------------ */
 
   return (
     <Accordion
       type="single"
+      collapsible
       className="w-full bg-gray-400 rounded-md"
       onValueChange={(v) => {
         if (!v) resetState();
