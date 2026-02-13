@@ -133,6 +133,7 @@ const Itineraryboard = (props: Props) => {
             addedPlaces={props.places.filter(
               (p) => p.pointId === selectedPoint.id
             )}
+            
             selectedPlace={selectedPoint}
             triggerName="Add a place to stay"
             descriptionName="Recommended accommodations based on location, safety, and price"
@@ -165,10 +166,12 @@ const Itineraryboard = (props: Props) => {
           ))}
 
           <Addaplace
+          
             addedPlaces={props.places.filter(
               (p) => p.pointId === selectedPoint.id
             )}
             selectedPlace={selectedPoint}
+          
             triggerName="Add a place to visit"
             descriptionName="Top attractions and must-see places nearby"
             cyrclesArr={props.cyrclesArr}

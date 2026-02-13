@@ -8,7 +8,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { BsHouseAddFill } from "react-icons/bs";
-import { MdAddCircle } from "react-icons/md";
 import Placecomponent from "./placecomponent";
 import LocationInput from "./inputauto";
 import { APIProvider } from "@vis.gl/react-google-maps";
@@ -16,175 +15,257 @@ import Mapprovider from "@/app/component/map/map-provider";
 import { ItineraryPoint } from "./itineraryboard";
 import { Place } from "../../../../../../../backend/entities/models/place";
 
+/* ----------------------------------
+   TRIP CONTEXT TYPES
+----------------------------------- */
 
-// Lodging types dropdown options
-const lodgingTypes = [
-  { label: "Hotel", value: "hotel" },
-  { label: "Hostel", value: "hostel" },
-  { label: "Motel", value: "motel" },
-  { label: "Guest House", value: "guest_house" },
-  { label: "Resort", value: "resort" },
-  { label: "Lodging", value: "lodging" },
-  { label: "Campground", value: "campground" },
-];
+type TravelWith = "family" | "friends" | "solo" | "couple";
+type TripBudget = "economy" | "balanced" | "luxury";
+type TripType = "cultural" | "nature" | "nightlife" | "adventure";
 
+const tripContext: {
+  travelingWith: TravelWith;
+  tripBudget: TripBudget;
+  tripType: TripType;
+} = {
+  travelingWith: "family",
+  tripBudget: "balanced",
+  tripType: "cultural",
+};
 
-type props = {
-  selectedPlace: ItineraryPoint
+const tripLabels = {
+  travelingWith: {
+    family: { label: "Family trip", icon: "👨‍👩‍👧‍👦" },
+    friends: { label: "With friends", icon: "🧑‍🤝‍🧑" },
+    solo: { label: "Solo traveler", icon: "🧍" },
+    couple: { label: "Couple getaway", icon: "❤️" },
+  } as Record<TravelWith, { label: string; icon: string }>,
+  tripBudget: {
+    economy: { label: "Budget-friendly", icon: "💰" },
+    balanced: { label: "Balanced budget", icon: "⚖️" },
+    luxury: { label: "Luxury stay", icon: "✨" },
+  } as Record<TripBudget, { label: string; icon: string }>,
+  tripType: {
+    cultural: { label: "Cultural focus", icon: "🏛" },
+    nature: { label: "Nature focused", icon: "🌿" },
+    nightlife: { label: "Nightlife", icon: "🌙" },
+    adventure: { label: "Adventure", icon: "🧗" },
+  } as Record<TripType, { label: string; icon: string }>,
+};
+
+type Props = {
+  selectedPlace: ItineraryPoint;
   latitude: number;
   longitude: number;
   cyrclesArr: any;
   triggerName: string;
   descriptionName: string;
-  addedPlaces : Place[]
+  addedPlaces: Place[];
 };
 
 type AffiliateMap = Record<
   string,
-  { affiliate_url: string; source?: string } | null
+  {
+    affiliate_url: string;
+    pricePerDay: number | null;
+    currency?: "EUR" | "USD";
+  } | null
 >;
 
-const Addaplace = (props: props) => {
+/* ----------------------------------
+   UTILS
+----------------------------------- */
+
+const haversineDistance = (
+  lat1: number,
+  lng1: number,
+  lat2: number,
+  lng2: number
+) => {
+  const toRad = (v: number) => (v * Math.PI) / 180;
+  const R = 6371;
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) *
+      Math.cos(toRad(lat2)) *
+      Math.sin(dLng / 2) ** 2;
+  return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+};
+
+const distanceScore = (km: number) => {
+  if (km < 1) return 30;
+  if (km < 3) return 22;
+  if (km < 6) return 14;
+  if (km < 10) return 6;
+  return 0;
+};
+
+const formatPrice = (
+  price: number | null | undefined,
+  currency: string = "EUR"
+) => {
+  if (!price) return null;
+  const symbol = currency === "USD" ? "$" : "€";
+  return `${symbol}${price} / night`;
+};
+
+const getFallbackPriceLabel = (budget: TripBudget) => {
+  if (budget === "economy") return "Usually budget-friendly";
+  if (budget === "balanced") return "Mid-range pricing";
+  return "Premium stay";
+};
+
+/* ----------------------------------
+   Trip Context Chips
+----------------------------------- */
+
+const TripContextChips = () => {
+  const chips = [
+    tripLabels.travelingWith[tripContext.travelingWith],
+    tripLabels.tripBudget[tripContext.tripBudget],
+    tripLabels.tripType[tripContext.tripType],
+  ];
+
+  return (
+    <div className="px-2 mb-2">
+      <div className="flex flex-wrap gap-2 mb-1">
+        {chips.map((chip, idx) => (
+          <span
+            key={idx}
+            className="flex items-center gap-1 px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full"
+          >
+            <span>{chip.icon}</span>
+            <span>{chip.label}</span>
+          </span>
+        ))}
+      </div>
+      <div className="text-[11px] text-gray-500">
+        Recommendations adapted to your trip style
+      </div>
+    </div>
+  );
+};
+
+/* ----------------------------------
+   COMPONENT
+----------------------------------- */
+
+const Addaplace = (props: Props) => {
   const [placesResult, setPlacesResult] = useState<any[]>([]);
   const [affiliateMap, setAffiliateMap] = useState<AffiliateMap>({});
-  const [inputLocation, setinputLocation] = useState<any>();
-  const [selectedType, setSelectedType] = useState<string>("hotel");
+  const [inputLocation, setInputLocation] = useState<any>();
   const [loading, setLoading] = useState(false);
-  const [requestCount, setRequestCount] = useState<number>(0);
-  const maxRequests = 5;
 
-  let LatLng = { lat: props.latitude , lng: props.longitude } 
+  const [visibleCount, setVisibleCount] = useState(10); // Show 10 by default
 
-  const mergeAlreadyVisited = (results: any[]) => {
-    return results.map((place) => ({
-      ...place,
-      alreadyAdded: props.addedPlaces.some(
-        (p) => p.id === place.id && p.pointId === props.selectedPlace.id
-      ),
-    }));
-    };
+  const scorePlace = (place: any) => {
+    let score = 0;
+    const rating = place.rating ?? 0;
+    const km = place._distanceKm;
+
+    score += distanceScore(km);
+    if (rating >= 4.5) score += 10;
+    else if (rating >= 4.2) score += 7;
+    else if (rating >= 4.0) score += 4;
+    else score -= 6;
+
+    if (tripContext.tripBudget === "economy" && rating >= 4.7) score -= 8;
+    if (tripContext.tripBudget === "luxury" && rating < 4.2) score -= 12;
+
+    if (tripContext.travelingWith === "family" && km < 3 && rating >= 4.2)
+      score += 4;
+
+    return score;
+  };
+
+  const buildReason = (place: any) => {
+    if (place._distanceKm < 1 && place.rating >= 4.5)
+      return "Excellent location · Top reviews";
+    if (place._distanceKm < 3) return "Great location near your plan";
+    if (place.rating >= 4.5) return "Highly rated by travelers";
+    return "Good value for this area";
+  };
 
   const fetchPlaces = async () => {
-    if (requestCount >= maxRequests) {
-      alert(`You have reached the maximum of ${maxRequests} searches.`);
-      return;
-    }
-
     try {
       setLoading(true);
 
-      if (props.triggerName === "Add a place to visit") {
-        if (props.triggerName === "Add a place to visit") {
-               const response = await fetch(
-                 "https://places.googleapis.com/v1/places:searchNearby",
-                 {
-                   method: "POST",
-                   headers: {
-                     "Content-Type": "application/json",
-                     "X-Goog-Api-Key": process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
-                     "X-Goog-FieldMask":
-                       "places.id,places.displayName,places.rating,places.primaryTypeDisplayName,places.location,places.websiteUri,places.googleMapsUri,places.shortFormattedAddress",
-                   },
-                   body: JSON.stringify({
-                     includedTypes: [
-                       "tourist_attraction",
-                       "museum",
-                       "art_gallery",
-                       "park",
-                       "zoo",
-                       "amusement_park",
-                       "historical_landmark",
-                     ],
-                     maxResultCount: 9,
-                     locationRestriction: {
-                       circle: {
-                         center: {
-                           latitude: Number(props.latitude),
-                           longitude: Number(props.longitude),
-                         },
-                         radius: 10000,
-                       },
-                     },
-                   }),
-                 }
-               );
-              
-               const result = await response.json();
-               let places = result.places || [];
-               console.log('runninggg')
-               places = mergeAlreadyVisited(places); 
-               setPlacesResult(places);
-               setRequestCount((prev) => prev + 1);
+      const centerLat = inputLocation?.lat ?? props.latitude;
+      const centerLng = inputLocation?.lng ?? props.longitude;
 
-               
-              
-               // ✅ BULK affiliate lookup (όπως σωστά κάνεις)
-               const placeIds = places.map((p: any) => p.id);
-              
-               if (placeIds.length) {
-                 const res = await fetch("/api/links/bulk", {
-                   method: "POST",
-                   headers: { "Content-Type": "application/json" },
-                   body: JSON.stringify({ placeIds }),
-                 });
-              
-                 const affiliateData = await res.json();
-                 
-                 setAffiliateMap(affiliateData);
-               }
-          }
+      // Determine type: stay or visit
+      const isStay = props.triggerName.toLowerCase().includes("stay");
+      const includedTypes = isStay
+        ? ["hotel", "lodging"]
+        : ["tourist_attraction", "museum", "park"];
 
-      } else {
-        // --- Google Places ---
-        const response = await fetch(
-          "https://places.googleapis.com/v1/places:searchNearby",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-Goog-Api-Key": process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
-              "X-Goog-FieldMask":
-                "places.id,places.displayName,places.rating,places.primaryTypeDisplayName,places.location,places.websiteUri,places.googleMapsUri,places.shortFormattedAddress",
-            },
-            body: JSON.stringify({
-              includedTypes: [selectedType],
-              maxResultCount: 9,
-              locationRestriction: {
-                circle: {
-                  center: {
-                    latitude: Number(props.latitude),
-                    longitude: Number(props.longitude),
-                  },
-                  radius: 10000,
-                },
+      const response = await fetch(
+        "https://places.googleapis.com/v1/places:searchNearby",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Goog-Api-Key": process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
+            "X-Goog-FieldMask":
+              "places.id,places.displayName,places.rating,places.location,places.websiteUri,places.googleMapsUri,places.shortFormattedAddress",
+          },
+          body: JSON.stringify({
+            includedTypes,
+            maxResultCount: 20, // fetch more so “see more” works
+            locationRestriction: {
+              circle: {
+                center: { latitude: Number(centerLat), longitude: Number(centerLng) },
+                radius: 10000,
               },
-            }),
-          }
-        );
-
-        const result = await response.json();
-        console.log('result reccomended' ,props.addedPlaces)
-        let places = result.places || [];
-        places = mergeAlreadyVisited(places);
-        setPlacesResult(places);
-        setRequestCount((prev) => prev + 1);
-
-        // ✅ BULK affiliate lookup
-        const placeIds = places.map((p: any) => p.id);
-
-        if (placeIds.length) {
-          const res = await fetch("/api/links/bulk", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ placeIds }),
-          });
-
-          const affiliateData = await res.json();
-          setAffiliateMap(affiliateData);
+            },
+          }),
         }
+      );
+
+      const result = await response.json();
+      let places = result.places || [];
+
+      places = places
+        .map((p: any) => {
+          const km = haversineDistance(
+            centerLat,
+            centerLng,
+            p.location.latitude,
+            p.location.longitude
+          );
+
+          const score = scorePlace({ ...p, _distanceKm: km });
+          const reason = buildReason({ ...p, _distanceKm: km });
+
+          return {
+            ...p,
+            _distanceKm: km,
+            _score: score,
+            _reason: reason,
+            alreadyAdded: props.addedPlaces.some(
+              (a) => a.id === p.id && a.pointId === props.selectedPlace.id
+            ),
+          };
+        })
+        .sort((a: any, b: any) => b._score - a._score);
+
+      setPlacesResult(places);
+
+      const placeIds = places.map((p: any) => p.id);
+
+      if (placeIds.length) {
+        const res = await fetch("/api/links/bulk", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ placeIds }),
+        });
+
+        setAffiliateMap(await res.json());
       }
-    } catch (error) {
-      console.error("Error fetching places:", error);
+    } catch (e) {
+      console.error(e);
     } finally {
       setLoading(false);
     }
@@ -192,110 +273,93 @@ const Addaplace = (props: props) => {
 
   useEffect(() => {
     fetchPlaces();
-  }, [props.addedPlaces]);
+  }, [props.addedPlaces, inputLocation, props.triggerName]);
 
-  // ✅ URL resolver
-  const resolveUrl = (place: any) =>
-    affiliateMap[place.id]?.affiliate_url ||
-    place.websiteUri ||
-    place.googleMapsUri;
+  const mapData = placesResult.slice(0, visibleCount).map((p) => ({
+    id: p.id,
+    name: p.displayName?.text ?? "",
+    location: { lat: p.location.latitude, lng: p.location.longitude },
+  }));
 
-    console.log(placesResult ,'affiliate', affiliateMap )
-
-
-  //For map component
-  const reccomendedforMapPlaces = placesResult.map(place => ({
-    id: place.id,
-    location: { lat: place.location.latitude ,
-                lng: place.location.longitude
-               },
-    name: place.displayName?.text ?? "",
-   }));
-
-   console.log('Added places' ,props.addedPlaces)
-
-   
+  const handleSeeMore = () => {
+    setVisibleCount((prev) => prev + 5);
+  };
 
   return (
     <Dialog>
       <DialogTrigger className="bg-gray-400 rounded-md min-w-[260px] h-10 flex items-center justify-center w-full gap-7 p-5 cursor-pointer">
-        {props.triggerName === "Add a place to stay" ? (
-          <BsHouseAddFill fontSize="20px" />
-        ) : (
-          <MdAddCircle fontSize="20px" />
-        )}
+        <BsHouseAddFill fontSize="20px" />
         <div className="text-base font-medium">{props.triggerName}</div>
       </DialogTrigger>
 
-      <DialogContent className="flex gap-2 h-[480px] w-[90%] sm:w-[70%] min-w-[320px] z-[60] sm:pl-4 mt-6">
+      <DialogContent className="flex gap-2 h-[480px] w-[90%] sm:w-[70%] z-[60] sm:pl-4 mt-6">
         <div className="sm:w-full 950:w-[70%]">
           <DialogTitle>
             <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}>
               <LocationInput
                 inputName=""
-                setLocation={setinputLocation}
+                setLocation={setInputLocation}
                 deafultValue={undefined}
               />
             </APIProvider>
           </DialogTitle>
 
-          {props.triggerName === "Add a place to stay" && (
-            <div className="mt-3 px-2 flex items-center gap-3">
-              <select
-                value={selectedType}
-                onChange={(e) => setSelectedType(e.target.value)}
-                className="w-[140px] border border-gray-300 rounded-md p-2 text-sm"
-              >
-                {lodgingTypes.map((type) => (
-                  <option key={type.value} value={type.value}>
-                    {type.label}
-                  </option>
-                ))}
-              </select>
-
-              <button
-                onClick={fetchPlaces}
-                className="px-3 py-2 bg-blue-500 text-white rounded-md text-sm"
-              >
-                {loading
-                  ? "Loading..."
-                  : `Search (${requestCount}/${maxRequests})`}
-              </button>
-            </div>
-          )}
-
           <div className="w-full flex gap-2 flex-col h-[345px] pt-2 pr-2 overflow-auto">
-            <div className="text-sm sm:text-md pl-2">
-              {props.descriptionName}
-            </div>
+            <TripContextChips />
 
-            {placesResult.map((place: any, index: number) => (
-              <div key={index} className="relative">
+            {placesResult.slice(0, visibleCount).map((place, index) => {
+              const affiliateData = affiliateMap[place.id];
+              const priceLabel = affiliateData
+                ? affiliateData.pricePerDay
+                  ? formatPrice(affiliateData.pricePerDay, affiliateData.currency)
+                  : null
+                : null;
+              const fallbackLabel = getFallbackPriceLabel(tripContext.tripBudget);
+
+              return (
                 <Placecomponent
+                  key={place.id}
                   tripId={props.selectedPlace.tripId}
                   pointId={props.selectedPlace.id}
                   placeId={place.id}
                   index={index}
-                  description={place.description ?? ""}
-                  longitude={place.location?.longitude ?? 0}
-                  latitude={place.location?.latitude ?? 0}
-                  type={props.triggerName === "Add a place to visit" ? 'PLACE_TO_VISIT' :'ACCOMMODATION'}
+                  description={place._reason}
+                  longitude={place.location.longitude}
+                  latitude={place.location.latitude}
+                  type={props.triggerName.toLowerCase().includes("stay") ? "ACCOMMODATION" : "PLACE_TO_VISIT"}
                   rating={place.rating ?? 0}
                   address={place.shortFormattedAddress ?? ""}
-                  displayName={place.displayName?.text || "Unknown"}
-                  link={resolveUrl(place)}
-                  alreadyAdded={place.alreadyAdded} // ✅ pass this
+                  displayName={place.displayName?.text || ""}
+                  link={affiliateData?.affiliate_url || place.websiteUri || place.googleMapsUri}
+                  priceLabel={priceLabel ?? fallbackLabel}
+                  hasExactPrice={!!priceLabel}
+                  alreadyAdded={place.alreadyAdded}
                 />
+              );
+            })}
+
+            {visibleCount < placesResult.length && (
+              <div className="flex justify-center mt-3">
+                <button
+                  onClick={handleSeeMore}
+                  className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 text-sm"
+                >
+                  See more
+                </button>
               </div>
-            ))}
+            )}
           </div>
         </div>
-        <div className="border-2 border-pink-700 hidden 950:flex w-[50%] mt-7 h-[407px] z-50 cursor-pointer"> 
+
+        <div className="hidden 950:flex w-[50%] mt-7 h-[407px]">
           <Mapprovider
-          cyrclesArr={props.cyrclesArr}
-          focusplace={LatLng}
-          recommendedStays={props.triggerName === "Add a place to visit" ? [] : reccomendedforMapPlaces }
-          recommendedVisits={props.triggerName === "Add a place to visit" ? reccomendedforMapPlaces : []}
+            cyrclesArr={props.cyrclesArr}
+            focusplace={{
+              lat: props.latitude,
+              lng: props.longitude,
+            }}
+            recommendedStays={props.triggerName.toLowerCase().includes("stay") ? mapData : []}
+            recommendedVisits={props.triggerName.toLowerCase().includes("visit") ? mapData : []}
           />
         </div>
       </DialogContent>
