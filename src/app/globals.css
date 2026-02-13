@@ -150,7 +150,23 @@ body {
 /* ------------------------------
    TIME PICKER POPPER MOBILE FIX ONLY
 --------------------------------*/
+/* Show styled scrollbars in Safari, Chrome, Edge */
+::-webkit-scrollbar {
+  width: 8px;
+}
 
+::-webkit-scrollbar-track {
+  background: #f3f4f6; /* light gray */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9ca3af; /* gray */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
 
 
 

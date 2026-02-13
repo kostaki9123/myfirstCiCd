@@ -304,7 +304,7 @@ const Addaplace = (props: Props) => {
             </APIProvider>
           </DialogTitle>
 
-          <div className="w-full flex gap-2 flex-col h-[345px] pt-2 pr-2 overflow-auto">
+          <div className="w-full flex gap-2 flex-col h-[345px] pt-2 pr-2 overflow-auto  mt-2">
             <TripContextChips />
 
             {placesResult.slice(0, visibleCount).map((place, index) => {
