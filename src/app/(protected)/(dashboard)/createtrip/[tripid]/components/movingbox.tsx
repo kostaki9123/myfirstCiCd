@@ -186,8 +186,7 @@ const icon = getTransportIcon(props.data.transportType);
            
         </div>
 
-
-         <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} className=" z-[52] pb-2    h-[70%]  820:w-fit w-[90%] 450:w-[350px]  pr-2   ">
+         <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} className=" z-[52] p-3   820:w-fit w-[90%] 450:w-[350px]           sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl ">
             <DialogHeader className=''>
               <DialogTitle className=' text-xl'>
                  Transport Details

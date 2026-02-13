@@ -139,7 +139,8 @@ function onSubmit(
           + Create Trip    
       </DialogTrigger>
 
-      <DialogContent className=" w-[300px] 535:w-fit  h-fit  text-black rounded-lg   p-0">
+       <DialogContent  className=" z-[52]    sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-1  360:p-2 sm:p-2 rounded-xl">
+      
         <form
          onSubmit={async (e) => {
            e.preventDefault();

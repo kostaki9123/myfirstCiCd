@@ -199,7 +199,7 @@ const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary }: Props) => 
         )}
       </DialogTrigger>
 
-      <DialogContent className="w-[300px] h-fit text-black rounded-lg p-0">
+      <DialogContent className="w-[300px] text-black rounded-lg p-0   sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-1">
         <form onSubmit={handleSubmit}>
           <Card>
             <CardHeader>
