@@ -3,6 +3,7 @@ import ItineraryClient from './components/itineraryClient';
 import { getPoints } from '../../createtrip/[tripid]/action';
 import { getPlaces } from './action';
 import { getBudgetByTripId } from '../../budget/[tripid]/action';
+import { getTrip } from '@/app/(protected)/action';
 
 const Page = async ({
   params,
@@ -23,11 +24,14 @@ const Page = async ({
   );
    const budget = await getBudgetByTripId(tripid)
 
+   const trip = await getTrip(tripid)
+
   // 3️⃣ Flatten
   const allPlaces = placesPerPoint.flat();
 
   return (
     <ItineraryClient
+      trip={trip}
       points={pointsOnly}
       places={allPlaces}
       budgetId={budget.id!}

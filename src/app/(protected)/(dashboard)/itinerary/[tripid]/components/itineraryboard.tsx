@@ -6,6 +6,7 @@ import Addaplace from './addplace';
 import PlaceToStayCard from './PlaceToStayCard';
 import PlaceToVisitCard from './PlaceToVisitCard';
 import { Place } from '../../../../../../../backend/entities/models/place';
+import { Trip } from './itineraryClient';
 
 export interface ItineraryPoint {
   id: string;
@@ -33,6 +34,7 @@ type Props = {
   setFocusplace?: Dispatch<SetStateAction<any>>;
   places: Place[];
   budgetId: string
+  trip: Trip
 };
 
 const Itineraryboard = (props: Props) => {
@@ -140,6 +142,9 @@ const Itineraryboard = (props: Props) => {
             cyrclesArr={props.cyrclesArr}
             latitude={selectedPoint.placeLat!}
             longitude={selectedPoint.placeLng!}
+            travelingWith={props.trip.travelingWith}
+            tripBudget={props.trip.tripBudget}
+            tripTypes={props.trip.tripTypes}
           />
         </div>
 
@@ -177,6 +182,9 @@ const Itineraryboard = (props: Props) => {
             cyrclesArr={props.cyrclesArr}
             latitude={selectedPoint.placeLat!}
             longitude={selectedPoint.placeLng!}
+            travelingWith={props.trip.travelingWith}
+            tripBudget={props.trip.tripBudget}
+            tripTypes={props.trip.tripTypes}
           />
         </div>
       </div>

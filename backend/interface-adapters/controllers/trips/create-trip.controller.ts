@@ -4,7 +4,7 @@ import { createTripUseCase } from "../../../application/use-cases/trip/create-tr
 
 const inputSchema = z.object({
     userId: z.string(),
-    tripName: z.string().min(3).max(31),
+    tripName: z.string().min(1).max(31),
     tripBudget: z.string(),
     travelingWith: z.string(),
     tripTypes: z.array(z.string()).min(1).max(3), //

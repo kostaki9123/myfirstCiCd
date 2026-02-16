@@ -66,28 +66,26 @@ export class PlaceRepository implements IPlaceRepository {
     }
   }
 
-  async deletePlace(
-    pointId: string,
-    placeId: string,
-    tx?: any
-  ): Promise<void> {
-    const client = tx ?? prisma;
+   async deletePlace(
+  pointId: string,
+  placeId: string,
+  tx?: any
+): Promise<void> {
+  const client = tx ?? prisma;
 
-    try {
-      await client.place.delete({
-        where: {
-          pointId_id: {
-            pointId,
-            id: placeId,
-          },
-        },
-      });
-    } catch {
-      throw new DatabaseOperationError(
-        `Place ${placeId} not found for point ${pointId}`
-      );
-    }
+  const result = await client.place.deleteMany({
+    where: {
+      id: placeId,
+      pointId: pointId,
+    },
+  });
+
+  if (result.count === 0) {
+    throw new DatabaseOperationError(
+      `Place ${placeId} not found for point ${pointId}`
+    );
   }
+}
 
    async deletePlacesByPointId(pointId: string): Promise<void> {
       try {

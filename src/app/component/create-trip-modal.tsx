@@ -26,7 +26,7 @@ export const formSchema = z.object({
     .min(1, { message: "You must enter a trip name" })
     .max(25, { message: "Trip name too long (max 25 characters)." }),
 
-  tripBudget: z.enum(["Economy traveler", "Balanced Traveler", "Luxury traveler"], {
+  tripBudget: z.enum(["Economy traveler", "Balanced traveler", "Luxury traveler"], {
     errorMap: () => ({ message: "Select trip budget" }),
   }),
 
@@ -139,7 +139,7 @@ function onSubmit(
           + Create Trip    
       </DialogTrigger>
 
-       <DialogContent  className=" z-[52]    sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-1  360:p-2 sm:p-2 rounded-xl">
+       <DialogContent  className="    sm:max-h-[90%] w-full max-w-lg p-2 rounded-xl">
       
         <form
          onSubmit={async (e) => {
@@ -152,7 +152,7 @@ function onSubmit(
            setisLoading(false);
          }}
          >
-          <Card className=" w-[300px] 535:w-fit  text-black ">
+          <Card className=" w-full text-black">
             <CardHeader>
               <DialogTitle>
                 Create trip
@@ -172,7 +172,7 @@ function onSubmit(
                      <Label htmlFor="name" >Trip Budget</Label>
                      <Budgetdropdown
                        deafaultOption="Select"
-                       allOptions={["Economy traveler", "Balanced Traveler", "Luxury traveler"]}
+                       allOptions={["Economy traveler", "Balanced traveler", "Luxury traveler"]}
                        value={tripBudget}
                        onChange={setTripBudget}
                      />

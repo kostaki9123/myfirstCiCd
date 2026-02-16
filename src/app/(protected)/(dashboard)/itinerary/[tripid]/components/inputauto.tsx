@@ -2,27 +2,59 @@ import { useEffect, useRef, useState } from "react";
 import { useMapsLibrary } from "@vis.gl/react-google-maps";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { createPlace } from "../action";
+
+type SelectedPlace = {
+  id: string;
+  tripId: string;
+};
 
 type Props = {
   inputName: string;
+  defaultValue?: string;
   setLocation: (place: google.maps.places.PlaceResult | null) => void;
-  deafultValue: any;
+  selectedPlace: SelectedPlace;
+  triggerName: string;
+
+  // ✅ NEW PROPS
+  lat: number;
+  lng: number;
+  radius?: number; // meters (default 5000)
 };
 
-const LocationInput = (props: Props) => {
+const LocationInput = ({
+  inputName,
+  defaultValue = "",
+  setLocation,
+  selectedPlace,
+  triggerName,
+  lat,
+  lng,
+  radius = 5000,
+}: Props) => {
+  const [loadingForCustomAdd, setLoadingForCustomAdd] = useState(false);
+  const [errorMessagesForCustomAdd, setErrorMessagesForCustomAdd] =
+    useState<{ [key: string]: string }>({});
+
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const [inputLocation, setInputLocation] =
+    useState<google.maps.places.PlaceResult | null>(null);
 
   const [predictions, setPredictions] = useState<
     google.maps.places.AutocompletePrediction[]
   >([]);
+
   const [activeIndex, setActiveIndex] = useState(-1);
 
   const places = useMapsLibrary("places");
-  const autocompleteService = useRef<google.maps.places.AutocompleteService>();
-  const placesService = useRef<google.maps.places.PlacesService>();
+  const autocompleteService =
+    useRef<google.maps.places.AutocompleteService | null>(null);
+  const placesService =
+    useRef<google.maps.places.PlacesService | null>(null);
 
   /* ----------------------------------------------
-     Initialize Google Services (NO BUILT-IN UI)
+     Initialize Google Services
   ---------------------------------------------- */
   useEffect(() => {
     if (!places) return;
@@ -36,35 +68,49 @@ const LocationInput = (props: Props) => {
   }, [places]);
 
   /* ----------------------------------------------
-     Fetch Prediction List
+     Fetch Predictions (Location Biased)
   ---------------------------------------------- */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
     if (!value) {
       setPredictions([]);
+      setActiveIndex(-1);
       return;
     }
 
+    const location = new google.maps.LatLng(lat, lng);
+
     autocompleteService.current?.getPlacePredictions(
-      { input: value },
+      {
+        input: value,
+        location,
+        radius,
+      },
       (results) => {
         setPredictions(results || []);
+        setActiveIndex(-1);
       }
     );
   };
 
   /* ----------------------------------------------
-     Fetch Place Details
+     Select Prediction
   ---------------------------------------------- */
-  const selectPrediction = (prediction: google.maps.places.AutocompletePrediction) => {
+  const selectPrediction = (
+    prediction: google.maps.places.AutocompletePrediction
+  ) => {
+    if (!placesService.current) return;
+
     inputRef.current!.value = prediction.description;
     setPredictions([]);
+    setActiveIndex(-1);
 
-    placesService.current?.getDetails(
+    placesService.current.getDetails(
       { placeId: prediction.place_id },
       (place) => {
-        props.setLocation(place);
+        setInputLocation(place || null);
+        setLocation(place || null);
       }
     );
   };
@@ -94,45 +140,64 @@ const LocationInput = (props: Props) => {
   };
 
   /* ----------------------------------------------
-     Add Button Click → Set Location
+     Add Place (API Submit)
   ---------------------------------------------- */
-  const handleAdd = () => {
-    const value = inputRef.current?.value;
+  const addPlace = async () => {
+    if (!inputLocation?.place_id || !inputLocation?.name) return;
 
-    if (!value || predictions.length === 0) return;
+    try {
+      setLoadingForCustomAdd(true);
 
-    // pick first result
-    const first = predictions[0];
+      const formData = new FormData();
+      formData.append("id", inputLocation.place_id);
+      formData.append("pointId", selectedPlace.id);
+      formData.append(
+        "placeType",
+        triggerName.toLowerCase().includes("stay")
+          ? "ACCOMMODATION"
+          : "PLACE_TO_VISIT"
+      );
+      formData.append("name", inputLocation.name);
+      formData.append("tripId", selectedPlace.tripId);
 
-    selectPrediction(first);
+      await createPlace(formData);
+
+      setErrorMessagesForCustomAdd({});
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      setErrorMessagesForCustomAdd({
+        general: "Something went wrong",
+      });
+    } finally {
+      setLoadingForCustomAdd(false);
+    }
   };
 
   return (
-    <div className="relative w-full 950:max-w-md pr-6  950:pr-0 ">
+    <div className="relative w-full 950:max-w-md pr-6 950:pr-0">
       <label className="block mb-1 font-medium text-gray-700">
-        {props.inputName}
+        {inputName}
       </label>
 
-      {/* INPUT + BUTTON */}
       <div className="flex gap-2">
         <Input
           ref={inputRef}
-          placeholder="Enter a custom location"
-          defaultValue={props.deafultValue || ""}
+          placeholder="Search places nearby..."
+          defaultValue={defaultValue}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           className="flex-1 border rounded-lg px-3 py-2"
         />
 
         <Button
-          onClick={handleAdd}
+          onClick={addPlace}
+          disabled={loadingForCustomAdd}
           className="px-4 py-2 rounded-lg"
         >
-          Add
+          {loadingForCustomAdd ? "Adding..." : "Add"}
         </Button>
       </div>
 
-      {/* CUSTOM DROPDOWN */}
       {predictions.length > 0 && (
         <ul className="absolute z-[57] left-0 right-0 mt-2 bg-white rounded-lg shadow-lg max-h-60 overflow-auto">
           {predictions.map((p, index) => (
@@ -152,6 +217,12 @@ const LocationInput = (props: Props) => {
             </li>
           ))}
         </ul>
+      )}
+
+      {errorMessagesForCustomAdd.general && (
+        <p className="text-sm text-red-500 mt-2">
+          {errorMessagesForCustomAdd.general}
+        </p>
       )}
     </div>
   );

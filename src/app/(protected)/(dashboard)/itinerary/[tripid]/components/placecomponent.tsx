@@ -31,7 +31,7 @@ export const PlaceTypeEnum = z.enum([
   "PLACE_TO_VISIT",
 ]);
 
-export const formSchema = z.object({
+export const formSchemaPlace = z.object({
   id: z.string(),
   pointId: z.string(),
   placeType: PlaceTypeEnum,
@@ -48,7 +48,7 @@ const Placecomponent = (props: Props) => {
     try {
       setIsLoading(true);
 
-      const validation = formSchema.safeParse({
+      const validation = formSchemaPlace.safeParse({
         id: props.placeId,
         pointId: props.pointId,
         placeType: props.type,

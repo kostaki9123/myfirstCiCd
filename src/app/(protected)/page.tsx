@@ -2,31 +2,28 @@
 import Link from "next/link";
 import Createtripmodal from "../component/create-trip-modal";
 import DeleteAlertDialog from "../component/delete-trip-modal";
-import { getTrips } from "./action";
 
+import { getTrips } from "./action";
+import UpdateTripModal from "../component/UpdateTripModal";
 
 export default async function Home() {
-    
-  let trips =  await getTrips()
- 
+  let trips = await getTrips();
 
-  
+  console.log('trips',trips)
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-gray-200 pt-20">
       {/* Header */}
-      <header className="w-full py-8 text-center  shadow-lg">
+      <header className="w-full py-8 text-center shadow-lg">
         <h1 className="text-4xl font-extrabold tracking-wide text-white">
           My trips
         </h1>
-       
       </header>
-
-    
 
       {/* Action Buttons */}
       <div className="mt-10 flex justify-center space-x-6">
-        <Createtripmodal/>
-      
+        <Createtripmodal />
+
         <button className="px-6 py-3 bg-gradient-to-r from-[#6d28d9] to-[#9333ea] text-white rounded-lg shadow-lg hover:scale-105 transition-transform duration-200">
           Sort Trips
         </button>
@@ -34,17 +31,27 @@ export default async function Home() {
 
       {/* Trip Cards */}
       <main className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 md:px-12">
-        {trips.map((trip , key) => (
+        {trips.map((trip) => (
           <div
-            key={key}
-            className="relative  mb-6  bg-[#1e293b] rounded-xl p-6 shadow-md hover:shadow-xl transform hover:-translate-y-2 transition-all"
+            key={trip.id}
+            className="relative mb-6 bg-[#1e293b] rounded-xl p-6 shadow-md hover:shadow-xl transform hover:-translate-y-2 transition-all"
           >
+            {/* Update Modal */}
+           <UpdateTripModal
+             tripId={trip.id}
+             initialName={trip.tripName}
+             initialBudget={trip.tripBudget}        // 🔹 required
+             initialTravelingWith={trip.travelingWith} // 🔹 required
+             initialTripTypes={trip.tripTypes}      // array
+            />
+
+
             {/* Trip Name */}
             <h2 className="text-2xl font-bold text-[#38bdf8]">{trip.tripName}</h2>
 
             {/* Countries */}
             <div className="mt-3 flex items-center space-x-2">
-               {/* trip.countries.map((country, idx) => (
+              {/* trip.countries.map((country, idx) => (
                 <span key={idx} className="text-sm text-gray-400">
                   {country.flag} {country.name}
                 </span>
@@ -52,23 +59,25 @@ export default async function Home() {
             </div>
 
             {/* Features */}
-            
-            <div key={key} className="mt-6 flex flex-wrap gap-3 ">
+            <div className="mt-6 flex flex-wrap gap-3">
               <span className="px-3 py-1 bg-[#16a34a]/20 text-[#16a34a] text-sm rounded-full">
-                💵 {trip.tripBudget }
+                💵 {trip.tripBudget}
               </span>
               <span className="px-3 py-1 bg-[#3b82f6]/20 text-[#3b82f6] text-sm rounded-full">
                 {trip.travelingWith}
               </span>
-              {trip.tripTypes.map((string) => (
-               <span className="px-3 py-1 bg-[#facc15]/20 text-[#facc15] text-sm rounded-full">
-                 {string}
-              </span>
-              )
-               )}
+              {trip.tripTypes.map((string, idx) => (
+                <span
+                  key={idx}
+                  className="px-3 py-1 bg-[#facc15]/20 text-[#facc15] text-sm rounded-full"
+                >
+                  {string}
+                </span>
+              ))}
             </div>
 
-            {/* Cost and Details 
+            {/* Cost and Details (commented out) */}
+            {/*
             <div className="mt-6">
               <h3 className="text-sm font-medium text-gray-400 uppercase">
                 Cost and Details:
@@ -92,17 +101,16 @@ export default async function Home() {
 
             {/* Actions */}
             <div className="mt-6 flex justify-between items-center">
-            <Link
+              <Link
                 href={{
                   pathname: `/home/${trip.id}`,
                 }}
               >
-                 <button className="px-4 py-2 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white rounded-lg shadow-lg hover:scale-105 transition-transform">
-                   Join Dashboard
-                 </button>
+                <button className="px-4 py-2 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white rounded-lg shadow-lg hover:scale-105 transition-transform">
+                  Join Dashboard
+                </button>
               </Link>
               <DeleteAlertDialog tripId={trip.id} />
-              
             </div>
           </div>
         ))}

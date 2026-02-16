@@ -19,19 +19,17 @@ import { Place } from "../../../../../../../backend/entities/models/place";
    TRIP CONTEXT TYPES
 ----------------------------------- */
 
-type TravelWith = "family" | "friends" | "solo" | "couple";
-type TripBudget = "economy" | "balanced" | "luxury";
-type TripType = "cultural" | "nature" | "nightlife" | "adventure";
-
-const tripContext: {
-  travelingWith: TravelWith;
-  tripBudget: TripBudget;
-  tripType: TripType;
-} = {
-  travelingWith: "family",
-  tripBudget: "balanced",
-  tripType: "cultural",
-};
+type TravelWith = "family" | "friends" | "solo" | "couple" | "group" | string;
+type TripBudget = "economy" | "balanced" | "luxury" | string;
+type TripType =
+  | "adventure"
+  | "cultural"
+  | "nature"
+  | "nightlife"
+  | "festival"
+  | "sportsEnthusiast"
+  | "events"
+  | string;
 
 const tripLabels = {
   travelingWith: {
@@ -39,38 +37,65 @@ const tripLabels = {
     friends: { label: "With friends", icon: "🧑‍🤝‍🧑" },
     solo: { label: "Solo traveler", icon: "🧍" },
     couple: { label: "Couple getaway", icon: "❤️" },
+    group: { label: "Group adventure", icon: "👥" },
   } as Record<TravelWith, { label: string; icon: string }>,
+
   tripBudget: {
     economy: { label: "Budget-friendly", icon: "💰" },
     balanced: { label: "Balanced budget", icon: "⚖️" },
     luxury: { label: "Luxury stay", icon: "✨" },
   } as Record<TripBudget, { label: string; icon: string }>,
+
   tripType: {
+    adventure: { label: "Adventure", icon: "🧗" },
     cultural: { label: "Cultural focus", icon: "🏛" },
     nature: { label: "Nature focused", icon: "🌿" },
     nightlife: { label: "Nightlife", icon: "🌙" },
-    adventure: { label: "Adventure", icon: "🧗" },
+    festival: { label: "Festival vibes", icon: "🎉" },
+    sportsEnthusiast: { label: "Sports activities", icon: "⚽" },
+    events: { label: "Special events", icon: "🎟️" },
   } as Record<TripType, { label: string; icon: string }>,
 };
 
-type Props = {
-  selectedPlace: ItineraryPoint;
-  latitude: number;
-  longitude: number;
-  cyrclesArr: any;
-  triggerName: string;
-  descriptionName: string;
-  addedPlaces: Place[];
+/* ----------------------------------
+   Mapping for incoming strings
+----------------------------------- */
+
+const budgetMap: Record<string, TripBudget> = {
+  economy: "economy",
+  balanced: "balanced",
+  luxury: "luxury",
+  "luxury traveler": "luxury",
 };
 
-type AffiliateMap = Record<
-  string,
-  {
-    affiliate_url: string;
-    pricePerDay: number | null;
-    currency?: "EUR" | "USD";
-  } | null
->;
+const tripTypeMap: Record<string, TripType> = {
+  adventure: "adventure",
+  adventures: "adventure",
+  cultural: "cultural",
+  "cultural enthusiasts": "cultural",
+  nature: "nature",
+  "natural lovers": "nature",
+  nightlife: "nightlife",
+  festival: "festival",
+  "sports": "sportsEnthusiast",
+  "sports enthusiast": "sportsEnthusiast",
+  events: "events",
+};
+
+type ScoredPlace = {
+  _score: number;
+  _distanceKm: number;
+  _reason: string;
+  alreadyAdded: boolean;
+  id: string;
+  location: { latitude: number; longitude: number };
+  rating?: number;
+  displayName?: { text: string };
+  shortFormattedAddress?: string;
+  websiteUri?: string;
+  googleMapsUri?: string;
+  // other fields from the API if needed
+};
 
 /* ----------------------------------
    UTILS
@@ -121,12 +146,34 @@ const getFallbackPriceLabel = (budget: TripBudget) => {
    Trip Context Chips
 ----------------------------------- */
 
-const TripContextChips = () => {
-  const chips = [
-    tripLabels.travelingWith[tripContext.travelingWith],
-    tripLabels.tripBudget[tripContext.tripBudget],
-    tripLabels.tripType[tripContext.tripType],
-  ];
+const TripContextChips = ({
+  travelingWith,
+  tripBudget,
+  tripTypes,
+}: {
+  travelingWith: TravelWith;
+  tripBudget: TripBudget;
+  tripTypes: TripType[];
+}) => {
+  const chips: { label: string; icon: string }[] = [];
+
+  // Normalize travelingWith
+  const twKey = travelingWith.toLowerCase() as string;
+  if (tripLabels.travelingWith[twKey]) chips.push(tripLabels.travelingWith[twKey]);
+
+  // Normalize budget
+  const normalizedBudget = budgetMap[tripBudget.toLowerCase()];
+  if (normalizedBudget && tripLabels.tripBudget[normalizedBudget])
+    chips.push(tripLabels.tripBudget[normalizedBudget]);
+
+  // Normalize trip types
+  tripTypes.forEach((type) => {
+    const normalizedType = tripTypeMap[type.toLowerCase()];
+    if (normalizedType && tripLabels.tripType[normalizedType])
+      chips.push(tripLabels.tripType[normalizedType]);
+  });
+
+  if (chips.length === 0) return null;
 
   return (
     <div className="px-2 mb-2">
@@ -149,16 +196,37 @@ const TripContextChips = () => {
 };
 
 /* ----------------------------------
-   COMPONENT
+   MAIN COMPONENT
 ----------------------------------- */
+
+type Props = {
+  selectedPlace: ItineraryPoint;
+  latitude: number;
+  longitude: number;
+  cyrclesArr: any;
+  triggerName: string;
+  descriptionName: string;
+  addedPlaces: Place[];
+
+  travelingWith: TravelWith;
+  tripBudget: TripBudget;
+  tripTypes: TripType[];
+};
+
+type AffiliateMap = Record<
+  string,
+  {
+    affiliate_url: string;
+    pricePerDay: number | null;
+    currency?: "EUR" | "USD";
+  } | null
+>;
 
 const Addaplace = (props: Props) => {
   const [placesResult, setPlacesResult] = useState<any[]>([]);
   const [affiliateMap, setAffiliateMap] = useState<AffiliateMap>({});
   const [inputLocation, setInputLocation] = useState<any>();
-  const [loading, setLoading] = useState(false);
-
-  const [visibleCount, setVisibleCount] = useState(10); // Show 10 by default
+  const [visibleCount, setVisibleCount] = useState(10);
 
   const scorePlace = (place: any) => {
     let score = 0;
@@ -171,10 +239,10 @@ const Addaplace = (props: Props) => {
     else if (rating >= 4.0) score += 4;
     else score -= 6;
 
-    if (tripContext.tripBudget === "economy" && rating >= 4.7) score -= 8;
-    if (tripContext.tripBudget === "luxury" && rating < 4.2) score -= 12;
+    if (props.tripBudget === "economy" && rating >= 4.7) score -= 8;
+    if (props.tripBudget === "luxury" && rating < 4.2) score -= 12;
 
-    if (tripContext.travelingWith === "family" && km < 3 && rating >= 4.2)
+    if (props.travelingWith === "family" && km < 3 && rating >= 4.2)
       score += 4;
 
     return score;
@@ -190,12 +258,9 @@ const Addaplace = (props: Props) => {
 
   const fetchPlaces = async () => {
     try {
-      setLoading(true);
-
       const centerLat = inputLocation?.lat ?? props.latitude;
       const centerLng = inputLocation?.lng ?? props.longitude;
 
-      // Determine type: stay or visit
       const isStay = props.triggerName.toLowerCase().includes("stay");
       const includedTypes = isStay
         ? ["hotel", "lodging"]
@@ -213,7 +278,7 @@ const Addaplace = (props: Props) => {
           },
           body: JSON.stringify({
             includedTypes,
-            maxResultCount: 20, // fetch more so “see more” works
+            maxResultCount: 20,
             locationRestriction: {
               circle: {
                 center: { latitude: Number(centerLat), longitude: Number(centerLng) },
@@ -236,38 +301,31 @@ const Addaplace = (props: Props) => {
             p.location.longitude
           );
 
-          const score = scorePlace({ ...p, _distanceKm: km });
-          const reason = buildReason({ ...p, _distanceKm: km });
-
           return {
             ...p,
             _distanceKm: km,
-            _score: score,
-            _reason: reason,
+            _score: scorePlace({ ...p, _distanceKm: km }),
+            _reason: buildReason({ ...p, _distanceKm: km }),
             alreadyAdded: props.addedPlaces.some(
               (a) => a.id === p.id && a.pointId === props.selectedPlace.id
             ),
-          };
-        })
-        .sort((a: any, b: any) => b._score - a._score);
+          } as ScoredPlace;
+        }) 
+        .sort((a:ScoredPlace, b:ScoredPlace) => b._score - a._score);
 
       setPlacesResult(places);
 
-      const placeIds = places.map((p: any) => p.id);
-
+      const placeIds = places.map((p : any) => p.id);
       if (placeIds.length) {
         const res = await fetch("/api/links/bulk", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ placeIds }),
         });
-
         setAffiliateMap(await res.json());
       }
     } catch (e) {
       console.error(e);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -281,9 +339,7 @@ const Addaplace = (props: Props) => {
     location: { lat: p.location.latitude, lng: p.location.longitude },
   }));
 
-  const handleSeeMore = () => {
-    setVisibleCount((prev) => prev + 5);
-  };
+  const handleSeeMore = () => setVisibleCount((prev) => prev + 5);
 
   return (
     <Dialog>
@@ -298,23 +354,28 @@ const Addaplace = (props: Props) => {
             <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}>
               <LocationInput
                 inputName=""
+                lat={props.latitude}
+                lng={props.longitude}
+                triggerName={props.triggerName}
+                selectedPlace={props.selectedPlace}
                 setLocation={setInputLocation}
-                deafultValue={undefined}
               />
             </APIProvider>
           </DialogTitle>
 
-          <div className="w-full flex gap-2 flex-col h-[345px] pt-2 pr-2 overflow-auto  mt-2">
-            <TripContextChips />
+          <div className="w-full flex gap-2 flex-col h-[345px] pt-2 pr-2 overflow-auto mt-2">
+            <TripContextChips
+              travelingWith={props.travelingWith}
+              tripBudget={props.tripBudget}
+              tripTypes={props.tripTypes}
+            />
 
             {placesResult.slice(0, visibleCount).map((place, index) => {
               const affiliateData = affiliateMap[place.id];
-              const priceLabel = affiliateData
-                ? affiliateData.pricePerDay
-                  ? formatPrice(affiliateData.pricePerDay, affiliateData.currency)
-                  : null
+              const priceLabel = affiliateData?.pricePerDay
+                ? formatPrice(affiliateData.pricePerDay, affiliateData.currency)
                 : null;
-              const fallbackLabel = getFallbackPriceLabel(tripContext.tripBudget);
+              const fallbackLabel = getFallbackPriceLabel(props.tripBudget);
 
               return (
                 <Placecomponent
@@ -354,10 +415,7 @@ const Addaplace = (props: Props) => {
         <div className="hidden 950:flex w-[50%] mt-7 h-[407px]">
           <Mapprovider
             cyrclesArr={props.cyrclesArr}
-            focusplace={{
-              lat: props.latitude,
-              lng: props.longitude,
-            }}
+            focusplace={{ lat: props.latitude, lng: props.longitude }}
             recommendedStays={props.triggerName.toLowerCase().includes("stay") ? mapData : []}
             recommendedVisits={props.triggerName.toLowerCase().includes("visit") ? mapData : []}
           />

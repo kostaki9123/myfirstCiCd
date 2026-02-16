@@ -11,6 +11,7 @@ import { UsersRepository } from '../../../backend/infrastructure/repository/user
 import { getTripsController } from '../../../backend/interface-adapters/controllers/trips/get-trips.controller';
 import { deleteTripController } from '../../../backend/interface-adapters/controllers/trips/delete-trip.controller';
 import { getTripController } from '../../../backend/interface-adapters/controllers/trips/get-trip.controllet';
+import { updateTripController } from '../../../backend/interface-adapters/controllers/trips/update-trip.controller';
 
 
 export async function signIn(userId:string, email:string, username:string ) {
@@ -87,13 +88,72 @@ export async function createTrip(formData:FormData ) {
            return result
          
         } catch (err) {
-          throw new Error(`Ops something went wrong:'${(err as Error).message}`)
+          throw new Error(`Ops something went wrong: ${err}`)
           
         }
-  
-    
+   
    //  );
   }
+
+
+
+export async function updateTrip(formData: FormData) {
+  console.log("run updateTripMeta");
+
+  // 🔐 Auth check
+  const { userId } = await auth();
+  if (!userId) {
+    redirect("/sign-in");
+  }
+  console.log("userId:", userId);
+
+  // Get user from repository
+  const usersRepository: IUsersRepository =
+    process.env.NODE_ENV === "test"
+      ? new MockUsersRepository()
+      : new UsersRepository();
+
+  const existingUser = await usersRepository.getUser(userId);
+  if (!existingUser) {
+    redirect("/sign-in");
+  }
+
+  try {
+    // Extract values from FormData
+    const tripId = formData.get("tripId") as string;
+    const tripName = formData.get("tripName") as string;
+    const tripBudget = formData.get("tripBudget") as "Economy traveler" | "Balanced traveler" | "Luxury traveler" | undefined
+    const travelingWith = formData.get("travelingWith") as "Solo" | "Friends" | "Couple" | "Family" | "Group" | undefined
+    const tripTypes = formData.getAll("tripTypes") as string[];
+
+    console.log("tripId:", tripId);
+    console.log("tripName:", tripName);
+    console.log("tripBudget:", tripBudget);
+    console.log("travelingWith:", travelingWith);
+    console.log("tripTypes:", tripTypes);
+
+    // Call controller
+    const result = await updateTripController({
+      userId,
+      tripId,
+      tripName,
+      tripBudget,
+      travelingWith,
+      tripTypes,
+    });
+
+    // Revalidate homepage to reflect updated data
+    revalidatePath("/");
+
+    return result;
+  } catch (err) {
+    console.error("updateTrip error:", err);
+    throw new Error(`Ops something went wrong:'${(err as Error).message}'`);
+  }
+}
+
+
+
 
   
 export async function getTrips() {
