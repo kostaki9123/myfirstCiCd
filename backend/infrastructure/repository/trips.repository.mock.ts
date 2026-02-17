@@ -16,7 +16,7 @@ export class MockTripsRepository implements ITripsRepository {
     tripBudget: "2500",
     travelingWith: "friends",
     tripTypes: ["beach", "culture", "food"],
-    createdAt: '2026-02-17 18:34:04.156'
+    createdAt: new Date("2025-09-17T18:34:04.156")
   },
   {
     id: "2",
@@ -25,7 +25,7 @@ export class MockTripsRepository implements ITripsRepository {
     tripBudget: "1800",
     travelingWith: "family",
     tripTypes: ["skiing", "nature"],
-    createdAt: '2026-02-22 18:34:04.156'
+    createdAt: new Date("2026-03-17T18:34:04.156")
   },
   {
     id: "3",
@@ -34,7 +34,7 @@ export class MockTripsRepository implements ITripsRepository {
     tripBudget: "3000",
     travelingWith: "solo",
     tripTypes: ["tech", "food", "city"],
-    createdAt: '2025-02-17 18:34:04.156'
+    createdAt: new Date("2025-10-17T18:34:04.156")
   },
   {
     id: "4",
@@ -43,7 +43,7 @@ export class MockTripsRepository implements ITripsRepository {
     tripBudget: "3500",
     travelingWith: "partner",
     tripTypes: ["wildlife", "adventure"],
-    createdAt: '2026-04-29 18:34:04.156'
+    createdAt: new Date("2026-11-17T18:34:04.156")
   },
   {
     id: "5",
@@ -52,7 +52,7 @@ export class MockTripsRepository implements ITripsRepository {
     tripBudget: "2000",
     travelingWith: "friends",
     tripTypes: ["roadtrip", "nature", "culture"],
-    createdAt: '2026-10-17 18:34:04.156'
+    createdAt:  new Date("2026-10-17T18:34:04.156")
   }
 ];
   }
@@ -88,7 +88,7 @@ export class MockTripsRepository implements ITripsRepository {
     const newTrip: Trip = {
       id: `trip_${Math.random().toString(36).substr(2, 9)}`,
       ...trip,
-      createdAt: '2026-02-17 18:34:04.156'
+      createdAt: new Date("2026-06-17T18:34:04.156")
     };
 
     this._trips.push(newTrip);

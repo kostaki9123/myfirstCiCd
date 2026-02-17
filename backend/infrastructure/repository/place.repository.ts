@@ -13,7 +13,7 @@ export class PlaceRepository implements IPlaceRepository {
           id: insert.id,           // Google place id
           pointId: insert.pointId,
           placeType: insert.placeType,
-        
+          googleMapLink:insert.googleMapLink,
           name: insert.name,
         },
       });
@@ -52,6 +52,7 @@ export class PlaceRepository implements IPlaceRepository {
            stayUntil: input.stayUntil ?? null,
            visitDate: input.visitDate ?? null,
            visitTime: input.visitTime ?? null,
+           googleMapLink: input.googleMapLink ?? null,
            cost: input.cost ?? null,
            notes: input.notes ?? null,
         },
