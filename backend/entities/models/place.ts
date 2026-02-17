@@ -18,7 +18,8 @@ const placeBaseSchema = z.object({
 
   stayFrom: z.coerce.date().nullable().optional(),
   stayUntil: z.coerce.date().nullable().optional(),
-
+  googleMapLink: z.string().nullable().optional(),
+   
   cost: z.coerce.number().positive().nullable().optional(),
   notes: z.string().nullable().optional(),
 
@@ -55,6 +56,7 @@ export const insertCreatePlaceSchema = placeBaseSchema.pick({
   name: true,
   stayFrom: true,
   stayUntil: true,
+  googleMapLink: true,
   cost: true,
   notes: true,
   visitDate: true,

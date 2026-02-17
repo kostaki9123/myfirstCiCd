@@ -9,6 +9,9 @@ import UpdateTripModal from "../component/UpdateTripModal";
 export default async function Home() {
   let trips = await getTrips();
 
+   trips.sort((a, b) => 
+      new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()
+  ); 
   console.log('trips',trips)
 
   return (
@@ -24,9 +27,7 @@ export default async function Home() {
       <div className="mt-10 flex justify-center space-x-6">
         <Createtripmodal />
 
-        <button className="px-6 py-3 bg-gradient-to-r from-[#6d28d9] to-[#9333ea] text-white rounded-lg shadow-lg hover:scale-105 transition-transform duration-200">
-          Sort Trips
-        </button>
+     
       </div>
 
       {/* Trip Cards */}

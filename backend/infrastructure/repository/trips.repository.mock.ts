@@ -15,7 +15,8 @@ export class MockTripsRepository implements ITripsRepository {
     userId: "user_123",
     tripBudget: "2500",
     travelingWith: "friends",
-    tripTypes: ["beach", "culture", "food"]
+    tripTypes: ["beach", "culture", "food"],
+    createdAt: '2026-02-17 18:34:04.156'
   },
   {
     id: "2",
@@ -23,7 +24,8 @@ export class MockTripsRepository implements ITripsRepository {
     userId: "user_456",
     tripBudget: "1800",
     travelingWith: "family",
-    tripTypes: ["skiing", "nature"]
+    tripTypes: ["skiing", "nature"],
+    createdAt: '2026-02-22 18:34:04.156'
   },
   {
     id: "3",
@@ -31,7 +33,8 @@ export class MockTripsRepository implements ITripsRepository {
     userId: "user_2zB4zA1PWJ3DmsP5INT5D8lp5HN",
     tripBudget: "3000",
     travelingWith: "solo",
-    tripTypes: ["tech", "food", "city"]
+    tripTypes: ["tech", "food", "city"],
+    createdAt: '2025-02-17 18:34:04.156'
   },
   {
     id: "4",
@@ -39,7 +42,8 @@ export class MockTripsRepository implements ITripsRepository {
     userId: "user_2zB4zA1PWJ3DmsP5INT5D8lp5HN",
     tripBudget: "3500",
     travelingWith: "partner",
-    tripTypes: ["wildlife", "adventure"]
+    tripTypes: ["wildlife", "adventure"],
+    createdAt: '2026-04-29 18:34:04.156'
   },
   {
     id: "5",
@@ -47,7 +51,8 @@ export class MockTripsRepository implements ITripsRepository {
     userId: "user_2zB4zA1PWJ3DmsP5INT5D8lp5HN",
     tripBudget: "2000",
     travelingWith: "friends",
-    tripTypes: ["roadtrip", "nature", "culture"]
+    tripTypes: ["roadtrip", "nature", "culture"],
+    createdAt: '2026-10-17 18:34:04.156'
   }
 ];
   }
@@ -83,6 +88,7 @@ export class MockTripsRepository implements ITripsRepository {
     const newTrip: Trip = {
       id: `trip_${Math.random().toString(36).substr(2, 9)}`,
       ...trip,
+      createdAt: '2026-02-17 18:34:04.156'
     };
 
     this._trips.push(newTrip);

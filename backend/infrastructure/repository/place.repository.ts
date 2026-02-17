@@ -13,6 +13,7 @@ export class PlaceRepository implements IPlaceRepository {
           id: insert.id,           // Google place id
           pointId: insert.pointId,
           placeType: insert.placeType,
+        
           name: insert.name,
         },
       });
@@ -35,8 +36,7 @@ export class PlaceRepository implements IPlaceRepository {
   }
 
   async updatePlace(
-    pointId: string,
-    placeId: string,
+    internalId: string,
     input: Partial<PlaceInsert>,
     tx?: any
   ): Promise<Place> {
@@ -45,10 +45,7 @@ export class PlaceRepository implements IPlaceRepository {
     try {
       return await client.place.update({
         where: {
-          pointId_id: {
-            pointId,
-            id: placeId,
-          },
+         internalId : internalId
         },
         data: {
            stayFrom: input.stayFrom ?? null,
@@ -61,7 +58,7 @@ export class PlaceRepository implements IPlaceRepository {
       });
     } catch {
       throw new DatabaseOperationError(
-        `Place ${placeId} not found for point ${pointId}`
+        `Place not found for with internalId: ${internalId}`
       );
     }
   }

@@ -3,8 +3,7 @@ import { MockPlaceRepository } from '../../../infrastructure/repository/place.re
 import { IPlaceRepository } from '../../repositories/place.repository.interface';
 
 export type UpdatePlaceUseCaseInput = {
-  id: string;
-  pointId: string;
+  internalId: string;
   stayFrom?: Date | null;
   stayUntil?: Date | null;
   visitDate?: Date | null;
@@ -24,8 +23,8 @@ export const updatePlaceUseCase = async (input: UpdatePlaceUseCaseInput) => {
 
   try {
     const updatedPlace = await placeRepository.updatePlace(
-      input.pointId, // 1️⃣ parent point ID
-      input.id,      // 2️⃣ place ID
+      input.internalId, 
+     
       {
         stayFrom: input.stayFrom ?? null,
         stayUntil: input.stayUntil ?? null,

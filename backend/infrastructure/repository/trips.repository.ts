@@ -37,9 +37,11 @@ export class TripsRepository implements ITripsRepository {
     async getTripsForUser(userId: string): Promise<Trip[]> {
         try{
             const trips = await prisma.trip.findMany({
+                
                where:{
                    userId : userId
-               }
+                   
+               },
            }) 
 
             return trips

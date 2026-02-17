@@ -39,18 +39,17 @@ export class MockPlaceRepository implements IPlaceRepository {
   }
 
   async updatePlace(
-    pointId: string,
-    placeId: string,
+    internalId:string,
     input: Partial<PlaceInsert>,
     tx?: any
   ): Promise<Place> {
     const index = this.places.findIndex(
-      (p) => p.id === placeId && p.pointId === pointId
+      (p) => p.id === internalId && p.pointId === internalId
     );
 
     if (index === -1) {
       throw new DatabaseOperationError(
-        `Place ${placeId} not found for point ${pointId}`
+         `Place not found for with internalId: ${internalId}`
       );
     }
 

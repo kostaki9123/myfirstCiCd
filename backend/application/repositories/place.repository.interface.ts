@@ -9,8 +9,7 @@ export interface IPlaceRepository {
 
   // Update using (pointId + placeId)
   updatePlace(
-    pointId: string,
-    placeId: string,
+    internalId : string,
     input: Partial<PlaceInsert>,
     tx?: any
   ): Promise<Place>;

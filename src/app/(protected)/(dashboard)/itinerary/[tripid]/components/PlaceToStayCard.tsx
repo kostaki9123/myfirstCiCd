@@ -107,8 +107,8 @@ export default function PlaceToStayCard(props: Props) {
     const d = validation.data;
 
     const fd = new FormData();
-    fd.append("id", d.id);
-    fd.append("pointId", d.pointId);
+    fd.append("internalId", props.internalId );
+   
 
     if (d.stayFrom) fd.append("stayFrom", d.stayFrom.toISOString());
     if (d.stayUntil) fd.append("stayUntil", d.stayUntil.toISOString());
@@ -124,8 +124,7 @@ export default function PlaceToStayCard(props: Props) {
     }
   };
 
-  console.log('from',props.stayFrom)
-  console.log(props.stayUntil)
+    console.log('ntervalId', props.internalId)
 
   /* ------------------ RENDER ------------------ */
 

@@ -30,8 +30,9 @@
     user      User   @relation(fields: [userId], references: [id])
 
     Point Point[]
-
     Budget Budget?
+
+    createdAt    DateTime @default(now())
   }
 
   model Budget {
@@ -52,10 +53,13 @@
     id             String @id @default(cuid()) @unique
     budgetId       String 
     description    String
-    connectedToId  String?
+    connectedToId  String? @unique
     category       String
-    amount         Int
+    amount         Int 
     expenseCurrency String
+
+    place           Place?  @relation("PlaceExpense", fields: [connectedToId], references: [internalId], onDelete: Cascade)
+
 
     // relation
     Budget           Budget      @relation(fields: [budgetId], references: [id])
@@ -107,12 +111,13 @@
   }
 
   model Place {
-    internalId String   @id @default(cuid()) 
+    internalId String   @id @default(cuid())
     id String    
     pointId    String
 
     placeType  PlaceType
     name       String
+    googleMapLink String? 
 
     stayFrom   DateTime?
     stayUntil DateTime?
@@ -125,7 +130,10 @@
 
     // ===== Relations =====
     point      Point      @relation(fields: [pointId], references: [id], onDelete: Cascade)
+    expense    Expense?  @relation("PlaceExpense")
 
+
+    @@unique([id, pointId])
     @@index([pointId])
   }
 

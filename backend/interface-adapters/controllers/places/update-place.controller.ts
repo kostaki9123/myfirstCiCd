@@ -7,9 +7,8 @@ import { updatePlaceUseCase } from "../../../application/use-cases/place/update-
 ------------------------------------------------------- */
 export const inputSchema = z.object({
   /* -------- Identifiers -------- */
-  id: z.string().min(1),
-  pointId: z.string().min(1),
-
+  internalId: z.string().min(1),
+  
   /* -------- Core -------- */
   /* -------- Stay (Accommodation) -------- */
   stayFrom: z.date().nullable().optional(),
@@ -39,9 +38,7 @@ export const updatePlaceController =
 
          console.log('data in controller', input)
            return await updatePlaceUseCase({
-                id: data.id,
-                pointId: data.pointId,
-            
+                internalId: data.internalId,
                 stayFrom: data.stayFrom ?? null,
                 stayUntil: data.stayUntil ?? null,
             

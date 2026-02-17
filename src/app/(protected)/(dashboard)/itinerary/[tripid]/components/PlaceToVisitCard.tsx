@@ -102,8 +102,7 @@ export default function PlaceToVisitCard(props: Props) {
 
       console.log("notes", d.notes)
 
-    fd.append("id", d.id);
-    fd.append("pointId", d.pointId);
+    fd.append("internalId", props.internalId );
     if (d.visitDate) fd.append("visitDate", d.visitDate.toISOString());
     if (d.visitTime) fd.append("visitTime", d.visitTime.toISOString());
     fd.append("notes", d.notes ?? "");
@@ -115,6 +114,8 @@ export default function PlaceToVisitCard(props: Props) {
       setError("Failed to update");
     }
   };
+
+  console.log('ntervalId', props.internalId)
 
   /* ------------------ RENDER ------------------ */
 

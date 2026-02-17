@@ -151,12 +151,12 @@ export async function updatePlace(formData: FormData) {
 
   try {
     // 3️⃣ Parse common fields
-    const id = formData.get("id") as string;
-    const pointId = formData.get("pointId") as string;
+    const internalId = formData.get("internalId") as string;
+
     const notes = formData.get("notes") as string;
 
-     if (!id || !pointId) {
-      throw new Error("Missing required fields: id or pointId");
+     if (!internalId ) {
+      throw new Error("Missing required fields: internalId");
     }
 
     //optional fields
@@ -166,16 +166,14 @@ export async function updatePlace(formData: FormData) {
     const visitTimeRaw = formData.get("visitTime") as string | null;
 
     const input: {
-      id: string;
-      pointId: string;
+      internalId: string;
       notes?: string | null;
       stayFrom?: Date | null;
       stayUntil?: Date | null;
       visitDate?: Date | null;
       visitTime?: Date | null;
     } = {
-      id,
-      pointId,
+      internalId,
       notes: notes ?? null,
     };
   
@@ -187,7 +185,7 @@ export async function updatePlace(formData: FormData) {
     if (visitDateRaw) input.visitDate = new Date(visitDateRaw);
     if (visitTimeRaw) input.visitTime = new Date(visitTimeRaw);
 
-    console.log('data in action', input)
+ 
 
 
     const result = await updatePlaceController(input);

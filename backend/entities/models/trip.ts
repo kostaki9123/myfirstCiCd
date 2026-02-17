@@ -7,6 +7,7 @@ export const selectTripSchema = z.object({
   tripBudget: z.string(),
   travelingWith: z.string(),
   tripTypes: z.array(z.string()).min(1).max(3),
+  createdAt: z.date().optional(),
 });
 export type Trip = z.infer<typeof selectTripSchema>;
 
