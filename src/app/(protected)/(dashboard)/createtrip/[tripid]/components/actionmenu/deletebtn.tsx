@@ -62,7 +62,7 @@ const Deletebtn = ({ pointId,tripId }: Props) => {
   };
 
   return (
-    <button className="flex flex-col items-center" 
+    <button className="flex flex-col items-start justify-center px-3 absolute top-0 left-0 right-0 bottom-0 " 
         disabled={isLoading}
         onClick={onDelete}
      >

@@ -59,11 +59,11 @@ const Dropdowncontent = ({ pointId, tripId, pointIndex, pointslength }: props) =
              
               <DropdownMenuGroup>
                  <DialogTrigger>       
-                    <DropdownMenuItem className=' w-[240px] py-[6px] px-3 ' >
+                    <DropdownMenuItem className=' w-[240px] py-[6px] px-3 cursor-pointer ' >
                        Move cyrcle  
                     </DropdownMenuItem>
                  </DialogTrigger>
-                 <DropdownMenuItem className=' w-[240px] py-[6px] px-3 '>
+                 <DropdownMenuItem className=' w-[240px] min-h-[30px] relative '>
                      <Deletebtn pointId={pointId} tripId={tripId}/>
                  </DropdownMenuItem>
     
@@ -72,7 +72,7 @@ const Dropdowncontent = ({ pointId, tripId, pointIndex, pointslength }: props) =
 
 
 
-  <DialogContent className=' h-fit w-[60%] 360:w-[50%]  600:w-auto min-w-[250px]  426::w-fit    p-4    z-50  text-black  '>
+  <DialogContent className='  z-[52]    sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-4 '>
         <form onSubmit={handleMove} className="space-y-4" >
         
               <DialogTitle>
