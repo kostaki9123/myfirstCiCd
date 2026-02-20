@@ -61,15 +61,33 @@ const  Navbar =  (props : props) => {
               <></>
               }
             </div>
-        
-            <SignedOut >
-                <SignInButton />
-            </SignedOut>
+
+   <SignedOut >
+  <div className="hidden md:flex gap-4 items-center ">
+    
+    {/* Sign In */}
+    <SignInButton>
+      <span className="cursor-pointer px-4 py-2 rounded-lg text-white font-medium 
+                       hover:bg-white/10 transition-colors duration-200">
+        log in
+      </span>
+    </SignInButton>
+
+    {/* Sign Up */}
+    <Link href={"/sign-up"}>
+    
+      <span className="cursor-pointer px-4 py-2 rounded-lg bg-sky-600 text-white font-semibold 
+                       hover:bg-sky-700 transition-colors duration-200">
+        Sign up
+      </span>
+  
+   </Link>
+  </div>
+</SignedOut>
+         
             <div className='w-11  flex items-center justify-center h-full '>
-              <SignedIn >
-                      
-                    <UserAvatarWithLoading/>
-                       
+              <SignedIn>                     
+                    <UserAvatarWithLoading/>    
               </SignedIn>
             </div>
             
