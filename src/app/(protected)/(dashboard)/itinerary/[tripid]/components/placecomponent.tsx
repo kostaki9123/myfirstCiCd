@@ -24,6 +24,7 @@ type Props = {
   tripId: string;
   priceLabel: string;
   hasExactPrice: boolean;
+  googleMapsUri: string;
 };
 
 export const PlaceTypeEnum = z.enum([
@@ -74,6 +75,8 @@ const Placecomponent = (props: Props) => {
       formData.append("placeType", props.type);
       formData.append("name", props.displayName);
       formData.append("tripId", props.tripId);
+      formData.append("googleMapsUri", props.googleMapsUri);
+
 
       await createPlace(formData);
       setErrorMessages({});

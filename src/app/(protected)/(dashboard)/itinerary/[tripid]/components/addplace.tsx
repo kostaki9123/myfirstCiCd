@@ -395,6 +395,7 @@ const Addaplace = (props: Props) => {
                   priceLabel={priceLabel ?? fallbackLabel}
                   hasExactPrice={!!priceLabel}
                   alreadyAdded={place.alreadyAdded}
+                  googleMapsUri={place.googleMapsUri}
                 />
               );
             })}

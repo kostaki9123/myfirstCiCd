@@ -7,15 +7,12 @@ import { z } from 'zod'
 import { updatePlace } from '../../../itinerary/[tripid]/action'
 
 type props = {
-    id: string;
-    pointId: string;
+    internalId: string; 
     notes : string | null | undefined
 }
 
 
 const updateSchema = z.object({
-  id: z.string(),
-  pointId: z.string(),
   notes: z.string().nullable(),
 });
 
@@ -36,8 +33,6 @@ const Notes = (props:props) => {
         setError(null);
     
         const validation = updateSchema.safeParse({
-          id: props.id,
-          pointId: props.pointId,
           notes,
         });
     
@@ -51,8 +46,7 @@ const Notes = (props:props) => {
     
           console.log("notes", d.notes)
     
-        fd.append("id", d.id);
-        fd.append("pointId", d.pointId);
+        fd.append("internalId", props.internalId);
         fd.append("notes", d.notes ?? "");
     
         try {

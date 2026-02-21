@@ -15,6 +15,8 @@ export const inputSchema = z.object({
 
   placeType: PlaceTypeEnum,
 
+  googleMapsUri : z.string() ,
+
   name: z.string().min(1, 'Name is required'),
 
   stayFrom: z.coerce.date().optional(),
@@ -44,6 +46,7 @@ export const createPlaceController =
             pointId: data.pointId ,
             placeType: data.placeType as any ,
             placeName: data.name,
+            googleMapsUri : data.googleMapsUri
           })
     }
     

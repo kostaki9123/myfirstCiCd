@@ -6,8 +6,7 @@ import { RiExternalLinkLine } from 'react-icons/ri'
 import Notes from './note'
 
 type props = {
- id: string
- pointId : string
+ internalId: string
  notes : string | null | undefined
  name : string
  stayFrom : Date
@@ -51,8 +50,7 @@ const Accomodationplace = (props:props) => {
                                    </div>
                                
                                    <Notes
-                                    id={props.id}
-                                    pointId={props.pointId}
+                                    internalId={props.internalId}
                                     notes={props.notes}
                                     />
                                    

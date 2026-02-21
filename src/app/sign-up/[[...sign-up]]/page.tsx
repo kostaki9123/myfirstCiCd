@@ -56,7 +56,7 @@ const Page = () => {
 
       {/* RIGHT SIDE – Sign Up */}
       <div className="relative z-10 flex items-center justify-center p-6">
-        <div className="bg-white/90 backdrop-blur-xl shadow-2xl rounded-3xl p-6 border border-slate-200">
+        <div className="bg-white/90 backdrop-blur-xl shadow-2xl rounded-3xl md:p-6 border border-slate-200">
           <SignUp
             appearance={{
               elements: {
