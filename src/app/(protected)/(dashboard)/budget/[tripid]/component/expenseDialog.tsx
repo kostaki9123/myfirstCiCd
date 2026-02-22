@@ -57,13 +57,14 @@ type Props = {
   budgedId: string
   connectedToId?: string
   fromItinerary?: boolean
+  fromAllExpenses? : boolean
 }
 
 /* ---------------------------------- */
 /* component */
 /* ---------------------------------- */
 
-const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary }: Props) => {
+const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary ,fromAllExpenses}: Props) => {
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isFetching, setIsFetching] = useState(false) // NEW: data fetching state
@@ -216,7 +217,7 @@ const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary }: Props) => 
                   {/* Amount */}
                   <div>
                     <Label>Amount</Label>
-                    <div className="relative flex items-center">
+                    <div className="relative flex items-center ">
                       <Input
                         name="amount"
                         type="number"
@@ -227,9 +228,10 @@ const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary }: Props) => 
                         }
                         className="pl-[60px]"
                       />
-                      <div className="absolute left-1">
+                      <div className="absolute ">
                         <CurrencyDropdown
-                          fromGeneralCurrency={!!fromItinerary}
+                          fromGeneralCurrency={!fromItinerary}
+                          fromAllExpenses={fromAllExpenses}
                           value={currency}
                           setCurrency={setCurrency}
                         />

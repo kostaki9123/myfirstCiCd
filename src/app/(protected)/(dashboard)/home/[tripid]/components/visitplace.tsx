@@ -10,7 +10,7 @@ type props = {
  name : string
  visitdate : Date
  visitTime : Date | undefined
- mapurl? : string //na figi optional later
+ googleMapLink : string //na figi optional later
 }
 
 const Visitplace = (props : props) => {

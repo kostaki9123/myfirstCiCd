@@ -11,7 +11,7 @@ type props = {
  name : string
  stayFrom : Date
  stayUntil : Date
- mapurl? : string //na figi optional later
+ googleMapLink : string//na figi optional later
 }
 
 const Accomodationplace = (props:props) => {
@@ -38,7 +38,7 @@ const Accomodationplace = (props:props) => {
                                        : <span>Until  Date : -- </span>
                                        }
                                       <a
-                                         href=''
+                                         href={`${props.googleMapLink}`}
                                          target="_blank"
                                          rel="noopener noreferrer"
                                          className="text-muted-foreground hover:text-blue-600 transition flex gap-1 items-center"

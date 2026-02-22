@@ -58,7 +58,7 @@ const Allexpenses = async (props :Props) => {
         Expenses
       </h4>
 
-      <AddExpenseDialog budgedId={props.budgedId}  />
+      <AddExpenseDialog budgedId={props.budgedId} fromAllExpenses={true}  />
 
       <Table>
         <TableHeader>
