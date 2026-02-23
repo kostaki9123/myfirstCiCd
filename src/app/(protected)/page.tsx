@@ -6,7 +6,9 @@ import DeleteAlertDialog from "../component/delete-trip-modal";
 import { getTrips } from "./action";
 import UpdateTripModal from "../component/UpdateTripModal";
 
+
 export default async function Home() {
+
   let trips = await getTrips();
 
    trips.sort((a, b) => 
