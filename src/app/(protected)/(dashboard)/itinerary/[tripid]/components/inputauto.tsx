@@ -3,6 +3,7 @@ import { useMapsLibrary } from "@vis.gl/react-google-maps";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { createPlace } from "../action";
+import { Place } from "../../../../../../../backend/entities/models/place";
 
 type SelectedPlace = {
   id: string;
@@ -15,7 +16,7 @@ type Props = {
   setLocation: (place: google.maps.places.PlaceResult | null) => void;
   selectedPlace: SelectedPlace;
   triggerName: string;
-
+  addedPlaces: Place[];
   // ✅ NEW PROPS
   lat: number;
   lng: number;
@@ -26,6 +27,7 @@ const LocationInput = ({
   inputName,
   defaultValue = "",
   setLocation,
+  addedPlaces,
   selectedPlace,
   triggerName,
   lat,
@@ -107,8 +109,11 @@ const LocationInput = ({
     setActiveIndex(-1);
 
     placesService.current.getDetails(
-      { placeId: prediction.place_id },
-      (place) => {
+      {
+       placeId: prediction.place_id ,
+       fields: ["place_id", "name", "geometry", "url"] 
+      },
+    (place) => {
         setInputLocation(place || null);
         setLocation(place || null);
       }
@@ -143,14 +148,39 @@ const LocationInput = ({
      Add Place (API Submit)
   ---------------------------------------------- */
   const addPlace = async () => {
+    
     if (!inputLocation?.place_id || !inputLocation?.name) return;
+
+     const alreadyExists = addedPlaces.some(
+    (place) => place.id === inputLocation.place_id
+  );
+
+  if (alreadyExists) {
+    setErrorMessagesForCustomAdd({
+      general: "This place has already been added to your trip.",
+    });
+      return; // ❌ stop here
+    }
+
 
     try {
       setLoadingForCustomAdd(true);
+      setErrorMessagesForCustomAdd({});
 
       const formData = new FormData();
       formData.append("id", inputLocation.place_id);
       formData.append("pointId", selectedPlace.id);
+
+      formData.append(
+       "latitude",
+         inputLocation.geometry?.location?.lat().toString() ?? ""
+         );
+
+      formData.append(
+       "longitude",
+         inputLocation.geometry?.location?.lng().toString() ?? ""
+         );
+
       formData.append(
         "placeType",
         triggerName.toLowerCase().includes("stay")
@@ -159,6 +189,8 @@ const LocationInput = ({
       );
       formData.append("name", inputLocation.name);
       formData.append("tripId", selectedPlace.tripId);
+      formData.append("googleMapsUri",  inputLocation.url || "");
+      
 
       await createPlace(formData);
 

@@ -10,11 +10,13 @@ export class PlaceRepository implements IPlaceRepository {
       console.log( insert.id,insert.pointId, insert.placeType,insert.name)
       return await prisma.place.create({  
         data: {
-          id: insert.id,           // Google place id
+          id: insert.id,         // Google place id
           pointId: insert.pointId,
           placeType: insert.placeType,
           googleMapLink:insert.googleMapLink,
           name: insert.name,
+          latitude : insert.latitude,
+          longitude : insert.longitude
         },
       });
     } catch (err: any) {

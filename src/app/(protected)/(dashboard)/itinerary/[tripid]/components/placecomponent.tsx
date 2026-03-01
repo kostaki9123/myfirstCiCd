@@ -15,8 +15,8 @@ type Props = {
   rating: number;
   displayName: string;
   type: string;
-  latitude?: number;
-  longitude?: number;
+  latitude: number;
+  longitude: number;
   description: string;
   address: string;
   link?: string;
@@ -36,6 +36,8 @@ export const formSchemaPlace = z.object({
   id: z.string(),
   pointId: z.string(),
   placeType: PlaceTypeEnum,
+  latitude: z.coerce.number(),
+  longitude: z.coerce.number(),
   name: z.string().min(1, "Name is required"),
 });
 
@@ -47,6 +49,7 @@ const Placecomponent = (props: Props) => {
 
   const addPlace = async () => {
     try {
+      console.log('runnn§')
       setIsLoading(true);
 
       const validation = formSchemaPlace.safeParse({
@@ -54,8 +57,10 @@ const Placecomponent = (props: Props) => {
         pointId: props.pointId,
         placeType: props.type,
         name: props.displayName,
+        latitude: props.latitude,
+        longitude: props.longitude,
       });
-
+      console.log('place id',props.placeId)
       if (!validation.success) {
         const errors = validation.error.flatten().fieldErrors;
 
@@ -65,7 +70,7 @@ const Placecomponent = (props: Props) => {
           placeType: errors.placeType?.[0] || "",
           name: errors.name?.[0] || "",
         });
-
+       console.log('shcema error',errorMessages)
         return;
       }
 
@@ -73,6 +78,15 @@ const Placecomponent = (props: Props) => {
       formData.append("id", props.placeId);
       formData.append("pointId", props.pointId);
       formData.append("placeType", props.type);
+      formData.append(
+       "latitude",
+          props.latitude.toString() ?? ""
+         );
+
+      formData.append(
+       "longitude",
+         props.longitude.toString() ?? ""
+         );
       formData.append("name", props.displayName);
       formData.append("tripId", props.tripId);
       formData.append("googleMapsUri", props.googleMapsUri);
@@ -115,10 +129,11 @@ const Placecomponent = (props: Props) => {
             {props.rating ? props.rating.toFixed(1) : "N/A"}
           </span>
         </div>
-
+         {/* 
         <span className="text-gray-500 text-xs tracking-wide">
           {props.type.replace("_", " ")}
         </span>
+        */}
       </div>
 
       {/* Address */}
@@ -138,9 +153,7 @@ const Placecomponent = (props: Props) => {
       {/* Price Section */}
       <div className="flex items-center justify-between mt-4">
         <div>
-          <div className="text-base font-semibold text-gray-900">
-            {props.priceLabel}
-          </div>
+          
 
           {props.hasExactPrice && (
             <div className="text-[10px] text-gray-400">
@@ -152,7 +165,7 @@ const Placecomponent = (props: Props) => {
 
       {/* Buttons */}
       <div className="mt-4 flex gap-3">
-        <Link href={props.link || "#"} className="flex-1">
+        <Link href={props.link || "#"} className="flex-1" target="_blank" rel="noopener noreferrer">
           <Button
             className="w-full bg-blue-600 hover:bg-blue-700 text-white h-9 text-sm rounded-md"
           >

@@ -38,6 +38,13 @@ export async function createPlace(formData: FormData) {
     const name = formData.get("name") as string;
     const tripId = formData.get("tripId") as string;
     const googleMapsUri = formData.get("googleMapsUri") as string;
+
+    const latitudeStr = formData.get("latitude") as string | null;
+    const longitudeStr = formData.get("longitude") as string | null;
+
+    const latitude = latitudeStr ? parseFloat(latitudeStr) : undefined;
+    const longitude = longitudeStr ? parseFloat(longitudeStr) : undefined;
+
        
     if (!id || !pointId || !placeType || !name) {
       throw new Error("Missing required fields: id or notes");
@@ -48,7 +55,9 @@ export async function createPlace(formData: FormData) {
       pointId,
       placeType,
       name ,
-      googleMapsUri
+      googleMapsUri,
+      latitude,
+      longitude
     };
 
     const result = await createPlaceController(input);

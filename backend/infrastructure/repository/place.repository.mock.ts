@@ -21,7 +21,8 @@ export class MockPlaceRepository implements IPlaceRepository {
       pointId: input.pointId,
       placeType: input.placeType,
       name: input.name,
-
+      latitude: input.latitude,
+      longitude: input.longitude,
       stayFrom: null,
       stayUntil: null,
       cost: null,

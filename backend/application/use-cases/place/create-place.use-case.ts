@@ -16,6 +16,8 @@ type props = {
   placeType: any ,
   placeName: string ,
   googleMapsUri : string
+  latitude : number
+  longitude : number
 };
 
 
@@ -34,7 +36,10 @@ export const createPlaceUseCase = async (input: props) => {
            pointId : input.pointId ,
            placeType : input.placeType ,
            name : input.placeName ,  
-           googleMapLink : input.googleMapsUri
+           googleMapLink : input.googleMapsUri ,
+           latitude : input.latitude,
+           longitude : input.longitude
+           
   });
 
   if (!createPlace) {

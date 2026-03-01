@@ -14,6 +14,7 @@ import { APIProvider } from "@vis.gl/react-google-maps";
 import Mapprovider from "@/app/component/map/map-provider";
 import { ItineraryPoint } from "./itineraryboard";
 import { Place } from "../../../../../../../backend/entities/models/place";
+import { RecommendedPlace } from "@/app/component/map/map";
 
 /* ----------------------------------
    TRIP CONTEXT TYPES
@@ -227,45 +228,414 @@ const Addaplace = (props: Props) => {
   const [affiliateMap, setAffiliateMap] = useState<AffiliateMap>({});
   const [inputLocation, setInputLocation] = useState<any>();
   const [visibleCount, setVisibleCount] = useState(10);
+  const [addedStayss, setAddedStays] = useState<RecommendedPlace[]>([]);
+  const [addedVisitss, setaddedVisits] = useState<RecommendedPlace[]>([]);
+  
 
-  const scorePlace = (place: any) => {
-    let score = 0;
-    const rating = place.rating ?? 0;
-    const km = place._distanceKm;
 
-    score += distanceScore(km);
+
+ const scorePlace = (place: any) => {
+  const rating = place.rating ?? 0;
+  const km = place._distanceKm ?? 10;
+
+  const budget = props.tripBudget.toLowerCase();
+  const travelingWith = props.travelingWith.toLowerCase();
+  const tripTypes = props.tripTypes.map((t) => t.toLowerCase());
+
+  let score = 0;
+
+  /* ---------------------------------- */
+  /* 1️⃣ Distance Weight (0–35 pts) */
+  /* ---------------------------------- */
+  if (km <= 1) score += 35;
+  else if (km <= 3) score += 25;
+  else if (km <= 6) score += 15;
+  else if (km <= 10) score += 8;
+  else score -= 5;
+
+  /* ---------------------------------- */
+  /* 2️⃣ Rating Weight (non-linear) */
+  /* ---------------------------------- */
+  score += Math.pow(rating, 2); // makes 4.8 much stronger than 4.3
+
+  /* ---------------------------------- */
+  /* 3️⃣ Budget Logic */
+  /* ---------------------------------- */
+
+  if (budget.includes("luxury")) {
+    if (rating >= 4.6) score += 18;
+    if (rating < 4.2) score -= 20;
+  }
+
+  if (budget.includes("balanced")) {
+    if (rating >= 4.3) score += 10;
+    if (rating < 4.0) score -= 8;
+  }
+
+  if (budget.includes("economy")) {
+    if (rating >= 4.0 && rating <= 4.6) score += 12;
+    if (rating > 4.8) score -= 6; // too premium
+  }
+
+  /* ---------------------------------- */
+  /* 4️⃣ Traveling With Logic */
+  /* ---------------------------------- */
+
+  if (travelingWith === "family") {
+    if (km < 5 && rating >= 4.2) score += 12;
+  }
+
+  if (travelingWith === "couple") {
     if (rating >= 4.5) score += 10;
-    else if (rating >= 4.2) score += 7;
-    else if (rating >= 4.0) score += 4;
-    else score -= 6;
+  }
 
-    if (props.tripBudget === "economy" && rating >= 4.7) score -= 8;
-    if (props.tripBudget === "luxury" && rating < 4.2) score -= 12;
+  if (travelingWith === "friends" || travelingWith === "group") {
+    if (rating >= 4.2) score += 8;
+  }
 
-    if (props.travelingWith === "family" && km < 3 && rating >= 4.2)
-      score += 4;
+  if (travelingWith === "solo") {
+    if (km < 3) score += 8;
+  }
 
-    return score;
+  /* ---------------------------------- */
+  /* 5️⃣ Trip Type Matching */
+  /* ---------------------------------- */
+
+  const name = place.displayName?.text?.toLowerCase() ?? "";
+
+  const keywordBoost: Record<string, string[]> = {
+    adventures: ["adventure", "climb", "hike", "rafting", "trek"],
+    "natural lovers": ["park", "nature", "trail", "lake", "forest"],
+    "cultural enthusiasts": ["museum", "historic", "art", "gallery", "temple"],
+    nightlife: ["bar", "club", "pub", "night"],
+    festival: ["festival", "event"],
+    "sports enthusiast": ["stadium", "arena", "sport"],
+    events: ["center", "hall", "theater"],
   };
 
-  const buildReason = (place: any) => {
-    if (place._distanceKm < 1 && place.rating >= 4.5)
-      return "Excellent location · Top reviews";
-    if (place._distanceKm < 3) return "Great location near your plan";
-    if (place.rating >= 4.5) return "Highly rated by travelers";
-    return "Good value for this area";
+  tripTypes.forEach((type) => {
+    const keywords = keywordBoost[type];
+    if (!keywords) return;
+
+    keywords.forEach((word) => {
+      if (name.includes(word)) {
+        score += 14;
+      }
+    });
+  });
+
+  /* ---------------------------------- */
+  /* 6️⃣ Low Rating Penalty */
+  /* ---------------------------------- */
+
+  if (rating < 4.0) score -= 18;
+
+  return score;
+};
+
+const buildReason = (place: any) => {
+  const rating = place.rating ?? 0;
+  const km = place._distanceKm ?? 0;
+
+  const budget = props.tripBudget.toLowerCase();
+  const travelingWith = props.travelingWith.toLowerCase();
+  const tripTypes = props.tripTypes.map((t) => t.toLowerCase());
+
+  const reasons: string[] = [];
+
+  /* ---------------------------------- */
+  /* ⭐ Rating-based reasons (strongest) */
+  /* ---------------------------------- */
+
+  if (rating >= 4.8) {
+    reasons.push("Outstanding reviews");
+  } else if (rating >= 4.5) {
+    reasons.push("Highly rated by travelers");
+  }
+
+  /* ---------------------------------- */
+  /* 📍 Distance (only if VERY close) */
+  /* ---------------------------------- */
+
+  if (km < 1) {
+    reasons.push("Steps away from your selected location");
+  }
+
+  /* ---------------------------------- */
+  /* 💎 Budget Match */
+  /* ---------------------------------- */
+
+  if (budget.includes("luxury") && rating >= 4.6) {
+    reasons.push("Premium experience match");
+  }
+
+  if (budget.includes("economy") && rating >= 4.0 && rating <= 4.6) {
+    reasons.push("Great value for money");
+  }
+
+  /* ---------------------------------- */
+  /* 👨‍👩‍👧 Traveling With */
+  /* ---------------------------------- */
+  
+
+ 
+  if (travelingWith === "solo" && rating >= 4.3) {
+  reasons.push("Great for solo travelers");
+}
+
+
+  if (travelingWith === "family" && rating >= 4.3) {
+    reasons.push("Family-friendly choice");
+  }
+
+  if (travelingWith === "couple" && rating >= 4.5) {
+    reasons.push("Perfect for couples");
+  }
+
+  if (
+    (travelingWith === "friends" || travelingWith === "group") &&
+    rating >= 4.2
+  ) {
+    reasons.push("Great for groups");
+  }
+
+  /* ---------------------------------- */
+  /* 🎯 Trip Type Relevance */
+  /* ---------------------------------- */
+
+  const name = place.displayName?.text?.toLowerCase() ?? "";
+
+  const typeKeywords: Record<string, string[]> = {
+    adventures: ["adventure", "hike", "climb", "rafting"],
+    "natural lovers": ["park", "lake", "forest", "trail"],
+    "cultural enthusiasts": ["museum", "historic", "gallery", "temple"],
+    nightlife: ["bar", "club", "pub"],
+    festival: ["festival"],
+    "sports enthusiast": ["stadium", "arena"],
+    events: ["hall", "center", "theater"],
   };
 
+  tripTypes.forEach((type) => {
+    const keywords = typeKeywords[type];
+    if (!keywords) return;
+
+    if (keywords.some((word) => name.includes(word))) {
+      reasons.push("Matches your trip interests");
+    }
+  });
+
+  /* ---------------------------------- */
+  /* 🎯 FINAL FILTER */
+  /* ---------------------------------- */
+
+  const uniqueReasons = [...new Set(reasons)];
+
+  if (uniqueReasons.length > 0) {
+  return uniqueReasons.slice(0, 2).join(" · ");
+}
+
+/* ---------------------------------- */
+/* 🎯 Smart Personalized Fallback */
+/* ---------------------------------- */
+
+if (travelingWith === "solo") {
+  return "Recommended for solo travelers";
+}
+
+if (travelingWith === "family") {
+  return "Recommended for family trips";
+}
+
+if (travelingWith === "couple") {
+  return "Recommended for couples";
+}
+
+if (travelingWith === "friends") {
+  return "Recommended for trips with friends";
+}
+
+if (travelingWith === "group") {
+  return "Recommended for group travel";
+}
+
+/* Budget fallback if somehow travelingWith missing */
+
+if (budget.includes("luxury")) {
+  return "Great choice for luxury travelers";
+}
+
+if (budget.includes("economy")) {
+  return "Ideal for budget-conscious travelers";
+}
+
+return "Recommended based on your trip preferences";
+};
   const fetchPlaces = async () => {
     try {
       const centerLat = inputLocation?.lat ?? props.latitude;
       const centerLng = inputLocation?.lng ?? props.longitude;
 
       const isStay = props.triggerName.toLowerCase().includes("stay");
-      const includedTypes = isStay
-        ? ["hotel", "lodging"]
-        : ["tourist_attraction", "museum", "park"];
 
+let includedTypes: string[] = [];
+
+if (isStay) {
+  const travelingWith = props.travelingWith.toLowerCase();
+  const budget = props.tripBudget.toLowerCase();
+
+  /* ---------------------------------- */
+  /* 🏨 Base Stay Types (VALID ONLY) */
+  /* ---------------------------------- */
+
+  includedTypes = ["lodging"]; // always include
+
+  /* ---------------------------------- */
+  /* 👤 SOLO */
+  /* ---------------------------------- */
+
+  if (travelingWith === "solo") {
+    includedTypes.push("hostel", "motel");
+  }
+
+  /* ---------------------------------- */
+  /* 👨‍👩‍👧 FAMILY */
+  /* ---------------------------------- */
+
+  else if (travelingWith === "family") {
+    includedTypes.push( "campground","hotel", "rv_park");
+  }
+
+  /* ---------------------------------- */
+  /* ❤️ COUPLE */
+  /* ---------------------------------- */
+
+  else if (travelingWith === "couple") {
+    includedTypes.push("hotel");
+  }
+
+  /* ---------------------------------- */
+  /* 🧑‍🤝‍🧑 FRIENDS / GROUP */
+  /* ---------------------------------- */
+
+  else if (travelingWith === "friends" || travelingWith === "group") {
+   
+  }
+
+  else {
+    includedTypes.push("hotel", "motel");
+  }
+
+  /* ---------------------------------- */
+  /* 💰 Budget Refinement (VALID ONLY) */
+  /* ---------------------------------- */
+
+  if (budget.includes("economy")) {
+    includedTypes.push("hostel", "motel", "campground");
+  }
+
+  if (budget.includes("luxury")) {
+   
+  }
+
+  /* ---------------------------------- */
+  /* 🧠 Remove duplicates */
+  /* ---------------------------------- */
+
+  includedTypes = [...new Set(includedTypes)];
+
+} else {
+  const tripTypes = props.tripTypes.map((t) => t.toLowerCase());
+
+  /* ---------------------------------- */
+  /* 🎯 Base Attractions */
+  /* ---------------------------------- */
+
+  includedTypes = [
+    "tourist_attraction",
+    "restaurant"
+  ];
+
+  /* ---------------------------------- */
+  /* 🏛 Cultural */
+  /* ---------------------------------- */
+
+  if (tripTypes.includes("cultural")) {
+    includedTypes.push(
+      "museum",
+      "art_gallery",
+      "church",
+      "mosque",
+      "hindu_temple",
+      "synagogue"
+    );
+  }
+
+  /* ---------------------------------- */
+  /* 🌿 Nature */
+  /* ---------------------------------- */
+
+  if (tripTypes.includes("nature")) {
+    includedTypes.push(
+      "park",
+      "natural_feature",
+      "zoo",
+      "aquarium"
+    );
+  }
+
+  /* ---------------------------------- */
+  /* 🌙 Nightlife */
+  /* ---------------------------------- */
+
+  if (tripTypes.includes("nightlife")) {
+    includedTypes.push(
+      "bar",
+      "night_club",
+      "casino"
+    );
+  }
+
+  /* ---------------------------------- */
+  /* 🎢 Adventure */
+  /* ---------------------------------- */
+
+  if (tripTypes.includes("adventure")) {
+    includedTypes.push(
+      "amusement_park",
+      "bowling_alley"
+    );
+  }
+
+  /* ---------------------------------- */
+  /* ⚽ Sports */
+  /* ---------------------------------- */
+
+  if (tripTypes.includes("sportsenthusiast")) {
+    includedTypes.push(
+      "stadium",
+      "gym",
+      "sports_complex"
+    );
+  }
+
+  /* ---------------------------------- */
+  /* 🎉 Events */
+  /* ---------------------------------- */
+
+  if (tripTypes.includes("events")) {
+    includedTypes.push(
+      "movie_theater",
+      "performing_arts_theater",
+      "event_venue"
+    );
+  }
+
+  /* ---------------------------------- */
+  /* 🧠 Remove duplicates */
+  /* ---------------------------------- */
+
+  includedTypes = [...new Set(includedTypes)];
+}
       const response = await fetch(
         "https://places.googleapis.com/v1/places:searchNearby",
         {
@@ -315,6 +685,8 @@ const Addaplace = (props: Props) => {
 
       setPlacesResult(places);
 
+      console.log('aqui:',places)
+
       const placeIds = places.map((p : any) => p.id);
       if (placeIds.length) {
         const res = await fetch("/api/links/bulk", {
@@ -339,7 +711,28 @@ const Addaplace = (props: Props) => {
     location: { lat: p.location.latitude, lng: p.location.longitude },
   }));
 
+  useEffect(() => {
+  const addedPlacesForMap: any[] = props.addedPlaces
+    .filter(p => p.pointId === props.selectedPlace.id)
+    .map(p => ({
+      id: p.id,
+      name: p.name,
+      location: { lat: Number(p.latitude), lng: Number(p.longitude) },
+      type: p.placeType, // "ACCOMMODATION" or "PLACE_TO_VISIT"
+    }));
+
+  setAddedStays(addedPlacesForMap.filter(p => p.type === "ACCOMMODATION"));
+  setaddedVisits(addedPlacesForMap.filter(p => p.type === "PLACE_TO_VISIT"));
+}, [props.addedPlaces, props.selectedPlace.id]);
+
+
+
+
+
+
   const handleSeeMore = () => setVisibleCount((prev) => prev + 5);
+
+console.log('ree',addedStayss)
 
   return (
     <Dialog>
@@ -356,6 +749,7 @@ const Addaplace = (props: Props) => {
                 inputName=""
                 lat={props.latitude}
                 lng={props.longitude}
+                addedPlaces={props.addedPlaces}
                 triggerName={props.triggerName}
                 selectedPlace={props.selectedPlace}
                 setLocation={setInputLocation}
@@ -373,7 +767,8 @@ const Addaplace = (props: Props) => {
             {placesResult.slice(0, visibleCount).map((place, index) => {
               const affiliateData = affiliateMap[place.id];
               const priceLabel = affiliateData?.pricePerDay
-                ? formatPrice(affiliateData.pricePerDay, affiliateData.currency)
+                ? 
+                  (affiliateData.pricePerDay, affiliateData.currency)
                 : null;
               const fallbackLabel = getFallbackPriceLabel(props.tripBudget);
 
@@ -419,6 +814,8 @@ const Addaplace = (props: Props) => {
             focusplace={{ lat: props.latitude, lng: props.longitude }}
             recommendedStays={props.triggerName.toLowerCase().includes("stay") ? mapData : []}
             recommendedVisits={props.triggerName.toLowerCase().includes("visit") ? mapData : []}
+            addedplacetovisit={addedVisitss ?? []}
+            addedplacetostay={addedStayss ?? []}
           />
         </div>
       </DialogContent>

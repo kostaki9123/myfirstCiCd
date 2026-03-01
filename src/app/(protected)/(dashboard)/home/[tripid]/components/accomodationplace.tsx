@@ -11,7 +11,7 @@ type props = {
  name : string
  stayFrom : Date
  stayUntil : Date
- googleMapLink : string//na figi optional later
+ googleMapLink : string| null | undefined//na figi optional later
 }
 
 const Accomodationplace = (props:props) => {
@@ -37,6 +37,7 @@ const Accomodationplace = (props:props) => {
                                         <span>Until Date : {props.stayUntil.toLocaleString('en-US', { month: 'short', day: '2-digit' })}</span>
                                        : <span>Until  Date : -- </span>
                                        }
+                                       {props.googleMapLink &&
                                       <a
                                          href={`${props.googleMapLink}`}
                                          target="_blank"
@@ -47,6 +48,7 @@ const Accomodationplace = (props:props) => {
                                            <span className='pt-[2px]'> Open In Map</span>
                                          
                                        </a>
+                                       }
                                    </div>
                                
                                    <Notes

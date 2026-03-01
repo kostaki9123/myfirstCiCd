@@ -10,7 +10,7 @@ type props = {
  name : string
  visitdate : Date
  visitTime : Date | undefined
- googleMapLink : string //na figi optional later
+ googleMapLink : string| null | undefined //na figi optional later
 }
 
 const Visitplace = (props : props) => {
@@ -35,7 +35,7 @@ const Visitplace = (props : props) => {
                                     <span>Visit  Time : {props.visitTime.toLocaleString('en-US', { month: 'short', day: '2-digit' })}</span>
                                     : <span>Visit  Time : -- </span>
                                   }
-
+                                  {props.googleMapLink &&
                                   <a
                                      href=''
                                      target="_blank"
@@ -46,6 +46,7 @@ const Visitplace = (props : props) => {
                                        <span className='pt-[2px]'> Open In Map</span>
                                      
                                    </a>
+                                   }
                                </div>
                            
                                <Notes

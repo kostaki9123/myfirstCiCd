@@ -122,6 +122,9 @@
     stayFrom   DateTime?
     stayUntil DateTime?
 
+    latitude    Float
+    longitude   Float
+
     cost       Float?
     notes      String?
 

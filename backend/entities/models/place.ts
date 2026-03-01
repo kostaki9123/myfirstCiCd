@@ -16,6 +16,9 @@ const placeBaseSchema = z.object({
   placeType: PlaceTypeEnum,
   name: z.string().min(1, "Name is required"),
 
+  latitude: z.coerce.number(),
+  longitude: z.coerce.number(),
+
   stayFrom: z.coerce.date().nullable().optional(),
   stayUntil: z.coerce.date().nullable().optional(),
   googleMapLink: z.string().nullable().optional(),
@@ -53,6 +56,8 @@ export const insertCreatePlaceSchema = placeBaseSchema.pick({
   id: true,
   pointId: true,
   placeType: true,
+  latitude: true,
+  longitude: true,
   name: true,
   stayFrom: true,
   stayUntil: true,

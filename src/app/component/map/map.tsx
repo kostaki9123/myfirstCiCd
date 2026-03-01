@@ -96,11 +96,15 @@ function App({
   focusplace,
   recommendedVisits,
   recommendedStays,
+   addedplacetovisit,
+  addedplacetostay,
 }: {
   cyrclesArr: TripSegment[];
   focusplace?: LatLng | null;
   recommendedVisits?: RecommendedPlace[];
   recommendedStays?: RecommendedPlace[];
+   addedplacetovisit?: RecommendedPlace[];
+  addedplacetostay?: RecommendedPlace[];
 }) {
   const sorted = [...cyrclesArr].sort((a, b) => a.index - b.index);
 
@@ -119,6 +123,8 @@ function App({
     boat: "⛴️",
     other: "➡️",
   };
+
+  console.log('added place to stay',addedplacetostay)
 
   const pathSegments: { path: LatLng[]; color: string }[] = [];
   const transportMarkers: { pos: LatLng; icon: string }[] = [];
@@ -218,18 +224,17 @@ function App({
           return <Marker key={pt.id} position={pos} />;
         })}
 
-      {/* ⭐ RECOMMENDED VISITS — now numbered */}
-     {recommendedVisits?.map((place, idx) => (
+    {addedplacetovisit?.map((place, key) => (
   <Marker
-    key={`visit-${place.id}`}
+    key={`added-visit-${place.id}`}
     position={place.location}
-    icon={{
+     icon={{
       url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
         <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
           <!-- Blue map pin -->
-          <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#1E90FF" stroke="#1E90FF" stroke-width="1"/>
+          <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#401eff" stroke="#311eff" stroke-width="1"/>
           <!-- Number label inside the pin -->
-          <text x="12" y="13" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${idx + 1}</text>
+          <text x="12" y="13" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${key + 1}</text>
         </svg>
       `)}`,
       scaledSize: new google.maps.Size(32, 48),
@@ -237,11 +242,30 @@ function App({
     }}
     title={place.name}
   />
+))}
 
-    ))}
-    
-    
-    
+
+
+  {addedplacetostay?.map((place , key) => (
+  <Marker
+    key={`added-stay-${place.id}`}
+    position={place.location}
+    zIndex={9999}
+   icon={{
+      url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+        <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
+          <!-- Blue map pin -->
+          <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#1eff69" stroke="#1eff71" stroke-width="1"/>
+          <!-- Number label inside the pin -->
+          <text x="12" y="13" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${key + 1}</text>
+        </svg>
+      `)}`,
+      scaledSize: new google.maps.Size(32, 48),
+      anchor: new google.maps.Point(16, 48),
+    }}
+    title={place.name}
+  />
+))}
     
           {/* 🏨 RECOMMENDED STAYS — now numbered */}
           {recommendedStays?.map((place, idx) => (
@@ -263,6 +287,29 @@ function App({
     title={place.name}
   />
     ))}
+
+      {/* ⭐ RECOMMENDED VISITS — now numbered */}
+     {recommendedVisits?.map((place, idx) => (
+  <Marker
+    key={`visit-${place.id}`}
+    position={place.location}
+    icon={{
+      url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+        <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
+          <!-- Blue map pin -->
+          <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#1E90FF" stroke="#1E90FF" stroke-width="1"/>
+          <!-- Number label inside the pin -->
+          <text x="12" y="13" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${idx + 1}</text>
+        </svg>
+      `)}`,
+      scaledSize: new google.maps.Size(32, 48),
+      anchor: new google.maps.Point(16, 48),
+    }}
+    title={place.name}
+  />
+
+    ))}
+
 
     </Map>
   );
