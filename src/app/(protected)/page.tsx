@@ -5,6 +5,8 @@ import DeleteAlertDialog from "../component/delete-trip-modal";
 
 import { getTrips } from "./action";
 import UpdateTripModal from "../component/UpdateTripModal";
+import DashboardWelcome from "../component/onboarding/DashboardWelcome";
+import EmptyTripsState from "../component/onboarding/DashboardWelcome";
 
 
 export default async function Home() {
@@ -18,6 +20,8 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-gray-200 pt-20">
+
+      
       {/* Header */}
       <header className="w-full py-8 text-center shadow-lg">
         <h1 className="text-4xl font-extrabold tracking-wide text-white">
@@ -33,6 +37,7 @@ export default async function Home() {
       </div>
 
       {/* Trip Cards */}
+        
       <main className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 md:px-12">
         {trips.map((trip) => (
           <div
@@ -118,6 +123,7 @@ export default async function Home() {
           </div>
         ))}
       </main>
+        
     </div>
   );
 }

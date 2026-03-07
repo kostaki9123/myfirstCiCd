@@ -42,6 +42,7 @@ type props = {
   index : number
   tripId : string
   minDate?: Date
+  onSubmitSuccess?: () => void;
 }
 
 const Createplaceform = (props : props) => {
@@ -105,6 +106,7 @@ const Createplaceform = (props : props) => {
       await createPoint(formData);
 
       setErrorMessages({});
+      if (props.onSubmitSuccess) props.onSubmitSuccess();
     } catch (err) {
       if (err instanceof InputParseError && err.cause instanceof ZodError) {
         const flattened = err.cause.flatten();

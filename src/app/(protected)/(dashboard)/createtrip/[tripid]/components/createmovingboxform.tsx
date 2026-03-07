@@ -61,6 +61,7 @@ type props = {
   index: number
   tripId : string
   minDate?: Date
+  onSubmitSuccess?: () => void;
 }
 
 const Createmovingboxform = (props : props) => {
@@ -124,6 +125,7 @@ const Createmovingboxform = (props : props) => {
         
 
       setGeneralError("");
+      if (props.onSubmitSuccess) props.onSubmitSuccess();
     } catch (err) {
       if (err instanceof InputParseError && err.cause instanceof ZodError) {
         setGeneralError("⚠️ Invalid input. Please try again.");

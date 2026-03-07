@@ -38,6 +38,7 @@ type Props = {
 };
 
 const Itineraryboard = (props: Props) => {
+   const [showItineraryHint, setShowItineraryHint] = useState(false);
   /** Only POINT items */
   const pointsOnly = useMemo(
     () => props.cyrclesArr.filter((item) => item.role === 'POINT'),
@@ -48,6 +49,13 @@ const Itineraryboard = (props: Props) => {
   const [selectedPoint, setSelectedPoint] = useState<ItineraryPoint>(
     pointsOnly[0]
   );
+
+    useEffect(() => {
+  const seen = localStorage.getItem("tripItineraryHintSeen");
+  if (!seen) {
+    setShowItineraryHint(true);
+  }
+}, []);
 
   /** Sync selectedPoint when prop changes */
   useEffect(() => {
@@ -109,9 +117,22 @@ const Itineraryboard = (props: Props) => {
             setSelectedPoint={setSelectedPoint}
           />
         </div>
+       
+         {showItineraryHint && (
+  <div className="bg-white rounded-2xl mt-7 535:mt-0 shadow-lg border border-gray-200 p-3  w-full text-gray-900 animate-pulse">
+    <h4 className="font-semibold text-base mb-1">Step 3</h4>
+    <p className="text-sm text-gray-700">
+      Plan this location of your trip. Add where you will <strong>stay</strong> and the 
+      places you want to <strong>visit</strong> for this location.
+    </p>
+  </div>
+)}
 
         {/* ACCOMMODATION */}
-        <div className="flex flex-col items-center p-2 mt-5 450:mt-0 pt-7 relative gap-2 ">
+        <div className="flex flex-col items-center p-2  450:mt-0 pt-7 relative gap-2 ">
+
+    
+     
           <small className="absolute left-2 top-2 font-semibold">
             Accommodation
           </small>
@@ -132,10 +153,10 @@ const Itineraryboard = (props: Props) => {
           ))}
 
           <Addaplace
+            onSubmitSuccess={setShowItineraryHint}
             addedPlaces={props.places.filter(
               (p) => p.pointId === selectedPoint.id
             )}
-            
             selectedPlace={selectedPoint}
             triggerName="Add a place to stay"
             descriptionName="Recommended accommodations based on location, safety, and price"
@@ -145,6 +166,7 @@ const Itineraryboard = (props: Props) => {
             travelingWith={props.trip.travelingWith}
             tripBudget={props.trip.tripBudget}
             tripTypes={props.trip.tripTypes}
+            
           />
         </div>
 
@@ -171,7 +193,7 @@ const Itineraryboard = (props: Props) => {
           ))}
 
           <Addaplace
-          
+            onSubmitSuccess={setShowItineraryHint}
             addedPlaces={props.places.filter(
               (p) => p.pointId === selectedPoint.id
             )}

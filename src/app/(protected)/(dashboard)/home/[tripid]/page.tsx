@@ -95,22 +95,25 @@ const route = formatRoute(points);
 
 
         {/* Itinerary */}
-          {points.length === 0 && 
-            <Link href={`/createtrip/${tripid}`} >
-              <div className=" w-[250px]  535:min-w-[300px] min-h-32 flex items-center justify-center flex-col  " >        
-                  {/**   className="group flex min-w-[250px] h-full items-center justify-center rounded-2xl bg-white p-10 shadow-md transition hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    aria-label="Start planning your trip"
-                  >*/}
-                    <div className="flex flex-col items-center space-y-2">
-                      <MdAddLocationAlt className="text-5xl text-blue-600 transition-transform group-hover:scale-110" />
-                      <span className="text-base font-semibold text-gray-700 group-hover:text-blue-600">
-                        Plan Your Trip
-                      </span>
-                    </div>
-                   
-               </div>
+          {points.length === 0 && (
+            <Link href={`/createtrip/${tripid}`}>
+              <div
+                className="group w-[250px] 535:min-w-[300px] min-h-32 flex flex-col items-center justify-center rounded-2xl 
+                bg-white p-8 shadow-md transition hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+                aria-label="Start planning your trip"
+              >
+                <MdAddLocationAlt className="text-5xl text-blue-600 transition-transform group-hover:scale-110" />
+          
+                <span className="mt-2 text-base font-semibold text-gray-700 group-hover:text-blue-600">
+                  Plan Your Trip
+                </span>
+          
+                <p className="text-sm text-gray-500 mt-1 text-center">
+                  Add your first place to start building the journey
+                </p>
+              </div>
             </Link>
-          }
+)}
          
        
           {points.map(( point:any , key:number ) => ( 

@@ -212,6 +212,7 @@ type Props = {
   travelingWith: TravelWith;
   tripBudget: TripBudget;
   tripTypes: TripType[];
+  onSubmitSuccess?: any //fix it later
 };
 
 type AffiliateMap = Record<
@@ -230,7 +231,7 @@ const Addaplace = (props: Props) => {
   const [visibleCount, setVisibleCount] = useState(10);
   const [addedStayss, setAddedStays] = useState<RecommendedPlace[]>([]);
   const [addedVisitss, setaddedVisits] = useState<RecommendedPlace[]>([]);
-  
+ 
 
 
 
@@ -243,6 +244,8 @@ const Addaplace = (props: Props) => {
   const tripTypes = props.tripTypes.map((t) => t.toLowerCase());
 
   let score = 0;
+
+
 
   /* ---------------------------------- */
   /* 1️⃣ Distance Weight (0–35 pts) */
@@ -734,9 +737,14 @@ if (isStay) {
 
 console.log('ree',addedStayss)
 
+
+
   return (
     <Dialog>
-      <DialogTrigger className="bg-gray-400 rounded-md min-w-[260px] h-10 flex items-center justify-center w-full gap-7 p-5 cursor-pointer">
+      <DialogTrigger  onClick={() => {
+    props.onSubmitSuccess(false);
+    localStorage.setItem("tripItineraryHintSeen", "true");
+  }} className="bg-gray-400 rounded-md min-w-[260px] h-10 flex items-center justify-center w-full gap-7 p-5 cursor-pointer">
         <BsHouseAddFill fontSize="20px" />
         <div className="text-base font-medium">{props.triggerName}</div>
       </DialogTrigger>
