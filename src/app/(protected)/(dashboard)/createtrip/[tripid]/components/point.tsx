@@ -393,7 +393,7 @@ console.log(props.withcurveline)
      </Dialog>
      {props.datalenght === props.index + 1 && (
           <>  
-            <Addnewcyrcle minDate={props.data.endDate!} index={ props.data.index + 1} tripId={props.data.tripId} withcurveline={props.withcurveline} />
+            <Addnewcyrcle lengtharr={props.datalenght} minDate={props.data.endDate!} index={ props.data.index + 1} tripId={props.data.tripId} withcurveline={props.withcurveline} />
           </>
       )}
 

@@ -5,6 +5,7 @@ import Tripboardphone from './components/tripboardphone';
 import { getPoints } from './action';
 import Navbar from '@/app/component-custom/bars/navbar';
 import { getTrip } from '@/app/(protected)/action';
+import { getPlaces } from '../../itinerary/[tripid]/action';
 
 
 interface PageProps {
@@ -17,6 +18,18 @@ const Page = async ({ params }: PageProps) => {
   console.log("Server-side ID:", tripid); 
 
     const points = await  getPoints(tripid)
+
+    const pointsOnly = points.filter((p) => p.role === 'POINT');
+
+    const placesPerPoint = await Promise.all(
+      pointsOnly.map((point) => getPlaces(point.id))
+    );
+
+    const allPlaces = placesPerPoint.flat();
+
+ 
+
+  
      
     console.log('ποιντσ',points);
 
@@ -27,13 +40,13 @@ const Page = async ({ params }: PageProps) => {
            <Tripboard  tripId={tripid} cyrclesArr={points} />
         </div>
         <div className=' h-[55%]  w-full xxs:block hidden bg-slate-500  ' >
-             <Mapprovider cyrclesArr={points} /> 
+             <Mapprovider cyrclesArr={points} allPlaces={allPlaces} /> 
         </div>
 
        
        
         <div  className='  h-[43%] block xxs:hidden '>
-           <Tripboardphone  tripId={tripid} cyrclesArr={points} />
+           <Tripboardphone  tripId={tripid} cyrclesArr={points}  />
         </div>
     </div>
   )

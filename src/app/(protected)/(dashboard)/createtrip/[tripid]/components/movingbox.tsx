@@ -200,7 +200,7 @@ const icon = getTransportIcon(props.data.transportType);
      </Dialog>
      {props.datalenght === props.index + 1  && (
           <>  
-            <Addnewcyrcle minDate={props.data.departureDate!}   withcurveline={props.withcurveline} index={ props.index + 1} tripId={props.tripId}  />
+            <Addnewcyrcle lengtharr={props.datalenght} minDate={props.data.departureDate!}   withcurveline={props.withcurveline} index={ props.index + 1} tripId={props.tripId}  />
           </>
       )}
 

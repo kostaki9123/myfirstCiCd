@@ -26,7 +26,7 @@ type Props = {
     index : number
     tripId : string
     withcurveline : boolean
-    lengtharr? : number
+    lengtharr : number
     minDate?: Date
   }
   
@@ -109,7 +109,6 @@ useEffect(() => {
     localStorage.setItem("createTripTransportHint", "true")
   }
 
- console.log('leght',props.lengtharr)
   return (
     
     <Dialog >
@@ -131,7 +130,7 @@ useEffect(() => {
               </div>
           </div>
          }
-              {showHint && (!props.lengtharr || props.lengtharr === 0)  && (
+              {showHint && props.lengtharr === 0  && (
   <div  className="absolute  360:top-[30%] left-[266px] xxs:top-[205px] xxs:left-[120px] -translate-x-1/2 bg-white rounded-2xl shadow-lg border border-gray-200 p-4 w-64 text-gray-900 z-50">
     <h4 className="font-semibold text-base mb-1">First step</h4>
     <p className="text-sm text-gray-700">
@@ -148,7 +147,7 @@ useEffect(() => {
           <DialogDescription>
           </DialogDescription>
           <div className="relative">
-      {showTransportHint &&
+      {showTransportHint && props.lengtharr === 0  &&
  <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-3 mb-4 w-full text-gray-900 animate-pulse">
     <h4 className="font-semibold text-base mb-1">Step 2</h4>
     <p className="text-sm text-gray-700">

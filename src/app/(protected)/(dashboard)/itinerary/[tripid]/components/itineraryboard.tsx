@@ -118,21 +118,19 @@ const Itineraryboard = (props: Props) => {
           />
         </div>
        
-         {showItineraryHint && (
-  <div className="bg-white rounded-2xl mt-7 535:mt-0 shadow-lg border border-gray-200 p-3  w-full text-gray-900 animate-pulse">
-    <h4 className="font-semibold text-base mb-1">Step 3</h4>
-    <p className="text-sm text-gray-700">
-      Plan this location of your trip. Add where you will <strong>stay</strong> and the 
-      places you want to <strong>visit</strong> for this location.
-    </p>
-  </div>
-)}
+         {showItineraryHint && props.places.length === 0 && (
+          <div className="bg-white rounded-2xl mt-7 535:mt-0 shadow-lg border border-gray-200 p-3  w-full text-gray-900 animate-pulse">
+            <h4 className="font-semibold text-base mb-1">Step 3</h4>
+            <p className="text-sm text-gray-700">
+              Plan this location of your trip. Add where you will <strong>stay</strong> and the 
+              places you want to <strong>visit</strong> for this location.
+            </p>
+          </div>
+         )}
 
         {/* ACCOMMODATION */}
         <div className="flex flex-col items-center p-2  450:mt-0 pt-7 relative gap-2 ">
 
-    
-     
           <small className="absolute left-2 top-2 font-semibold">
             Accommodation
           </small>
