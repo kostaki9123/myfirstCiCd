@@ -237,8 +237,7 @@ function App({
           <text x="12" y="13" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${key + 1}</text>
         </svg>
       `)}`,
-      scaledSize: new google.maps.Size(32, 48),
-      anchor: new google.maps.Point(16, 48),
+     
     }}
     title={place.name}
   />
@@ -260,8 +259,7 @@ function App({
           <text x="12" y="13" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${key + 1}</text>
         </svg>
       `)}`,
-      scaledSize: new google.maps.Size(32, 48),
-      anchor: new google.maps.Point(16, 48),
+    
     }}
     title={place.name}
   />
