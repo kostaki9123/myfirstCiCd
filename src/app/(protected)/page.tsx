@@ -11,12 +11,6 @@ import EmptyTripsState from "../component/onboarding/DashboardWelcome";
 
 export default async function Home() {
 
-  function delay(ms:number) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
-
-await delay(3000)
-
   let trips = await getTrips();
 
    trips.sort((a, b) => 

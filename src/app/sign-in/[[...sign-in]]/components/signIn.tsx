@@ -9,7 +9,7 @@ export default function DelayedSignIn() {
 
   useEffect(() => {
     // simulate loading until Clerk is ready
-    const timer = setTimeout(() => setReady(true), 800); // 0.8s delay
+    const timer = setTimeout(() => setReady(true), 300); // 0.8s delay
     return () => clearTimeout(timer);
   }, []);
 
