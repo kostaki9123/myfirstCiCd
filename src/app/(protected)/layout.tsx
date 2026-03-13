@@ -39,5 +39,5 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
     throw new Error(`Oops, something went wrong: ${(err as Error).message}`);
   }
 
-  return <ClientProtected>{children}</ClientProtected>;
+  return <>{children}</>
 }

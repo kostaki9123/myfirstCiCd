@@ -55,7 +55,7 @@ const  Page =  () => {
       </div>
 
       {/* RIGHT SIDE – Sign In */}
-        <div className="relative z-10 flex items-center justify-center p-6 ">
+        <div className="relative z-10 flex items-center justify-center ">
              <DelayedSignIn/>
         </div>
     </div>

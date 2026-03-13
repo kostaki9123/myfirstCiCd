@@ -9,14 +9,14 @@ export default function DelayedSignIn() {
 
   useEffect(() => {
     // simulate loading until Clerk is ready
-    const timer = setTimeout(() => setReady(true), 300); // 0.8s delay
+    const timer = setTimeout(() => setReady(true), 800); // 0.8s delay
     return () => clearTimeout(timer);
   }, []);
 
   if (!ready) return <MainLoader />;
 
   return (
-    <div className="bg-white/90 backdrop-blur-xl shadow-2xl border border-slate-200  rounded-3xl md:p-6 ">
+    
      <SignIn
          appearance={{
          elements: {
@@ -32,7 +32,7 @@ export default function DelayedSignIn() {
          },
        }}
     />
-    </div>
+   
   );
 }
 
