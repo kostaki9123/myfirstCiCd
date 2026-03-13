@@ -168,6 +168,12 @@ body {
   background: #6b7280;
 }
 
+   @keyframes pulseLogo {
+          0% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.2); opacity: 0.7; }
+          100% { transform: scale(1); opacity: 1; }
+        }
 
-
-
+        .animate-pulseLogo {
+          animation: pulseLogo 1.5s ease-in-out infinite;
+        }

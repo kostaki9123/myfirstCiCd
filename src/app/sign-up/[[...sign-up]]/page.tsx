@@ -1,9 +1,12 @@
-'use client'
 
-import { SignUp } from '@clerk/nextjs'
-import React from 'react'
+
+import MainLoader from '@/app/component/loaders/singUpandInloader'
+import React, { Suspense } from 'react'
+import DelayedSignUp from './components/signUp'
+
 
 const Page = () => {
+ 
   return (
     <div className="relative min-h-screen grid md:grid-cols-2 bg-gradient-to-br from-sky-50 via-white to-emerald-50 overflow-hidden">
 
@@ -15,13 +18,13 @@ const Page = () => {
       {/* LEFT SIDE – Concept Explanation */}
       <div className="hidden md:flex relative z-10 flex-col justify-center px-16 backdrop-blur-sm">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-sky-600 to-emerald-600 bg-clip-text text-transparent mb-6">
-          Start Planning Your Journey
+          Design Your Trip Step by Step
         </h1>
 
         <p className="text-slate-600 mb-10 text-lg leading-relaxed">
-          Create your trip by connecting circles as destinations,
-          defining travel paths, and organizing your itinerary and budget
-          all in one visual planner.
+          Plan your journey visually. Add destination circles, link them in the order 
+          you’ll visit, and organize your entire trip — itinerary, stays, and budget — 
+          in one smart planner.
         </p>
 
         <div className="space-y-6">
@@ -30,7 +33,7 @@ const Page = () => {
               📍 Place Nodes
             </h3>
             <p className="text-slate-600 text-sm">
-              Add destinations as interactive circles.
+              Add destinations as interactive circles — click to edit details or add stops along your journey.
             </p>
           </div>
 
@@ -39,7 +42,7 @@ const Page = () => {
               ✈ Travel Connections
             </h3>
             <p className="text-slate-600 text-sm">
-              Connect your destinations to define your journey visually.
+              Connect your destinations visually to define the path of your trip.
             </p>
           </div>
 
@@ -48,7 +51,7 @@ const Page = () => {
               📅 Smart Itinerary & Budget
             </h3>
             <p className="text-slate-600 text-sm">
-              Organize activities, accommodations, and track your expenses.
+             Plan activities, accommodations, and track your expenses — all in one place.
             </p>
           </div>
         </div>
@@ -56,23 +59,7 @@ const Page = () => {
 
       {/* RIGHT SIDE – Sign Up */}
       <div className="relative z-10 flex items-center justify-center p-6">
-        <div className="bg-white/90 backdrop-blur-xl shadow-2xl rounded-3xl md:p-6 border border-slate-200">
-          <SignUp
-            appearance={{
-              elements: {
-                card: "shadow-none border-none",
-                headerTitle: "text-2xl font-semibold text-slate-800",
-                headerSubtitle: "text-slate-500",
-                formButtonPrimary:
-                  "bg-sky-600 hover:bg-sky-700 text-white font-medium transition-all duration-200 rounded-lg",
-                footerActionLink:
-                  "text-sky-600 hover:text-sky-700 font-medium",
-                formFieldInput:
-                  "rounded-lg border-slate-300 focus:border-sky-500 focus:ring-sky-500",
-              },
-            }}
-          />
-        </div>
+         <DelayedSignUp/>
       </div>
     </div>
   )

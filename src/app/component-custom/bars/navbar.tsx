@@ -9,6 +9,7 @@ import UserAvatarWithLoading from './UserAvatarWithLoading';
 import TripHeader from './ded';
 import Tripdeader from './ded';
 import Ded from './ded';
+import Image from 'next/image';
 
 
 type props = {
@@ -23,7 +24,7 @@ const  Navbar =  (props : props) => {
   
 
   return (
-    <div className= 'h-14 fixed bg-[#010038] top-0 left-0 right-0    justify-center flex   items-center z-[51] md:min-w-screen shadow-lg'>
+    <div className= 'h-14 fixed bg-[#010038] top-0 left-0 right-0  justify-center flex   items-center z-[51] md:min-w-screen shadow-lg'>
           
 
        <div className='absolute left-0 min-w-fit h-full flex  text-white  '> 
@@ -31,11 +32,20 @@ const  Navbar =  (props : props) => {
             <></>
            :<Humburger/>
            }
-           <div className='md:w-[249px] w-[180px] justify-center items-center flex  '>
-               <h3 className=" scroll-m-20 text-xl md:text-xl font-semibold tracking-tight ">
-                   Trip planner
-               </h3>
-           </div>
+         <div className="relative w-[249px] md:ml-5  justify-center items-center flex ">
+              <Image
+                src="/ChatGPT Image 10 Μαρ 2026, 04_35_50 μμ.png"
+                alt="Trip Planner Logo"
+                width={90}
+                height={90}
+                className="object-contain mt-2 absolute left-0 md:left-3"
+              />
+            
+          
+            <h3 className="scroll-m-20  mt-1  text-xl md:text-xl font-semibold tracking-tight text-white absolute left-16 md:left-20">
+              Tripaki
+            </h3>
+         </div>
            
            {props.withtripname &&
              <Ded/>
