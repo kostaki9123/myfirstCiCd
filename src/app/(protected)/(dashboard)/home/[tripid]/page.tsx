@@ -41,10 +41,12 @@ const Home = async ({ params }: PageProps) => {
     month: "short",
     day: "numeric",
     year: "numeric",
+
   })} - ${max.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
+  
   })}`;
 }
 
