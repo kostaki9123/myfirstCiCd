@@ -12,8 +12,8 @@ import { ChevronsUpDownIcon, CheckIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 type Props = {
-  startTime: string // "03:00"
-  endTime: string   // "18:00"
+  startTime: string // "00:00"
+  endTime: string   // "12:45"
   stepMinutes?: number // default 15
   value: string | Date | null
   onChange: (date: Date) => void
@@ -26,6 +26,8 @@ export default function TimeSlotsDropdown({
   value,
   onChange,
 }: Props) {
+
+  console.log('value',value)
   /* -------- Normalize selected time -------- */
   const selectedTime = React.useMemo(() => {
     if (!value) return null
@@ -34,8 +36,12 @@ export default function TimeSlotsDropdown({
   }, [value])
 
   const selectedLabel = selectedTime
-    ? selectedTime.toTimeString().slice(0, 5)
-    : null
+  ? selectedTime.toLocaleTimeString('en-GB', {
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: 'UTC'
+    })
+  : null
 
   /* -------- Generate time slots -------- */
   const times = React.useMemo(() => {
@@ -64,13 +70,13 @@ export default function TimeSlotsDropdown({
   }, [startTime, endTime, stepMinutes])
 
   /* -------- Handle selection -------- */
-  const handleSelect = (time: string) => {
-    const [h, m] = time.split(':').map(Number)
-    const date = new Date()
+const handleSelect = (time: string) => {
+  const [h, m] = time.split(':').map(Number)
 
-    date.setHours(h, m, 0, 0)
-    onChange(date)
-  }
+   const date = new Date(Date.UTC(1970, 0, 1, h, m))
+
+  onChange(date)
+}
 
   return (
     <DropdownMenu>

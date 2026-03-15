@@ -39,9 +39,9 @@ export default async function Home() {
       {/* Trip Cards */}
         
       <main className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-6 md:px-12">
-        {trips.map((trip) => (
+        {trips.map((trip , key) => (
           <div
-            key={trip.id}
+            key={key}
             className="relative mb-6 bg-[#1e293b] rounded-xl p-6 shadow-md hover:shadow-xl transform hover:-translate-y-2 transition-all"
           >
             {/* Update Modal */}
@@ -57,33 +57,25 @@ export default async function Home() {
             {/* Trip Name */}
             <h2 className="text-2xl font-bold text-[#38bdf8]">{trip.tripName}</h2>
 
-            {/* Countries */}
-            <div className="mt-3 flex items-center space-x-2">
-              {/* trip.countries.map((country, idx) => (
-                <span key={idx} className="text-sm text-gray-400">
-                  {country.flag} {country.name}
-                </span>
-              )) */}
-            </div>
-
             {/* Features */}
             <div className="mt-6 flex flex-wrap gap-3">
-              <span className="px-3 py-1 bg-[#16a34a]/20 text-[#16a34a] text-sm rounded-full">
-                💵 {trip.tripBudget}
-              </span>
-              <span className="px-3 py-1 bg-[#3b82f6]/20 text-[#3b82f6] text-sm rounded-full">
-                {trip.travelingWith}
-              </span>
-              {trip.tripTypes.map((string, idx) => (
-                <span
-                  key={idx}
-                  className="px-3 py-1 bg-[#facc15]/20 text-[#facc15] text-sm rounded-full"
-                >
-                  {string}
+                <span className="px-3 py-1 bg-slate-700 text-slate-200 text-sm rounded-full">
+                  💵 {trip.tripBudget}
                 </span>
-              ))}
-            </div>
-
+              
+                <span className="px-3 py-1 bg-slate-700 text-slate-200 text-sm rounded-full">
+                  👥 {trip.travelingWith}
+                </span>
+              
+                {trip.tripTypes.map((type, idx) => (
+                  <span
+                    key={idx}
+                    className="px-3 py-1 bg-slate-700 text-slate-200 text-sm rounded-full"
+                  >
+                     {type}
+                  </span>
+                ))}              
+             </div>
             {/* Cost and Details (commented out) */}
             {/*
             <div className="mt-6">

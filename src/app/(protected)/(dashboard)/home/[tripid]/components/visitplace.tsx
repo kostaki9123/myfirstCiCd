@@ -28,13 +28,20 @@ const Visitplace = (props : props) => {
                              <CardContent className="  p-2 pt-0 space-y-2 text-xs text-muted-foreground">
                                <div className="flex items-start px-2 flex-col gap-2"> 
                                    {props.visitdate ?
-                                    <span>Visit  Date : {props.visitdate.toLocaleString('en-US', { month: 'short', day: '2-digit' })}</span>
+                                    <span>Visit  Date : {props.visitdate.toLocaleString('en-GB', { month: 'short', day: '2-digit' })}</span>
                                     : <span>Visit  Date : -- </span>
                                   }
-                                   {props.visitTime ?
-                                    <span>Visit  Time : {props.visitTime.toLocaleString('en-US', { month: 'short', day: '2-digit' })}</span>
-                                    : <span>Visit  Time : -- </span>
-                                  }
+                                 {props.visitTime ?
+                                   <span>
+                                     Visit Time : {props.visitTime.toLocaleTimeString('en-GB', {
+                                       hour: '2-digit',
+                                       minute: '2-digit',
+                                       hour12: false ,
+                                       timeZone: 'UTC'
+                                     })}
+                                   </span>
+                                   : <span>Visit Time : -- </span>
+                                 }
                                   {props.googleMapLink &&
                                   <a
                                      href=''

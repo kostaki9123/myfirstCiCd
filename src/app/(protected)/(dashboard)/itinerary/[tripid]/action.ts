@@ -175,7 +175,7 @@ export async function updatePlace(formData: FormData) {
     const stayUntilRaw = formData.get("stayUntil") as string | null;
     const visitDateRaw = formData.get("visitDate") as string | null;
     const visitTimeRaw = formData.get("visitTime") as string | null;
-
+   
     const input: {
       internalId: string;
       notes?: string | null;

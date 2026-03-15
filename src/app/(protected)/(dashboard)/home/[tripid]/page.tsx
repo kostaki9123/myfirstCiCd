@@ -22,10 +22,15 @@ const Home = async ({ params }: PageProps) => {
   const points = await getPoints(tripid);
 
   console.log('herreeee',points)
+
   function formatDateRange(points: any[]) {
   const dates = points
-    .filter((p) => p.role === "POINT" && p.startDate && p.endDate)
-    .flatMap((p) => [new Date(p.startDate), new Date(p.endDate)]);
+    .flatMap((p) => [
+      p.startDate ? new Date(p.startDate) : null,
+      p.endDate ? new Date(p.endDate) : null,
+      p.departureDate ? new Date(p.departureDate) : null,
+    ])
+    .filter(Boolean) as Date[];
 
   if (dates.length === 0) return "No dates";
 
@@ -66,7 +71,7 @@ const route = formatRoute(points);
       <div className="relative   flex items-start justify-start   h-full w-full">
           
           
-      <div className=" flex 535:flex-col flex-col 535:mt-0 relative  w-full  535:max-w-[200px]  535:max-w-content   justify-start items-start   gap-2 min-w-max p-6  ">
+      <div className=" flex 535:flex-col flex-col 535:mt-0 relative  w-full  max-w-[200px]  535:max-w-content   justify-start items-start   gap-2 min-w-max p-6  ">
            <div className=" absolute left-[-9px] top-0   pl-4 h-full ">
                   <div className=" bottom-0 w-1 bg-gray-500 rounded-full h-[98%] my-5 "></div>
            </div>
@@ -98,7 +103,7 @@ const route = formatRoute(points);
           {points.length === 0 && (
             <Link href={`/createtrip/${tripid}`}>
               <div
-                className="group w-[250px] 535:min-w-[300px] min-h-32 flex flex-col items-center justify-center rounded-2xl 
+                className="group w-full  535:max-w-[370px] flex flex-col items-center justify-center rounded-2xl 
                 bg-white p-8 shadow-md transition hover:shadow-lg hover:-translate-y-1 cursor-pointer"
                 aria-label="Start planning your trip"
               >

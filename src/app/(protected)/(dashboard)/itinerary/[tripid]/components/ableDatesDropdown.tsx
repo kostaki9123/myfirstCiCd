@@ -70,7 +70,7 @@ export default function DateRangeDropdown({
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-48 max-h-64 overflow-y-auto z-[69] border-2 border-red-700">
+      <DropdownMenuContent className="w-48 max-h-64 overflow-y-auto z-[69]">
         {dates.map((date) => {
           const isSelected =
             selectedDate?.toDateString() === date.toDateString()

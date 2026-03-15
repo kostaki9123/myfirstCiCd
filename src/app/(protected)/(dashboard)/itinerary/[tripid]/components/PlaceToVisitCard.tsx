@@ -64,6 +64,8 @@ export default function PlaceToVisitCard(props: Props) {
   const [visitTime, setVisitTime] = useState<Date | null>(
     props.visitTime ?? null
   );
+
+  
   const [notes, setNotes] = useState(props.notes ?? "");
 
   const [isDirty, setIsDirty] = useState(false);
@@ -165,8 +167,8 @@ export default function PlaceToVisitCard(props: Props) {
               <div>
                   <label className="text-xs text-gray-700">Visit Time</label>
                   <TimeSlotsDropdown
-                   startTime="03:00"
-                   endTime="08:00"
+                   startTime="00:00"
+                   endTime="23:45"
                    stepMinutes={15}
                    value={visitTime}
                    onChange={(v) => {
