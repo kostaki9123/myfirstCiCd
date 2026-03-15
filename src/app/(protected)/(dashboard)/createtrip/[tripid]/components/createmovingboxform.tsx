@@ -116,7 +116,7 @@ const Createmovingboxform = (props : props) => {
       formData.append("toLat", validation.data.to.location.lat.toString());
       formData.append("toLng", validation.data.to.location.lng.toString());
       formData.append("transportType", validation.data.transportType);
-      formData.append("departureDate", validation.data.departureDate.toISOString());
+      formData.append("departureDate", validation.data.departureDate.toLocaleDateString("en-CA"));
       formData.append("notes", validation.data.notes!);
 
       await createPoint(formData);

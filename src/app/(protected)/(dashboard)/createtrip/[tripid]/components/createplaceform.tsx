@@ -99,8 +99,8 @@ const Createplaceform = (props : props) => {
       formData.append("PlaceAddress", validation.data.place.address!);
       formData.append("PlaceLat", validation.data.place.location.lat.toString());
       formData.append("PlaceLng", validation.data.place.location.lng.toString());
-      formData.append("startDate", validation.data.dates?.[0].toISOString());
-      formData.append("endDate", validation.data.dates?.[1].toISOString());
+      formData.append("startDate", validation.data.dates?.[0].toLocaleDateString("en-CA"));
+      formData.append("endDate", validation.data.dates?.[1].toLocaleDateString("en-CA"));
 
       // TODO: send data to backend here
       await createPoint(formData);

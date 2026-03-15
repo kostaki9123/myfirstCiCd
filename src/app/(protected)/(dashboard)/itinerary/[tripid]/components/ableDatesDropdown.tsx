@@ -74,11 +74,11 @@ export default function DateRangeDropdown({
         {dates.map((date) => {
           const isSelected =
             selectedDate?.toDateString() === date.toDateString()
-
+             console.log('inroow' ,date)
           return (
             <DropdownMenuItem
               key={date.toISOString()}
-              onClick={() => onChange(date)}
+              onClick={() => onChange(date)   }
               className={cn(
                 'flex items-center justify-between',
                 isSelected && 'bg-indigo-50 text-indigo-600'

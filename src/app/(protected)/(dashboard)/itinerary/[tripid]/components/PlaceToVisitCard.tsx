@@ -105,8 +105,8 @@ export default function PlaceToVisitCard(props: Props) {
       console.log("notes", d.notes)
 
     fd.append("internalId", props.internalId );
-    if (d.visitDate) fd.append("visitDate", d.visitDate.toISOString());
-    if (d.visitTime) fd.append("visitTime", d.visitTime.toISOString());
+    if (d.visitDate) fd.append("visitDate", d.visitDate.toLocaleDateString("en-CA"));
+    if (d.visitTime) fd.append("visitTime", d.visitTime.toLocaleDateString("en-CA"));
     fd.append("notes", d.notes ?? "");
 
     try {

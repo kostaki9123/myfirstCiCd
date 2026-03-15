@@ -59,6 +59,8 @@ const updateSchema = z
     }
   );
 
+
+
 /* -------------------------------------------------------
    COMPONENT
 ------------------------------------------------------- */
@@ -112,16 +114,14 @@ export default function PlaceToStayCard(props: Props) {
     const fd = new FormData();
     fd.append("internalId", props.internalId );
       
-    console.log("stayFromoo", d.stayFrom)
-    console.log("stayUntil", d.stayUntil)
 
-    if (d.stayFrom) fd.append("stayFrom", d.stayFrom.toISOString());
-    if (d.stayUntil) fd.append("stayUntil", d.stayUntil.toISOString());
+    if (d.stayFrom) fd.append("stayFrom",  d.stayFrom.toLocaleDateString("en-CA"));
+    if (d.stayUntil) fd.append("stayUntil", d.stayUntil.toLocaleDateString("en-CA"));
 
     fd.append("notes", d.notes ?? "");
 
     try {
-      
+      console.log('koyrastika',d.stayFrom ,d.stayUntil)
       await updatePlace(fd);
       setIsDirty(false);
     } catch (err) {
