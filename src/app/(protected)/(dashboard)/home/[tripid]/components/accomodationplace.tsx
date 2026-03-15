@@ -29,14 +29,27 @@ const Accomodationplace = (props:props) => {
                                
                                  <CardContent className="  p-2 pt-0 space-y-2 text-xs text-muted-foreground">
                                    <div className="flex items-start px-2 flex-col gap-2"> 
-                                       {props.stayFrom ?
-                                        <span>From  Date : {props.stayFrom.toLocaleString('en-US', { month: 'short', day: '2-digit' })}</span>
-                                        : <span>From  Date : -- </span>
-                                      }
-                                       {props.stayUntil ?
-                                        <span>Until Date : {props.stayUntil.toLocaleString('en-US', { month: 'short', day: '2-digit' })}</span>
-                                       : <span>Until  Date : -- </span>
-                                       }
+                                      {props.stayFrom ? (
+  <span>
+    From Date : {new Date(props.stayFrom).toLocaleDateString(undefined, {
+      month: '2-digit',
+      day: '2-digit',
+    })}
+  </span>
+) : (
+  <span>From Date : --</span>
+)}
+
+{props.stayUntil ? (
+  <span>
+    Until Date : {new Date(props.stayUntil).toLocaleDateString(undefined, {
+      month: '2-digit',
+      day: '2-digit',
+    })}
+  </span>
+) : (
+  <span>Until Date : --</span>
+)}
                                        {props.googleMapLink &&
                                       <a
                                          href={`${props.googleMapLink}`}

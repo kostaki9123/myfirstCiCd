@@ -27,10 +27,16 @@ const Visitplace = (props : props) => {
                            
                              <CardContent className="  p-2 pt-0 space-y-2 text-xs text-muted-foreground">
                                <div className="flex items-start px-2 flex-col gap-2"> 
-                                   {props.visitdate ?
-                                    <span>Visit  Date : {props.visitdate.toLocaleString('en-GB', { month: 'short', day: '2-digit' })}</span>
-                                    : <span>Visit  Date : -- </span>
-                                  }
+                                {props.visitdate ? (
+  <span>
+    Visit Date : {new Date(props.visitdate).toLocaleDateString(undefined, {
+      month: '2-digit',
+      day: '2-digit',
+    })}
+  </span>
+) : (
+  <span>Visit Date : -- </span>
+)}
                                  {props.visitTime ?
                                    <span>
                                      Visit Time : {props.visitTime.toLocaleTimeString('en-GB', {

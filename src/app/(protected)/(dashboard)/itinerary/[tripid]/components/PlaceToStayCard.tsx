@@ -73,8 +73,11 @@ export default function PlaceToStayCard(props: Props) {
   const [isDirty, setIsDirty] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  console.log('id',props.id)
+ 
   /* ------------------ RESET ------------------ */
+
+  console.log('ddin',checkIn)
+  console.log('ddout',checkOut)
 
   const resetState = () => {
     setCheckIn(props.stayFrom ?? null);
@@ -88,7 +91,7 @@ export default function PlaceToStayCard(props: Props) {
 
   const handleSave = async () => {
     setError(null);
-
+   
     const validation = updateSchema.safeParse({
       id: props.id,
       pointId: props.pointId,
@@ -108,7 +111,9 @@ export default function PlaceToStayCard(props: Props) {
 
     const fd = new FormData();
     fd.append("internalId", props.internalId );
-   
+      
+    console.log("stayFromoo", d.stayFrom)
+    console.log("stayUntil", d.stayUntil)
 
     if (d.stayFrom) fd.append("stayFrom", d.stayFrom.toISOString());
     if (d.stayUntil) fd.append("stayUntil", d.stayUntil.toISOString());
@@ -116,6 +121,7 @@ export default function PlaceToStayCard(props: Props) {
     fd.append("notes", d.notes ?? "");
 
     try {
+      
       await updatePlace(fd);
       setIsDirty(false);
     } catch (err) {

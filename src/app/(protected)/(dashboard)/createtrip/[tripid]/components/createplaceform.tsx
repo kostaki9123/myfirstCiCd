@@ -28,7 +28,7 @@ export const formSchema = z.object({
 
   dates: z
     .array(z.date({ required_error: "You must select valid dates" }))
-    .length(2, { message: "You must select both start and end dates" })
+    .length(2, { message: "You must select dates" })
     .refine(([start, end]) => end >= start, {
       message: "End date cannot be before start date",
     }),

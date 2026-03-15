@@ -169,12 +169,15 @@ export async function updatePlace(formData: FormData) {
      if (!internalId ) {
       throw new Error("Missing required fields: internalId");
     }
+     console.log('costakis ',formData.get("stayFrom") as string | null,formData.get("stayUntil") as string | null)
 
     //optional fields
     const stayFromRaw = formData.get("stayFrom") as string | null;
     const stayUntilRaw = formData.get("stayUntil") as string | null;
     const visitDateRaw = formData.get("visitDate") as string | null;
     const visitTimeRaw = formData.get("visitTime") as string | null;
+
+    console.log('costakis 2',stayFromRaw,stayUntilRaw)
    
     const input: {
       internalId: string;
