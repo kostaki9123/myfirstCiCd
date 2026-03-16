@@ -32,8 +32,8 @@ const Accomodationplace = (props:props) => {
                                       {props.stayFrom ? (
   <span>
     From Date : {new Date(props.stayFrom).toLocaleDateString(undefined, {
-      month: '2-digit',
-      day: '2-digit',
+         day: "numeric",
+         month: "short",
     })}
   </span>
 ) : (
@@ -43,8 +43,8 @@ const Accomodationplace = (props:props) => {
 {props.stayUntil ? (
   <span>
     Until Date : {new Date(props.stayUntil).toLocaleDateString(undefined, {
-      month: '2-digit',
-      day: '2-digit',
+         day: "numeric",
+         month: "short",
     })}
   </span>
 ) : (

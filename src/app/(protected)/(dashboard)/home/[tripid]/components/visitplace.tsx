@@ -30,8 +30,8 @@ const Visitplace = (props : props) => {
                                 {props.visitdate ? (
                                   <span>
                                     Visit Date : {new Date(props.visitdate).toLocaleDateString(undefined, {
-                                      month: '2-digit',
-                                      day: '2-digit',
+                                        day: "numeric",
+                                       month: "short", 
                                     })}
                                   </span>
                                 ) : (

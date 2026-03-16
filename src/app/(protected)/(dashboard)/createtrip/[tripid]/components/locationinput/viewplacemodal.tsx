@@ -125,7 +125,7 @@ if (loading) {
   return (
     <div className="pl-0 flex flex-col 820:flex-row gap-6 items-start justify-start w-full overflow-x-auto p-4">
       {/* ---------------- ACCOMMODATION ---------------- */}
-      <div className="flex-shrink-0 relative flex flex-col gap-2 min-h-[13rem] w-full sm:w-[250px] rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 p-4">
+      <div className="flex-shrink-0 relative flex flex-col max-h-64 overflow-auto gap-2 min-h-[13rem] w-full sm:w-[250px] rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 p-4">
         <h4 className="text-base font-semibold text-center mb-2">
           Accommodation
         </h4>
@@ -172,7 +172,7 @@ if (loading) {
       </div>
 
       {/* ---------------- PLACES ---------------- */}
-      <div className="flex-shrink-0 flex flex-col gap-2 min-h-[13rem] w-full sm:w-[250px] rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 p-4">
+      <div className="flex-shrink-0 flex flex-col gap-2 max-h-64 overflow-auto min-h-[13rem] w-full sm:w-[250px] rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 p-4">
         <h4 className="text-base font-semibold text-center mb-2">
           Places
         </h4>
@@ -201,7 +201,12 @@ if (loading) {
 
 
                   <p className=" text-xs text-gray-500">
-                    {formatDate(place.visitDate)} · {formatTime(place.visitTime)}
+                    {formatDate(place.visitDate)} · {place.visitTime && place.visitTime.toLocaleTimeString('en-GB', {
+                                       hour: '2-digit',
+                                       minute: '2-digit',
+                                       hour12: false ,
+                                       timeZone: 'UTC'
+                                     })}
                   </p>
                 </div>
               </div>
