@@ -25,12 +25,8 @@ const NotesBox = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  /* --------------------------------------------------
-     Hide notes if parent clears value
-  -------------------------------------------------- */
-  useEffect(() => {
-    if (!value) setMode("hidden");
-  }, [value]);
+  // Local state to track textarea characters
+  const [clientNotes, setClientNotes] = useState<string>(value);
 
   /* --------------------------------------------------
      Auto resize textarea
@@ -40,37 +36,44 @@ const NotesBox = ({
     textareaRef.current.style.height = "auto";
     textareaRef.current.style.height =
       textareaRef.current.scrollHeight + "px";
-  }, [value]);
+  }, [clientNotes]);
 
   /* --------------------------------------------------
-     Autofocus when editing
+     Autofocus when editing, cursor at end
   -------------------------------------------------- */
   useEffect(() => {
-    if (mode === "edit") {
-      textareaRef.current?.focus();
+    if (mode === "edit" && textareaRef.current) {
+      const el = textareaRef.current;
+      setTimeout(() => {
+        el.focus();
+        const length = el.value.length;
+        el.setSelectionRange(length, length);
+      }, 0);
     }
   }, [mode]);
 
   /* --------------------------------------------------
      Click outside (AFTER click)
-     IMPORTANT: use 'click', NOT 'mousedown'
   -------------------------------------------------- */
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(e.target as Node)
-      ) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
         if (mode === "edit") {
-          setMode(value ? "view" : "hidden");
+          setMode(clientNotes ? "view" : "hidden"); // use clientNotes here
         }
       }
     };
 
     document.addEventListener("click", handleClickOutside);
-    return () =>
-      document.removeEventListener("click", handleClickOutside);
-  }, [mode, value]);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [mode, clientNotes]);
+
+  /* --------------------------------------------------
+     Sync parent value if it changes externally
+  -------------------------------------------------- */
+  useEffect(() => {
+    setClientNotes(value);
+  }, [value]);
 
   /* --------------------------------------------------
      Render
@@ -79,7 +82,14 @@ const NotesBox = ({
     <div ref={wrapperRef} className="w-full">
       {/* ---------- ADD BUTTON ---------- */}
       {mode === "hidden" && (
-         <button onClick={() => setMode("edit")} className={`flex items-center justify-center gap-2 w-full ${fromItinerary ? 'max-w-[202px]' : 'max-w-[152px]' }  bg-white border rounded-lg py-2 text-[14px] text-gray-700 hover:bg-gray-100 active:scale-95 transition shadow-sm`} > <FaNoteSticky className="text-lg text-blue-600" /> Add notes </button>
+        <button
+          onClick={() => setMode("edit")}
+          className={`flex items-center justify-center gap-2 w-full ${
+            fromItinerary ? "max-w-[202px]" : "max-w-[152px]"
+          } bg-white border rounded-lg py-2 text-[14px] text-gray-700 hover:bg-gray-100 active:scale-95 transition shadow-sm`}
+        >
+          <FaNoteSticky className="text-lg text-blue-600" /> Add notes
+        </button>
       )}
 
       {/* ---------- VIEW MODE ---------- */}
@@ -90,7 +100,6 @@ const NotesBox = ({
               Notes
             </label>
           )}
-
           <div
             onClick={() => setMode("edit")}
             className="
@@ -100,7 +109,7 @@ const NotesBox = ({
               hover:bg-gray-200 transition cursor-pointer
             "
           >
-            {value}
+            {clientNotes}
           </div>
         </>
       )}
@@ -113,11 +122,14 @@ const NotesBox = ({
               Notes
             </label>
           )}
-
           <textarea
             ref={textareaRef}
-            value={value}
-            onChange={(e) => onChange(e.target.value.slice(0, 200))}
+            value={clientNotes}
+            onChange={(e) => {
+              const text = e.target.value.slice(0, 200);
+              setClientNotes(text);
+              onChange(text); // sync with parent
+            }}
             maxLength={200}
             placeholder={placeholder}
             className={`
@@ -130,9 +142,8 @@ const NotesBox = ({
               transition-all shadow-sm mt-1
             `}
           />
-
           <div className="text-[10px] text-right text-gray-400 mt-1">
-            {value.length}/200
+            {clientNotes.length}/200
           </div>
         </>
       )}

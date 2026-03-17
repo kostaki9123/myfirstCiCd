@@ -144,9 +144,11 @@ const Itineraryboard = (props: Props) => {
               pointId={place.pointId}
               placeType={place.placeType}
               name={place.name}
-              stayFrom={selectedPoint.startDate}
-              stayUntil={selectedPoint.endDate}
+              stayFrom={place.stayFrom ? place.stayFrom :selectedPoint.startDate}
+              stayUntil={place.stayUntil ? place.stayUntil : selectedPoint.endDate}
               notes={place.notes}
+              ablestayFrom={selectedPoint.startDate}
+              ablestayUntil={selectedPoint.endDate}
             />
           ))}
 
@@ -185,8 +187,8 @@ const Itineraryboard = (props: Props) => {
               name={place.name}
               visitDate={place.visitDate}
               visitTime={place.visitTime}
-              stayFrom={selectedPoint.startDate}
-              stayUntil={selectedPoint.endDate}
+              ablestayFrom={selectedPoint.startDate}
+              ablestayUntil={selectedPoint.endDate}
               notes={place.notes}
             />
           ))}

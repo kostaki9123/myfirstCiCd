@@ -35,6 +35,8 @@ type Props = {
   stayFrom?: Date | null;
   stayUntil?: Date | null;
   notes?: string | null;
+  ablestayFrom: Date | null | undefined;
+  ablestayUntil: Date | null | undefined
 };
 
 /* -------------------------------------------------------
@@ -165,8 +167,8 @@ export default function PlaceToStayCard(props: Props) {
                 <label className="text-xs text-gray-700">Check In</label>
                 <AbleDatesDropdown
                   value={checkIn}
-                  startDate={props.stayFrom ?? ""}
-                  endDate={props.stayUntil ?? ""}
+                  startDate={props.ablestayFrom ?? ""}
+                  endDate={props.ablestayUntil ?? ""}
                   onChange={(v) => {
                     setCheckIn(v);
                     setIsDirty(true);
@@ -178,8 +180,8 @@ export default function PlaceToStayCard(props: Props) {
                 <label className="text-xs text-gray-700">Check Out</label>
                 <AbleDatesDropdown
                   value={checkOut}
-                  startDate={props.stayFrom ?? ""}
-                  endDate={props.stayUntil ?? ""}
+                   startDate={props.ablestayFrom ?? ""}
+                  endDate={props.ablestayUntil ?? ""}
                   onChange={(v) => {
                     setCheckOut(v);
                     setIsDirty(true);

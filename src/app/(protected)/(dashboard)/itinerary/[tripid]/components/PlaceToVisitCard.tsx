@@ -32,8 +32,8 @@ type Props = {
   budgetid: string
   placeType: "ACCOMMODATION" | "PLACE_TO_VISIT";
   name: string;
-  stayFrom?: Date | null;
-  stayUntil?: Date | null;
+  ablestayFrom?: Date | null;
+  ablestayUntil?: Date | null;
   visitDate?: Date | null;
   visitTime?: Date | null;
   notes?: string | null;
@@ -156,8 +156,8 @@ export default function PlaceToVisitCard(props: Props) {
                   <label className="text-xs text-gray-700">Visit date</label>
                   <AbleDatesDropdown
                     value={visitDate}
-                    startDate={props.stayFrom ?? ""}
-                    endDate={props.stayUntil ?? ""}
+                    startDate={props.ablestayFrom ?? ""}
+                    endDate={props.ablestayUntil ?? ""}
                     onChange={(v) => {
                       setVisitDate(v);
                       setIsDirty(true);

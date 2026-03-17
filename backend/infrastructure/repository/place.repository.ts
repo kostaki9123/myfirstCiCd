@@ -49,15 +49,15 @@ export class PlaceRepository implements IPlaceRepository {
         where: {
          internalId : internalId
         },
-        data: {
-           stayFrom: input.stayFrom ?? null,
-           stayUntil: input.stayUntil ?? null,
-           visitDate: input.visitDate ?? null,
-           visitTime: input.visitTime ?? null,
-           googleMapLink: input.googleMapLink ?? null,
-           cost: input.cost ?? null,
-           notes: input.notes ?? null,
-        },
+       data: {
+            ...(input.stayFrom != null && { stayFrom: input.stayFrom }),
+            ...(input.stayUntil != null && { stayUntil: input.stayUntil }),
+            ...(input.visitDate != null && { visitDate: input.visitDate }),
+            ...(input.visitTime != null && { visitTime: input.visitTime }),
+            ...(input.googleMapLink != null && { googleMapLink: input.googleMapLink }),
+            ...(input.cost != null && { cost: input.cost }),
+            ...(input.notes != null && { notes: input.notes }),
+          }
       });
     } catch {
       throw new DatabaseOperationError(

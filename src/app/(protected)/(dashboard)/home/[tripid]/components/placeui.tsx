@@ -33,9 +33,22 @@ const Placeui = async (props : props) => {
   let data : Place[] = []
 
   
-  data = await getPlaces(props.id!)
-    
-  console.log('dataa' , data)
+data = (await getPlaces(props.id!)).sort((a, b) => {
+  const getDate = (p: Place) =>
+    new Date(p.placeType === "ACCOMMODATION" ? p.stayFrom! : p.visitDate!);
+
+  const dateA = getDate(a).getTime();
+  const dateB = getDate(b).getTime();
+
+  // First sort by date
+  if (dateA !== dateB) return dateA - dateB;
+
+  // If same date → ACCOMMODATION first
+  if (a.placeType === "ACCOMMODATION" && b.placeType !== "ACCOMMODATION") return -1;
+  if (a.placeType !== "ACCOMMODATION" && b.placeType === "ACCOMMODATION") return 1;
+
+  return 0;
+});
   return (
     <div className="relative min-h-32 flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
                <div className="lg:absolute top-1 mt-1 lg:mt-0 left-[-6px] px-3 py-1.5 rounded-md

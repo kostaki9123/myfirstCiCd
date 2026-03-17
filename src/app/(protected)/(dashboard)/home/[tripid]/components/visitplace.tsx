@@ -16,7 +16,7 @@ type props = {
 const Visitplace = (props : props) => {
   return (
               <div className=" flex flex-col  " >
-                           <h2 className=" text-base py-2 font-semibold text-white hidden lg:block ">Places</h2>
+                           <h2 className=" text-base py-2 font-semibold text-white hidden lg:block ">Place</h2>
                            
                            <Card className=" w-72 426:w-auto relative h-full p-2 535:max-w-[370px] max-w-[350px]">
                              <CardHeader className="flex flex-row gap-2 p-3">
@@ -50,7 +50,7 @@ const Visitplace = (props : props) => {
                                  }
                                   {props.googleMapLink &&
                                   <a
-                                     href=''
+                                     href={`${props.googleMapLink}`}
                                      target="_blank"
                                      rel="noopener noreferrer"
                                      className="text-muted-foreground hover:text-blue-600 transition flex gap-1 items-center"
