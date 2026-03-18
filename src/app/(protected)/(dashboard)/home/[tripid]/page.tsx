@@ -61,6 +61,8 @@ function formatRoute(points: any[]) {
 const dateRange = formatDateRange(points);
 const route = formatRoute(points);
 
+console.log(points , 'here')
+
 
   return (
     <div className=" absolute top-0 inset-0 flex items-start justify-start overflow-x-hidden 535:overflow-x-auto  bg-[#010038] ">
@@ -120,16 +122,15 @@ const route = formatRoute(points);
 )}
          
        
-          {points.map(( point:any , key:number ) => ( 
+          {points.map(( point: any, key:number ) => ( 
               point.role === "POINT" 
             ? 
            <Placeui  id={point.id} index={point.index} key={key}
-              placeName={point.placeName}  startDate={point.startDate}  endDate={point.endDate}   
+                           placeName={point.placeName}  startDate={point.startDate}  endDate={point.endDate}
              />
            :
-            <Transportui id={point.id} index={point.index} key={key}  fromName={point.fromName}  toName={point.toName} transportType={point.transportType} departureDate={point.departureDate} />    
+            <Transportui toId={point.toPlaceId} toName={point.toName}  toAddress={point.toAddress} toLat={point.toLat.toString()} toLng={point.toLng.toString()!} fromId={point.fromPlaceId} fromName={point.fromName}  fromAddress={point.fromAddress} fromLat={point.fromLat.toString()!} fromLng={point.fromLng.toString()!}  id={point.id} tripId={point.tripId} index={point.index} key={key}    transportType={point.transportType!} departureDate={point.departureDate} />    
         ))}
-        
         </div>
       </div>
     </div>

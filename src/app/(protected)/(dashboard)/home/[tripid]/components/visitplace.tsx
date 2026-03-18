@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import React from 'react'
 import { MdHotel } from 'react-icons/md'
 import { RiExternalLinkLine } from 'react-icons/ri'
-import Notes from './note'
+import Notes from './placenote'
 
 type props = {
  internalId: string

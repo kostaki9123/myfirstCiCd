@@ -250,6 +250,8 @@ export async function MovePoint(formData: FormData) {
       throw new Error("Missing required fields: tripId or role");
     }
 
+    
+
     // 4️⃣ Create input object based on role
     let input: any = {
       id,
@@ -296,6 +298,8 @@ export async function MovePoint(formData: FormData) {
       input.notes = (formData.get("notes") as string);
     }
     
+    console.log('edo' ,input)
+
     console.log('controller run')
     const result = await updatePointController(input);
 

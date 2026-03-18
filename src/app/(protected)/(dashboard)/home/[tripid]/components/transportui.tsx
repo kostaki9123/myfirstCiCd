@@ -6,8 +6,9 @@ import { FaCar , FaBusAlt , FaBicycle, FaShip,FaWalking } from "react-icons/fa";
 import { FaTrainTram, FaMotorcycle , FaTrainSubway , FaTaxi , FaFerry  } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import NotesBox from '../../../../../component/notes/edittextarea';
-import Notes from './note';
+import Notes from './placenote';
 import { RiExternalLinkLine } from 'react-icons/ri';
+import Pointnotes from './pointnotes';
 
 
 const transportModes = [
@@ -26,9 +27,19 @@ const transportModes = [
 
 type props = {
    id: string ,
+   tripId : string
    index: number,
+   fromId : string
    fromName: string,
+   fromAddress : string
+   fromLat : string
+   fromLng : string
+
    toName: string,
+   toId : string
+   toAddress : string
+   toLat : string
+   toLng : string
    transportType: string,
    departureDate?: any,
    departureTime?: any
@@ -77,13 +88,7 @@ function capitalizeFirst(str : string) {
                             <span>From:{props.fromName}</span>
                             <span>To:{ props.toName}</span>
                           </div>
-                          { /** 
-                          <Notes
-                            id={props.id}
-                            pointId={props.pointId}
-                            notes={props.notes}
-                          /> */
-                          }
+                          <Pointnotes  toName={props.toName} toId={props.toId} toAddress={props.toAddress} toLat={props.toLat} toLng={props.toLng} fromName={props.fromName} fromId={props.fromId} fromAddress={props.fromAddress} fromLat={props.fromLat} fromLng={props.fromLng} index={props.index} id={props.id} tripId={props.tripId} notes={props.notes} transportType={props.transportType} departureDate={props.departureDate} />
                         </CardContent>
                       </Card>
                  </div> 
