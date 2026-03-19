@@ -246,6 +246,8 @@ export async function MovePoint(formData: FormData) {
     const role = formData.get("role") as "POINT" | "MOVING_BOX";
     const index = Number(formData.get("index"));
 
+       console.log('edo' ,id , tripId , role)
+
     if (!tripId || !role) {
       throw new Error("Missing required fields: tripId or role");
     }
@@ -298,7 +300,6 @@ export async function MovePoint(formData: FormData) {
       input.notes = (formData.get("notes") as string);
     }
     
-    console.log('edo' ,input)
 
     console.log('controller run')
     const result = await updatePointController(input);

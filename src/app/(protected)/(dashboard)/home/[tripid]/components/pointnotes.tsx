@@ -62,7 +62,7 @@ const Pointnotes = (props:props) => {
           console.log("notes", d.notes)
     
         fd.append("id", props.id ?? "");
-        fd.append("tripId", d.notes ?? "");
+        fd.append("tripId", props.tripId ?? "");
         fd.append("role",  "MOVING_BOX" );
         fd.append("index", props.index.toString() ?? "");
         

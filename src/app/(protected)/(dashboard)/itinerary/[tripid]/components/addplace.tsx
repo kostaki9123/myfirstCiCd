@@ -749,7 +749,7 @@ console.log('ree',addedStayss)
         <div className="text-base font-medium">{props.triggerName}</div>
       </DialogTrigger>
 
-      <DialogContent className="flex gap-2 h-[480px] w-[90%] sm:w-[70%] z-[60] sm:pl-4 mt-6">
+      <DialogContent className="flex gap-2 h-[480px] w-[90%] sm:w-[70%] z-[60] sm:pl-4 mt-6" onOpenAutoFocus={(e) => e.preventDefault()}>
         <div className="sm:w-full 950:w-[70%]">
           <DialogTitle>
             <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}>
