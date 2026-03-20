@@ -32,21 +32,22 @@ const  Navbar =  (props : props) => {
             <></>
            :<Humburger/>
            }
-         <div className="relative w-[249px] md:ml-5  justify-center items-center flex ">
-              <Image
-                src="/ChatGPT Image 10 Μαρ 2026, 04_35_50 μμ.png"
-                alt="Trip Planner Logo"
-                width={90}
-                height={90}
-                className="object-contain mt-2 absolute left-0 md:left-3"
-              />
-            
-          
-            <h3 className="scroll-m-20  mt-1  text-xl md:text-xl font-semibold tracking-tight text-white absolute left-16 md:left-20">
-              Tripaki
-            </h3>
-         </div>
-           
+           <Link
+                href="/"
+                className="relative w-[200px] md:ml-5 flex justify-center items-center "
+              >
+                <Image
+                  src="/ChatGPT Image 10 Μαρ 2026, 04_35_50 μμ.png"
+                  alt="Trip Planner Logo"
+                  width={90}
+                  height={90}
+                  className="object-contain mt-2 absolute left-0 md:left-3"
+                />
+              
+                <h3 className="mt-1 text-xl font-semibold tracking-tight text-white absolute left-16 md:left-20">
+                  Tripaki
+                </h3>
+             </Link>
            {props.withtripname &&
              <Ded/>
            }

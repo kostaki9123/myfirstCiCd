@@ -41,6 +41,6 @@ export const createTripUseCase = async (input: props) => {
      return createTrip;
   } catch (err) {
    // console.error('Sign in use case:',err);
-    throw new Error(`Ops something went wrong:'${(err as Error).message}`)
+    throw new Error(`${(err as Error).message}`)
   }
 };

@@ -26,7 +26,7 @@ export async function signIn(userId:string, email:string, username:string ) {
           });
          
         } catch (err) {
-          throw new Error(`Ops something went wrong:'${(err as Error).message}`)
+          throw new Error(`${(err as Error).message}`)
           
         }
   
@@ -88,7 +88,7 @@ export async function createTrip(formData:FormData ) {
            return result
          
         } catch (err) {
-          throw new Error(`Ops something went wrong: ${err}`)
+          throw new Error(`${err}`)
           
         }
    
@@ -148,7 +148,7 @@ export async function updateTrip(formData: FormData) {
     return result;
   } catch (err) {
     console.error("updateTrip error:", err);
-    throw new Error(`Ops something went wrong:'${(err as Error).message}'`);
+    throw new Error(`${(err as Error).message}'`);
   }
 }
 
@@ -179,7 +179,7 @@ export async function getTrips() {
     return result;
   } catch (err) {
     console.error(err);
-    throw new Error(`Ops something went wrong: '${(err as Error).message}'`);
+    throw new Error(`${(err as Error).message}'`);
   }
 }
 
@@ -206,7 +206,7 @@ export async function getTrip(tripId : string) {
     return result;
   } catch (err) {
     console.error(err);
-    throw new Error(`Ops something went wrong: '${(err as Error).message}'`);
+    throw new Error(`${(err as Error).message}'`);
   }
 }
 
@@ -244,7 +244,7 @@ export async function deleteTrip(tripId:string) {
                   
         } catch (err) {
           console.log(err)
-          throw new Error(`Ops something went wrong:'${(err as Error).message}`)
+          throw new Error(`${(err as Error).message}`)
           
         }
   

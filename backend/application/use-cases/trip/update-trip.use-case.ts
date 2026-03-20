@@ -40,6 +40,6 @@ export const updateTripUseCase = async (input: Props) => {
 
     return updatedTrip;
   } catch (err) {
-    throw new Error(`Ops something went wrong:'${(err as Error).message}'`);
+    throw new Error(`${(err as Error).message}'`);
   }
 };

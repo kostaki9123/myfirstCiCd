@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 import { IUsersRepository } from "../../../../../../backend/application/repositories/users.repository.interface";
@@ -14,7 +14,7 @@ import { deletePointController } from "../../../../../../backend/interface-adapt
 import { movePointController } from "../../../../../../backend/interface-adapters/controllers/points/move-point.controller";
 import { updatePointUseCase } from "../../../../../../backend/application/use-cases/points/update.point.use-case";
 import { updatePointController } from "../../../../../../backend/interface-adapters/controllers/points/update-point.controller";
-import { Point } from "@prisma/client";
+
 
 export async function createPoint(formData: FormData) {
   console.log("🟡 createPoint action called");
@@ -125,10 +125,11 @@ export async function getPoints(tripId : string) {
 
   try {
     const points = await getPointsController(tripId);
+
     return points;
   } catch (err) {
     console.error(err);
-    throw new Error(`Ops something went wrong: '${(err as Error).message}'`);
+    throw new Error(`${(err as Error).message}`);
   }
 }
 
