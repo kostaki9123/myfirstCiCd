@@ -47,7 +47,7 @@ type props = {
 }
 
 const Transportui = (props : props) => {
-   const [notes, setNotes] = useState(props.notes ?? "");
+  
 
  const getTransportIcon = (type: string) => {
     const found = transportModes.find((m) => m.value === type);

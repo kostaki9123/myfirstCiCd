@@ -232,7 +232,36 @@ const Addaplace = (props: Props) => {
   const [addedStayss, setAddedStays] = useState<RecommendedPlace[]>([]);
   const [addedVisitss, setaddedVisits] = useState<RecommendedPlace[]>([]);
  
+  const getPlaceCategory = (types: string[] = []) => {
+  if (types.includes("restaurant")) return "Restaurant ";
+  if (types.includes("cafe")) return "Cafe";
+  if (types.includes("bar")) return "Bar";
+  if (types.includes("tourist_attraction")) return "Attraction";
+  if (types.includes("museum")) return "Museum";
+  if (types.includes("park")) return "Nature";
+  if (types.includes("night_club")) return "Nightlife";
+  if (types.includes("lodging")) return "Accommodation";
+  return null;
+};
 
+const getAccommodationCategory = (types: string[] = []) => {
+  // ✅ MOST SPECIFIC FIRST
+  if (types.includes("hostel")) return "Hostel";
+  if (types.includes("motel")) return "Motel";
+  if (types.includes("resort_hotel")) return "Resort";
+  if (types.includes("guest_house")) return "Guest House";
+  if (types.includes("bed_and_breakfast")) return "B&B";
+  if (types.includes("campground")) return "Campground";
+  if (types.includes("rv_park")) return "RV Park";
+
+  // ⚠️ LESS SPECIFIC
+  if (types.includes("hotel")) return "Hotel";
+
+  // ⚠️ GENERIC FALLBACK
+  if (types.includes("lodging")) return "Accommodation";
+
+  return null;
+};
 
 
  const scorePlace = (place: any) => {
@@ -647,7 +676,7 @@ if (isStay) {
             "Content-Type": "application/json",
             "X-Goog-Api-Key": process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
             "X-Goog-FieldMask":
-              "places.id,places.displayName,places.rating,places.location,places.websiteUri,places.googleMapsUri,places.shortFormattedAddress",
+              "places.id,places.displayName,places.rating,places.location,places.websiteUri,places.googleMapsUri,places.shortFormattedAddress,places.types",
           },
           body: JSON.stringify({
             includedTypes,
@@ -665,6 +694,8 @@ if (isStay) {
       const result = await response.json();
       let places = result.places || [];
 
+       console.log('1aqui:',places)
+
       places = places
         .map((p: any) => {
           const km = haversineDistance(
@@ -679,6 +710,7 @@ if (isStay) {
             _distanceKm: km,
             _score: scorePlace({ ...p, _distanceKm: km }),
             _reason: buildReason({ ...p, _distanceKm: km }),
+            category: props.triggerName.toLowerCase().includes("stay") ? getAccommodationCategory(p.types) :  getPlaceCategory(p.types),
             alreadyAdded: props.addedPlaces.some(
               (a) => a.id === p.id && a.pointId === props.selectedPlace.id
             ),
@@ -786,6 +818,7 @@ console.log('ree',addedStayss)
                   tripId={props.selectedPlace.tripId}
                   pointId={props.selectedPlace.id}
                   placeId={place.id}
+                  category={ place.category}
                   index={index}
                   description={place._reason}
                   longitude={place.location.longitude}

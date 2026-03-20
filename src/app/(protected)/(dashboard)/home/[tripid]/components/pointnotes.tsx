@@ -99,7 +99,7 @@ const Pointnotes = (props:props) => {
        setNotes(v);
        setIsDirty(true);
      }}
-     placeholder="Opening hours, ticket info, best time to visit…"
+     placeholder="Flight details, departure time, terminal, booking info, useful links…"
      showLabel={false}
      fromItinerary={false}
      />

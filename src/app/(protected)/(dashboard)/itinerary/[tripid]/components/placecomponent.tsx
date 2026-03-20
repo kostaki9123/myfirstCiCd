@@ -25,6 +25,7 @@ type Props = {
   priceLabel: string;
   hasExactPrice: boolean;
   googleMapsUri: string;
+  category: string;
 };
 
 export const PlaceTypeEnum = z.enum([
@@ -45,11 +46,11 @@ export const formSchemaPlace = z.object({
 
 const Placecomponent = (props: Props) => {
   const [errorMessages, setErrorMessages] = useState<{ [key: string]: string }>({});
+  const [justAdded, setJustAdded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const addPlace = async () => {
     try {
-      console.log('runnn§')
       setIsLoading(true);
 
       const validation = formSchemaPlace.safeParse({
@@ -60,7 +61,7 @@ const Placecomponent = (props: Props) => {
         latitude: props.latitude,
         longitude: props.longitude,
       });
-      console.log('place id',props.placeId)
+      
       if (!validation.success) {
         const errors = validation.error.flatten().fieldErrors;
 
@@ -93,6 +94,7 @@ const Placecomponent = (props: Props) => {
 
 
       await createPlace(formData);
+      setJustAdded(true);
       setErrorMessages({});
     } catch (err) {
       if (err instanceof InputParseError && err.cause instanceof ZodError) {
@@ -107,6 +109,8 @@ const Placecomponent = (props: Props) => {
       setIsLoading(false);
     }
   };
+
+  const isAdded = props.alreadyAdded || justAdded;
 
   return (
     <div className="relative flex flex-col bg-white rounded-xl shadow-md hover:shadow-lg transition duration-200 p-4 w-full">
@@ -127,6 +131,10 @@ const Placecomponent = (props: Props) => {
           <IoStar color="gold" size={18} />
           <span className="font-medium">
             {props.rating ? props.rating.toFixed(1) : "N/A"}
+          </span>
+
+          <span className="text-gray-500 text-xs">
+            {props.category}
           </span>
         </div>
          {/* 
@@ -174,16 +182,16 @@ const Placecomponent = (props: Props) => {
         </Link>
 
         <Button
-          disabled={props.alreadyAdded || isLoading}
+            disabled={isAdded || isLoading}
           onClick={addPlace}
           className={`flex-1 h-9 text-sm rounded-md transition
-            ${
-              props.alreadyAdded
-                ? "bg-gray-400 text-white cursor-not-allowed"
-                : "bg-green-600 hover:bg-green-700 text-white"
-            }`}
-        >
-          {props.alreadyAdded ? "Added" : isLoading ? "Adding..." : "Add"}
+           ${
+             isAdded
+               ? "bg-gray-400 text-white cursor-not-allowed"
+               : "bg-green-600 hover:bg-green-700 text-white"
+           }`}
+          >
+           {isAdded ? "Added" : isLoading ? "Adding..." : "Add"}
         </Button>
       </div>
 

@@ -18,6 +18,7 @@ type Props = {
 
 const Deleteplacebtn = ({ placeId, pointId }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [justDeleted, setJustDeleted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const onDelete = async () => {
@@ -33,6 +34,7 @@ const Deleteplacebtn = ({ placeId, pointId }: Props) => {
       setErrorMessage("");
 
      await deletePlace(pointId, placeId);
+     setJustDeleted(true);
 
       console.log("✅ Place deleted successfully");
     } catch (err) {
@@ -43,6 +45,8 @@ const Deleteplacebtn = ({ placeId, pointId }: Props) => {
     }
   };
 
+  if (justDeleted) return null; 
+
   return (
     <div className="flex flex-col gap-1 top-3 right-2 absolute">
   <div
@@ -51,7 +55,7 @@ const Deleteplacebtn = ({ placeId, pointId }: Props) => {
     aria-label="Delete place"
     aria-disabled={isLoading}
     onClick={() => {
-      if (!isLoading) onDelete();
+     if (!isLoading && !justDeleted) onDelete();
     }}
     onKeyDown={(e) => {
       if (isLoading) return;
@@ -65,7 +69,7 @@ const Deleteplacebtn = ({ placeId, pointId }: Props) => {
       text-white transition p-2 rounded-full
       cursor-pointer select-none
       focus:outline-none focus:ring-2 focus:ring-red-400
-      ${isLoading ? "opacity-50 pointer-events-none" : ""}
+     ${isLoading || justDeleted ? "opacity-50 pointer-events-none" : ""}
     `}
   >
     <MdDelete size={20} className={isLoading ? "animate-spin" : ""} />
