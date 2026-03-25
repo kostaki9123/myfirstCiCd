@@ -57,6 +57,7 @@ export class PlaceRepository implements IPlaceRepository {
             ...(input.googleMapLink != null && { googleMapLink: input.googleMapLink }),
             ...(input.cost != null && { cost: input.cost }),
             ...(input.notes != null && { notes: input.notes }),
+            ...(input.paymentStatus != null && { paymentStatus: input.paymentStatus }),
           }
       });
     } catch {

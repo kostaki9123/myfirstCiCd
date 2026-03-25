@@ -11,6 +11,7 @@ type props = {
  visitdate : Date
  visitTime : Date | undefined
  googleMapLink : string| null | undefined //na figi optional later
+ isPaid?: boolean
 }
 
 const Visitplace = (props : props) => {
@@ -22,7 +23,19 @@ const Visitplace = (props : props) => {
                              <CardHeader className="flex flex-row gap-2 p-3">
                                <div className=" flex flex-row items-center gap-2">
                                  <CardTitle className="">{props.name}</CardTitle>
+
+                                 {props.isPaid && (
+                                     <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-green-100 text-green-700">
+                                       Paid
+                                     </span>
+                                  )}
                                </div>
+                                <a
+                                  href={`/itinerary?place=${props.internalId}`}
+                                   className="text-xs px-2 py-1 rounded-md border border-blue-200 text-blue-700 hover:bg-blue-50 transition"
+                                    >
+                                      Edit
+                                </a>
                              </CardHeader>
                            
                              <CardContent className="  p-2 pt-0 space-y-2 text-xs text-muted-foreground">

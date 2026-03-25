@@ -38,7 +38,6 @@
   model Budget {
     id             String   @id @default(cuid())
     tripId         String    @unique
-    Amount         Int
     genCurrency    String
     budgetAmount   Int
     budgetCurrency String
@@ -127,6 +126,7 @@
 
     cost       Float?
     notes      String?
+    paymentStatus String?
 
     visitDate  DateTime?
     visitTime  DateTime?

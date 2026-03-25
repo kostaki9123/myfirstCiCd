@@ -8,8 +8,6 @@ const budgetBaseSchema = z.object({
 
   tripId: z.string().cuid(),
 
-  Amount: z.number().int().positive(),
-
   genCurrency: z.string().min(1, "General currency is required"),
 
   budgetAmount: z.number().int().positive(),
@@ -38,7 +36,6 @@ export type Budget = z.infer<typeof selectBudgetSchema>
  */
 export const insertCreateBudgetSchema = budgetBaseSchema.pick({
   tripId: true,
-  Amount: true,
   genCurrency: true,
   budgetAmount: true,
   budgetCurrency: true,

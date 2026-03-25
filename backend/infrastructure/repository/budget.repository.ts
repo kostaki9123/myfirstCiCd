@@ -18,7 +18,7 @@ export class BudgetsRepository implements IBudgetsRepository {
         },
         data: {
           tripId: input.tripId,
-          Amount: input.Amount,
+       
           genCurrency: input.genCurrency,
           budgetAmount: input.budgetAmount,
           budgetCurrency: input.budgetCurrency,
@@ -94,7 +94,6 @@ export class BudgetsRepository implements IBudgetsRepository {
       const newBudget = await prisma.budget.create({
         data: {
           tripId: input.tripId,
-          Amount: input.Amount,
           genCurrency: input.genCurrency,
           budgetAmount: input.budgetAmount,
           budgetCurrency: input.budgetCurrency,

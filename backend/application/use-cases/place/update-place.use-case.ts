@@ -10,6 +10,7 @@ export type UpdatePlaceUseCaseInput = {
   visitTime?: Date | null;
   cost?: number | null;
   notes?: string | null;
+  paymentStatus?: string;
 };
 
 export type IUpdatePlaceUseCase = ReturnType<typeof updatePlaceUseCase>;

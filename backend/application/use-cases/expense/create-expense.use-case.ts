@@ -50,14 +50,7 @@ export const createExpenseUseCase = async (
         budget.budgetCurrency
       )
     }
-
-    /* ---------------- UPDATE BUDGET ---------------- */
-    const newBudgetAmount = budget.Amount + convertedAmount
-
-    await budgetRepository.updateBudget(budget.id!, {
-      Amount: newBudgetAmount,
-    })
-
+    
     return createdExpense
   } catch (err) {
     throw new Error(

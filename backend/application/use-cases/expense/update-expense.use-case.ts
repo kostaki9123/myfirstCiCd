@@ -27,7 +27,6 @@ export const updateExpenseUseCase = async (input: Props) => {
       description: input.description,
       category: input.category,
       expenseCurrency: input.expenseCurrency,
-      amount: input.amount,
       connectedToId: input.connectedToId,
     })
 

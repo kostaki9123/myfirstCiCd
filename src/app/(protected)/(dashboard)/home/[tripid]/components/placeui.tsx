@@ -74,9 +74,9 @@ data = (await getPlaces(props.id!)).sort((a, b) => {
                   :
                     data.map(( place:Place , key:number ) => ( 
                       place.placeType === "ACCOMMODATION" ?
-                      <Accomodationplace  internalId={place.internalId!} googleMapLink={place.googleMapLink} notes={place.notes} name={place.name} stayFrom={place.stayFrom!} stayUntil={place.stayUntil!} />
+                      <Accomodationplace  key={key} isPaid internalId={place.internalId!} googleMapLink={place.googleMapLink} notes={place.notes} name={place.name} stayFrom={place.stayFrom!} stayUntil={place.stayUntil!} />
                       :
-                      <Visitplace  internalId={place.internalId!} googleMapLink={place.googleMapLink} notes={place.notes} name={place.name} visitdate={place.visitDate!} visitTime={place.visitTime ? place.visitTime : undefined} />                       
+                      <Visitplace key={key} internalId={place.internalId!} googleMapLink={place.googleMapLink} notes={place.notes} name={place.name} visitdate={place.visitDate!} visitTime={place.visitTime ? place.visitTime : undefined} />                       
                     ))}
                 </div>  
              </div>

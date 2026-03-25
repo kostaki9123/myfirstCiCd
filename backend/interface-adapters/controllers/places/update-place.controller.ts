@@ -21,6 +21,8 @@ export const inputSchema = z.object({
   /* -------- Extras -------- */
   cost: z.number().nullable().optional(),
   notes: z.string().nullable().optional(),
+
+  paymentStatus: z.string().nullable().optional(),
 });
 
 
@@ -47,6 +49,7 @@ export const updatePlaceController =
             
                 cost: data.cost ?? null,
                 notes: data.notes ?? null,
+                paymentStatus: data.paymentStatus!
               })
                       
     }

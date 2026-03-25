@@ -20,6 +20,8 @@ import { Button } from "@/components/ui/button";
 import NotesBox from "@/app/component/notes/edittextarea";
 import { updatePlace } from "../action";
 import AddExpenseDialog from "../../../budget/[tripid]/component/expenseDialog";
+import { RiExternalLinkLine } from "react-icons/ri";
+import PayStatusDropdown from "./paidstatusdropdown";
 
 /* -------------------------------------------------------
    TYPES
@@ -37,6 +39,8 @@ type Props = {
   visitDate?: Date | null;
   visitTime?: Date | null;
   notes?: string | null;
+  bookingLink?: string | null
+  paymentStatus?: "UNPAID" | "PARTIALLY_PAID" | "PAID";
 };
 
 /* -------------------------------------------------------
@@ -64,6 +68,10 @@ export default function PlaceToVisitCard(props: Props) {
   const [visitTime, setVisitTime] = useState<Date | null>(
     props.visitTime ?? null
   );
+
+  const [paymentStatus, setPaymentStatus] = useState<'UNPAID' | 'PARTIALLY_PAID' | 'PAID'>(
+  props.paymentStatus ?? 'UNPAID'
+)
 
   
   const [notes, setNotes] = useState(props.notes ?? "");
@@ -107,6 +115,7 @@ export default function PlaceToVisitCard(props: Props) {
     fd.append("internalId", props.internalId );
     if (d.visitDate) fd.append("visitDate", d.visitDate.toLocaleDateString("en-CA"));
     if (d.visitTime) fd.append("visitTime", d.visitTime.toISOString());
+    fd.append("paymentStatus", paymentStatus);
     fd.append("notes", d.notes ?? "");
 
     try {
@@ -181,10 +190,28 @@ export default function PlaceToVisitCard(props: Props) {
             </div>
 
             {/* TIME + COST */}
-            <div className="flex flex-col">
-                 <label className="text-xs text-gray-700  ">Cost</label>
-               <AddExpenseDialog connectedToId={props.internalId} budgedId={props.budgetid} fromAllExpenses={true}  fromItinerary/> 
-            </div>
+            <div className="py-1 flex flex-col gap-4 max-w-[500px] ">
+            {/* CHECK-IN / CHECK-OUT */}
+               <div className="grid grid-cols-2 gap-3">
+                   <div className="flex flex-col">
+                        <label className="text-xs text-gray-700  ">Cost</label>
+                      <AddExpenseDialog connectedToId={props.internalId} budgedId={props.budgetid} fromAllExpenses={true}  fromItinerary/> 
+                     
+                   </div>
+
+                   <div className="flex flex-col">
+                        <label className="text-xs text-gray-700">Payment Status</label>
+                        <PayStatusDropdown
+                          value={paymentStatus}
+                          onChange={(v) => {
+                            setPaymentStatus(v)
+                            setIsDirty(true)
+                          }}
+                        />
+                    </div>
+
+                </div>
+             </div>
 
 
             {/* NOTES */}
@@ -201,6 +228,19 @@ export default function PlaceToVisitCard(props: Props) {
                 fromItinerary
               />
             </div>
+
+              {props.bookingLink && (
+                   <a
+                     href={props.bookingLink} 
+                     target="_blank"
+                     rel="noopener noreferrer"
+                   >
+                     <Button className="w-full">
+                       Book Here
+                       <RiExternalLinkLine className=' text-lg'/>
+                     </Button>
+                   </a>
+                 )} 
 
             {/* SAVE */}
             {isDirty && (

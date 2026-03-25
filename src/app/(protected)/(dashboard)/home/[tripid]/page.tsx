@@ -129,7 +129,7 @@ console.log(points , 'here')
                            placeName={point.placeName}  startDate={point.startDate}  endDate={point.endDate}
              />
            :
-            <Transportui toId={point.toPlaceId} toName={point.toName}  toAddress={point.toAddress} toLat={point.toLat.toString()} toLng={point.toLng.toString()!} fromId={point.fromPlaceId} fromName={point.fromName}  fromAddress={point.fromAddress} fromLat={point.fromLat.toString()!} fromLng={point.fromLng.toString()!}  id={point.id} tripId={point.tripId} index={point.index} key={key}    transportType={point.transportType!} departureDate={point.departureDate} />    
+            <Transportui  key={key}     toId={point.toPlaceId} toName={point.toName}  toAddress={point.toAddress} toLat={point.toLat.toString()} toLng={point.toLng.toString()!} fromId={point.fromPlaceId} fromName={point.fromName}  fromAddress={point.fromAddress} fromLat={point.fromLat.toString()!} fromLng={point.fromLng.toString()!}  id={point.id} tripId={point.tripId} index={point.index} transportType={point.transportType!} departureDate={point.departureDate} />    
         ))}
         </div>
       </div>
