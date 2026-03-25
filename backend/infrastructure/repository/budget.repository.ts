@@ -17,8 +17,7 @@ export class BudgetsRepository implements IBudgetsRepository {
           id: budgetId,
         },
         data: {
-          tripId: input.tripId,
-       
+          tripId: input.tripId,   
           genCurrency: input.genCurrency,
           budgetAmount: input.budgetAmount,
           budgetCurrency: input.budgetCurrency,

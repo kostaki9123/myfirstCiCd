@@ -107,7 +107,6 @@ export class TripsRepository implements ITripsRepository {
               const newbudget = await prisma.budget.create({
                   data:{
                       tripId : newTrip.id ,
-                      Amount : 0,
                       genCurrency : 'EUR',   
                       budgetAmount : 0,  
                       budgetCurrency : 'EUR'           

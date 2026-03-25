@@ -9,7 +9,6 @@ export class MockBudgetsRepository implements IBudgetsRepository {
       {
         id: "1",
         tripId: "1",
-        Amount: 0,
         genCurrency: "Euro",
         budgetAmount: 2500,
         budgetCurrency: "Euro",
@@ -17,7 +16,6 @@ export class MockBudgetsRepository implements IBudgetsRepository {
       {
         id: "2",
         tripId: "2",
-        Amount: 0,
         genCurrency: "Euro",
         budgetAmount: 1800,
         budgetCurrency: "Euro",
@@ -25,7 +23,6 @@ export class MockBudgetsRepository implements IBudgetsRepository {
       {
         id: "3",
         tripId: "3",
-        Amount: 0,
         genCurrency: "Yen",
         budgetAmount: 3000,
         budgetCurrency: "Yen",
@@ -33,7 +30,6 @@ export class MockBudgetsRepository implements IBudgetsRepository {
       {
         id: "4",
         tripId: "4",
-        Amount: 0,
         genCurrency: "USD",
         budgetAmount: 3500,
         budgetCurrency: "USD",
@@ -41,7 +37,6 @@ export class MockBudgetsRepository implements IBudgetsRepository {
       {
         id: "5",
         tripId: "5",
-        Amount: 0,
         genCurrency: "USD",
         budgetAmount: 2000,
         budgetCurrency: "USD",
