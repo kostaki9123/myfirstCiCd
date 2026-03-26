@@ -47,11 +47,7 @@ export const deleteExpenseUseCase = async (input: Props) => {
     }
 
     // 5️⃣ Update the budget amount
-    const newBudgetAmount = (budget.Amount || 0) - amountToSubtract
-    await budgetRepository.updateBudget(input.budgetId, {
-      Amount: newBudgetAmount,
-    })
-
+  
     // 6️⃣ Delete the expense
     const result = await expenseRepository.deleteExpense(input.expenseId)
 
