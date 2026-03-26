@@ -28,15 +28,10 @@ export const updateBudgetUseCase = async (input: Props) => {
     // 2️⃣ Call repository to update
     const oldBudget = await budgetRepository.getBudget(input.budgetId)
 
-    const newAmount = await convertCurrency(
-      oldBudget?.Amount!,
-      oldBudget?.genCurrency!,
-      input.genCurrency!
-    )
+   
 
     const result = await budgetRepository.updateBudget(input.budgetId, {
       tripId: input.tripId,
-      Amount: newAmount,
       genCurrency: input.genCurrency,
       budgetAmount: input.budgetAmount,
       budgetCurrency: input.budgetCurrency,
