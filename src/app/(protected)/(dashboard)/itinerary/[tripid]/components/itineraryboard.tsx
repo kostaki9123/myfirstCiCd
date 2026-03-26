@@ -149,6 +149,7 @@ const Itineraryboard = (props: Props) => {
               notes={place.notes}
               ablestayFrom={selectedPoint.startDate}
               ablestayUntil={selectedPoint.endDate}
+              paymentStatus={place.paymentStatus ? place.paymentStatus : undefined}
               bookingLink={'d'}
             />
           ))}
@@ -191,6 +192,7 @@ const Itineraryboard = (props: Props) => {
               ablestayFrom={selectedPoint.startDate}
               ablestayUntil={selectedPoint.endDate}
               notes={place.notes}
+              paymentStatus={place.paymentStatus ? place.paymentStatus : undefined}
                bookingLink={'d'}
             />
           ))}

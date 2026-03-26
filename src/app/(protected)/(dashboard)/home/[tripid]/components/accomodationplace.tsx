@@ -12,7 +12,7 @@ type props = {
  stayFrom : Date
  stayUntil : Date
  googleMapLink : string| null | undefined//na figi optional later
- isPaid?: boolean
+ paymentStatus?: string | null
 }
 
 const Accomodationplace = (props:props) => {
@@ -23,21 +23,31 @@ const Accomodationplace = (props:props) => {
                                <Card className=" w-72 426:w-auto relative h-fit p-2 535:max-w-[370px] max-w-[350px] ">
                                  <CardHeader className="flex flex-row gap-2 p-3 ">
                                   {/* LEFT: title + icon + badge */}
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex items-start gap-2">
                                       <CardTitle>{props.name}</CardTitle>
                                       <MdHotel className="text-4xl 535:text-xl" />
                                   
-                                      {props.isPaid && (
-                                        <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-green-100 text-green-700">
-                                          Paid
-                                        </span>
-                                      )}
+                                       {props.paymentStatus === "PAID" && (
+                                     <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-green-100 text-green-700">
+                                       Paid
+                                     </span>
+                                  )}
+                                  {props.paymentStatus === "UNPAID" && (
+                                     <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-green-100 text-red-500">
+                                       unPaid
+                                     </span>
+                                  )}
+                                  {props.paymentStatus === "PARTIALLY_PAID" && (
+                                     <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-green-100 text-red-500">
+                                       Partially Paid
+                                     </span>
+                                  )}
                                     </div>
                                   
                                     {/* RIGHT: action */}
                                     <a
                                       href={`/itinerary?place=${props.internalId}`}
-                                      className="text-xs px-2 py-1 rounded-md border border-blue-200 text-blue-700 hover:bg-blue-50 transition"
+                                      className="text-xs max-h-7 px-2 py-1 rounded-md border border-blue-200 text-blue-700 hover:bg-blue-50 transition"
                                     >
                                       Edit
                                     </a>

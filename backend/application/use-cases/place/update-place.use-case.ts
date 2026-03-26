@@ -32,6 +32,7 @@ export const updatePlaceUseCase = async (input: UpdatePlaceUseCaseInput) => {
         visitDate: input.visitDate ?? null,
         visitTime: input.visitTime ?? null,
         cost: input.cost ?? null,
+        paymentStatus: input.paymentStatus ?? null,
         notes: input.notes ?? null,
       } // 3️⃣ input object
     );

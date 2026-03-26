@@ -11,7 +11,7 @@ type props = {
  visitdate : Date
  visitTime : Date | undefined
  googleMapLink : string| null | undefined //na figi optional later
- isPaid?: boolean
+ paymentStatus?: string | null
 }
 
 const Visitplace = (props : props) => {
@@ -21,18 +21,28 @@ const Visitplace = (props : props) => {
                            
                            <Card className=" w-72 426:w-auto relative h-full p-2 535:max-w-[370px] max-w-[350px]">
                              <CardHeader className="flex flex-row gap-2 p-3">
-                               <div className=" flex flex-row items-center gap-2">
+                               <div className=" flex flex-row items-start  gap-2">
                                  <CardTitle className="">{props.name}</CardTitle>
 
-                                 {props.isPaid && (
+                                 {props.paymentStatus === "PAID" && (
                                      <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-green-100 text-green-700">
                                        Paid
+                                     </span>
+                                  )}
+                                  {props.paymentStatus === "UNPAID" && (
+                                     <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-red-100 text-red-500">
+                                       Unpaid
+                                     </span>
+                                  )}
+                                  {props.paymentStatus === "PARTIALLY_PAID" && (
+                                     <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-yellow-100 text-yellow-500">
+                                       Partially Paid
                                      </span>
                                   )}
                                </div>
                                 <a
                                   href={`/itinerary?place=${props.internalId}`}
-                                   className="text-xs px-2 py-1 rounded-md border border-blue-200 text-blue-700 hover:bg-blue-50 transition"
+                                   className="text-xs max-h-7 px-2 py-1 rounded-md border border-blue-200 text-blue-700 hover:bg-blue-50 transition"
                                     >
                                       Edit
                                 </a>

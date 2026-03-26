@@ -40,7 +40,7 @@ type Props = {
   visitTime?: Date | null;
   notes?: string | null;
   bookingLink?: string | null
-  paymentStatus?: "UNPAID" | "PARTIALLY_PAID" | "PAID";
+  paymentStatus?: string;
 };
 
 /* -------------------------------------------------------
@@ -69,8 +69,8 @@ export default function PlaceToVisitCard(props: Props) {
     props.visitTime ?? null
   );
 
-  const [paymentStatus, setPaymentStatus] = useState<'UNPAID' | 'PARTIALLY_PAID' | 'PAID'>(
-  props.paymentStatus ?? 'UNPAID'
+  const [paymentStatus, setPaymentStatus] = useState(
+  props.paymentStatus ?? ''
 )
 
   

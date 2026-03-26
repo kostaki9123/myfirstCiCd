@@ -40,7 +40,7 @@ type Props = {
   ablestayFrom: Date | null | undefined;
   ablestayUntil: Date | null | undefined
   bookingLink?: string | null
-  paymentStatus?: "UNPAID" | "PARTIALLY_PAID" | "PAID";
+  paymentStatus?: string;
 };
 
 /* -------------------------------------------------------
@@ -80,8 +80,8 @@ export default function PlaceToStayCard(props: Props) {
 
   const [isDirty, setIsDirty] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [paymentStatus, setPaymentStatus] = useState<'UNPAID' | 'PARTIALLY_PAID' | 'PAID'>(
-  props.paymentStatus ?? 'UNPAID'
+  const [paymentStatus, setPaymentStatus] = useState(
+  props.paymentStatus ?? ''
 )
 
  

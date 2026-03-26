@@ -14,18 +14,18 @@ import { cn } from '@/lib/utils'
 
 /* ---------------- TYPES ---------------- */
 
-type PaymentStatus = "UNPAID" | "PARTIALLY_PAID" | "PAID";
+
 
 type Props = {
-  value: PaymentStatus
-  onChange: (value: PaymentStatus) => void
+  value: string
+  onChange: (value: string) => void
 }
 
 /* ---------------- OPTIONS ---------------- */
 
 const options: {
   label: string
-  value: PaymentStatus
+  value: string
   icon: React.ReactNode
   color: string
 }[] = [
@@ -79,9 +79,9 @@ export default function PayStatusDropdown({ value, onChange }: Props) {
 
       {/* DROPDOWN */}
       <DropdownMenuContent className="w-44">
-        {options.map((option) => (
+        {options.map((option ,key) => (
           <DropdownMenuItem
-            key={option.value}
+            key={key}
             onClick={() => onChange(option.value)}
             className="flex items-center justify-between"
           >
