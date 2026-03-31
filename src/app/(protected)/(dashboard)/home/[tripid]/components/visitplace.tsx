@@ -10,8 +10,10 @@ type props = {
  name : string
  visitdate : Date
  visitTime : Date | undefined
+ pointId : string
  googleMapLink : string| null | undefined //na figi optional later
  paymentStatus?: string | null
+ tripId : string
 }
 
 const Visitplace = (props : props) => {
@@ -41,7 +43,7 @@ const Visitplace = (props : props) => {
                                   )}
                                </div>
                                 <a
-                                  href={`/itinerary?place=${props.internalId}`}
+                                  href={`/itinerary/${props.tripId}?point=${props.pointId}`}
                                    className="text-xs max-h-7 px-2 py-1 rounded-md border border-blue-200 text-blue-700 hover:bg-blue-50 transition"
                                     >
                                       Edit

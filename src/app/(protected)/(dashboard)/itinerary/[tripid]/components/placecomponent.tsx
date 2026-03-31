@@ -19,13 +19,13 @@ type Props = {
   longitude: number;
   description: string;
   address: string;
-  link?: string;
   alreadyAdded: boolean;
   tripId: string;
   priceLabel: string;
   hasExactPrice: boolean;
   googleMapsUri: string;
   category: string;
+  affiliatelink:string
 };
 
 export const PlaceTypeEnum = z.enum([
@@ -91,7 +91,7 @@ const Placecomponent = (props: Props) => {
       formData.append("name", props.displayName);
       formData.append("tripId", props.tripId);
       formData.append("googleMapsUri", props.googleMapsUri);
-
+      formData.append("affiliatelink", props.affiliatelink);
 
       await createPlace(formData);
       setJustAdded(true);
@@ -173,7 +173,7 @@ const Placecomponent = (props: Props) => {
 
       {/* Buttons */}
       <div className="mt-4 flex gap-3">
-        <Link href={props.link || "#"} className="flex-1" target="_blank" rel="noopener noreferrer">
+        <Link href={props.affiliatelink || "#"} className="flex-1" target="_blank" rel="noopener noreferrer">
           <Button
             className="w-full bg-blue-600 hover:bg-blue-700 text-white h-9 text-sm rounded-md"
           >

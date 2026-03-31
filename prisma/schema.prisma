@@ -127,6 +127,7 @@
     cost       Float?
     notes      String?
     paymentStatus String?
+    affiliatelink String?
 
     visitDate  DateTime?
     visitTime  DateTime?

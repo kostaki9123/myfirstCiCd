@@ -108,6 +108,20 @@ function App({
 }) {
   const sorted = [...cyrclesArr].sort((a, b) => a.index - b.index);
 
+
+  function MapController({ focusplace }: { focusplace?: LatLng | null }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map || !focusplace) return;
+
+    map.panTo(focusplace);
+    map.setZoom(13);
+  }, [map, focusplace]);
+
+  return null;
+}
+
   const COLOR_A = "#1E90FF";
   const COLOR_B = "#FF0000";
 
@@ -124,7 +138,7 @@ function App({
     other: "➡️",
   };
 
-  console.log('added place to stay',addedplacetostay)
+  console.log('reccomended',addedplacetostay)
 
   const pathSegments: { path: LatLng[]; color: string }[] = [];
   const transportMarkers: { pos: LatLng; icon: string }[] = [];
@@ -197,6 +211,7 @@ function App({
       defaultCenter={finalCenter}
       defaultZoom={focusplace ? 13 : 3}
     >
+      <MapController focusplace={focusplace} />
       {/* ROUTES */}
       {pathSegments.map((seg, i) => (
         <PolylineOverlay

@@ -24,16 +24,20 @@ const ItineraryClient = ({
   places,
   budgetId,
   trip,
+  selectedpointId
 }: {
   points: any[];
   places: Place[];
   budgetId: string;
   trip: Trip;
+  selectedpointId?: string;
 }) => {
 
-  /* ---------------- DEFAULT FOCUS ---------------- */
+  /* ✅ SAFE DEFAULT FOCUS */
   const defaultLocation =
-    points[0]?.placeLat != null && points[0]?.placeLng != null
+    points.length > 0 &&
+    points[0]?.placeLat != null &&
+    points[0]?.placeLng != null
       ? { lat: points[0].placeLat, lng: points[0].placeLng }
       : null;
 
@@ -41,7 +45,7 @@ const ItineraryClient = ({
     defaultLocation
   );
 
-  /* ---------------- DERIVE SELECTED POINT ID ---------------- */
+  /* ✅ DERIVE SELECTED POINT ID SAFELY */
   const selectedPointId = useMemo(() => {
     if (!focusplace) return null;
 
@@ -54,9 +58,8 @@ const ItineraryClient = ({
     return matchedPoint?.id ?? null;
   }, [focusplace, points]);
 
-  /* ---------------- BUILD MAP PLACES ---------------- */
+  /* ✅ SAFE MAP DATA */
   const { addedStays, addedVisits } = useMemo(() => {
-
     if (!selectedPointId) {
       return { addedStays: [], addedVisits: [] };
     }
@@ -79,26 +82,19 @@ const ItineraryClient = ({
       }));
 
     return {
-      addedStays: mapped.filter(
-        (p) => p.type === "ACCOMMODATION"
-      ),
-      addedVisits: mapped.filter(
-        (p) => p.type === "PLACE_TO_VISIT"
-      ),
+      addedStays: mapped.filter((p) => p.type === "ACCOMMODATION"),
+      addedVisits: mapped.filter((p) => p.type === "PLACE_TO_VISIT"),
     };
-
   }, [places, selectedPointId]);
-
-  /* ---------------- RENDER ---------------- */
 
   return (
     <div className="h-full absolute inset-0 flex min-w-[344px]">
 
-      {/* LEFT SIDE */}
+      {/* LEFT */}
       <div className="h-full w-full 950:w-[53%] overflow-auto">
         {points.length === 0 ? (
           <div className="h-fit min-h-40 w-full p-3">
-            <div className="w-full rounded-md min-h-40 flex items-center justify-center p-2 bg-[#ACA7CB] min-w-[290px] relative">
+            <div className="w-full rounded-md min-h-40 flex items-center justify-center p-2 bg-[#ACA7CB]">
               There is no destination yet
             </div>
           </div>
@@ -110,11 +106,12 @@ const ItineraryClient = ({
             focusplace={focusplace}
             setFocusplace={setFocusplace}
             budgetId={budgetId}
+            selectedpointId={selectedpointId}
           />
         )}
       </div>
 
-      {/* RIGHT SIDE MAP */}
+      {/* RIGHT MAP */}
       <div className="h-full w-[47%] hidden 950:block">
         <Mapprovider
           cyrclesArr={points}

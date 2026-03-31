@@ -39,7 +39,7 @@ type Props = {
   notes?: string | null;
   ablestayFrom: Date | null | undefined;
   ablestayUntil: Date | null | undefined
-  bookingLink?: string | null
+  affiliateLink?: string | null
   paymentStatus?: string;
 };
 
@@ -237,9 +237,9 @@ export default function PlaceToStayCard(props: Props) {
               />
             </div>
 
-              {props.bookingLink && (
+              {props.affiliateLink && (
                    <a
-                     href={props.bookingLink}
+                     href={props.affiliateLink}
                      target="_blank"
                      rel="noopener noreferrer"
                    >

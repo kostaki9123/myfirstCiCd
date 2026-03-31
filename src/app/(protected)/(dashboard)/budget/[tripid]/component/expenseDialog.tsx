@@ -166,8 +166,10 @@ const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary ,fromAllExpen
       setIsLoading(true)
       setErrors({})
       if (expense?.id) {
+        console.log('update')
         await updateExpense(expense.id, actionFormData)
       } else {
+ console.log('create')
         await createExpense(actionFormData)
       }
       setOpen(false)

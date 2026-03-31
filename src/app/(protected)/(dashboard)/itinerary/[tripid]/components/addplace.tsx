@@ -773,10 +773,15 @@ console.log('ree',addedStayss)
 
   return (
     <Dialog>
-      <DialogTrigger  onClick={() => {
-    props.onSubmitSuccess(false);
+      <DialogTrigger 
+onClick={() => {
+  props.onSubmitSuccess(false);
+
+  if (typeof window !== "undefined") {
     localStorage.setItem("tripItineraryHintSeen", "true");
-  }} className="bg-gray-400 rounded-md min-w-[260px] h-10 flex items-center justify-center w-full gap-7 p-5 cursor-pointer">
+  }
+}}
+ className="bg-gray-400 rounded-md min-w-[260px] h-10 flex items-center justify-center w-full gap-7 p-5 cursor-pointer">
         <BsHouseAddFill fontSize="20px" />
         <div className="text-base font-medium">{props.triggerName}</div>
       </DialogTrigger>
@@ -827,7 +832,7 @@ console.log('ree',addedStayss)
                   rating={place.rating ?? 0}
                   address={place.shortFormattedAddress ?? ""}
                   displayName={place.displayName?.text || ""}
-                  link={affiliateData?.affiliate_url || place.websiteUri || place.googleMapsUri}
+                  affiliatelink={affiliateData?.affiliate_url || place.websiteUri || place.googleMapsUri}
                   priceLabel={priceLabel ?? fallbackLabel}
                   hasExactPrice={!!priceLabel}
                   alreadyAdded={place.alreadyAdded}

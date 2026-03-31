@@ -126,7 +126,7 @@ console.log(points , 'here')
               point.role === "POINT" 
             ? 
            <Placeui  id={point.id} index={point.index} key={key}
-                           placeName={point.placeName}  startDate={point.startDate}  endDate={point.endDate}
+                           placeName={point.placeName} tripId={tripid}  startDate={point.startDate}  endDate={point.endDate}
              />
            :
             <Transportui  key={key}     toId={point.toPlaceId} toName={point.toName}  toAddress={point.toAddress} toLat={point.toLat.toString()} toLng={point.toLng.toString()!} fromId={point.fromPlaceId} fromName={point.fromName}  fromAddress={point.fromAddress} fromLat={point.fromLat.toString()!} fromLng={point.fromLng.toString()!}  id={point.id} tripId={point.tripId} index={point.index} transportType={point.transportType!} departureDate={point.departureDate} />    

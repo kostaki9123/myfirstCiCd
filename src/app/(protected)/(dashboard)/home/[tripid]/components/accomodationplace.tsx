@@ -11,8 +11,10 @@ type props = {
  name : string
  stayFrom : Date
  stayUntil : Date
+ pointId : string
  googleMapLink : string| null | undefined//na figi optional later
  paymentStatus?: string | null
+ tripId : string
 }
 
 const Accomodationplace = (props:props) => {
@@ -27,18 +29,18 @@ const Accomodationplace = (props:props) => {
                                       <CardTitle>{props.name}</CardTitle>
                                       <MdHotel className="text-4xl 535:text-xl" />
                                   
-                                       {props.paymentStatus === "PAID" && (
+                                   {props.paymentStatus === "PAID" && (
                                      <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-green-100 text-green-700">
                                        Paid
                                      </span>
                                   )}
                                   {props.paymentStatus === "UNPAID" && (
-                                     <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-green-100 text-red-500">
-                                       unPaid
+                                     <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-red-100 text-red-500">
+                                       Unpaid
                                      </span>
                                   )}
                                   {props.paymentStatus === "PARTIALLY_PAID" && (
-                                     <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-green-100 text-red-500">
+                                     <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-yellow-100 text-yellow-500">
                                        Partially Paid
                                      </span>
                                   )}
@@ -46,7 +48,7 @@ const Accomodationplace = (props:props) => {
                                   
                                     {/* RIGHT: action */}
                                     <a
-                                      href={`/itinerary?place=${props.internalId}`}
+                                      href={`/itinerary/${props.tripId}?point=${props.pointId}`}
                                       className="text-xs max-h-7 px-2 py-1 rounded-md border border-blue-200 text-blue-700 hover:bg-blue-50 transition"
                                     >
                                       Edit

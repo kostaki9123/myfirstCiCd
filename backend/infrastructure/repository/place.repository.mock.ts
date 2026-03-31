@@ -29,6 +29,7 @@ export class MockPlaceRepository implements IPlaceRepository {
       notes: null,
       visitDate: null,
       visitTime: null,
+      affiliatelink: input.affiliatelink
     };
 
     this.places.push(newPlace);

@@ -7,12 +7,16 @@ import { getTrip } from '@/app/(protected)/action';
 
 const Page = async ({
   params,
+  searchParams,
 }: {
   params: Promise<{ tripid: string }>;
+  searchParams: Promise<{ point?: string }>;
 }) => {
   const { tripid } = await params;
+  const { point } = await searchParams;
 
-  console.log('Server-side ID from itinerary:', tripid);
+  console.log('Trip ID:', tripid);
+  console.log('Selected point:', point);
 
   // 1️⃣ Fetch points
   const points = await getPoints(tripid);
@@ -35,6 +39,7 @@ const Page = async ({
       points={pointsOnly}
       places={allPlaces}
       budgetId={budget.id!}
+      selectedpointId={point}
     />
   );
 };

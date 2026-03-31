@@ -18,6 +18,7 @@ type props = {
   googleMapsUri : string
   latitude : number
   longitude : number
+  affiliatelink : string
 };
 
 
@@ -38,7 +39,8 @@ export const createPlaceUseCase = async (input: props) => {
            name : input.placeName ,  
            googleMapLink : input.googleMapsUri ,
            latitude : input.latitude,
-           longitude : input.longitude
+           longitude : input.longitude,
+           affiliatelink : input.affiliatelink,
            
   });
 

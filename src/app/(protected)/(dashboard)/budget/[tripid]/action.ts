@@ -82,9 +82,9 @@ export async function updateExpense(expenseId: string, formData: FormData) {
     const expenseCurrency = formData.get("expenseCurrency") as string | null
     const amountStr = formData.get("amount") as string | null
     const connectedToId = formData.get("connectedToId") as string | null
-
+    
     const input: Record<string, any> = {}
-
+     console.log('update expense' , expenseId , amountStr)
     if (description) input.description = description
     if (category) input.category = category
     if (expenseCurrency) input.expenseCurrency = expenseCurrency

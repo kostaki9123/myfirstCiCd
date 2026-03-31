@@ -16,6 +16,7 @@ export const inputSchema = z.object({
   placeType: PlaceTypeEnum,
 
   googleMapsUri : z.string() ,
+  affiliatelink : z.string() ,
 
   name: z.string().min(1, 'Name is required'),
 
@@ -51,7 +52,8 @@ export const createPlaceController =
             placeName: data.name,
             googleMapsUri : data.googleMapsUri,
             latitude: data.latitude,
-            longitude:data.longitude
+            longitude:data.longitude,
+            affiliatelink:data.affiliatelink
           })
     }
     

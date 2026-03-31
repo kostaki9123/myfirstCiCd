@@ -39,7 +39,7 @@ type Props = {
   visitDate?: Date | null;
   visitTime?: Date | null;
   notes?: string | null;
-  bookingLink?: string | null
+  affiliateLink?: string | null
   paymentStatus?: string;
 };
 
@@ -229,9 +229,9 @@ export default function PlaceToVisitCard(props: Props) {
               />
             </div>
 
-              {props.bookingLink && (
+              {props.affiliateLink && (
                    <a
-                     href={props.bookingLink} 
+                     href={props.affiliateLink} 
                      target="_blank"
                      rel="noopener noreferrer"
                    >
