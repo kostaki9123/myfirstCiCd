@@ -61,7 +61,7 @@
 
 
     // relation
-    Budget           Budget      @relation(fields: [budgetId], references: [id])
+    Budget Budget @relation(fields: [budgetId], references: [id], onDelete: Cascade)
 
   }
 

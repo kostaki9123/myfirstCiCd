@@ -281,7 +281,13 @@ const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary ,fromAllExpen
                 type="submit"
                 disabled={isLoading || isFetching || !category || !currency}
               >
-                {isLoading ? 'Saving...' : 'Add Expense'}
+                {isLoading
+                  ? expense?.id
+                    ? 'Updating...'
+                    : 'Creating...'
+                  : expense?.id
+                  ? 'Update Expense'
+                  : 'Add Expense'}
               </Button>
             </CardFooter>
           </Card>
