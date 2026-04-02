@@ -141,7 +141,7 @@ const getFallbackPriceLabel = (budget: TripBudget) => {
   if (budget === "economy") return "Usually budget-friendly";
   if (budget === "balanced") return "Mid-range pricing";
   return "Premium stay";
-};
+}; 
 
 /* ----------------------------------
    Trip Context Chips
@@ -212,7 +212,7 @@ type Props = {
   travelingWith: TravelWith;
   tripBudget: TripBudget;
   tripTypes: TripType[];
-  onSubmitSuccess?: any //fix it later
+  onSubmitSuccess?: (success: boolean) => void; //fix it later
 };
 
 type AffiliateMap = Record<
@@ -231,6 +231,8 @@ const Addaplace = (props: Props) => {
   const [visibleCount, setVisibleCount] = useState(10);
   const [addedStayss, setAddedStays] = useState<RecommendedPlace[]>([]);
   const [addedVisitss, setaddedVisits] = useState<RecommendedPlace[]>([]);
+
+  const [debouncedLocation, setDebouncedLocation] = useState(inputLocation);
  
   const getPlaceCategory = (types: string[] = []) => {
   if (types.includes("restaurant")) return "Restaurant ";
@@ -503,9 +505,11 @@ if (budget.includes("economy")) {
 return "Recommended based on your trip preferences";
 };
   const fetchPlaces = async () => {
+    
+
     try {
-      const centerLat = inputLocation?.lat ?? props.latitude;
-      const centerLng = inputLocation?.lng ?? props.longitude;
+      const centerLat = debouncedLocation?.lat ?? props.latitude;
+      const centerLng = debouncedLocation?.lng ?? props.longitude;
 
       const isStay = props.triggerName.toLowerCase().includes("stay");
 
@@ -668,6 +672,14 @@ if (isStay) {
 
   includedTypes = [...new Set(includedTypes)];
 }
+
+const cacheKey = `${centerLat}-${centerLng}-${includedTypes.join(",")}`;
+
+const cached = sessionStorage.getItem(cacheKey);
+if (cached) {
+  setPlacesResult(JSON.parse(cached));
+  return;
+}
       const response = await fetch(
         "https://places.googleapis.com/v1/places:searchNearby",
         {
@@ -676,15 +688,15 @@ if (isStay) {
             "Content-Type": "application/json",
             "X-Goog-Api-Key": process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
             "X-Goog-FieldMask":
-              "places.id,places.displayName,places.rating,places.location,places.websiteUri,places.googleMapsUri,places.shortFormattedAddress,places.types",
+              "places.id,places.displayName,places.location,places.rating,places.types",
           },
           body: JSON.stringify({
             includedTypes,
-            maxResultCount: 20,
+            maxResultCount: 10,
             locationRestriction: {
               circle: {
                 center: { latitude: Number(centerLat), longitude: Number(centerLng) },
-                radius: 10000,
+                radius: 3000,
               },
             },
           }),
@@ -722,7 +734,9 @@ if (isStay) {
 
       console.log('aqui:',places)
 
-      const placeIds = places.map((p : any) => p.id);
+      const visiblePlaces = places.slice(0, visibleCount);
+      const placeIds = visiblePlaces.map((p: any) => p.id);
+
       if (placeIds.length) {
         const res = await fetch("/api/links/bulk", {
           method: "POST",
@@ -737,8 +751,17 @@ if (isStay) {
   };
 
   useEffect(() => {
-    fetchPlaces();
-  }, [props.addedPlaces, inputLocation, props.triggerName]);
+  const handler = setTimeout(() => {
+    setDebouncedLocation(inputLocation);
+  }, 800);
+
+  return () => clearTimeout(handler);
+}, [inputLocation]);
+
+useEffect(() => {
+  fetchPlaces();
+}, [debouncedLocation, props.triggerName]);
+
 
   const mapData = placesResult.slice(0, visibleCount).map((p) => ({
     id: p.id,
@@ -774,11 +797,12 @@ console.log('ree',addedStayss)
   return (
     <Dialog>
       <DialogTrigger 
-onClick={() => {
-  props.onSubmitSuccess(false);
+  onClick={() => {
+    props.onSubmitSuccess!(false);
 
   if (typeof window !== "undefined") {
     localStorage.setItem("tripItineraryHintSeen", "true");
+    setPlacesResult(placesResult);
   }
 }}
  className="bg-gray-400 rounded-md min-w-[260px] h-10 flex items-center justify-center w-full gap-7 p-5 cursor-pointer">
@@ -812,9 +836,8 @@ onClick={() => {
             {placesResult.slice(0, visibleCount).map((place, index) => {
               const affiliateData = affiliateMap[place.id];
               const priceLabel = affiliateData?.pricePerDay
-                ? 
-                  (affiliateData.pricePerDay, affiliateData.currency)
-                : null;
+  ? formatPrice(affiliateData.pricePerDay, affiliateData.currency)
+  : null;
               const fallbackLabel = getFallbackPriceLabel(props.tripBudget);
 
               return (
