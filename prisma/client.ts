@@ -12,7 +12,7 @@ const pool =
   globalForPrisma.pgPool ??
   new pg.Pool({
     connectionString: process.env.DATABASE_URL,
-    max: 10, // βάλε explicit limit
+    max: 5, // βάλε explicit limit
   });
 
 if (process.env.NODE_ENV !== "production") {

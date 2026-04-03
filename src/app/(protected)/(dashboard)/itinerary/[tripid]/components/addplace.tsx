@@ -202,8 +202,8 @@ const TripContextChips = ({
 
 type Props = {
   selectedPlace: ItineraryPoint;
-  latitude: number;
-  longitude: number;
+    latitude: number;
+    longitude: number;
   cyrclesArr: any;
   triggerName: string;
   descriptionName: string;
@@ -504,251 +504,158 @@ if (budget.includes("economy")) {
 
 return "Recommended based on your trip preferences";
 };
-  const fetchPlaces = async () => {
-    
 
-    try {
-      const centerLat = debouncedLocation?.lat ?? props.latitude;
-      const centerLng = debouncedLocation?.lng ?? props.longitude;
 
-      const isStay = props.triggerName.toLowerCase().includes("stay");
+// … all your imports and types remain exactly the same …
 
-let includedTypes: string[] = [];
+const fetchPlaces = async () => {
+  try {
+    const centerLat = debouncedLocation?.lat ?? props.latitude;
+    const centerLng = debouncedLocation?.lng ?? props.longitude;
 
-if (isStay) {
-  const travelingWith = props.travelingWith.toLowerCase();
-  const budget = props.tripBudget.toLowerCase();
+    const isStay = props.triggerName.toLowerCase().includes("stay");
 
-  /* ---------------------------------- */
-  /* 🏨 Base Stay Types (VALID ONLY) */
-  /* ---------------------------------- */
+    let includedTypes: string[] = [];
 
-  includedTypes = ["lodging"]; // always include
+    if (isStay) {
+      const travelingWith = props.travelingWith.toLowerCase();
+      const budget = props.tripBudget.toLowerCase();
 
-  /* ---------------------------------- */
-  /* 👤 SOLO */
-  /* ---------------------------------- */
+      includedTypes = ["lodging"]; // always include
 
-  if (travelingWith === "solo") {
-    includedTypes.push("hostel", "motel");
-  }
-
-  /* ---------------------------------- */
-  /* 👨‍👩‍👧 FAMILY */
-  /* ---------------------------------- */
-
-  else if (travelingWith === "family") {
-    includedTypes.push( "campground","hotel", "rv_park");
-  }
-
-  /* ---------------------------------- */
-  /* ❤️ COUPLE */
-  /* ---------------------------------- */
-
-  else if (travelingWith === "couple") {
-    includedTypes.push("hotel");
-  }
-
-  /* ---------------------------------- */
-  /* 🧑‍🤝‍🧑 FRIENDS / GROUP */
-  /* ---------------------------------- */
-
-  else if (travelingWith === "friends" || travelingWith === "group") {
-   
-  }
-
-  else {
-    includedTypes.push("hotel", "motel");
-  }
-
-  /* ---------------------------------- */
-  /* 💰 Budget Refinement (VALID ONLY) */
-  /* ---------------------------------- */
-
-  if (budget.includes("economy")) {
-    includedTypes.push("hostel", "motel", "campground");
-  }
-
-  if (budget.includes("luxury")) {
-   
-  }
-
-  /* ---------------------------------- */
-  /* 🧠 Remove duplicates */
-  /* ---------------------------------- */
-
-  includedTypes = [...new Set(includedTypes)];
-
-} else {
-  const tripTypes = props.tripTypes.map((t) => t.toLowerCase());
-
-  /* ---------------------------------- */
-  /* 🎯 Base Attractions */
-  /* ---------------------------------- */
-
-  includedTypes = [
-    "tourist_attraction",
-    "restaurant"
-  ];
-
-  /* ---------------------------------- */
-  /* 🏛 Cultural */
-  /* ---------------------------------- */
-
-  if (tripTypes.includes("cultural")) {
-    includedTypes.push(
-      "museum",
-      "art_gallery",
-      "church",
-      "mosque",
-      "hindu_temple",
-      "synagogue"
-    );
-  }
-
-  /* ---------------------------------- */
-  /* 🌿 Nature */
-  /* ---------------------------------- */
-
-  if (tripTypes.includes("nature")) {
-    includedTypes.push(
-      "park",
-      "natural_feature",
-      "zoo",
-      "aquarium"
-    );
-  }
-
-  /* ---------------------------------- */
-  /* 🌙 Nightlife */
-  /* ---------------------------------- */
-
-  if (tripTypes.includes("nightlife")) {
-    includedTypes.push(
-      "bar",
-      "night_club",
-      "casino"
-    );
-  }
-
-  /* ---------------------------------- */
-  /* 🎢 Adventure */
-  /* ---------------------------------- */
-
-  if (tripTypes.includes("adventure")) {
-    includedTypes.push(
-      "amusement_park",
-      "bowling_alley"
-    );
-  }
-
-  /* ---------------------------------- */
-  /* ⚽ Sports */
-  /* ---------------------------------- */
-
-  if (tripTypes.includes("sportsenthusiast")) {
-    includedTypes.push(
-      "stadium",
-      "gym",
-      "sports_complex"
-    );
-  }
-
-  /* ---------------------------------- */
-  /* 🎉 Events */
-  /* ---------------------------------- */
-
-  if (tripTypes.includes("events")) {
-    includedTypes.push(
-      "movie_theater",
-      "performing_arts_theater",
-      "event_venue"
-    );
-  }
-
-  /* ---------------------------------- */
-  /* 🧠 Remove duplicates */
-  /* ---------------------------------- */
-
-  includedTypes = [...new Set(includedTypes)];
-}
-
-const cacheKey = `${centerLat}-${centerLng}-${includedTypes.join(",")}`;
-
-const cached = sessionStorage.getItem(cacheKey);
-if (cached) {
-  setPlacesResult(JSON.parse(cached));
-  return;
-}
-      const response = await fetch(
-        "https://places.googleapis.com/v1/places:searchNearby",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Goog-Api-Key": process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
-            "X-Goog-FieldMask":
-              "places.id,places.displayName,places.location,places.rating,places.types,places.websiteUri,places.googleMapsUri",
-          },
-          body: JSON.stringify({
-            includedTypes,
-            maxResultCount: 10,
-            locationRestriction: {
-              circle: {
-                center: { latitude: Number(centerLat), longitude: Number(centerLng) },
-                radius: 3000,
-              },
-            },
-          }),
-        }
-      );
-
-      const result = await response.json();
-      let places = result.places || [];
-
-       console.log('1aqui:',places)
-
-      places = places
-        .map((p: any) => {
-          const km = haversineDistance(
-            centerLat,
-            centerLng,
-            p.location.latitude,
-            p.location.longitude
-          );
-
-          return {
-            ...p,
-            _distanceKm: km,
-            _score: scorePlace({ ...p, _distanceKm: km }),
-            _reason: buildReason({ ...p, _distanceKm: km }),
-            category: props.triggerName.toLowerCase().includes("stay") ? getAccommodationCategory(p.types) :  getPlaceCategory(p.types),
-            alreadyAdded: props.addedPlaces.some(
-              (a) => a.id === p.id && a.pointId === props.selectedPlace.id
-            ),
-          } as ScoredPlace;
-        }) 
-        .sort((a:ScoredPlace, b:ScoredPlace) => b._score - a._score);
-
-      setPlacesResult(places);
-
-      console.log('aqui:',places)
-
-      const visiblePlaces = places.slice(0, visibleCount);
-      const placeIds = visiblePlaces.map((p: any) => p.id);
-
-      if (placeIds.length) {
-        const res = await fetch("/api/links/bulk", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ placeIds }),
-        });
-        setAffiliateMap(await res.json());
+      if (travelingWith === "solo") {
+        includedTypes.push("hostel", "motel");
+      } else if (travelingWith === "family") {
+        includedTypes.push("campground", "hotel", "rv_park");
+      } else if (travelingWith === "couple") {
+        includedTypes.push("hotel");
+      } else if (travelingWith === "friends" || travelingWith === "group") {
+        // no extra
+      } else {
+        includedTypes.push("hotel", "motel");
       }
-    } catch (e) {
-      console.error(e);
+
+      if (budget.includes("economy")) {
+        includedTypes.push("hostel", "motel", "campground");
+      }
+
+      includedTypes = [...new Set(includedTypes)];
+    } else {
+      const tripTypes = props.tripTypes.map((t) => t.toLowerCase());
+
+      includedTypes = ["tourist_attraction", "restaurant"];
+
+      if (tripTypes.includes("cultural")) {
+        includedTypes.push(
+          "museum",
+          "art_gallery",
+          "church",
+          "mosque",
+          "hindu_temple",
+          "synagogue"
+        );
+      }
+
+      if (tripTypes.includes("nature")) {
+        includedTypes.push("park", "natural_feature", "zoo", "aquarium");
+      }
+
+      if (tripTypes.includes("nightlife")) {
+        includedTypes.push("bar", "night_club", "casino");
+      }
+
+      if (tripTypes.includes("adventure")) {
+        includedTypes.push("amusement_park", "bowling_alley");
+      }
+
+      if (tripTypes.includes("sportsenthusiast")) {
+        includedTypes.push("stadium", "gym", "sports_complex");
+      }
+
+      if (tripTypes.includes("events")) {
+        includedTypes.push("movie_theater", "performing_arts_theater", "event_venue");
+      }
+
+      includedTypes = [...new Set(includedTypes)];
     }
-  };
+
+    const cacheKey = `${centerLat}-${centerLng}-${includedTypes.join(",")}`;
+    const cached = sessionStorage.getItem(cacheKey);
+    if (cached) {
+      setPlacesResult(JSON.parse(cached));
+      return;
+    }
+
+    const includedTypesString = includedTypes.join("|");
+
+    // ✅ UPDATED FETCH: call your Next.js API route instead of exposing API key
+    const response = await fetch("/api/places/search", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    lat: centerLat,
+    lng: centerLng,
+    types: includedTypes, // this can be an array
+  }),
+});
+
+
+    const result = await response.json();
+    let places = result.results; // legacy API uses "results"
+       console.log(places)
+   places = places
+  .map((p: any) => {
+    const km = haversineDistance(
+      centerLat,
+      centerLng,
+      p.geometry.location.lat,
+      p.geometry.location.lng
+    );
+
+    return {
+      ...p,
+      _distanceKm: km,
+      _score: scorePlace({ ...p, _distanceKm: km }),
+      _reason: buildReason({ ...p, _distanceKm: km }),
+      category: props.triggerName.toLowerCase().includes("stay")
+        ? getAccommodationCategory(p.types)
+        : getPlaceCategory(p.types),
+      alreadyAdded: props.addedPlaces.some(
+        (a) => a.id === p.place_id && a.pointId === props.selectedPlace.id
+      ),
+      location: { // normalize to your previous structure
+        latitude: p.geometry.location.lat,
+        longitude: p.geometry.location.lng,
+      },
+      displayName: { text: p.name }, // same as your old structure
+      shortFormattedAddress: p.vicinity,
+      id: p.place_id,
+      rating: p.rating ?? 0,
+      websiteUri: undefined, // optional, set if available
+      googleMapsUri: `https://www.google.com/maps/place/?q=place_id:${p.place_id}`,
+    } as ScoredPlace;
+  })
+  .sort((a: ScoredPlace, b: ScoredPlace) => b._score - a._score);
+
+    setPlacesResult(places);
+
+    const visiblePlaces = places.slice(0, visibleCount);
+    const placeIds = visiblePlaces.map((p: any) => p.id);
+
+    if (placeIds.length) {
+      const res = await fetch("/api/links/bulk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ placeIds }),
+      });
+      setAffiliateMap(await res.json());
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+// … the rest of your component remains unchanged …
 
   useEffect(() => {
   const handler = setTimeout(() => {
@@ -760,7 +667,7 @@ if (cached) {
 
 useEffect(() => {
   fetchPlaces();
-}, [debouncedLocation, props.triggerName]);
+}, [debouncedLocation, props.triggerName ,props.latitude,props.longitude]);
 
 
   const mapData = placesResult.slice(0, visibleCount).map((p) => ({
@@ -769,8 +676,8 @@ useEffect(() => {
     location: { lat: p.location.latitude, lng: p.location.longitude },
   }));
 
-  useEffect(() => {
-  const addedPlacesForMap: any[] = props.addedPlaces
+useEffect(() => {
+  const addedPlacesForMap = props.addedPlaces
     .filter(p => p.pointId === props.selectedPlace.id)
     .map(p => ({
       id: p.id,
@@ -779,14 +686,10 @@ useEffect(() => {
       type: p.placeType, // "ACCOMMODATION" or "PLACE_TO_VISIT"
     }));
 
+  // Separate into stays and visits for the map
   setAddedStays(addedPlacesForMap.filter(p => p.type === "ACCOMMODATION"));
   setaddedVisits(addedPlacesForMap.filter(p => p.type === "PLACE_TO_VISIT"));
 }, [props.addedPlaces, props.selectedPlace.id]);
-
-
-
-
-
 
   const handleSeeMore = () => setVisibleCount((prev) => prev + 5);
 
