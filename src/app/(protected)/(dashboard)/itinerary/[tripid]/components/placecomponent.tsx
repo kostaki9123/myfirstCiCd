@@ -49,6 +49,8 @@ const Placecomponent = (props: Props) => {
   const [justAdded, setJustAdded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log('check' , props.affiliatelink ,'e',props.googleMapsUri , )
+
   const addPlace = async () => {
     try {
       setIsLoading(true);

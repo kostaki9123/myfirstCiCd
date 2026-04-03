@@ -688,7 +688,7 @@ if (cached) {
             "Content-Type": "application/json",
             "X-Goog-Api-Key": process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
             "X-Goog-FieldMask":
-              "places.id,places.displayName,places.location,places.rating,places.types",
+              "places.id,places.displayName,places.location,places.rating,places.types,places.websiteUri,places.googleMapsUri",
           },
           body: JSON.stringify({
             includedTypes,

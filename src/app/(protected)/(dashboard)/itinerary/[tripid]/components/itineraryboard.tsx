@@ -117,20 +117,20 @@
           {/* HEADER */}
           <div className="flex justify-center mb-2 relative">
             <div className=' absolute top-1 left-2 max-w-20 450:max-w-max  '>
-              {selectedPoint.startDate && selectedPoint.endDate
-                ? `${new Date(selectedPoint.startDate).toLocaleDateString(undefined, {
-                    month: '2-digit',
-                    day: '2-digit',
-                  })} - ${new Date(selectedPoint.endDate).toLocaleDateString(undefined, {
-                    month: '2-digit',
-                    day: '2-digit',
-                  })}`
-                : selectedPoint.startDate
-                ? new Date(selectedPoint.startDate).toLocaleDateString(undefined, {
-                    month: '2-digit',
-                    day: '2-digit',
-                  })
-                : 'No date'}
+             {selectedPoint.startDate && selectedPoint.endDate
+               ? `${new Date(selectedPoint.startDate).toLocaleDateString("en-GB", {
+                   month: "2-digit",
+                   day: "2-digit",
+                 })} - ${new Date(selectedPoint.endDate).toLocaleDateString("en-GB", {
+                   month: "2-digit",
+                   day: "2-digit",
+                 })}`
+               : selectedPoint.startDate
+               ? new Date(selectedPoint.startDate).toLocaleDateString("en-GB", {
+                   month: "2-digit",
+                   day: "2-digit",
+                 })
+               : "No date"}
             </div>
 
             <Placesdropdown
