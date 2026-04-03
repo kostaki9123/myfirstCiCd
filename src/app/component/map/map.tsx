@@ -239,20 +239,32 @@ function App({
           return <Marker key={pt.id} position={pos} />;
         })}
 
-    {addedplacetovisit?.map((place, key) => (
+{addedplacetovisit?.map((place, key) => (
   <Marker
     key={`added-visit-${place.id}`}
     position={place.location}
-     icon={{
+    icon={{
       url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
         <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
           <!-- Blue map pin -->
           <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#401eff" stroke="#311eff" stroke-width="1"/>
-          <!-- Number label inside the pin -->
-          <text x="12" y="13" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${key + 1}</text>
+
+          <!-- Circle icon (moved UP) -->
+          <circle cx="12" cy="9" r="4" fill="white"/>
+
+          <!-- Number label -->
+          <text 
+            x="12" 
+            y="22" 
+            text-anchor="middle" 
+            font-size="10" 
+            fill="white" 
+            font-family="Arial" 
+            font-weight="bold">
+            ${key + 1}
+          </text>
         </svg>
       `)}`,
-     
     }}
     title={place.name}
   />
@@ -260,21 +272,35 @@ function App({
 
 
 
-  {addedplacetostay?.map((place , key) => (
+     {addedplacetostay?.map((place, key) => (
   <Marker
     key={`added-stay-${place.id}`}
     position={place.location}
     zIndex={9999}
-   icon={{
+    icon={{
       url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
         <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
-          <!-- Blue map pin -->
-          <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#1eff69" stroke="#1eff71" stroke-width="1"/>
-          <!-- Number label inside the pin -->
-          <text x="12" y="13" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${key + 1}</text>
+          <!-- Pin base -->
+          <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#22c55e"/>
+          
+
+          <!-- House (final tiny move UP) -->
+          <path d="M8 8.5 L12 4.5 L16 8.5 V13.5 H8 Z" fill="white"/>
+          <rect x="10" y="10.5" width="4" height="3" fill="#22c55e"/>
+
+          <!-- Number (moved UP) -->
+          <text 
+            x="12" 
+            y="22" 
+            text-anchor="middle" 
+            font-size="10" 
+            fill="white" 
+            font-family="Arial" 
+            font-weight="bold">
+            ${key + 1}
+          </text>
         </svg>
-      `)}`,
-    
+      `)}`
     }}
     title={place.name}
   />

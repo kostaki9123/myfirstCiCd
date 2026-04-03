@@ -28,8 +28,9 @@ import PayStatusDropdown from "./paidstatusdropdown";
 ------------------------------------------------------- */
 
 type Props = {
+  index : number
   internalId : string
-  id: string;
+  id: string;  
   budgetid: string
   pointId: string;
   placeType: "ACCOMMODATION" | "PLACE_TO_VISIT";
@@ -157,7 +158,36 @@ export default function PlaceToStayCard(props: Props) {
         {/* ---------------- HEADER ---------------- */}
         <AccordionTrigger className="relative">
           <div className="flex items-center gap-2 pl-1">
-            <IoHome className="text-2xl" />
+            
+            <div className="w-8 h-10">
+                 <svg viewBox="0 0 24 36" className="w-full h-full">
+                   {/* Pin base */}
+                   <path
+                     d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z"
+                     fill="#22c55e"
+                   />
+               
+                   {/* House */}
+                   <path
+                     d="M8 8.5 L12 4.5 L16 8.5 V13.5 H8 Z"
+                     fill="white"
+                   />
+                   <rect x="10" y="10.5" width="4" height="3" fill="#22c55e" />
+               
+                   {/* Number */}
+                   <text
+                     x="12"
+                     y="22"
+                     textAnchor="middle"
+                     fontSize="10"
+                     fill="white"
+                     fontFamily="Arial"
+                     fontWeight="bold"
+                   >
+                     {props.index + 1}
+                   </text>
+                 </svg>
+            </div>
             <div className="font-semibold flex items-center gap-1">
               {props.name}
               <ChevronDown className="h-4 w-4 text-neutral-500" />

@@ -157,8 +157,9 @@
               Accommodation
             </small>
 
-            {accommodationPlaces.map((place) => (
+            {accommodationPlaces.map((place , key) => (
               <PlaceToStayCard
+                index={key}
                 key={place.internalId ?? place.id}
                 budgetid={props.budgetId}
                 internalId={place.internalId!}
@@ -200,8 +201,9 @@
               Places to Visit
             </small>
 
-            {placesToVisit.map((place) => (
+            {placesToVisit.map((place , key) => (
               <PlaceToVisitCard
+                index={key}
                 key={place.internalId ?? place.id}
                 budgetid={props.budgetId}
                 internalId={place.internalId!}

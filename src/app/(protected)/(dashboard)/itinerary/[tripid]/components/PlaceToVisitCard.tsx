@@ -28,6 +28,7 @@ import PayStatusDropdown from "./paidstatusdropdown";
 ------------------------------------------------------- */
 
 type Props = {
+  index : number
   internalId : string
   id: string;
   pointId: string;
@@ -140,12 +141,33 @@ export default function PlaceToVisitCard(props: Props) {
       <AccordionItem value="item-1">
         {/* HEADER */}
         <AccordionTrigger className="relative">
-          <div className="flex items-start gap-2 pl-1">
-            <div className="relative inline-flex items-center justify-center">
-              <FaLocationPin className="text-2xl text-black" />
-              <span className="absolute text-white text-[14px] font-bold -translate-y-[3.5px]">
-                1
-              </span>
+          <div className="flex items-center  gap-2 pl-1">
+            <div className="w-8 h-10">
+                   <svg viewBox="0 0 24 36" className="w-full h-full">
+                     {/* Blue pin */}
+                     <path
+                       d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z"
+                       fill="#401eff"
+                       stroke="#311eff"
+                       strokeWidth="1"
+                     />
+                 
+                     {/* Circle icon */}
+                     <circle cx="12" cy="9" r="4" fill="white" />
+                 
+                     {/* Number */}
+                     <text
+                       x="12"
+                       y="22"
+                       textAnchor="middle"
+                       fontSize="10"
+                       fill="white"
+                       fontFamily="Arial"
+                       fontWeight="bold"
+                     >
+                       {props.index + 1}
+                     </text>
+                   </svg>
             </div>
 
             <div className="font-semibold flex items-center gap-1">
