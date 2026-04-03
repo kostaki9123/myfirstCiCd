@@ -2,17 +2,27 @@ import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient | undefined };
+const globalForPrisma = globalThis as unknown as {
+  prisma?: PrismaClient;
+  pgPool?: pg.Pool;
+};
 
-// Create a Postgres pool
-const pool = new pg.Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+// ✅ reuse pool
+const pool =
+  globalForPrisma.pgPool ??
+  new pg.Pool({
+    connectionString: process.env.DATABASE_URL,
+    max: 10, // βάλε explicit limit
+  });
 
-// Create Prisma adapter
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.pgPool = pool;
+}
+
+// ✅ adapter με reused pool
 const adapter = new PrismaPg(pool);
 
-// Initialize Prisma Client
+// ✅ prisma singleton
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
