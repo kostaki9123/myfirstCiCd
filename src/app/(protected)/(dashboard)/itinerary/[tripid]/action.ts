@@ -38,7 +38,7 @@ export async function createPlace(formData: FormData) {
     const name = formData.get("name") as string;
     const tripId = formData.get("tripId") as string;
     const googleMapsUri = formData.get("googleMapsUri") as string;
-    const affiliatelink = formData.get("affiliatelink") as string;
+    const affiliatelink = formData.get("affiliatelink") as string ?? undefined 
 
     const latitudeStr = formData.get("latitude") as string | null;
     const longitudeStr = formData.get("longitude") as string | null;
@@ -59,7 +59,7 @@ export async function createPlace(formData: FormData) {
       googleMapsUri,
       latitude,
       longitude,
-      affiliatelink
+      affiliatelink 
     };
 
     const result = await createPlaceController(input);

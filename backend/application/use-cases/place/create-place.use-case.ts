@@ -18,7 +18,7 @@ type props = {
   googleMapsUri : string
   latitude : number
   longitude : number
-  affiliatelink : string
+  affiliatelink? : string
 };
 
 

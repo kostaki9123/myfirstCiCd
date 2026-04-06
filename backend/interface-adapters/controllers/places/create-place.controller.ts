@@ -16,7 +16,7 @@ export const inputSchema = z.object({
   placeType: PlaceTypeEnum,
 
   googleMapsUri : z.string() ,
-  affiliatelink : z.string() ,
+  affiliatelink : z.string().optional() ,
 
   name: z.string().min(1, 'Name is required'),
 
@@ -36,7 +36,7 @@ export const inputSchema = z.object({
 
 export const createPlaceController =
     async (input: Partial<z.infer<typeof inputSchema>>) : Promise<ReturnType<typeof createPlaceUseCase >> => { 
-                  
+          console.log('never stop ',input)
          //input validation
          const { data, error: inputParseError } = inputSchema.safeParse(input);
     
