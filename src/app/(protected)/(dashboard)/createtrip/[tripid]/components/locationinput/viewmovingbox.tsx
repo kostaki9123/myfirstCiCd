@@ -9,7 +9,18 @@ import DatePickerExample from "./datepicker";
 import { updatePoint } from "../../action";
 import NotesBox from "@/app/component/notes/edittextarea";
 import CreateTripNotesBox from "../notes";
+import { z } from "zod";
 
+const tripSegmentSchema = z.object({
+  fromName: z.string().min(1, "From location is required"),
+  toName: z.string().min(1, "To location is required"),
+  transportType: z.string().min(1, "Transport type is required"),
+  departureDate: z.date({
+    required_error: "Departure date is required",
+    invalid_type_error: "Invalid date",
+  }),
+  notes: z.string().max(200, "Notes cannot exceed 200 characters").optional(),
+}); 
 type PlaceData = {
   name: string;
   address: string;
@@ -50,6 +61,7 @@ type Props = {
 const ViewMovingBoxModal = ({ data }: Props) => {
   const [formData, setFormData] = useState<TripSegment>(data);
   const [notes, setNotes] = useState<string>(data.notes); 
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   // -----------------------------
   // Generic value update
@@ -72,10 +84,37 @@ const ViewMovingBoxModal = ({ data }: Props) => {
     }));
   };
 
+     const validate = () => {
+  const result = tripSegmentSchema.safeParse({
+    fromName: formData.fromName,
+    toName: formData.toName,
+    transportType: formData.transportType,
+    departureDate: formData.departureDate,
+    notes,
+  });
+
+  if (!result.success) {
+    const fieldErrors: Record<string, string> = {};
+
+    result.error.errors.forEach((err) => {
+      const field = err.path[0] as string;
+      fieldErrors[field] = err.message;
+    });
+
+    setErrors(fieldErrors);
+    return false;
+  }
+
+  setErrors({});
+  return true;
+};
+
   // -----------------------------
   // Save handler
   // -----------------------------
   const handleSave = async () => {
+      if (!validate()) return; 
+
     const original = JSON.stringify(data);
     const updated = JSON.stringify(formData);
     let oldNotes = data.notes
@@ -85,6 +124,8 @@ const ViewMovingBoxModal = ({ data }: Props) => {
       console.log("No changes — skipping backend update");
       return;
     }
+
+ 
 
     console.log('run 1')
     // Prepare FormData for server action
@@ -136,6 +177,9 @@ const ViewMovingBoxModal = ({ data }: Props) => {
             defaultQuery={data.fromName}
             onPlaceSelected={(place) => handlePlaceChange("from", place)}
           />
+          {errors.fromName && (
+              <p className="text-red-500 text-sm">{errors.fromName}</p>
+          )}
         </div>
 
         {/* To */}
@@ -147,6 +191,9 @@ const ViewMovingBoxModal = ({ data }: Props) => {
             defaultQuery={data.toName}
             onPlaceSelected={(place) => handlePlaceChange("to", place)}
           />
+          {errors.toName && (
+           <p className="text-red-500 text-sm">{errors.toName}</p>
+          )}
         </div>
 
         {/* Transport Type */}
@@ -156,6 +203,9 @@ const ViewMovingBoxModal = ({ data }: Props) => {
             value={formData.transportType}
             onChange={(value) => handleChange("transportType", value)}
           />
+          {errors.transportType && (
+           <p className="text-red-500 text-sm">{errors.transportType}</p>
+           )}
         </div>
 
         {/* Departure Date */}
@@ -168,6 +218,9 @@ const ViewMovingBoxModal = ({ data }: Props) => {
               handleChange("departureDate", v);
             }}
           />
+          {errors.departureDate && (
+              <p className="text-red-500 text-sm">{errors.departureDate}</p>
+            )}
         </div>
 
        
@@ -179,6 +232,9 @@ const ViewMovingBoxModal = ({ data }: Props) => {
              value={notes}
              onChange={setNotes}
             />
+            {errors.notes && (
+            <p className="text-red-500 text-sm">{errors.notes}</p>
+           )}
         </div>
 
       {/* Save */}

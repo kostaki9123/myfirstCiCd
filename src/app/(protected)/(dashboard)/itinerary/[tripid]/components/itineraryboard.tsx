@@ -167,8 +167,8 @@
                 pointId={place.pointId}
                 placeType={place.placeType}
                 name={place.name}
-                stayFrom={place.stayFrom ? place.stayFrom :selectedPoint.startDate}
-                stayUntil={place.stayUntil ? place.stayUntil : selectedPoint.endDate}
+                stayFrom={place.stayFrom }
+                stayUntil={place.stayUntil }
                 notes={place.notes}
                 ablestayFrom={selectedPoint.startDate}
                 ablestayUntil={selectedPoint.endDate}

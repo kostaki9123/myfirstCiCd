@@ -20,7 +20,12 @@ import { Label } from '@/components/ui/label'
 import ExpenseCategorydropdown from './expensecategorydropdown'
 import CurrencyDropdown from './currencydropdown'
 import { MdOutlineAttachMoney } from 'react-icons/md'
-import { createExpense, updateExpense, getExpensesByConnectedToId } from '../action'
+import {
+  createExpense,
+  updateExpense,
+  getExpensesByConnectedToId,
+  getExpenseById, // 👈 YOU MUST HAVE THIS
+} from '../action'
 import { Expense } from '../../../../../../../backend/entities/models/expense'
 
 /* ---------------------------------- */
@@ -43,9 +48,9 @@ const CURRENCIES = [
 /* ---------------------------------- */
 
 const expenseSchema = z.object({
-  description: z.string().min(1).max(100),
+  description: z.string().min(1, 'Description is required').max(100),
   category: z.enum(EXPENSE_CATEGORIES),
-  amount: z.number().positive(),
+  amount: z.number().positive('Amount must be greater than 0'),
   expenseCurrency: z.enum(CURRENCIES),
 })
 
@@ -56,54 +61,73 @@ const expenseSchema = z.object({
 type Props = {
   budgedId: string
   connectedToId?: string
+  expenseId?: string // 👈 for table edit
   fromItinerary?: boolean
-  fromAllExpenses? : boolean
+  fromAllExpenses?: boolean
 }
 
 /* ---------------------------------- */
 /* component */
 /* ---------------------------------- */
 
-const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary ,fromAllExpenses}: Props) => {
+const ExpenseDialog = ({
+  budgedId,
+  connectedToId,
+  expenseId,
+  fromItinerary,
+  fromAllExpenses,
+}: Props) => {
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [isFetching, setIsFetching] = useState(false) // NEW: data fetching state
+  const [isFetching, setIsFetching] = useState(false)
 
-  // Controlled states
   const [expense, setExpense] = useState<Expense | null>(null)
+
   const [amount, setAmount] = useState<number | ''>('')
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState('')
   const [currency, setCurrency] = useState('USD')
+
   const [errors, setErrors] = useState<Record<string, string>>({})
 
+  console.log('ddd',expenseId)
   /* ---------------------------------- */
   /* fetch existing expense */
   /* ---------------------------------- */
   useEffect(() => {
-    if (!open || !connectedToId) return
+    if (!open) return
 
     const fetchExpense = async () => {
-      setIsFetching(true) // start fetching
       try {
-        const data = await getExpensesByConnectedToId(connectedToId)
-        setExpense(data)
-        setAmount(data?.amount ?? '')
-        setDescription(data?.description ?? '')
-        setCategory(data?.category ?? '')
-        setCurrency(data?.expenseCurrency ?? 'USD')
+        setIsFetching(true)
+
+        let data: Expense | null = null
+
+        if (connectedToId) {
+          data = await getExpensesByConnectedToId(connectedToId)
+        } else if (expenseId) {
+          data = await getExpenseById(expenseId)
+        }
+
+        if (data) {
+          setExpense(data)
+          setAmount(data.amount ?? '')
+          setDescription(data.description ?? '')
+          setCategory(data.category ?? '')
+          setCurrency(data.expenseCurrency ?? 'USD')
+        }
       } catch (err) {
         console.error('Failed to fetch expense', err)
       } finally {
-        setIsFetching(false) // stop fetching
+        setIsFetching(false)
       }
     }
 
     fetchExpense()
-  }, [open, connectedToId])
+  }, [open, connectedToId, expenseId])
 
   /* ---------------------------------- */
-  /* reset state when modal closes */
+  /* reset when modal closes */
   /* ---------------------------------- */
   useEffect(() => {
     if (!open) {
@@ -119,7 +143,7 @@ const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary ,fromAllExpen
   /* ---------------------------------- */
   /* submit */
   /* ---------------------------------- */
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const payload = {
@@ -142,7 +166,7 @@ const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary ,fromAllExpen
       return
     }
 
-    // Skip backend call if no changes
+    // skip if no changes
     if (
       expense &&
       expense.description === payload.description &&
@@ -154,24 +178,25 @@ const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary ,fromAllExpen
       return
     }
 
-    const actionFormData = new FormData()
-    actionFormData.append('description', payload.description)
-    actionFormData.append('category', payload.category)
-    actionFormData.append('amount', payload.amount.toString())
-    actionFormData.append('expenseCurrency', payload.expenseCurrency)
-    actionFormData.append('budgedId', budgedId)
-    if (connectedToId) actionFormData.append('connectedToId', connectedToId)
+    const fd = new FormData()
+    fd.append('description', payload.description)
+    fd.append('category', payload.category)
+    fd.append('amount', payload.amount.toString())
+    fd.append('expenseCurrency', payload.expenseCurrency)
+    fd.append('budgedId', budgedId)
+
+    if (connectedToId) fd.append('connectedToId', connectedToId)
 
     try {
       setIsLoading(true)
       setErrors({})
-      if (expense?.id) {
-        console.log('update')
-        await updateExpense(expense.id, actionFormData)
+
+      if (expense?.id || expenseId) {
+        await updateExpense(expense?.id || expenseId!, fd)
       } else {
- console.log('create')
-        await createExpense(actionFormData)
+        await createExpense(fd)
       }
+
       setOpen(false)
     } catch {
       setErrors({ GeneralError: 'Failed to save expense' })
@@ -186,42 +211,47 @@ const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary ,fromAllExpen
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
-        className={`bg-[#ACA7CB] text-black rounded-lg ${
+        className={`rounded-lg ${
           fromItinerary
-            ? 'text-gray-700 hover:bg-gray-100 active:scale-95 transition shadow-sm bg-white max-w-[202px] py-2 rounded-lg flex items-center justify-center'
-            : 'absolute top-2 right-2 px-2 rounded-lg'
+            ? 'text-gray-700 hover:bg-gray-100 bg-white py-2 flex items-center justify-center gap-2 px-2'
+            : expenseId
+            ? 'text-blue-600 text-sm hover:underline'
+            : 'absolute top-2 right-2 px-2 bg-[#ACA7CB]'
         }`}
       >
         {fromItinerary ? (
-          <div className="flex justify-center items-center gap-2 pr-2">
+          <>
             <MdOutlineAttachMoney className="text-xl text-blue-600" />
-            <div>Add cost</div>
-          </div>
+            <span>Add cost</span>
+          </>
+        ) : expenseId ? (
+          'Edit'
         ) : (
-          <>+</>
+          '+'
         )}
       </DialogTrigger>
 
-      <DialogContent className="w-[300px] text-black rounded-lg p-0   sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-1">
+      <DialogContent className="w-[300px] text-black rounded-lg sm:max-h-[90%] p-1">
         <form onSubmit={handleSubmit}>
           <Card>
             <CardHeader>
-              <DialogTitle>Add Expense</DialogTitle>
+              <DialogTitle>
+                {expense || expenseId ? 'Update Expense' : 'Add Expense'}
+              </DialogTitle>
             </CardHeader>
 
             <CardContent className="space-y-4">
               {isFetching ? (
                 <div className="flex justify-center items-center h-32">
-                  <span className="text-gray-500">Loading expense...</span>
+                  <span className="text-gray-500">Loading...</span>
                 </div>
               ) : (
                 <>
                   {/* Amount */}
                   <div>
                     <Label>Amount</Label>
-                    <div className="relative flex items-center ">
+                    <div className="relative flex items-center">
                       <Input
-                        name="amount"
                         type="number"
                         step="0.01"
                         value={amount}
@@ -230,7 +260,7 @@ const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary ,fromAllExpen
                         }
                         className="pl-[60px]"
                       />
-                      <div className="absolute ">
+                      <div className="absolute">
                         <CurrencyDropdown
                           fromGeneralCurrency={!fromItinerary}
                           fromAllExpenses={fromAllExpenses}
@@ -239,14 +269,15 @@ const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary ,fromAllExpen
                         />
                       </div>
                     </div>
-                    {errors.amount && <p className="text-red-500 text-sm">{errors.amount}</p>}
+                    {errors.amount && (
+                      <p className="text-red-500 text-sm">{errors.amount}</p>
+                    )}
                   </div>
 
                   {/* Description */}
                   <div>
                     <Label>Description</Label>
                     <Input
-                      name="description"
                       placeholder="e.g. Dinner"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
@@ -262,13 +293,13 @@ const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary ,fromAllExpen
                     <ExpenseCategorydropdown
                       value={category}
                       setExpenseCategory={setCategory}
-                      placeholder="Select category"
                     />
                     {errors.category && (
                       <p className="text-red-500 text-sm">{errors.category}</p>
                     )}
                   </div>
 
+                  {/* General error */}
                   {errors.GeneralError && (
                     <p className="text-red-500 text-sm">{errors.GeneralError}</p>
                   )}
@@ -282,10 +313,10 @@ const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary ,fromAllExpen
                 disabled={isLoading || isFetching || !category || !currency}
               >
                 {isLoading
-                  ? expense?.id
+                  ? expense || expenseId
                     ? 'Updating...'
                     : 'Creating...'
-                  : expense?.id
+                  : expense || expenseId
                   ? 'Update Expense'
                   : 'Add Expense'}
               </Button>
@@ -297,4 +328,4 @@ const AddExpenseDialog = ({ budgedId, connectedToId, fromItinerary ,fromAllExpen
   )
 }
 
-export default AddExpenseDialog
+export default ExpenseDialog

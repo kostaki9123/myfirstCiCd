@@ -42,12 +42,13 @@ const Visitplace = (props : props) => {
                                      </span>
                                   )}
                                </div>
-                                <a
-                                  href={`/itinerary/${props.tripId}?point=${props.pointId}`}
-                                   className="text-xs max-h-7 px-2 py-1 rounded-md border border-blue-200 text-blue-700 hover:bg-blue-50 transition"
+                               <a
+                                      href={`/itinerary/${props.tripId}?point=${props.pointId}`}
+                                      className="text-xs max-h-7 px-2 py-1 rounded-md border absolute top-2 right-2 border-blue-200 text-blue-700 hover:bg-blue-50 transition"
                                     >
                                       Edit
-                                </a>
+                                    </a>
+                                    <div className=' min-w-8'></div>
                              </CardHeader>
                            
                              <CardContent className="  p-2 pt-0 space-y-2 text-xs text-muted-foreground">

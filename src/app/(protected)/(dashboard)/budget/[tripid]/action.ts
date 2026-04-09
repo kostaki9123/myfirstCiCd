@@ -13,6 +13,7 @@ import { getExpensesByBudgetIdController } from "../../../../../../backend/inter
 import { getExpensesByConnectedToIdController } from "../../../../../../backend/interface-adapters/controllers/expenses/get-by-connectedid.controller"
 import { updateBudgetController } from "../../../../../../backend/interface-adapters/controllers/budget/update-budget.controller";
 import { getBudgetByTripIdController } from "../../../../../../backend/interface-adapters/controllers/budget/getBudgetByTripId-budget.controller";
+import { getExpensesByIdController } from "../../../../../../backend/interface-adapters/controllers/expenses/get-by-expenseid.controller";
 
 /* ---------------------------------- */
 /* Create Expense */
@@ -154,6 +155,19 @@ export async function getExpensesByConnectedToId(connectedToId: string) {
   }
 }
 
+/* ---------------------------------- */
+/* get Expense */
+/* ---------------------------------- */
+export async function getExpenseById(id: string) {
+  try {
+    console.log('cons' ,id )
+    const expenses = await getExpensesByIdController(id)
+    return expenses
+  } catch (err) {
+    console.error("❌ Error fetching expenses by connectedToId:", err)
+    throw new Error(`Oops, something went wrong: ${(err as Error).message}`)
+  }
+}
 
 //Budget action 
 /* ---------------------------------- */

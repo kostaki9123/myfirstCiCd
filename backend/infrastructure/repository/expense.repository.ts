@@ -46,33 +46,35 @@ export class ExpenseRepository implements IExpenseRepository {
     })
   }
 
-  async updateExpense(
-    expenseId: string,
-    input: Partial<ExpenseInsert>,
-    tx?: any
-  ): Promise<Expense> {
-    const client = tx ?? prisma
+ async updateExpense(
+  expenseId: string,
+  input: Partial<ExpenseInsert>,
+  tx?: any
+): Promise<Expense> {
+  const client = tx ?? prisma
 
-    try {
-      return await client.expense.update({
-        where: {
-          id: expenseId,
-        },
-        data: {
-          description: input.description,
-          category: input.category,
-          expenseCurrency: input.expenseCurrency,
-          amount: input.amount,
-          connectedToId: input.connectedToId ?? null,
-        },
-      })
-    } catch {
-      throw new DatabaseOperationError(
-        `Expense ${expenseId} not found`
-      )
-    }
+  try {
+    return await client.expense.update({
+      where: {
+        id: expenseId,
+      },
+      data: {
+        description: input.description,
+        category: input.category,
+        expenseCurrency: input.expenseCurrency,
+        amount: input.amount,
+
+        ...(input.connectedToId !== undefined && {
+          connectedToId: input.connectedToId,
+        }),
+      },
+    })
+  } catch {
+    throw new DatabaseOperationError(
+      `Expense ${expenseId} not found`
+    )
   }
-
+}
   async deleteExpense(
     expenseId: string,
     tx?: any

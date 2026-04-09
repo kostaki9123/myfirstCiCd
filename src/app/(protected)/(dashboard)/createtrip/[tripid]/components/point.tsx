@@ -93,36 +93,6 @@ type Props = {
   minDate?: Date
 } 
 
-const fakeAccommodations = [
-    {
-      id: "1",
-      name: "Cozy Airbnb",
-      description: "Perfect for couples",
-      image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&h=300&fit=crop",
-    },
-  ];
-
-  const fakePlaces = [
-    {
-      id: "1",
-      name: "Eiffel Tower",
-      description: "Iconic landmark in Paris",
-      image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=300&h=300&fit=crop",
-    },
-    {
-      id: "2",
-      name: "Notre Dame",
-      description: "Famous medieval cathedral",
-      image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=300&h=300&fit=crop",
-    },
-    {
-      id: "",
-      name: "Notre Dame",
-      description: "Famous medieval cathedral",
-      image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=300&h=300&fit=crop",
-    },
-  ];
-
 const positiongrid = [
   {gridColumn: 2, gridRow : 3 ,line : "up"   },  //grid colunm delte if not needded
   {gridColumn: 3, gridRow : 2 ,line : "down" },
@@ -237,8 +207,17 @@ const Point =  (props:Props) => {
     });
 
     if (!validation.success) {
-      setError(validation.error.errors[0].message);
-      return;
+       const err = validation.error.errors[0];
+     
+       if (err.path[0] === "place") {
+         setError("Please select a valid place");
+       } else if (err.path[0] === "dates") {
+         setError(err.message);
+       } else {
+         setError("Invalid input");
+       }
+
+     return;
     }
 
     const d = validation.data;
@@ -268,43 +247,6 @@ const Point =  (props:Props) => {
     }
   };
 
- 
-  // const fields = 'id,displayName';
-//
-  // 
-  // const url = `https://places.googleapis.com/v1/places/${props.data.placeId1}?fields=*&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}`
-//
-  // const response : any = await fetch(`${url}`, {
-  //    // headers: {
-  //    //      'Content-Type': 'application/json',
-  //    //      'X-Goog-Api-Key': process.env.NEXT_PUBLIC_GOOGLE_MAP_API!,
-  //    //      'X-Goog-FieldMask': 'places.websiteUri,places.types,places.id'
-  //    //    },
-  //     cache: 'no-store'
-  //       })
-  //    console.log(response)
-  // const result = await response.json();
-
-  //  console.log("Id data" ,result , props.data.placeId1)
-  //const formattedStartDate = props.data.startDate.replace(/ /g, "/");
-
-// let formattedEndDate
-// if (props.data.enddate){
-// formattedEndDate = props.data.enddate.replace(/ /g, "/");
-// }
-console.log(props.index)
-console.log(props.datalenght)
-console.log(props.withcurveline)
-
-
-  function isSingleDigit(input : number) {
-    if (typeof input === "number" && input >= 0 && input <= 9) {
-        return true; // Single-digit number
-    }
-    return false; // Not a single-digit number
-  }
-
-  
   return (
     <>
     <Dialog open={isOpen} onOpenChange={handleModalChange} >
@@ -357,6 +299,7 @@ console.log(props.withcurveline)
                       onPlaceSelected={(place) => {
                         setSelectedPlace(place)
                         setIsDirty(true);
+                        setError(null)
                       }}
                       onMovingbox
                       apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}
@@ -374,10 +317,17 @@ console.log(props.withcurveline)
                             setDateRange([value as Date, null]);
                           }
                            setIsDirty(true);
+                           setError(null);
                         }}
                         namePrefix="booking"
                         defaultValue={dateRange}
                      />  
+
+              {error && (
+               <div className="text-red-500 text-sm mt-2">
+                 {error}
+               </div>
+             )}
                  
             {isDirty && (
             <div className="flex justify-end ">

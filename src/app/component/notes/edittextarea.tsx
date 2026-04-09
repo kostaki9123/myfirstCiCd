@@ -105,7 +105,7 @@ const NotesBox = ({
             className="
               bg-[#f5f7fa] border border-gray-300 rounded
               p-2 text-sm text-gray-700
-              whitespace-pre-wrap shadow-sm
+              whitespace-pre-wrap break-words shadow-sm
               hover:bg-gray-200 transition cursor-pointer
             "
           >

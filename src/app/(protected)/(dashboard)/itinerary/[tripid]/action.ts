@@ -191,7 +191,7 @@ export async function updatePlace(formData: FormData) {
     } = {
       internalId,
       notes: notes ?? null,
-      paymentStatus: paymentStatus ?? 'UNPAID',
+      paymentStatus: paymentStatus ?? null,
     };
   
     
