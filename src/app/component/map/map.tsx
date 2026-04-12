@@ -140,48 +140,27 @@ function App({
 
   console.log('reccomended',addedplacetostay)
 
-  const pathSegments: { path: LatLng[]; color: string }[] = [];
+
   const transportMarkers: { pos: LatLng; icon: string }[] = [];
 
-  /* ---------------------- BUILD CONNECTIONS ---------------------- */
-  for (let i = 0; i < sorted.length; i++) {
-    const item = sorted[i];
+ const movingBoxPaths: LatLng[][] = useMemo(() => {
+  const paths: LatLng[][] = []
 
-    if (item.role === "POINT") {
-      const p = safePoint(item.placeLat, item.placeLng);
-      if (!p) continue;
+  const sorted = [...cyrclesArr].sort((a, b) => a.index - b.index)
 
-      const next = sorted[i + 1];
-      if (next) {
-        const target =
-          next.role === "MOVING_BOX"
-            ? { lat: next.fromLat, lng: next.fromLng }
-            : safePoint(next.placeLat, next.placeLng);
-
-        if (target) pathSegments.push({ path: [p, target], color: COLOR_A });
-      }
-    }
-
+  for (const item of sorted) {
     if (item.role === "MOVING_BOX") {
-      const from: LatLng = { lat: item.fromLat, lng: item.fromLng };
-      const to: LatLng = { lat: item.toLat, lng: item.toLng };
-
-      pathSegments.push({ path: [from, to], color: COLOR_B });
-
-      const icon = transportIcons[item.transportType] || transportIcons.other;
-      transportMarkers.push({ pos: getMid(from, to), icon });
-
-      const next = sorted[i + 1];
-      if (next) {
-        const target =
-          next.role === "MOVING_BOX"
-            ? { lat: next.fromLat, lng: next.fromLng }
-            : safePoint(next.placeLat, next.placeLng);
-
-        if (target) pathSegments.push({ path: [to, target], color: COLOR_A });
-      }
+      paths.push([
+        { lat: item.fromLat, lng: item.fromLng },
+        { lat: item.toLat, lng: item.toLng },
+      ])
     }
   }
+
+  return paths
+}, [cyrclesArr])
+
+
 
   /* ---------------------- MAP CENTER ---------------------- */
   const mapCenter = useMemo(() => {
@@ -213,12 +192,13 @@ function App({
     >
       <MapController focusplace={focusplace} />
       {/* ROUTES */}
-      {pathSegments.map((seg, i) => (
+      
+      {movingBoxPaths.map((path, i) => (
         <PolylineOverlay
           key={i}
-          path={seg.path}
+          path={path}
           options={{
-            strokeColor: seg.color,
+            strokeColor: "#FF0000",
             strokeOpacity: 1,
             strokeWeight: 3,
           }}
@@ -233,10 +213,10 @@ function App({
       {/* TRIP POINTS */}
       {sorted
         .filter((i) => i.role === "POINT")
-        .map((pt) => {
+        .map((pt ,key) => {
           const pos = safePoint(pt.placeLat, pt.placeLng);
           if (!pos) return null;
-          return <Marker key={pt.id} position={pos} />;
+          return <Marker key={pt.id} position={pos} label={{ text: String(key + 1) }}  />;
         })}
 
 {addedplacetovisit?.map((place, key) => (
