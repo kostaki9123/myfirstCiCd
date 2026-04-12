@@ -5,7 +5,6 @@ import { IExpenseRepository } from "../../repositories/expense.repository"
 import { IBudgetsRepository } from "../../repositories/budget.repository"
 import { MockBudgetsRepository } from "../../../infrastructure/repository/budget.repository.mock"
 import { BudgetsRepository } from "../../../infrastructure/repository/budget.repository"
-import { convertCurrency } from "../../../infrastructure/services/convert-currency"
 
 type Props = ExpenseInsert
 
@@ -40,16 +39,6 @@ export const createExpenseUseCase = async (
       throw new Error(`Budget ${input.budgetId} not found`)
     }
 
-    /* ---------------- CONVERT CURRENCY ---------------- */
-    let convertedAmount = createdExpense.amount
-
-    if (createdExpense.expenseCurrency !== budget.budgetCurrency) {
-      convertedAmount = await convertCurrency(
-        createdExpense.amount,
-        createdExpense.expenseCurrency,
-        budget.budgetCurrency
-      )
-    }
     
     return createdExpense
   } catch (err) {

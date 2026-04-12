@@ -74,7 +74,7 @@ export class ExpenseRepository implements IExpenseRepository {
       `Expense ${expenseId} not found`
     )
   }
-}
+} 
   async deleteExpense(
     expenseId: string,
     tx?: any

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import React, { useState } from "react"
 import CurrencyDropdown from "./currencydropdown"
 import { updateBudget } from "../action"
+import { CURRENCIES } from "@/lib/currency"
 
 type Props = {
   budgedCurrency: string
@@ -61,6 +62,11 @@ const Setbudgetamount = ({
     setIsEditing(false)
   }
 
+     const currencysymbol = CURRENCIES.filter(
+        (c : any) => c.code === savedBudget?.currency
+      )
+    
+
   return (
     <div className="bg-[#ACA7CB] rounded-md p-2 relative base:row-start-2 base:row-end-3 base:col-start-1 base:col-end-2 535:row-start-1 535:row-end-2 535:col-start-2 535:col-end-3 986:row-start-1 986:row-end-5 986:col-start-2 986:col-end-3 lg:col-start-2 lg:787:col-end-3 xl:col-start-4 xl:col-end-5">
       <h4 className="text-xl font-semibold tracking-tight">Budget</h4>
@@ -76,7 +82,7 @@ const Setbudgetamount = ({
       {!isEditing && savedBudget && (
         <div className="absolute inset-x-2 bottom-2 top-11 flex flex-col items-center justify-center gap-2">
           <p className="text-lg font-medium">
-            {savedBudget.currency} {savedBudget.amount}
+            {savedBudget.currency} {savedBudget.amount}{currencysymbol?.[0].symbol}
           </p>
           <Button variant="outline" onClick={() => setIsEditing(true)}>
             Edit
