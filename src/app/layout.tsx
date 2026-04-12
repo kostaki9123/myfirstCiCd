@@ -1,6 +1,6 @@
   import type { Metadata } from "next";
   import { Analytics } from '@vercel/analytics/react';
-  import "./globals.css";
+import "./globals.css";
   import { ClerkProvider, SignedIn, SignedOut, SignIn, SignInButton, UserButton } from "@clerk/nextjs";
   import Navbar from "./component-custom/bars/navbar";
   import { Toaster } from "@/components/ui/sonner";
