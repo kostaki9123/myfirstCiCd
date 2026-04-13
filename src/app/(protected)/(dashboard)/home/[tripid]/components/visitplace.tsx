@@ -13,7 +13,7 @@ type Props = {
   visitdate: Date;
   visitTime: Date | undefined;
   pointId: string;
-  googleMapLink: string | null | undefined; // stored link (mobile-friendly fallback)
+  googleMapLink: string | null | undefined;
   paymentStatus?: string | null;
   tripId: string;
 };
@@ -26,7 +26,7 @@ const isMobileDevice = () => {
   );
 };
 
-// extract place_id if present
+// extract place_id
 const extractPlaceId = (url?: string | null) => {
   if (!url) return null;
 
@@ -46,18 +46,13 @@ const Visitplace = (props: Props) => {
 
   const placeId = extractPlaceId(props.googleMapLink);
 
-  // FINAL URL LOGIC
+  // FINAL URL LOGIC (BEST RELIABILITY)
   const googleLink = (() => {
     if (!props.googleMapLink) return null;
 
-    // 📱 mobile → always use stored link (works best on phone apps)
-    if (isMobile) {
-      return props.googleMapLink;
-    }
-
-    // 🖥️ desktop → force place_id format if available
+    // If we have place_id → use strongest universal format
     if (placeId) {
-      return `https://www.google.com/maps/place/?q=place_id:${placeId}`;
+      return `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${placeId}`;
     }
 
     // fallback
