@@ -175,13 +175,13 @@ const Placecomponent = (props: Props) => {
 
       {/* Buttons */}
       <div className="mt-4 flex gap-3">
-        <Link href={props.affiliatelink || "#"} className="flex-1" target="_blank" rel="noopener noreferrer">
+        <a href={props.affiliatelink  } className="flex-1" target="_blank" rel="noopener noreferrer">
           <Button
             className="w-full bg-blue-600 hover:bg-blue-700 text-white h-9 text-sm rounded-md"
           >
             View
           </Button>
-        </Link>
+        </a>
 
         <Button
             disabled={isAdded || isLoading}

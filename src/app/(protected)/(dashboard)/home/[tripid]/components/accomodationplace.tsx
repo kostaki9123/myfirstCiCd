@@ -4,6 +4,7 @@ import React from 'react'
 import { MdHotel } from 'react-icons/md'
 import { RiExternalLinkLine } from 'react-icons/ri'
 import Notes from './placenote'
+import Link from 'next/link'
 
 type props = {
  internalId: string
@@ -47,12 +48,12 @@ const Accomodationplace = (props:props) => {
                                     </div>
                                   
                                     {/* RIGHT: action */}
-                                    <a
+                                    <Link
                                       href={`/itinerary/${props.tripId}?point=${props.pointId}`}
                                       className="text-xs max-h-7 px-2 py-1 rounded-md border absolute top-2 right-2 border-blue-200 text-blue-700 hover:bg-blue-50 transition"
                                     >
                                       Edit
-                                    </a>
+                                    </Link>
                                     <div className=' min-w-8'></div>
                                  </CardHeader>
                                
