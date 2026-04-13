@@ -1,5 +1,7 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { RiExternalLinkLine } from "react-icons/ri";
 import Notes from "./placenote";
 import Link from "next/link";
@@ -11,29 +13,56 @@ type Props = {
   visitdate: Date;
   visitTime: Date | undefined;
   pointId: string;
-  googleMapLink: string | null | undefined;
+  googleMapLink: string | null | undefined; // stored link (mobile-friendly fallback)
   paymentStatus?: string | null;
   tripId: string;
 };
 
-// 🔥 Normalize Google Maps link for ALL devices
-const normalizeGoogleMapsLink = (url?: string | null) => {
+// detect mobile safely
+const isMobileDevice = () => {
+  if (typeof window === "undefined") return false;
+  return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i.test(
+    navigator.userAgent
+  );
+};
+
+// extract place_id if present
+const extractPlaceId = (url?: string | null) => {
   if (!url) return null;
 
-  // If already contains place_id → convert to best universal format
-  const match = url.match(/place_id:([A-Za-z0-9_-]+)/);
+  const match =
+    url.match(/place_id:([A-Za-z0-9_-]+)/) ||
+    url.match(/[?&]q=place_id:([A-Za-z0-9_-]+)/);
 
-  if (match?.[1]) {
-    const placeId = match[1];
-
-    return `https://www.google.com/maps/place/?q=place_id:${placeId}`;
-  }
-
-  return url;
+  return match?.[1] ?? null;
 };
 
 const Visitplace = (props: Props) => {
-  const googleLink = normalizeGoogleMapsLink(props.googleMapLink);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(isMobileDevice());
+  }, []);
+
+  const placeId = extractPlaceId(props.googleMapLink);
+
+  // FINAL URL LOGIC
+  const googleLink = (() => {
+    if (!props.googleMapLink) return null;
+
+    // 📱 mobile → always use stored link (works best on phone apps)
+    if (isMobile) {
+      return props.googleMapLink;
+    }
+
+    // 🖥️ desktop → force place_id format if available
+    if (placeId) {
+      return `https://www.google.com/maps/place/?q=place_id:${placeId}`;
+    }
+
+    // fallback
+    return props.googleMapLink;
+  })();
 
   return (
     <div className="flex flex-col">
@@ -109,7 +138,6 @@ const Visitplace = (props: Props) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-blue-600 transition flex gap-1 items-center"
-                title="Open in map"
               >
                 <RiExternalLinkLine className="text-lg" />
                 <span className="pt-[2px]">Open in Map</span>
