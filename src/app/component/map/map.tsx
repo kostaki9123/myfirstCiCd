@@ -216,7 +216,7 @@ function App({
         .map((pt ,key) => {
           const pos = safePoint(pt.placeLat, pt.placeLng);
           if (!pos) return null;
-          return <Marker key={pt.id} position={pos} label={{ text: String(key + 1) }}  />;
+          return <Marker key={pt.id} position={pos} label={{ text: String(key + 1) }} zIndex={1000} />;
         })}
 
 {addedplacetovisit?.map((place, key) => (
@@ -256,7 +256,7 @@ function App({
   <Marker
     key={`added-stay-${place.id}`}
     position={place.location}
-    zIndex={9999}
+    zIndex={1}
     icon={{
       url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
         <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">

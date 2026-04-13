@@ -1,9 +1,9 @@
   import type { Metadata } from "next";
   import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
-  import { ClerkProvider, SignedIn, SignedOut, SignIn, SignInButton, UserButton } from "@clerk/nextjs";
+  import { ClerkProvider } from "@clerk/nextjs";
   import Navbar from "./component-custom/bars/navbar";
-  import { Toaster } from "@/components/ui/sonner";
+ 
  
   export const metadata : Metadata = {
   title: "Tripaki - Your Personal Trip Planner",
@@ -16,8 +16,8 @@ import "./globals.css";
     images: [
       {
         url: "/Tripaki-logo-transparent.png",
-        width: 800,
-        height: 600,
+        width: 1200,
+        height: 630 ,
       },
     ],
     locale: "en_US",
@@ -34,14 +34,12 @@ import "./globals.css";
   }>)
   {
       
-   
-    
     return (
     <ClerkProvider 
     signInUrl="/sign-in"
     signUpUrl="/sign-up"
     >
-      <html lang="en  " className="bg-[#010038]  ">
+      <html lang="en" className="bg-[#010038]">
         <body
         className="bg-[#010038]  "
           id="datepicker-portal"
