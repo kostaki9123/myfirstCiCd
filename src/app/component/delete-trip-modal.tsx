@@ -22,30 +22,29 @@ const DeleteAlertDialog = ({ tripId }: Props) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  function onSubmit(setOpen: (open: boolean) => void) {
-    return async (formData: FormData) => {
-      try {
-        await deleteTrip(tripId);
-        setOpen(false);
-      } catch (err) {
-        if (err instanceof Error && err.name === "DatabaseOperationError") {
-          console.error("Database error while deleting trip");
-        } else {
-          console.error("Unexpected error:", err);
-        }
+  async function handleDelete() {
+    try {
+      await deleteTrip(tripId);
+      return true;
+    } catch (err) {
+      if (err instanceof Error && err.name === "DatabaseOperationError") {
+        console.error("Database error while deleting trip");
+      } else {
+        console.error("Unexpected error:", err);
       }
-    };
+      return false;
+    }
   }
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <div className="px-4 py-2 text-[#f87171] border border-[#f87171] rounded-lg hover:bg-[#f87171]  hover:text-white transition cursor-pointer">
+        <div className="px-4 py-2 text-[#f87171] border border-[#f87171] rounded-lg hover:bg-[#f87171] hover:text-white transition cursor-pointer">
           Delete
         </div>
       </AlertDialogTrigger>
 
-      <AlertDialogContent className=" w-3/4 674:w-full " >
+      <AlertDialogContent className="w-3/4 674:w-full">
         <AlertDialogHeader>
           <AlertDialogTitle>Confirm delete</AlertDialogTitle>
           <AlertDialogDescription>
@@ -54,19 +53,31 @@ const DeleteAlertDialog = ({ tripId }: Props) => {
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isLoading}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={isLoading}>
+            Cancel
+          </AlertDialogCancel>
+
           <form
             onSubmit={async (e) => {
               e.preventDefault();
               setIsLoading(true);
 
-              const formData = new FormData(e.currentTarget);
-              await onSubmit(setOpen)(formData);
+              try {
+                const success = await handleDelete();
 
-              setIsLoading(false);
+                if (success) {
+                  setOpen(false); // ✅ close modal after delete
+                }
+              } finally {
+                setIsLoading(false);
+              }
             }}
           >
-            <AlertDialogAction type="submit" disabled={isLoading} className="w-full">
+            <AlertDialogAction
+              type="submit"
+              disabled={isLoading}
+              className="w-full"
+            >
               {isLoading ? "Deleting..." : "Delete"}
             </AlertDialogAction>
           </form>

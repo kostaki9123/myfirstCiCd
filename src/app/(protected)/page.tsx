@@ -1,13 +1,8 @@
-//export const dynamic = 'force-dynamic';
 import Link from "next/link";
 import Createtripmodal from "../component/create-trip-modal";
 import DeleteAlertDialog from "../component/delete-trip-modal";
-
 import { getTrips } from "./action";
 import UpdateTripModal from "../component/UpdateTripModal";
-import DashboardWelcome from "../component/onboarding/DashboardWelcome";
-import EmptyTripsState from "../component/onboarding/DashboardWelcome";
-
 
 export default async function Home() {
 
@@ -16,11 +11,9 @@ export default async function Home() {
    trips.sort((a, b) => 
       new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()
   ); 
-  console.log('trips',trips)
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-gray-200 pt-20">
-
       
       {/* Header */}
       <header className="w-full py-8 text-center shadow-lg">
@@ -31,9 +24,7 @@ export default async function Home() {
 
       {/* Action Buttons */}
       <div className="mt-10 flex justify-center space-x-6">
-        <Createtripmodal />
-
-     
+        <Createtripmodal /> 
       </div>
 
       {/* Trip Cards */}
@@ -76,28 +67,6 @@ export default async function Home() {
                   </span>
                 ))}              
              </div>
-            {/* Cost and Details (commented out) */}
-            {/*
-            <div className="mt-6">
-              <h3 className="text-sm font-medium text-gray-400 uppercase">
-                Cost and Details:
-              </h3>
-              <div className="flex justify-between mt-2">
-                <div className="flex flex-col text-center">
-                  <small className="text-sm text-gray-400">Cost</small>
-                  <div className="text-lg font-semibold text-gray-300">
-                    $200 { trip.}
-                  </div>
-                </div>
-                <div className="flex flex-col text-center">
-                  <small className="text-sm text-gray-400">Start in</small>
-                  <div className="text-lg font-semibold text-gray-300">
-                   trip.startsInDays  days
-                  </div>
-                </div>
-              </div>
-            </div>
-            */}
 
             {/* Actions */}
             <div className="mt-6 flex justify-between items-center">

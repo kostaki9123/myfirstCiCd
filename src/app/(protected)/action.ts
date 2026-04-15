@@ -13,23 +13,19 @@ import { deleteTripController } from '../../../backend/interface-adapters/contro
 import { getTripController } from '../../../backend/interface-adapters/controllers/trips/get-trip.controllet';
 import { updateTripController } from '../../../backend/interface-adapters/controllers/trips/update-trip.controller';
 
-
 export async function signIn(userId:string, email:string, username:string ) {
     //const instrumentationService = getInjection('IInstrumentationService');
     //return await instrumentationService.instrumentServerAction(
     //  'signIn',
     //  { recordResponse: true },
-        try {
-         
+        try {      
           return await signInController({
             userId,username,email
           });
          
         } catch (err) {
-          throw new Error(`${(err as Error).message}`)
-          
-        }
-  
+          throw new Error(`${(err as Error).message}`)         
+        } 
    //  );
   }
 
@@ -39,9 +35,7 @@ export async function createTrip(formData:FormData ) {
     //return await instrumentationService.instrumentServerAction(
     //  'signIn',
     //  { recordResponse: true },
-        console.log('run1')
         const { userId } = await auth(); // 🔐 Auth check
-        console.log('run')
         if (!userId) {
           redirect('/sign-in')
         }
@@ -61,20 +55,13 @@ export async function createTrip(formData:FormData ) {
           
 
           let tripName = formData.get("tripName") as string 
-          console.log("trip name:", formData.get("tripName") as string )
 
           let tripBudget =  formData.get("tripBudget") as string 
-          console.log("trip Budget:", formData.get("tripBudget") as string )
 
           let travelingWith = formData.get("travelingWith") as string
-          console.log("travelingWith:", formData.get("travelingWith") as string )
 
           let tripTypes = formData.getAll("tripTypes") as string[];
-          console.log("Trip Types:", tripTypes);
-
-          
-         
-           
+    
           const result =  await createTripController({
              userId : userId,
              tripName : tripName,
@@ -88,26 +75,20 @@ export async function createTrip(formData:FormData ) {
            return result
          
         } catch (err) {
-          throw new Error(`${err}`)
-          
-        }
-   
+          throw new Error(`${err}`)        
+        }  
    //  );
   }
 
 
-
 export async function updateTrip(formData: FormData) {
-  console.log("run updateTripMeta");
 
   // 🔐 Auth check
   const { userId } = await auth();
   if (!userId) {
     redirect("/sign-in");
   }
-  console.log("userId:", userId);
 
-  // Get user from repository
   const usersRepository: IUsersRepository =
     process.env.NODE_ENV === "test"
       ? new MockUsersRepository()
@@ -126,11 +107,6 @@ export async function updateTrip(formData: FormData) {
     const travelingWith = formData.get("travelingWith") as "Solo" | "Friends" | "Couple" | "Family" | "Group" | undefined
     const tripTypes = formData.getAll("tripTypes") as string[];
 
-    console.log("tripId:", tripId);
-    console.log("tripName:", tripName);
-    console.log("tripBudget:", tripBudget);
-    console.log("travelingWith:", travelingWith);
-    console.log("tripTypes:", tripTypes);
 
     // Call controller
     const result = await updateTripController({
@@ -147,13 +123,9 @@ export async function updateTrip(formData: FormData) {
 
     return result;
   } catch (err) {
-    console.error("updateTrip error:", err);
     throw new Error(`${(err as Error).message}'`);
   }
 }
-
-
-
 
   
 export async function getTrips() {
@@ -178,7 +150,6 @@ export async function getTrips() {
     const result = await getTripsController(userId);
     return result;
   } catch (err) {
-    console.error(err);
     throw new Error(`${(err as Error).message}'`);
   }
 }
@@ -205,11 +176,9 @@ export async function getTrip(tripId : string) {
     const result = await getTripController(tripId);
     return result;
   } catch (err) {
-    console.error(err);
     throw new Error(`${(err as Error).message}'`);
   }
 }
-
 
 
 export async function deleteTrip(tripId:string) {
@@ -240,13 +209,9 @@ export async function deleteTrip(tripId:string) {
            revalidatePath('/')
 
            return result
-        
-                  
+                        
         } catch (err) {
-          console.log(err)
-          throw new Error(`${(err as Error).message}`)
-          
+          throw new Error(`${(err as Error).message}`)       
         }
-  
    //  );
   }

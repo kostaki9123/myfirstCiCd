@@ -6,13 +6,10 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState, useEffect } from 'react';
-import { z, ZodError } from 'zod';
 import { Checkbox } from '@/components/ui/checkbox';
 import { updateTrip } from '../(protected)/action';
 import Budgetdropdown from './budgetdropdown';
 import { formSchema } from './create-trip-modal';
-import { MdAdd } from "react-icons/md";
-import { InputParseError } from '../../../backend/entities/errors/common';
 
 type Props = {
   tripId: string;

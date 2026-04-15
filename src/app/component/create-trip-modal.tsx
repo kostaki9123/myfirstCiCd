@@ -5,7 +5,6 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } 
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
 } from "@/components/ui/card"
@@ -13,7 +12,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React,{ useState } from 'react';
 import { z, ZodError } from 'zod';
-import { MdAdd } from "react-icons/md";
 import { Checkbox } from '@/components/ui/checkbox';
 import { createTrip } from '../(protected)/action';
 import Budgetdropdown from './budgetdropdown';
@@ -46,10 +44,7 @@ const Createtripmodal = () => {
   const [isLoading, setisLoading] = useState<boolean>(false)
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [tripBudget, setTripBudget] = useState<string>(""); // controlled
-  const [travelingWith, setTravelingWith] = useState<string>(""); // controlled
-
-  const { user } = useUser();
-  
+  const [travelingWith, setTravelingWith] = useState<string>(""); // controlled  
   
   const handleCheckboxChange = (value: string) => {
     setSelectedTypes((prev) => {
@@ -110,11 +105,10 @@ function onSubmit(
       setOpen(false);
     } catch (err) {
        if (err instanceof Error && err.name === "DatabaseOperationError") {
-            setErrorMessages({
-               GeneralError: 'Trip could not created.There was problem with database',
-             })
+          setErrorMessages({
+             GeneralError: 'Trip could not created.There was problem with database',
+     })
        }
-    //    setErrorMessage(err.message); 
        if (err instanceof InputParseError && err.cause instanceof ZodError) {
          const flattened = err.cause.flatten();
          setErrorMessages({
@@ -124,14 +118,10 @@ function onSubmit(
            tripTypes: flattened.fieldErrors.tripTypes?.[0] || "",
          });
        } else {
-         console.error("Unexpected error:", err);
        }
      }
   };
 }
-
-
-
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
