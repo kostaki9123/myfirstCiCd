@@ -1,5 +1,3 @@
-
-
 import { PointsRepository } from '../../../infrastructure/repository/points.repository';
 import { MockPointsRepository } from '../../../infrastructure/repository/points.repository.mock';
 import { IPointsRepository } from '../../repositories/points.repository.interface';
@@ -59,7 +57,6 @@ export const createPointUseCase = async (input: props) => {
        ? new MockPointsRepository() 
        : new PointsRepository();
 
-    console.log('useCase')
 
   try {
 

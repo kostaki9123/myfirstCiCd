@@ -15,7 +15,7 @@ export const createTripController =
          
          //input validation
          const { data, error: inputParseError } = inputSchema.safeParse(input);
-          console.log('create trip controller')
+      
          if (inputParseError) {
               throw new InputParseError('Invalid data', { cause: inputParseError });
          }

@@ -1,4 +1,3 @@
-
 import { DatabaseOperationError } from "../../../entities/errors/common"
 import { BudgetsRepository } from "../../../infrastructure/repository/budget.repository"
 import { MockBudgetsRepository } from "../../../infrastructure/repository/budget.repository.mock"

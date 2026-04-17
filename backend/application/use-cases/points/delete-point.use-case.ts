@@ -1,10 +1,5 @@
-
-
-import { ExpenseRepository } from '../../../infrastructure/repository/expense.repository';
-import { MockExpenseRepository } from '../../../infrastructure/repository/expense.repository.mock';
 import { PointsRepository } from '../../../infrastructure/repository/points.repository';
 import { MockPointsRepository } from '../../../infrastructure/repository/points.repository.mock';
-import { IExpenseRepository } from '../../repositories/expense.repository';
 import { IPointsRepository } from '../../repositories/points.repository.interface';
 
 
@@ -12,10 +7,6 @@ export type IdeletePointUseCase = ReturnType<typeof deletePointUseCase>;
 
 export const deletePointUseCase = async (pointId: string , tripId:string) => {
 
-  const expenseRepository: IExpenseRepository =
-    process.env.NODE_ENV === "test"
-      ? new MockExpenseRepository()
-      : new ExpenseRepository()
 
   // Choose repository based on environment
    const pointRepository: IPointsRepository =
@@ -23,15 +14,10 @@ export const deletePointUseCase = async (pointId: string , tripId:string) => {
        ? new MockPointsRepository() 
        : new PointsRepository();
 
-
   try {
-
-
     let deletePoint = await pointRepository.deletePoint(
         pointId,tripId
     );
-
-    
 
     return deletePoint;
 

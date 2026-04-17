@@ -3,8 +3,6 @@
 import { PlaceRepository } from '../../../infrastructure/repository/place.repository';
 import { MockPlaceRepository } from '../../../infrastructure/repository/place.repository.mock';
 import { IPlaceRepository } from '../../repositories/place.repository.interface';
-import { ITripsRepository } from '../../repositories/trips.repository.interface';
-import { IUsersRepository } from '../../repositories/users.repository.interface';
 
 export type IplaceType  = {
  placeType : 'ACCOMMODATION' | 'PLACE_TO_VISIT',

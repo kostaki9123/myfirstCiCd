@@ -1,10 +1,7 @@
 
 import { PointsRepository } from '../../../infrastructure/repository/points.repository';
 import { MockPointsRepository } from '../../../infrastructure/repository/points.repository.mock';
-import { TripsRepository } from '../../../infrastructure/repository/trips.repository';
-import { MockTripsRepository } from '../../../infrastructure/repository/trips.repository.mock';
 import { IPointsRepository } from '../../repositories/points.repository.interface';
-
 
 
 export type IgetPointsUseCase = ReturnType<typeof getPointsUseCase>;

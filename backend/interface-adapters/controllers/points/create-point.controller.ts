@@ -1,7 +1,5 @@
 import { z } from "zod";
 import { InputParseError } from "../../../entities/errors/common";
-
-import { createTripUseCase } from "../../../application/use-cases/trip/create-trip.use-case";
 import { createPointUseCase } from "../../../application/use-cases/points/create-point.use-case";
 
 const inputSchema = z.object({

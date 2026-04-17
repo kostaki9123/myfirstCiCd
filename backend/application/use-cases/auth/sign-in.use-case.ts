@@ -1,5 +1,3 @@
-import { error } from 'console';
-import { AuthenticationError } from '../../../entities/errors/auth';
 import { UsersRepository } from '../../../infrastructure/repository/users.repository';
 import { MockUsersRepository } from '../../../infrastructure/repository/users.repository.mock';
 import { IUsersRepository } from '../../repositories/users.repository.interface';

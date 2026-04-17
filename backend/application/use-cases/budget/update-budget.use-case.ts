@@ -1,9 +1,7 @@
 import { DatabaseOperationError } from "../../../entities/errors/common"
 import { BudgetsRepository } from "../../../infrastructure/repository/budget.repository"
 import { MockBudgetsRepository } from "../../../infrastructure/repository/budget.repository.mock"
-import { convertCurrency } from "../../../infrastructure/services/convert-currency"
 import { IBudgetsRepository } from "../../repositories/budget.repository"
-
 
 type Props = {
   budgetId: string
@@ -25,11 +23,6 @@ export const updateBudgetUseCase = async (input: Props) => {
 
   try {
     
-    // 2️⃣ Call repository to update
-    const oldBudget = await budgetRepository.getBudget(input.budgetId)
-
-   
-
     const result = await budgetRepository.updateBudget(input.budgetId, {
       tripId: input.tripId,
       genCurrency: input.genCurrency,

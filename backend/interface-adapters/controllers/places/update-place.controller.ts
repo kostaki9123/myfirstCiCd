@@ -38,7 +38,6 @@ export const updatePlaceController =
               throw new InputParseError('Invalid data', { cause: inputParseError });
          }
 
-         console.log('data in controller', input)
            return await updatePlaceUseCase({
                 internalId: data.internalId,
                 stayFrom: data.stayFrom ?? null,

@@ -36,10 +36,6 @@ export class MockExpenseRepository implements IExpenseRepository {
       return expense ?? null
   }
 
- 
-
-
-
   async updateExpense(
     expenseId: string,
     input: Partial<ExpenseInsert>,

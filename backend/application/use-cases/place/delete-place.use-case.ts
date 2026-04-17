@@ -1,7 +1,5 @@
 import { PlaceRepository } from "../../../infrastructure/repository/place.repository";
 import { MockPlaceRepository } from "../../../infrastructure/repository/place.repository.mock";
-import { PointsRepository } from "../../../infrastructure/repository/points.repository";
-import { MockPointsRepository } from "../../../infrastructure/repository/points.repository.mock";
 import { IPlaceRepository } from "../../repositories/place.repository.interface";
 
 

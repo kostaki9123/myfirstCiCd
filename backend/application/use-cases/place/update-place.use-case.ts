@@ -37,8 +37,6 @@ export const updatePlaceUseCase = async (input: UpdatePlaceUseCaseInput) => {
       } // 3️⃣ input object
     );
 
-     console.log('run use case', input)
-
     if (!updatedPlace) {
       throw new Error("Place could not be updated");
     }

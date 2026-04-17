@@ -17,7 +17,6 @@ export const updateTripController = async (
 ): Promise<ReturnType<typeof updateTripUseCase>> => {
   // Input validation
   const { data, error: inputParseError } = inputSchema.safeParse(input);
-  console.log("update trip controller");
 
   if (inputParseError) {
     throw new InputParseError("Invalid data", { cause: inputParseError });

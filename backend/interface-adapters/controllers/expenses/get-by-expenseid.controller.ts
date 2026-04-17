@@ -1,7 +1,5 @@
 import { z } from "zod"
 import { InputParseError } from "../../../entities/errors/common"
-import { getExpensesByConnectedToIdUseCase } from "../../../application/use-cases/expense/get-by-connectedid.use-case"
-import { getExpenseById } from "@/app/(protected)/(dashboard)/budget/[tripid]/action"
 import { getExpenseByIdUseCase } from "../../../application/use-cases/expense/get-expense-by-id.use-case"
 
 /* ---------------------------------- */

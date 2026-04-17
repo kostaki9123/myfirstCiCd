@@ -96,7 +96,6 @@ export async function getPlaces(pointId : string) {
 
   try {
     const places = await getPlacesController(pointId);
-    console.log('action places ', places)
     return places;
   } catch (err) {
     throw new Error(`Ops something went wrong: '${(err as Error).message}'`);
