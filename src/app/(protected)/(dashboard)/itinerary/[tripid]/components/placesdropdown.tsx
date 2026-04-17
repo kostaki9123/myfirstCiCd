@@ -18,7 +18,6 @@ type props = {
 
 const Placesdropdown = (props: props) => {
 
-  console.log("Selected place:", props.selectedPlace);
 
   return (
     <DropdownMenu>

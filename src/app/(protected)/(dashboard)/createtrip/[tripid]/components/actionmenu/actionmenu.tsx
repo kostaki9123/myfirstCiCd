@@ -3,15 +3,8 @@ import React from 'react'
 import { HiDotsHorizontal } from "react-icons/hi";
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-//import Deletbtn from './deletbtn';
-//import Movepoint from './movepoint';import { Label } from '@/components/ui/label';
 import Dropdowncontent from './dropdowncontent';
 
 type props = {
@@ -20,8 +13,6 @@ type props = {
   pointId : string 
   tripId : string
 }
-
-
 
 const Actionsmenu = (props : props) => {
 

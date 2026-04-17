@@ -95,12 +95,8 @@ type ScoredPlace = {
   shortFormattedAddress?: string;
   websiteUri?: string;
   googleMapsUri?: string;
-  // other fields from the API if needed
 };
 
-/* ----------------------------------
-   UTILS
------------------------------------ */
 
 const haversineDistance = (
   lat1: number,
@@ -120,13 +116,6 @@ const haversineDistance = (
   return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
 };
 
-const distanceScore = (km: number) => {
-  if (km < 1) return 30;
-  if (km < 3) return 22;
-  if (km < 6) return 14;
-  if (km < 10) return 6;
-  return 0;
-};
 
 const formatPrice = (
   price: number | null | undefined,
@@ -231,7 +220,6 @@ const Addaplace = (props: Props) => {
   const [visibleCount, setVisibleCount] = useState(10);
   const [addedStayss, setAddedStays] = useState<RecommendedPlace[]>([]);
   const [addedVisitss, setaddedVisits] = useState<RecommendedPlace[]>([]);
-
   const [debouncedLocation, setDebouncedLocation] = useState(inputLocation);
  
   const getPlaceCategory = (types: string[] = []) => {
@@ -692,10 +680,6 @@ useEffect(() => {
 }, [props.addedPlaces, props.selectedPlace.id]);
 
   const handleSeeMore = () => setVisibleCount((prev) => prev + 5);
-
-console.log('ree',addedStayss)
-
-
 
   return (
     <Dialog>

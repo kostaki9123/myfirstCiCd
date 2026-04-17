@@ -3,12 +3,10 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-
 import { MockUsersRepository } from "../../../../../../backend/infrastructure/repository/users.repository.mock";
 import { UsersRepository } from "../../../../../../backend/infrastructure/repository/users.repository"; 
 import { IUsersRepository } from "../../../../../../backend/application/repositories/users.repository.interface"; 
 import { createPlaceController } from "../../../../../../backend/interface-adapters/controllers/places/create-place.controller";
-import { IplaceType } from "../../../../../../backend/application/use-cases/place/create-place.use-case";
 import { getPlacesController } from "../../../../../../backend/interface-adapters/controllers/places/get-place.controller";
 import { deletePlaceController } from "../../../../../../backend/interface-adapters/controllers/places/delete-place.controller";
 import { updatePlaceController } from "../../../../../../backend/interface-adapters/controllers/places/update-place.controller";
@@ -101,16 +99,11 @@ export async function getPlaces(pointId : string) {
     console.log('action places ', places)
     return places;
   } catch (err) {
-    console.error(err);
     throw new Error(`Ops something went wrong: '${(err as Error).message}'`);
   }
 }
 
 export async function deletePlace(pointId: string, placeId:string) {
-    //const instrumentationService = getInjection('IInstrumentationService');
-    //return await instrumentationService.instrumentServerAction(
-    //  'signIn',
-    //  { recordResponse: true },
         const { userId } = await auth(); // 🔐 Auth check
 
         if (!userId) {
@@ -137,14 +130,10 @@ export async function deletePlace(pointId: string, placeId:string) {
         
                   
         } catch (err) {
-          console.log(err)
           throw new Error(`Ops something went wrong:'${(err as Error).message}`)
           
         }
-  
-   //  );
   }
-
 
 export async function updatePlace(formData: FormData) {
   console.log("🟡 updatePlace action called");
@@ -178,7 +167,6 @@ export async function updatePlace(formData: FormData) {
     const visitDateRaw = formData.get("visitDate") as string | null;
     const visitTimeRaw = formData.get("visitTime") as string | null;
     const paymentStatus = formData.get("paymentStatus") as string | null;
-    console.log('costakis 2',stayFromRaw,stayUntilRaw)
    
     const input: {
       internalId: string;
@@ -202,17 +190,13 @@ export async function updatePlace(formData: FormData) {
     if (visitDateRaw) input.visitDate = new Date(visitDateRaw);
     if (visitTimeRaw) input.visitTime = new Date(visitTimeRaw);
 
- 
-
-
     const result = await updatePlaceController(input);
 
-    console.log("✅ Place updated successfully:", result);
-
     revalidatePath("/");
+
+    return result
    
   } catch (err) {
-    console.error("❌ Error updating place:", err);
     throw new Error(
       `Oops, something went wrong: ${(err as Error).message}`
     );

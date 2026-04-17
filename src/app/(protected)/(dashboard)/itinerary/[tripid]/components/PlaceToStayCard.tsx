@@ -1,18 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { IoHome } from "react-icons/io5";
-import { MdOutlineAttachMoney } from "react-icons/md";
 import { ChevronDown } from "lucide-react";
 import { z } from "zod";
-
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
 import AbleDatesDropdown from "./ableDatesDropdown";
 import NotesBox from "../../../../../component/notes/edittextarea";
 import Deleteplacebtn from "./deleteplacebtn";
@@ -21,11 +17,6 @@ import { updatePlace } from "../action";
 import AddExpenseDialog from "../../../budget/[tripid]/component/expenseDialog";
 import { RiExternalLinkLine } from "react-icons/ri";
 import PayStatusDropdown from "./paidstatusdropdown";
-//import { updatePlaceToStay } from "../actions"; // 👈 your server action
-
-/* -------------------------------------------------------
-   TYPES
-------------------------------------------------------- */
 
 type Props = {
   index : number
@@ -87,10 +78,6 @@ export default function PlaceToStayCard(props: Props) {
 
  
   /* ------------------ RESET ------------------ */
-
-  console.log('ddin',checkIn)
-  console.log('ddout',checkOut)
-
   const resetState = () => {
     setCheckIn(props.stayFrom ?? null);
     setCheckOut(props.stayUntil ?? null);
@@ -100,7 +87,6 @@ export default function PlaceToStayCard(props: Props) {
   };
 
   /* ------------------ SAVE ------------------ */
-
   const handleSave = async () => {
     setError(null);
    
@@ -117,8 +103,6 @@ export default function PlaceToStayCard(props: Props) {
       return;
     }
 
-    
-
     const d = validation.data;
 
     const fd = new FormData();
@@ -132,7 +116,6 @@ export default function PlaceToStayCard(props: Props) {
     fd.append("notes", d.notes ?? "");
 
     try {
-      console.log('koyrastika',d.stayFrom ,d.stayUntil)
       await updatePlace(fd);
       setIsDirty(false);
     } catch (err) {
@@ -140,10 +123,6 @@ export default function PlaceToStayCard(props: Props) {
       setError("Failed to update");
     }
   };
-
-    console.log('ntervalId', props.internalId)
-
-  /* ------------------ RENDER ------------------ */
 
   return (
     <Accordion
@@ -288,7 +267,7 @@ export default function PlaceToStayCard(props: Props) {
                 )}
                     <Button
                       onClick={(e) => {
-                        e.stopPropagation();   // 🔥 THIS FIXES IT
+                        e.stopPropagation(); 
                         handleSave();
                       }}
                     >

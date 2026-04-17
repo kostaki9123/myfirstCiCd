@@ -1,20 +1,15 @@
 'use client'
 import React from 'react'
-import { IoLocationSharp } from "react-icons/io5";
-
-//import Actionsmenu from '../actionsmenu/actionsmenu';
 import { IoAirplaneOutline , IoTrain } from "react-icons/io5";
 import { FaCar , FaBusAlt , FaBicycle, FaShip,FaWalking } from "react-icons/fa";
-import { FaTrainTram, FaMotorcycle , FaTrainSubway , FaTaxi , FaFerry  } from "react-icons/fa6";
-import { FaHelicopter } from "react-icons/fa";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {  FaMotorcycle , FaTrainSubway } from "react-icons/fa6";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import Curveline from './curveline';
 import CurvelinePhone from './curvelinephone';
 import Addnewcyrcle from './addnewcyrcle';
 import Actionsmenu from './actionmenu/actionmenu';
 import Viewmovingboxmodal from './locationinput/viewmovingbox';
-//import Savebtn from '../viewcyrclemodal/deletebtn';
-//import ViewPlaceMoadal from '../viewcyrclemodal/viewplacemodal';
+
 
 export type TripSegment = {
   id: string;
@@ -107,23 +102,7 @@ const positiongrid = [
   ]
 
 const Movingbox = (props : Props) => {
- // const [by , setBy] = useState<string>(props.data.moveIcon)
- //const [isByEdit , setisByEdit] = useState<boolean>(false)
- //const inputBy = useRef<any>(null);
-
-//  useEffect(() => {
-//    function handleClickOutside(event: MouseEvent) {
-//        if (inputBy.current && !inputBy.current.contain,(event.target as Node)) {
-//            setisByEdit(false);
-//        }
-//    }
-//
-//    document.addEventListener('mousedown', handleClickOutside);
-//
-//    return () => {
-//        document.removeEventListener('mousedown', handleClickOutside);
-//    };
-//  }, []);
+ 
 const transportModes = [
   { value: "flight", icon: <IoAirplaneOutline /> },
   { value: "bus", icon: <FaBusAlt /> },
@@ -145,9 +124,6 @@ const getTransportIcon = (type: string) => {
 
 const icon = getTransportIcon(props.data.transportType);
 
-//const formattedDate = props.data.startdate.replace(/ /g, "/");
-  
- // console.log("by" ,by)
   return (
 <>
     <Dialog >
@@ -186,7 +162,7 @@ const icon = getTransportIcon(props.data.transportType);
            
         </div>
 
-         <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} className=" z-[52] p-3   820:w-fit w-[90%] 450:w-[350px]           sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl ">
+         <DialogContent onOpenAutoFocus={(e) => e.preventDefault()} className=" z-[52] p-3 rounded-xl  820:w-fit w-[90%] 450:w-[350px]           sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl ">
             <DialogHeader className=''>
               <DialogTitle className=' text-xl'>
                  Transport Details
@@ -195,7 +171,6 @@ const icon = getTransportIcon(props.data.transportType);
 
             <Viewmovingboxmodal data={props.data}/> 
            
-           {/**  <Savebtn  /> */}
           </DialogContent>
      </Dialog>
      {props.datalenght === props.index + 1  && (

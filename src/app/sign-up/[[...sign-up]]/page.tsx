@@ -1,7 +1,4 @@
-
-
-import MainLoader from '@/app/component/loaders/singUpandInloader'
-import React, { Suspense } from 'react'
+import React from 'react'
 import DelayedSignUp from './components/signUp'
 
 

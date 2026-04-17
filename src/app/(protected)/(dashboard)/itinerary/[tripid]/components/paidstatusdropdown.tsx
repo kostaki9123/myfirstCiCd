@@ -12,16 +12,11 @@ import { ChevronsUpDownIcon, CheckIcon } from 'lucide-react'
 import { CheckCircle2, Clock, AlertCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-/* ---------------- TYPES ---------------- */
-
-
 
 type Props = {
   value: string
   onChange: (value: string) => void
 }
-
-/* ---------------- OPTIONS ---------------- */
 
 const options: {
   label: string

@@ -54,8 +54,6 @@ export default function DateRangeDropdown({
     return result
   }, [startDate, endDate])
 
-  console.log('Datesss',dates)
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

@@ -46,7 +46,6 @@
       [props.cyrclesArr]
     );
 
-    console.log(props.selectedpointId,'ddddddgbntgujn5o')
 
   const [selectedPoint, setSelectedPoint] = useState<ItineraryPoint>(
     () =>
@@ -94,12 +93,6 @@
           place.placeType === 'ACCOMMODATION'
       );
     }, [props.places, selectedPoint.id]);
-
-
-    const formatDate = (date?: Date | null) => {
-       if (!date) return 'No date';
-       return new Date(date).toISOString().slice(5, 10); // MM-DD
-    };
 
     /** Places to visit (recomputed on change) */
     const placesToVisit = useMemo(() => {

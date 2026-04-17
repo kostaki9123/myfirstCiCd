@@ -15,9 +15,7 @@ import { updateBudgetController } from "../../../../../../backend/interface-adap
 import { getBudgetByTripIdController } from "../../../../../../backend/interface-adapters/controllers/budget/getBudgetByTripId-budget.controller";
 import { getExpensesByIdController } from "../../../../../../backend/interface-adapters/controllers/expenses/get-by-expenseid.controller";
 
-/* ---------------------------------- */
 /* Create Expense */
-/* ---------------------------------- */
 export async function createExpense(formData: FormData) {
   console.log("🟡 createExpense action called")
 
@@ -56,12 +54,10 @@ export async function createExpense(formData: FormData) {
       expenseCurrency,
       amount,
       connectedToId: connectedToId || undefined,
-    }
-    
+    }   
     // 6️⃣ Call controller
     const result = await createExpenseController(input)
 
-    console.log("✅ Expense created successfully:", result)
     revalidatePath(`/`)
     return result
   } catch (err) {
@@ -85,7 +81,6 @@ export async function updateExpense(expenseId: string, formData: FormData) {
     const connectedToId = formData.get("connectedToId") as string | null
     
     const input: Record<string, any> = {}
-     console.log('update expense' , expenseId , amountStr)
     if (description) input.description = description
     if (category) input.category = category
     if (expenseCurrency) input.expenseCurrency = expenseCurrency
@@ -101,9 +96,8 @@ export async function updateExpense(expenseId: string, formData: FormData) {
   }
 }
 
-/* ---------------------------------- */
 /* Delete Expense */
-/* ---------------------------------- */
+
 export async function deleteExpense(formData:FormData) {
   const { userId } = await auth()
   if (!userId) redirect("/sign-in")
@@ -160,7 +154,6 @@ export async function getExpensesByConnectedToId(connectedToId: string) {
 /* ---------------------------------- */
 export async function getExpenseById(id: string) {
   try {
-    console.log('cons' ,id )
     const expenses = await getExpensesByIdController(id)
     return expenses
   } catch (err) {
@@ -203,7 +196,6 @@ export async function updateBudget(budgetId: string, formData: FormData) {
 
     const result = await updateBudgetController(input)
 
-    console.log("✅ Budget updated successfully:", result)
     revalidatePath("/")
     return result
   } catch (err) {
@@ -212,9 +204,8 @@ export async function updateBudget(budgetId: string, formData: FormData) {
   }
 }
 
-
 /* Get Budgets by TripId */
-/* ---------------------------------- */
+
 export async function getBudgetByTripId(tripId: string) {
   try {
     const budgets = await getBudgetByTripIdController({tripId})

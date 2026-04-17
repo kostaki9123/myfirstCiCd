@@ -10,8 +10,6 @@ type Props = {
   onlyTime?: boolean;
   onChange?: (value: Date | [Date | null, Date | null] | null) => void;
   namePrefix?: string;
-
-  // NEW:
   defaultValue?: Date | [Date | null, Date | null] | null;
   fromItinerary?: boolean
   minDate?: Date;

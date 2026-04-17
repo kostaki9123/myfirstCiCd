@@ -1,5 +1,3 @@
-
-
 import React from 'react'
 import DelayedSignIn from './components/signIn'
 

@@ -5,12 +5,9 @@ import { IoLocationSharp } from "react-icons/io5";
 import DatePickerExample from "./locationinput/datepicker";
 import Curveline from './curveline';
 import PlaceSearchWrapper from "./locationinput/locationinput";
-// import Actionsmenu from '../actionsmenu/actionsmenu';
 import { 
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -19,13 +16,10 @@ import CurvelinePhone from './curvelinephone';
 import Addnewcyrcle from './addnewcyrcle';
 import Actionsmenu from './actionmenu/actionmenu';
 import ViewPlaceMoadal from './locationinput/viewplacemodal';
-import { Input } from '@/components/ui/input';
-import EditableText from './editableInput';
 import { Button } from '@/components/ui/button';
 import { z } from "zod";
 import { updatePoint } from '../action';
 
-// import Savebtn from '../viewcyrclemodal/deletebtn';
 
 const updateSchema = z.object({
   place: z
@@ -259,7 +253,6 @@ const Point =  (props:Props) => {
              <div onClick={() => setIsOpen(true)}  className=' text-white cursor-pointer bg-[#2E305B]  h-[100px] w-[100px] rounded-[50%] flex items-center justify-center gap-[3px] flex-col z-50'>
                 <IoLocationSharp className=' text-xl'/>
                 <h4 className=' text-center'>
-                   {/**  {result.shortFormattedAddress ? <>{result.shortFormattedAddress}</> : */} 
                    <>{props.data.placeName}</>  
                 </h4>
                 <div className=' h-5'>
@@ -292,7 +285,7 @@ const Point =  (props:Props) => {
         </div>
 
 
-         <DialogContent  onOpenAutoFocus={(e) => e.preventDefault()} className="  z-[52]    sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-3">
+         <DialogContent  onOpenAutoFocus={(e) => e.preventDefault()} className="  z-[52]    sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-3 rounded-xl">
             <DialogHeader className='flex justify-start  items-start'>
               <DialogTitle className=' text-xl w-[90%] '>
                   <PlaceSearchWrapper
@@ -336,9 +329,6 @@ const Point =  (props:Props) => {
           )}
 
              <ViewPlaceMoadal pointId={props.data.id} tripId={props.tripId}  />
-            {/**
-             * 
-            <Savebtn  />  */}
           </DialogContent>
      </Dialog>
      {props.datalenght === props.index + 1 && (

@@ -1,21 +1,13 @@
 import Navbar from '@/app/component-custom/bars/navbar'
 import Sidebar from '@/app/component-custom/bars/sidebar'
 import React, { ReactNode } from 'react'
-import { getTrip } from '../action';
-
-
 
  interface props {
   params: Promise<{ tripid: string }>;
   children : ReactNode // ✅ params is now async
 }
 
-const DashboardLayout = async ({ children ,params }: props) => {
-
-  const { tripid } = await params;
-  
-  const trip = await getTrip(tripid);
-
+const DashboardLayout = async ({ children }: props) => {
 
   return (
     <div className=' h-screen relative '>

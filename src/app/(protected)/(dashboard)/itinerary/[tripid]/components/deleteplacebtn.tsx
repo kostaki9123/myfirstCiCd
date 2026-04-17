@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { z } from "zod";
 import { deletePlace } from "../action";
-// import { deletePlace } from "../action"; // adjust path if needed
 
 const deleteSchema = z.object({
   pointId: z.string().min(1, "Invalid point ID"),
@@ -36,7 +35,6 @@ const Deleteplacebtn = ({ placeId, pointId }: Props) => {
      await deletePlace(pointId, placeId);
      setJustDeleted(true);
 
-      console.log("✅ Place deleted successfully");
     } catch (err) {
       console.error(err);
       setErrorMessage("Failed to delete place");
@@ -48,32 +46,32 @@ const Deleteplacebtn = ({ placeId, pointId }: Props) => {
   if (justDeleted) return null; 
 
   return (
-    <div className="flex flex-col gap-1 top-3 right-2 absolute">
-  <div
-    role="button"
-    tabIndex={0}
-    aria-label="Delete place"
-    aria-disabled={isLoading}
-    onClick={() => {
-     if (!isLoading && !justDeleted) onDelete();
-    }}
-    onKeyDown={(e) => {
-      if (isLoading) return;
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        onDelete();
-      }
-    }}
-    className={`
-      bg-red-600 hover:bg-red-700 active:bg-red-800
-      text-white transition p-2 rounded-full
-      cursor-pointer select-none
-      focus:outline-none focus:ring-2 focus:ring-red-400
-     ${isLoading || justDeleted ? "opacity-50 pointer-events-none" : ""}
-    `}
-  >
-    <MdDelete size={20} className={isLoading ? "animate-spin" : ""} />
-  </div>
+  <div className="flex flex-col gap-1 top-3 right-2 absolute">
+     <div
+       role="button"
+       tabIndex={0}
+       aria-label="Delete place"
+       aria-disabled={isLoading}
+       onClick={() => {
+        if (!isLoading && !justDeleted) onDelete();
+       }}
+       onKeyDown={(e) => {
+         if (isLoading) return;
+         if (e.key === "Enter" || e.key === " ") {
+           e.preventDefault();
+           onDelete();
+         }
+       }}
+       className={`
+         bg-red-600 hover:bg-red-700 active:bg-red-800
+         text-white transition p-2 rounded-full
+         cursor-pointer select-none
+         focus:outline-none focus:ring-2 focus:ring-red-400
+        ${isLoading || justDeleted ? "opacity-50 pointer-events-none" : ""}
+       `}
+     >
+      <MdDelete size={20} className={isLoading ? "animate-spin" : ""} />
+    </div>
 
   {errorMessage && (
     <span className="text-xs text-red-500">{errorMessage}</span>

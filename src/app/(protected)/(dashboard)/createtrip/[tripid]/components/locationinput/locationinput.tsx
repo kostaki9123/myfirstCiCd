@@ -17,8 +17,6 @@ interface PlaceSearchWrapperProps {
   apiKey: string;
   onPlaceSelected?: (place: PlaceResult) => void;
   onMovingbox?: boolean;
-
-  /** NEW optional defaults */
   defaultQuery?: string;
   defaultPlace?: PlaceResult;
 }

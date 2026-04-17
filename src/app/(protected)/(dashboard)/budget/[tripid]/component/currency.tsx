@@ -1,9 +1,8 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { FaEuroSign } from "react-icons/fa6";
 import CurrencyDropdown from './currencydropdown';
-import { updateBudget } from '../action'; // your server action
+import { updateBudget } from '../action'; 
 import { CURRENCIES } from '@/lib/currency';
 
 type Props = {

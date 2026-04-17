@@ -7,7 +7,6 @@ import PlaceSearchWrapper from "./locationinput";
 import { Button } from "@/components/ui/button";
 import DatePickerExample from "./datepicker";
 import { updatePoint } from "../../action";
-import NotesBox from "@/app/component/notes/edittextarea";
 import CreateTripNotesBox from "../notes";
 import { z } from "zod";
 
@@ -150,15 +149,10 @@ const ViewMovingBoxModal = ({ data }: Props) => {
     fd.append("transportType", formData.transportType);
     fd.append("departureDate", formData.departureDate.toISOString());
     fd.append("notes", notes);
-    console.log('run 2')
-
-    // TODO: call your server action
-    console.log("Sending update:", Object.fromEntries(fd));
 
     // example:
      await updatePoint(fd);
 
-    console.log("Saved!");
   };
 
   // -----------------------------

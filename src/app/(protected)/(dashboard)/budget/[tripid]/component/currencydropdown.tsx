@@ -10,8 +10,6 @@ import {
 import { RiArrowDropDownLine } from 'react-icons/ri'
 import { CURRENCIES } from '@/lib/currency'
 
-
-
 type Props = {
   value?: string
   setCurrency: (value: string) => void

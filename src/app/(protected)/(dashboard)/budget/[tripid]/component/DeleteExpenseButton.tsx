@@ -6,7 +6,7 @@ import { deleteExpense } from '../action'
 type Props = {
   budgetId: string
   expenseId: string
-  onDeleted?: () => void // optional callback to refresh parent
+  onDeleted?: () => void
 }
 
 const DeleteExpenseButton = ({ expenseId, onDeleted,budgetId }: Props) => {
@@ -18,7 +18,7 @@ const DeleteExpenseButton = ({ expenseId, onDeleted,budgetId }: Props) => {
     try {
 
       const actionFormData = new FormData()
-       console.log(budgetId)
+
        actionFormData.append('expenseId', expenseId)
        actionFormData.append('budgetId', budgetId)
 

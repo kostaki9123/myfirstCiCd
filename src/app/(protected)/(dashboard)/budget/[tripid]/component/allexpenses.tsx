@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { getBudgetByTripId, getExpensesByBudgetId } from "../action"
+import { getExpensesByBudgetId } from "../action"
 import DeleteExpenseButton from "./DeleteExpenseButton"
 import ExpenseDialog from "./expenseDialog"
 
@@ -32,8 +32,6 @@ const Allexpenses = async (props :Props) => {
    </div>
 
   let expenses: Expense[] = []
-  
-  let budgetId
 
   try {
     
@@ -51,8 +49,6 @@ const Allexpenses = async (props :Props) => {
   } catch (err) {
     console.error("❌ Error fetching expenses:", err)
   }
-
-  console.log('ko',expenses)
 
   return (
     <div className='bg-[#ACA7CB] overflow-y-auto relative rounded-md p-2 base:row-start-3 base:row-end-4 base:col-start-1 base:col-end-2 535:row-start-2 535:row-end-3 535:col-start-1 535:col-end-3 986:row-start-5 986:row-end-9 986:col-start-1 986:col-end-3 lg:col-start-1 lg:787:col-end-3 xl:col-start-1 xl:col-end-3'>
@@ -86,6 +82,7 @@ const Allexpenses = async (props :Props) => {
                   <ExpenseDialog
                    budgedId={props.budgedId}
                    expenseId={expense.id}
+                   fromAllExpenses={true}  
                    />
               </TableCell>
 

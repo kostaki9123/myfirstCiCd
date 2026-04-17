@@ -50,9 +50,6 @@ const Mapprovider = ({
   const finalAddedStays = addedplacetostay ?? addedStaysFromAll;
   const finalAddedVisits = addedplacetovisit ?? addedVisitsFromAll;
 
-  console.log('added place to stay:', finalAddedStays)
-  console.log('added place to visit:', finalAddedVisits)
-
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}>
       <App

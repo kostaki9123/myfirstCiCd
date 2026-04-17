@@ -24,7 +24,7 @@ import {
   createExpense,
   updateExpense,
   getExpensesByConnectedToId,
-  getExpenseById, // 👈 YOU MUST HAVE THIS
+  getExpenseById, 
 } from '../action'
 import { Expense } from '../../../../../../../backend/entities/models/expense'
 
@@ -54,9 +54,7 @@ const expenseSchema = z.object({
   expenseCurrency: z.enum(CURRENCIES),
 })
 
-/* ---------------------------------- */
 /* props */
-/* ---------------------------------- */
 
 type Props = {
   budgedId: string
@@ -66,9 +64,7 @@ type Props = {
   fromAllExpenses?: boolean
 }
 
-/* ---------------------------------- */
 /* component */
-/* ---------------------------------- */
 
 const ExpenseDialog = ({
   budgedId,
@@ -90,10 +86,8 @@ const ExpenseDialog = ({
 
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  console.log('ddd',expenseId)
-  /* ---------------------------------- */
   /* fetch existing expense */
-  /* ---------------------------------- */
+
   useEffect(() => {
     if (!open) return
 
@@ -126,9 +120,8 @@ const ExpenseDialog = ({
     fetchExpense()
   }, [open, connectedToId, expenseId])
 
-  /* ---------------------------------- */
   /* reset when modal closes */
-  /* ---------------------------------- */
+
   useEffect(() => {
     if (!open) {
       setExpense(null)

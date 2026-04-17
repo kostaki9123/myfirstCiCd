@@ -1,19 +1,13 @@
 "use client"
 
-import { Dialog,DialogTrigger,DialogContent,DialogHeader,DialogTitle,DialogDescription, } from '@/components/ui/dialog'
+import { Dialog,DialogTrigger,DialogContent,DialogTitle } from '@/components/ui/dialog'
 import {
-  DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import React, { useState } from 'react'
-//import Deletbtn from './deletbtn'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Label } from '@/components/ui/label'
+import React  from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Deletebtn from './deletebtn'
@@ -28,9 +22,6 @@ type props = {
 }
 
 const Dropdowncontent = ({ pointId, tripId, pointIndex, pointslength }: props) => {
-
-  console.log('point index ww',pointIndex)
-
   
   const handleMove = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
@@ -45,10 +36,8 @@ const Dropdowncontent = ({ pointId, tripId, pointIndex, pointslength }: props) =
   sendData.append("newIndex", String(newIndex));
 
   try {
-    console.log('runn1')
     await MovePoint(sendData);
   } catch (err) {
-    console.error("Move error:", err);
   }
 };
 

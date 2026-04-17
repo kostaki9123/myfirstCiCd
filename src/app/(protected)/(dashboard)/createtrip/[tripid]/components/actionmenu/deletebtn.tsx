@@ -1,12 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { z, ZodError } from "zod";
 import { InputParseError } from "../../../../../../../../backend/entities/errors/common";
 import { deletePoint } from "../../action";
-
-//import { deletePoint } from "../action"; // <-- You must have this backend action
 
 // --------------------
 // ✅ Zod Schema
@@ -46,7 +43,6 @@ const Deletebtn = ({ pointId,tripId }: Props) => {
 
       await deletePoint(pointId,tripId);
 
-      console.log("✅ Point deleted successfully");
     } catch (err) {
       if (err instanceof InputParseError && err.cause instanceof ZodError) {
         setErrorMessage(

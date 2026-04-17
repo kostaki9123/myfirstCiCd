@@ -1,13 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, MapPin, BedDouble, Plane } from "lucide-react";
-import { GoChecklist  } from "react-icons/go";
+import { Calendar, MapPin} from "lucide-react";
 import { MdAddLocationAlt } from "react-icons/md";
 import { getPoints } from "../../createtrip/[tripid]/action";
-
 import Link from "next/link";
 import Transportui from "./components/transportui";
 import Placeui from "./components/placeui";
-
 
 interface PageProps {
   params: Promise<{ tripid: string }>; // ✅ params is now async
@@ -17,11 +14,7 @@ const Home = async ({ params }: PageProps) => {
 
   const { tripid } = await params;
 
-  console.log("Server-side ID:", tripid); 
-
   const points = await getPoints(tripid);
-
-  console.log('herreeee',points)
 
   function formatDateRange(points: any[]) {
   const dates = points
@@ -61,47 +54,36 @@ function formatRoute(points: any[]) {
 const dateRange = formatDateRange(points);
 const route = formatRoute(points);
 
-console.log(points , 'here')
-
-
   return (
-    <div className=" absolute top-0 inset-0 flex items-start justify-start overflow-x-hidden 535:overflow-x-auto  bg-[#010038] ">
-      
-    
-      
-      <div className="relative   flex items-start justify-start   h-full w-full">
-          
-          
-      <div className=" flex 535:flex-col flex-col 535:mt-0 relative  w-full  max-w-[200px]  535:max-w-content   justify-start items-start   gap-2 min-w-max p-6  ">
-           <div className=" absolute left-[-9px] top-0   pl-4 h-full ">
-                  <div className=" bottom-0 w-1 bg-gray-500 rounded-full h-[98%] my-5 "></div>
+    <div className=" absolute top-0 inset-0 flex items-start justify-start overflow-x-hidden 535:overflow-x-auto  bg-[#010038] "> 
+      <div className="relative   flex items-start justify-start   h-full w-full">   
+        <div className=" flex 535:flex-col flex-col 535:mt-0 relative  w-full  max-w-[200px]  535:max-w-content   justify-start items-start   gap-2 min-w-max p-6  ">
+             <div className=" absolute left-[-9px] top-0   pl-4 h-full ">
+                    <div className=" bottom-0 w-1 bg-gray-500 rounded-full h-[98%] my-5 "></div>
+             </div>
+
+            {/* Trip Overview */}
+            <div className="flex w-full gap-12 ">
+         
+               <Card className=" w-full  p-2 535:max-w-[370px]  ">
+                  <CardHeader className=" p-3"> 
+                    <CardTitle >Trip Summary 🌍</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2 p p-3  text-xs text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4" />
+                      <span>{dateRange}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4" />
+                      <span>{route || "No places yet"}</span>
+                    </div>
+                  </CardContent>
+              </Card>   
            </div>
 
-        {/* Trip Overview */}
-        <div className="flex w-full gap-12 ">
-         
-          
-           <Card className=" w-full  p-2 535:max-w-[370px]  ">
-            <CardHeader className=" p-3"> 
-              <CardTitle >Trip Summary 🌍</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2 p p-3  text-xs text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                <span>{dateRange}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                <span>{route || "No places yet"}</span>
-              </div>
-            </CardContent>
-          </Card>
-        
-        </div>
-
-
-        {/* Itinerary */}
-          {points.length === 0 && (
+           {/* Itinerary */}
+           {points.length === 0 && (
             <Link href={`/createtrip/${tripid}`}>
               <div
                 className="group w-full  535:max-w-[370px] flex flex-col items-center justify-center rounded-2xl 
@@ -119,18 +101,16 @@ console.log(points , 'here')
                 </p>
               </div>
             </Link>
-)}
-         
-       
-          {points.map(( point: any, key:number ) => ( 
+            )}
+              
+           {points.map(( point: any, key:number ) => ( 
               point.role === "POINT" 
-            ? 
-           <Placeui  id={point.id} index={point.index} key={key}
-                           placeName={point.placeName} tripId={tripid}  startDate={point.startDate}  endDate={point.endDate}
-             />
-           :
-            <Transportui  key={key}  notes={point.notes}    toId={point.toPlaceId} toName={point.toName}  toAddress={point.toAddress} toLat={point.toLat.toString()} toLng={point.toLng.toString()!} fromId={point.fromPlaceId} fromName={point.fromName}  fromAddress={point.fromAddress} fromLat={point.fromLat.toString()!} fromLng={point.fromLng.toString()!}  id={point.id} tripId={point.tripId} index={point.index} transportType={point.transportType!} departureDate={point.departureDate} />    
-        ))}
+             ? 
+              <Placeui  id={point.id} index={point.index} key={key}
+              placeName={point.placeName} tripId={tripid}  startDate={point.startDate}  endDate={point.endDate}   />         
+             :
+              <Transportui  key={key}  notes={point.notes}    toId={point.toPlaceId} toName={point.toName}  toAddress={point.toAddress} toLat={point.toLat.toString()} toLng={point.toLng.toString()!} fromId={point.fromPlaceId} fromName={point.fromName}  fromAddress={point.fromAddress} fromLat={point.fromLat.toString()!} fromLng={point.fromLng.toString()!}  id={point.id} tripId={point.tripId} index={point.index} transportType={point.transportType!} departureDate={point.departureDate} />    
+            ))}
         </div>
       </div>
     </div>

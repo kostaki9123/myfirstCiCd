@@ -7,12 +7,8 @@ import React from 'react'
 
 const Humburger = () => {
    const pathname = usePathname()
-    
-      console.log("pathname humburger",pathname)
-      const id = pathname.split("/").pop();
-      console.log(id);
-    // Sidebar items
-   
+
+   const id = pathname.split("/").pop();
 
   return (
     <DropdownMenu>

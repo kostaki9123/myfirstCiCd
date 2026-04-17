@@ -15,9 +15,6 @@ const Page = async ({
   const { tripid } = await params;
   const { point } = await searchParams;
 
-  console.log('Trip ID:', tripid);
-  console.log('Selected point:', point);
-
   // 1️⃣ Fetch points
   const points = await getPoints(tripid);
   const pointsOnly = points.filter((p) => p.role === 'POINT');

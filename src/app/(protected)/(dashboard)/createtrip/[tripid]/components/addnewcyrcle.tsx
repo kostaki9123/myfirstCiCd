@@ -2,12 +2,10 @@
 
 import React, { useEffect, useState } from 'react'
 import { MdAddLocationAlt } from "react-icons/md";
-import { FiMessageSquare } from "react-icons/fi";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
@@ -19,8 +17,6 @@ import {
 } from "@/components/ui/tabs"
 import Createplaceform from './createplaceform';
 import Createmovingboxform from './createmovingboxform';
-//import Createplaceform from '../createtripforms/createplaceform';
-//import Createmovingform from '../createtripforms/createmovingform';
 
 type Props = {
     index : number
@@ -163,13 +159,10 @@ useEffect(() => {
                    <TabsTrigger value="password">Moving cyrcle</TabsTrigger>
               </TabsList>
               <TabsContent value="account" className='px-5  w-full'>
-                {/** <Createplaceform index={props.index} tripId={props.tripId} cyrcleArrId={props.cyrcleArrId}/>  {/** create place form */}
-                <Createplaceform index={props.index} tripId={props.tripId} minDate={props.minDate}    onSubmitSuccess={handleTransportAdded}  />
+                 <Createplaceform index={props.index} tripId={props.tripId} minDate={props.minDate}    onSubmitSuccess={handleTransportAdded}  />
               </TabsContent>
               <TabsContent value="password" className='px-5  w-full ' >
-                
-                {/**  <Createmovingform index={props.index} tripId={props.tripId} cyrcleArrId={props.cyrcleArrId}/>  {/** create moving form */}
-                <Createmovingboxform tripId={props.tripId} index={props.index} minDate={props.minDate} onSubmitSuccess={handleTransportAdded}/>
+                 <Createmovingboxform tripId={props.tripId} index={props.index} minDate={props.minDate} onSubmitSuccess={handleTransportAdded}/>
               </TabsContent>
          </Tabs>
          </div>

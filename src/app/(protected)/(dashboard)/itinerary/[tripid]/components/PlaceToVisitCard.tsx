@@ -1,20 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { FaLocationPin } from "react-icons/fa6";
 import { ChevronDown } from "lucide-react";
 import { z } from "zod";
-
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
 import AbleDatesDropdown from "./ableDatesDropdown";
 import TimeSlotsDropdown from "./timeDropdown";
-
 import Deleteplacebtn from "./deleteplacebtn";
 import { Button } from "@/components/ui/button";
 import NotesBox from "@/app/component/notes/edittextarea";
@@ -23,9 +19,6 @@ import AddExpenseDialog from "../../../budget/[tripid]/component/expenseDialog";
 import { RiExternalLinkLine } from "react-icons/ri";
 import PayStatusDropdown from "./paidstatusdropdown";
 
-/* -------------------------------------------------------
-   TYPES
-------------------------------------------------------- */
 
 type Props = {
   index : number
@@ -111,8 +104,6 @@ export default function PlaceToVisitCard(props: Props) {
     const d = validation.data;
     const fd = new FormData();
 
-      console.log("notes", d.notes)
-
     fd.append("internalId", props.internalId );
     if (d.visitDate) fd.append("visitDate", d.visitDate.toLocaleDateString("en-CA"));
     if (d.visitTime) fd.append("visitTime", d.visitTime.toISOString());
@@ -126,8 +117,6 @@ export default function PlaceToVisitCard(props: Props) {
       setError("Failed to update");
     }
   };
-
-  console.log('ntervalId', props.internalId)
 
   /* ------------------ RENDER ------------------ */
 

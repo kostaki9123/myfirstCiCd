@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { IoStar } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { z, ZodError } from "zod";
 import { InputParseError } from "../../../../../../../backend/entities/errors/common";
 import { createPlace } from "../action";
 
-/* -------------------- TYPES -------------------- */
 
 type Props = {
   placeId: string;
@@ -49,7 +47,6 @@ const Placecomponent = (props: Props) => {
   const [justAdded, setJustAdded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log('check' , props.affiliatelink ,'e',props.googleMapsUri , )
 
   const addPlace = async () => {
     try {
@@ -73,7 +70,6 @@ const Placecomponent = (props: Props) => {
           placeType: errors.placeType?.[0] || "",
           name: errors.name?.[0] || "",
         });
-       console.log('shcema error',errorMessages)
         return;
       }
 
@@ -139,11 +135,6 @@ const Placecomponent = (props: Props) => {
             {props.category}
           </span>
         </div>
-         {/* 
-        <span className="text-gray-500 text-xs tracking-wide">
-          {props.type.replace("_", " ")}
-        </span>
-        */}
       </div>
 
       {/* Address */}

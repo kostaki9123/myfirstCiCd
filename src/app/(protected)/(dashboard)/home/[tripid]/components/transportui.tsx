@@ -1,15 +1,11 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import { IoAirplaneOutline , IoTrain } from "react-icons/io5";
 import { FaCar , FaBusAlt , FaBicycle, FaShip,FaWalking } from "react-icons/fa";
-import { FaTrainTram, FaMotorcycle , FaTrainSubway , FaTaxi , FaFerry  } from "react-icons/fa6";
+import { FaMotorcycle , FaTrainSubway  } from "react-icons/fa6";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import NotesBox from '../../../../../component/notes/edittextarea';
-import Notes from './placenote';
-import { RiExternalLinkLine } from 'react-icons/ri';
 import Pointnotes from './pointnotes';
-
 
 const transportModes = [
   { value: "flight", icon: <IoAirplaneOutline /> },
@@ -24,7 +20,6 @@ const transportModes = [
   { value: "other", icon: <FaShip /> },
 ];
 
-
 type props = {
    id: string ,
    tripId : string
@@ -34,7 +29,6 @@ type props = {
    fromAddress : string
    fromLat : string
    fromLng : string
-
    toName: string,
    toId : string
    toAddress : string
@@ -48,8 +42,7 @@ type props = {
 
 const Transportui = (props : props) => {
   
-
- const getTransportIcon = (type: string) => {
+const getTransportIcon = (type: string) => {
     const found = transportModes.find((m) => m.value === type);
     return found ? found.icon : type;
   };
@@ -59,40 +52,41 @@ function capitalizeFirst(str : string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
- const date = props.departureDate.toLocaleString('en-US', { month: 'short', day: '2-digit' });
+ const date =props.departureDate ?  props.departureDate.toLocaleString('en-US', { month: 'short', day: '2-digit' }) : null
 
   return (
      <div className="relative min-h-32 flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
-                 <div className=" lg:absolute top-1 mt-1 lg:mt-0s left-[-6px] px-3 py-1.5 rounded-md
+            <div className=" lg:absolute top-1 mt-1 lg:mt-0s left-[-6px] px-3 py-1.5 rounded-md
                 bg-gray-700 text-white text-[11px] shadow-lg flex items-center gap-1">
-                   <div className="uppercase tracking-wide text-gray-200">{date.split(' ')[0]}</div>
-                   <div className="font-semibold">{date.split(' ')[1]}</div>
-                 </div>
+                 <div className="uppercase tracking-wide text-gray-200">{date.split(' ')[0]}</div>
+                 <div className="font-semibold">{date.split(' ')[1]}</div>
+            </div>
 
-                 <div  className="relative pl-10 text-white w-40   ">
-                       <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full border-2 border-lime-500"></div>
-                       <div className="text-lg font-semibold">{capitalizeFirst(props.transportType)}</div>
-                      
-                 </div>
+            <div  className="relative pl-10 text-white w-40   ">
+                  <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full border-2 border-lime-500"></div>
+                  <div className="text-lg font-semibold">{capitalizeFirst(props.transportType)}</div>
+                 
+            </div>
                     
-                 <div className='flex flex-col' >  
-                      <h2 className=" text-base h-[32px] font-semibold text-white hidden lg:block "></h2>
-
-                      <Card className=" group  w-72  lg:mt-5  relative ml-3 lg:ml-0 p-2 ">
-                        <CardHeader className="p-3">  
-                          <CardTitle>Transport</CardTitle>    
-                        </CardHeader>
-                        <CardContent className=" p-2 pt-0 space-y-2 text-xs text-muted-foreground">
-                          <div className="flex items-start px-2 flex-col gap-2">
-                                        
-                            <span>From:{props.fromName}</span>
-                            <span>To:{ props.toName}</span>
-                          </div>
-                          <Pointnotes  toName={props.toName} toId={props.toId} toAddress={props.toAddress} toLat={props.toLat} toLng={props.toLng} fromName={props.fromName} fromId={props.fromId} fromAddress={props.fromAddress} fromLat={props.fromLat} fromLng={props.fromLng} index={props.index} id={props.id} tripId={props.tripId} notes={props.notes} transportType={props.transportType} departureDate={props.departureDate} />
-                        </CardContent>
-                      </Card>
-                 </div> 
-             </div>
+            <div className='flex flex-col' >  
+                 <h2 className=" text-base h-[32px] font-semibold text-white hidden lg:block "></h2>
+                 <Card className=" group  w-72  lg:mt-5  relative ml-3 lg:ml-0 p-2 ">
+                   <CardHeader className="p-3  ">  
+                     <CardTitle className='flex flex-row gap-2'>
+                          Transport  
+                           <div >{getTransportIcon(props.transportType)}</div> 
+                     </CardTitle>                   
+                   </CardHeader>
+                   <CardContent className=" p-2 pt-0 space-y-2 text-xs text-muted-foreground">
+                     <div className="flex items-start px-2 flex-col gap-2">                      
+                       <span>From:{props.fromName}</span>
+                       <span>To:{ props.toName}</span>
+                     </div>
+                     <Pointnotes  toName={props.toName} toId={props.toId} toAddress={props.toAddress} toLat={props.toLat} toLng={props.toLng} fromName={props.fromName} fromId={props.fromId} fromAddress={props.fromAddress} fromLat={props.fromLat} fromLng={props.fromLng} index={props.index} id={props.id} tripId={props.tripId} notes={props.notes} transportType={props.transportType} departureDate={props.departureDate} />
+                   </CardContent>
+                 </Card>
+            </div> 
+      </div>
   )
 }
 

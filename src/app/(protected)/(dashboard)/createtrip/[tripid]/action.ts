@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from "@clerk/nextjs/server";
-import { notFound, redirect } from "next/navigation";
+import {  redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 import { IUsersRepository } from "../../../../../../backend/application/repositories/users.repository.interface";
@@ -9,17 +9,12 @@ import { MockUsersRepository } from "../../../../../../backend/infrastructure/re
 import { UsersRepository } from "../../../../../../backend/infrastructure/repository/users.repository";
 import { createPointController } from "../../../../../../backend/interface-adapters/controllers/points/create-point.controller";
 import { getPointsController } from "../../../../../../backend/interface-adapters/controllers/points/get-points.controllers";
-import { deleteTripController } from "../../../../../../backend/interface-adapters/controllers/trips/delete-trip.controller";
 import { deletePointController } from "../../../../../../backend/interface-adapters/controllers/points/delete-point.controller";
 import { movePointController } from "../../../../../../backend/interface-adapters/controllers/points/move-point.controller";
-import { updatePointUseCase } from "../../../../../../backend/application/use-cases/points/update.point.use-case";
 import { updatePointController } from "../../../../../../backend/interface-adapters/controllers/points/update-point.controller";
 
 
 export async function createPoint(formData: FormData) {
-  console.log("🟡 createPoint action called");
-  console.log("FormData:", formData);
-
   // 1️⃣ Auth check
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
@@ -90,8 +85,6 @@ export async function createPoint(formData: FormData) {
 
     // 5️⃣ Call controller
     const result = await createPointController(input);
-
-    console.log("✅ Point created successfully:", result);
  
     revalidatePath('/')
     return result;
@@ -136,10 +129,6 @@ export async function getPoints(tripId : string) {
 
 
 export async function deletePoint(pointId:string,tripId: string) {
-    //const instrumentationService = getInjection('IInstrumentationService');
-    //return await instrumentationService.instrumentServerAction(
-    //  'signIn',
-    //  { recordResponse: true },
         const { userId } = await auth(); // 🔐 Auth check
 
         if (!userId) {
@@ -170,16 +159,10 @@ export async function deletePoint(pointId:string,tripId: string) {
           throw new Error(`Ops something went wrong:'${(err as Error).message}`)
           
         }
-  
-   //  );
   }
 
 
 export async function MovePoint(formData: FormData) {
-    //const instrumentationService = getInjection('IInstrumentationService');
-    //return await instrumentationService.instrumentServerAction(
-    //  'signIn',
-    //  { recordResponse: true },
         const { userId } = await auth(); // 🔐 Auth check
 
         if (!userId) {
@@ -208,25 +191,18 @@ export async function MovePoint(formData: FormData) {
              newIndex : newIndex - 1
           })
 
-          console.log('conre')
-
           revalidatePath(`/createtrip/${tripId}`);
          
           return result
         
                   
         } catch (err) {
-          console.log(err)
           throw new Error(`Ops something went wrong:'${(err as Error).message}`)
           
         }
-  
-   //  );
   }
 
  export async function updatePoint(formData: FormData) {
-  console.log("🟡 updatePoint action called");
- 
   // 1️⃣ Auth check
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
@@ -247,13 +223,10 @@ export async function MovePoint(formData: FormData) {
     const role = formData.get("role") as "POINT" | "MOVING_BOX";
     const index = Number(formData.get("index"));
 
-       console.log('edo' ,id , tripId , role)
 
     if (!tripId || !role) {
       throw new Error("Missing required fields: tripId or role");
     }
-
-    
 
     // 4️⃣ Create input object based on role
     let input: any = {
@@ -301,17 +274,12 @@ export async function MovePoint(formData: FormData) {
       input.notes = (formData.get("notes") as string);
     }
     
-
-    console.log('controller run')
     const result = await updatePointController(input);
-
-    console.log("✅ Point updating successfully:", result);
  
     revalidatePath('/')
     return result;
    
   } catch (err) {
-    console.error("❌ Error updating point:", err);
     throw new Error(
       `Oops, something went wrong: ${(err as Error).message}`
     );

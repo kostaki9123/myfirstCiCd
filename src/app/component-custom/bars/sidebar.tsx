@@ -10,17 +10,14 @@ import Link from 'next/link';
 const Sidebar = () => {
     const pathname = usePathname()
 
-  
-    console.log("pathname",pathname)
     const id = pathname.split("/").pop();
-    console.log(id);
   // Sidebar items
-  const menuItems = [
-    { name: 'Home', path: `/home/${id}` },
-    { name: 'Create trip', path: `/createtrip/${id}`  },
-    { name: 'Itinerary', path: `/itinerary/${id}`  },
-    { name: 'Budget', path: `/budget/${id}`  },
-  ];
+    const menuItems = [
+      { name: 'Home', path: `/home/${id}` },
+      { name: 'Create trip', path: `/createtrip/${id}`  },
+      { name: 'Itinerary', path: `/itinerary/${id}`  },
+      { name: 'Budget', path: `/budget/${id}`  },
+    ];
 
   return (
     <aside className="w-56 bg-[#010038] text-white h-screen flex-col   md:flex hidden absolute pt-14  left-0  bottom-0 ">

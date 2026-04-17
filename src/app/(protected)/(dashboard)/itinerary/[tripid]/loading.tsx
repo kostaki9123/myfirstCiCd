@@ -1,5 +1,4 @@
 import MainLoader from "@/app/component/loaders/singUpandInloader";
-import Image from "next/image";
 
 export default function Loading() {
   return (

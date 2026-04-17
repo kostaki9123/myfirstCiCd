@@ -63,14 +63,6 @@ function PolylineOverlay({
   return null;
 }
 
-/* ---------------------- MIDPOINT ---------------------- */
-function getMid(a: LatLng, b: LatLng): LatLng {
-  return {
-    lat: (a.lat + b.lat) / 2,
-    lng: (a.lng + b.lng) / 2,
-  };
-}
-
 /* ---------------------- TRANSPORT ICON MARKER ---------------------- */
 function TransportMarker({
   position,
@@ -79,17 +71,40 @@ function TransportMarker({
   position: LatLng;
   icon: string;
 }) {
+  const transportIcons: Record<string, string> = {
+    flight: "✈️",
+    train: "🚆",
+    bus: "🚌",
+    car: "🚗",
+    subway: "🚇",
+    walking: "🚶",
+    bicycle: "🚲",
+    motorbike: "🏍️",
+    boat: "⛴️",
+    other: "➡️",
+  };
+
+  const selectedIcon = transportIcons[icon] || transportIcons.other;
+
   return (
     <Marker
       position={position}
       icon={{
-        url: "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=",
+        url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="24">
+              ${selectedIcon}
+            </text>
+          </svg>
+        `)}`,
+        scaledSize: new google.maps.Size(40, 40),
+
+        // ✅ THIS IS THE IMPORTANT PART
+        anchor: new google.maps.Point(20, 20),
       }}
-      label={{ text: icon, fontSize: "20px" }}
     />
   );
 }
-
 /* ---------------------- MAIN COMPONENT ---------------------- */
 function App({
   cyrclesArr,
@@ -122,26 +137,6 @@ function App({
   return null;
 }
 
-  const COLOR_A = "#1E90FF";
-  const COLOR_B = "#FF0000";
-
-  const transportIcons: Record<string, string> = {
-    flight: "✈️",
-    train: "🚆",
-    bus: "🚌",
-    car: "🚗",
-    subway: "🚇",
-    walking: "🚶",
-    bicycle: "🚲",
-    motorbike: "🏍️",
-    boat: "⛴️",
-    other: "➡️",
-  };
-
-  console.log('reccomended',addedplacetostay)
-
-
-  const transportMarkers: { pos: LatLng; icon: string }[] = [];
 
  const movingBoxPaths: LatLng[][] = useMemo(() => {
   const paths: LatLng[][] = []
@@ -160,9 +155,27 @@ function App({
   return paths
 }, [cyrclesArr])
 
+const transportMarkers = useMemo(() => {
+  const markers: { pos: LatLng; icon: string }[] = [];
 
+  for (const item of sorted) {
+    if (item.role === "MOVING_BOX") {
+      // midpoint between from → to
+      const midLat = (item.fromLat + item.toLat) / 2;
+      const midLng = (item.fromLng + item.toLng) / 2;
+
+      markers.push({
+        pos: { lat: midLat, lng: midLng },
+        icon: item.transportType,
+      });
+    }
+  }
+
+  return markers;
+}, [sorted]);
 
   /* ---------------------- MAP CENTER ---------------------- */
+
   const mapCenter = useMemo(() => {
     const pts: LatLng[] = [];
 

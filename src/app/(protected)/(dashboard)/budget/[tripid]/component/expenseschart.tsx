@@ -1,7 +1,6 @@
 import { getExpensesByBudgetId } from "../action"
 import ExpensesChartClient from "./ExpensesChartclient"
 
-
  export type Expense = {
   id: string
   description: string

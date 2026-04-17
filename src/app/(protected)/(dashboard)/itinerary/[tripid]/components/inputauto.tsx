@@ -17,7 +17,6 @@ type Props = {
   selectedPlace: SelectedPlace;
   triggerName: string;
   addedPlaces: Place[];
-  // ✅ NEW PROPS
   lat: number;
   lng: number;
   radius?: number; // meters (default 5000)

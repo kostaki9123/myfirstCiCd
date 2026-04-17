@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { SignIn, SignUp } from "@clerk/nextjs";
+import { SignIn } from "@clerk/nextjs";
 import MainLoader from "@/app/component/loaders/singUpandInloader";
 
 export default function DelayedSignIn() {
