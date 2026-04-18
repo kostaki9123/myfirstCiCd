@@ -57,7 +57,7 @@ const route = formatRoute(points);
   return (
     <div className=" absolute top-0 inset-0 flex items-start justify-start overflow-x-hidden 535:overflow-x-auto  bg-[#010038] "> 
       <div className="relative   flex items-start justify-start   h-full w-full">   
-        <div className=" flex 535:flex-col flex-col 535:mt-0 relative  w-full  max-w-[200px]  535:max-w-content   justify-start items-start   gap-2 min-w-max p-6  ">
+        <div className=" flex 535:flex-col flex-col 535:mt-0 relative  w-9  border-2 border-red-400 max-w-[200px]  535:max-w-content   justify-start items-start   gap-2 min-w-max p-6  ">
              <div className=" absolute left-[-9px] top-0   pl-4 h-full ">
                     <div className=" bottom-0 w-1 bg-gray-500 rounded-full h-[98%] my-5 "></div>
              </div>
@@ -65,7 +65,7 @@ const route = formatRoute(points);
             {/* Trip Overview */}
             <div className="flex w-full gap-12 ">
          
-               <Card className=" w-full  p-2 535:max-w-[370px]  ">
+               <Card className=" w-[80%] xxs:w-full  p-2 535:max-w-[370px]  ">
                   <CardHeader className=" p-3"> 
                     <CardTitle >Trip Summary 🌍</CardTitle>
                   </CardHeader>
@@ -86,7 +86,7 @@ const route = formatRoute(points);
            {points.length === 0 && (
             <Link href={`/createtrip/${tripid}`}>
               <div
-                className="group w-full  535:max-w-[370px] flex flex-col items-center justify-center rounded-2xl 
+                className="group  w-[80%] xxs:w-full 535:max-w-[370px] flex flex-col items-center justify-center rounded-2xl 
                 bg-white p-8 shadow-md transition hover:shadow-lg hover:-translate-y-1 cursor-pointer"
                 aria-label="Start planning your trip"
               >

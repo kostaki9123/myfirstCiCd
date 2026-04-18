@@ -590,7 +590,7 @@ const fetchPlaces = async () => {
 
     const result = await response.json();
     let places = result.results; // legacy API uses "results"
-       console.log(places)
+       console.log('dame',places)
    places = places
   .map((p: any) => {
     const km = haversineDistance(
@@ -678,6 +678,8 @@ useEffect(() => {
   setAddedStays(addedPlacesForMap.filter(p => p.type === "ACCOMMODATION"));
   setaddedVisits(addedPlacesForMap.filter(p => p.type === "PLACE_TO_VISIT"));
 }, [props.addedPlaces, props.selectedPlace.id]);
+
+console.log()
 
   const handleSeeMore = () => setVisibleCount((prev) => prev + 5);
 
