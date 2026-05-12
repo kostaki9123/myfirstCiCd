@@ -1,4 +1,7 @@
-import { TripWith, TripBudget, TripType } from "./newaddplace";
+export type TripWith = "Solo" | "Friends" | "Couple" |  "Family" | "Group"
+export type TripBudget = "Economy traveler" | "Balanced traveler" | "Luxury traveler"
+export type TripType = "Adventures"| "Cultural Enthusiast"| "Natural lovers"| "Nightlife"| "Festival"| "Sports Enthusiast"| "Events"
+
 
 const tripLabels = {
   travelingWith: {
