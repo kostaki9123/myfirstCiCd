@@ -183,7 +183,7 @@ function onSubmit(
               <div className=' w-full pt-2 ' >
                      <Label htmlFor="name"  >Trip type {"(Max 3)"}</Label>
                      <div className='flex flex-wrap gap-2 w-full  mt-2 max-w-[400px]'>
-                     {["Adventures", "Cultural enthusiasts", "Natural lovers", "Nightlife", "Festival", "Sports Enthusiast", "Events"].map((type , key) => (
+                     {["Adventures", "Cultural Enthusiast", "Natural lovers", "Nightlife", "Festival", "Sports Enthusiast", "Events"].map((type , key) => (
                     <div key={key} className="flex items-center space-x-1">
                       <Checkbox
                         id={type}

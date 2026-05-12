@@ -174,11 +174,11 @@ if (loading) {
       {/* ---------------- PLACES ---------------- */}
       <div className="flex-shrink-0 flex flex-col gap-2 max-h-64 overflow-auto min-h-[13rem] w-full sm:w-[250px] rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 p-4">
         <h4 className="text-base font-semibold text-center mb-2">
-          Places
+          Places to visit
         </h4>
 
         {placesToVisit.length === 0 ? (
-          <ActionRow href="/itinerary/add-place" label="Add Place" />
+          <ActionRow href={`/itinerary/${tripId}`} label="Add Place" />
         ) : (
           <div className="flex flex-col gap-3 w-full ">
             {placesToVisit.map((place) => (

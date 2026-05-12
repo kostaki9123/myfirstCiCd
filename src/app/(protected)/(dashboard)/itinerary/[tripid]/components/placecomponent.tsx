@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoStar } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import { z, ZodError } from "zod";
 import { InputParseError } from "../../../../../../../backend/entities/errors/common";
 import { createPlace } from "../action";
+import Image from "next/image";
 
 
 type Props = {
@@ -20,10 +21,12 @@ type Props = {
   alreadyAdded: boolean;
   tripId: string;
   priceLabel: string;
-  hasExactPrice: boolean;
+  Priceperday: number;
   googleMapsUri: string;
   category: string;
   affiliatelink:string
+  photoreference? : string
+  LocationComments : string
 };
 
 export const PlaceTypeEnum = z.enum([
@@ -46,6 +49,46 @@ const Placecomponent = (props: Props) => {
   const [errorMessages, setErrorMessages] = useState<{ [key: string]: string }>({});
   const [justAdded, setJustAdded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  
+ useEffect(() => {
+      setIsMobile(isMobileDevice());
+  }, []);
+
+// detect mobile safely
+const isMobileDevice = () => {
+  if (typeof window === "undefined") return false;
+  return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i.test(
+    navigator.userAgent
+  );
+};
+
+// extract place_id
+const extractPlaceId = (url?: string | null) => {
+  if (!url) return null;
+
+  const match =
+    url.match(/place_id:([A-Za-z0-9_-]+)/) ||
+    url.match(/[?&]q=place_id:([A-Za-z0-9_-]+)/);
+
+  return match?.[1] ?? null;
+};
+
+ const placeId = extractPlaceId(props.googleMapsUri);
+
+  // FINAL URL LOGIC (BEST RELIABILITY)
+  const googleLink = (() => {
+    if (!props.googleMapsUri) return null;
+
+    // If we have place_id → use strongest universal format
+    if (placeId) {
+      return `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${placeId}`;
+    }
+
+    // fallback
+    return props.googleMapsUri;
+  })();
+
 
 
   const addPlace = async () => {
@@ -107,94 +150,116 @@ const Placecomponent = (props: Props) => {
       setIsLoading(false);
     }
   };
+console.log("PHOTO REF:", props.photoreference);
+console.log('category',  props.category)
 
   const isAdded = props.alreadyAdded || justAdded;
 
   return (
-    <div className="relative flex flex-col bg-white rounded-xl shadow-md hover:shadow-lg transition duration-200 p-4 w-full">
+   <div className="relative flex flex-col sm:max-w-xl bg-white rounded-xl shadow-md hover:shadow-lg transition duration-200 p-4 ">
 
-      {/* Ranking Icon — dynamically handle 1,2,…10+ */}
-      <div className="absolute top-4 left-4 w-7 h-7 flex items-center justify-center bg-blue-600 text-white text-sm font-semibold rounded">
+  {/* TOP SECTION */}
+  <div className="flex flex-col sm:flex-row gap-3">
+
+    {/* IMAGE */}
+    {props.photoreference &&
+    <div className="w-full sm:w-[160px] h-[140px] sm:h-[120px] flex-shrink-0">
+      <Image
+        src={props.photoreference}
+        alt={props.displayName}
+        width={200}
+        height={150}
+        className="w-full h-full object-cover rounded-lg"
+      />
+    </div>
+    }
+    {/* CONTENT */}
+    <div className="relative flex flex-col flex-1 min-w-0 p-1">
+
+      {/* Ranking */}
+      <div className="absolute left-1 top-1 w-6 h-6 flex items-center justify-center bg-[#1E90FF] text-white text-xs font-medium rounded">
         {props.index + 1}
       </div>
 
       {/* Title */}
-      <h4 className="text-lg font-semibold pl-12 pr-2 border-b pb-2">
+      <h4
+        title={props.displayName}
+        className="text-base sm:text-lg font-semibold pl-8 pr-2 border-b pb-1 sm:truncate"
+      >
         {props.displayName || "Unknown Place"}
       </h4>
 
-      {/* Rating + Type */}
-      <div className="flex justify-between items-center mt-3 text-sm">
-        <div className="flex items-center gap-2">
-          <IoStar color="gold" size={18} />
-          <span className="font-medium">
+      {/* Distance + Rating */}
+      <div className="flex justify-between items-center mt-2 text-sm">
+        <div className="flex flex-col">
+             <p>{props.category}</p>
+             {props.LocationComments &&
+              <p className="text-xs text-gray-500 line-clamp-3 ">
+                {props.LocationComments}
+              </p> 
+             }
+             {props.description &&
+              <p className="text-xs text-gray-500 line-clamp-3 ">
+                {props.description}
+              </p> 
+             }
+        </div>
+        <div className="flex items-center gap-1">
+          <IoStar className="text-yellow-500" size={14} />
+          <span className="font-medium text-gray-800 text-sm">
             {props.rating ? props.rating.toFixed(1) : "N/A"}
           </span>
-
-          <span className="text-gray-500 text-xs">
-            {props.category}
-          </span>
-        </div>
+         </div>
       </div>
 
-      {/* Address */}
-      {props.address && (
-        <p className="text-xs text-gray-500 mt-1 line-clamp-2">
-          {props.address}
-        </p>
-      )}
-
-      {/* Description / AI Reason */}
-      {props.description && (
-        <p className="text-sm text-gray-600 mt-2 line-clamp-3">
-          {props.description}
-        </p>
-      )}
-
-      {/* Price Section */}
-      <div className="flex items-center justify-between mt-4">
-        <div>
-          
-
-          {props.hasExactPrice && (
-            <div className="text-[10px] text-gray-400">
-              Estimated per night
-            </div>
-          )}
-        </div>
+      {/* Price */}
+      {props.Priceperday > 0  &&
+       <div className="mt-2 flex justify-between items-end"> 
+           <div>
+              <div className="text-sm font-semibold text-gray-900"> {props.Priceperday}$
+                 {props.type === 'ACCOMMODATION' &&
+                 <span className="text-xs font-normal text-gray-500">/ night</span>
+                  }
+                </div> 
+              <div className="text-[10px] text-gray-400"> estimated price </div> 
+           </div>
       </div>
+      }
+   </div>
+  </div>
+  {/* BUTTONS */}
+  <div className="mt-4 flex gap-2">
+    <Button
+      disabled={isAdded || isLoading}
+      onClick={addPlace}
+      className={`flex-1 h-9 text-sm rounded-md ${
+        isAdded
+          ? "bg-gray-300 text-gray-600"
+          : "bg-blue-600 hover:bg-blue-700 text-white"
+      }`}
+    >
+      {isAdded ? "Added" : isLoading ? "Adding..." : "Add"}
+    </Button>
 
-      {/* Buttons */}
-      <div className="mt-4 flex gap-3">
-        <a href={props.affiliatelink  } className="flex-1" target="_blank" rel="noopener noreferrer">
-          <Button
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white h-9 text-sm rounded-md"
-          >
-            View
-          </Button>
-        </a>
+    <a href={props.affiliatelink ? props.affiliatelink : googleLink!} target="_blank" className="flex-1">
+      <Button
+        variant="outline"
+        className="w-full h-9 text-sm"
+      >
+        View
+      </Button>
+    </a>
+  </div>
 
-        <Button
-            disabled={isAdded || isLoading}
-          onClick={addPlace}
-          className={`flex-1 h-9 text-sm rounded-md transition
-           ${
-             isAdded
-               ? "bg-gray-400 text-white cursor-not-allowed"
-               : "bg-green-600 hover:bg-green-700 text-white"
-           }`}
-          >
-           {isAdded ? "Added" : isLoading ? "Adding..." : "Add"}
-        </Button>
-      </div>
-
-      {errorMessages.general && (
-        <p className="text-xs text-red-500 mt-2">
-          {errorMessages.general}
-        </p>
-      )}
-    </div>
+  {/* ERROR */}
+  {errorMessages.general && (
+    <p className="text-xs text-red-500 mt-2">
+      {errorMessages.general}
+    </p>
+  )}
+</div>
   );
 };
 
 export default Placecomponent;
+         

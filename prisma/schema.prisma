@@ -150,9 +150,27 @@
   model PlaceAffiliateLink {
     id           Int      @id @default(autoincrement())
     place_id     String   @unique
-    affiliate_url String
-    source       String?
-    clicks       Int      @default(0)
+    name         String
+    PhotoUrl     String?
+    Priceperday  Int?
+    LocationComments String?
+    Rating       Float?
+    TypeOflodgindOrPlace String?
+    affiliate_url String?
+    description   String?
+    source        String?
+    placebudget   String?
+    Placewith     String[]
+    placetype     String[]
+    compound_code String 
+    AvarageTime   String?
+    OpenHours     String?
+    AccomodationOrPlace String
+    Reccomended   Boolean
+    latitude      Float
+    longitude     Float
+    MustSee       Boolean?
+    HiddenSpot    Boolean?
     created_at   DateTime @default(now())
     updated_at   DateTime @updatedAt
   }

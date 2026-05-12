@@ -2,7 +2,7 @@
 
   import React, { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
   import Placesdropdown from './placesdropdown';
-  import Addaplace from './addplace';
+  import Addaplace, { TripBudget, TripType, TripWith } from './addplace';
   import PlaceToStayCard from './PlaceToStayCard';
   import PlaceToVisitCard from './PlaceToVisitCard';
   import { Place } from '../../../../../../../backend/entities/models/place';
@@ -181,9 +181,9 @@
               cyrclesArr={props.cyrclesArr}
               latitude={selectedPoint.placeLat!}
               longitude={selectedPoint.placeLng!}
-              travelingWith={props.trip.travelingWith}
-              tripBudget={props.trip.tripBudget}
-              tripTypes={props.trip.tripTypes}
+              travelingWith={props.trip.travelingWith as TripWith}
+              tripBudget={props.trip.tripBudget as TripBudget}
+              tripTypes={props.trip.tripTypes as TripType[]}
               
             />
           </div>
@@ -213,7 +213,6 @@
                 affiliateLink={place.affiliatelink}
               />
             ))}
-
             <Addaplace
               onSubmitSuccess={setShowItineraryHint}
               addedPlaces={props.places.filter(
@@ -226,10 +225,12 @@
               cyrclesArr={props.cyrclesArr}
               latitude={selectedPoint.placeLat!}
               longitude={selectedPoint.placeLng!}
-              travelingWith={props.trip.travelingWith}
-              tripBudget={props.trip.tripBudget}
-              tripTypes={props.trip.tripTypes}
+              travelingWith={props.trip.travelingWith as TripWith}
+              tripBudget={props.trip.tripBudget as TripBudget}
+              tripTypes={props.trip.tripTypes as TripType[]}
             />
+          
+            
           </div>
         </div>
       </div>

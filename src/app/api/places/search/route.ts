@@ -20,16 +20,18 @@ if (typeof lat !== "number" || typeof lng !== "number") {
 
     const typesString = Array.isArray(types) ? types.join("|") : types;
 
+    console.log('types before req in backend' , typesString)
+
     const response = await fetch(
       `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=3000&type=${typesString}&key=${process.env.GOOGLE_MAPS_API_KEY}`
     );
 
     if (!response.ok) {
-  return NextResponse.json(
-    { error: "Failed to fetch places" },
-    { status: 502 }
-  );
-}
+     return NextResponse.json(
+       { error: "Failed to fetch places" },
+       { status: 502 }
+     );
+    }
 
 const data = await response.json();
 

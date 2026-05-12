@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "PlaceAffiliateLink" ALTER COLUMN "PhotoUrl" DROP NOT NULL,
+ALTER COLUMN "Priceperday" DROP NOT NULL,
+ALTER COLUMN "TypeOflodgindOrPlace" DROP NOT NULL,
+ALTER COLUMN "affiliate_url" DROP NOT NULL,
+ALTER COLUMN "source" DROP NOT NULL;
