@@ -285,7 +285,7 @@ const Point =  (props:Props) => {
         </div>
 
 
-         <DialogContent  onOpenAutoFocus={(e) => e.preventDefault()} className="  z-[52] max-h-[500px] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-3 rounded-xl">
+         <DialogContent  onOpenAutoFocus={(e) => e.preventDefault()} className="  z-[52] max-h-[500px] min-w-[262px] w-[90%] sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-3 rounded-xl">
             <DialogHeader className='flex justify-start  items-start'>
               <DialogTitle className=' text-xl w-[90%] '>
                   <PlaceSearchWrapper

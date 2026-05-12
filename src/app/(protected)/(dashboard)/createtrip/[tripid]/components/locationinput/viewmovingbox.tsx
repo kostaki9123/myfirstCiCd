@@ -159,7 +159,7 @@ const ViewMovingBoxModal = ({ data }: Props) => {
   // Render
   // -----------------------------
   return (
-    <div className="flex flex-col gap-6 overflow-y-auto p-2 w-[90%] sm:w-full ">
+    <div className="flex flex-col gap-6 overflow-y-auto p-2  ">
       <div className="grid grid-cols-1 820:grid-cols-2 gap-4">
 
         {/* From */}
