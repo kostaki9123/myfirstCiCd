@@ -357,6 +357,7 @@ const Addaplace = (props: Props) => {
               .map((place: any, index: number) => (
                 <Placecomponent
                   key={index}
+                  
                   tripId={props.selectedPlace.tripId}
                   pointId={props.selectedPlace.id}
                   placeId={place.place_id ?? place.id}
