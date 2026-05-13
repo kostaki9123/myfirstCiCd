@@ -169,6 +169,8 @@ console.log('category',  props.category)
         alt={props.displayName}
         width={200}
         height={150}
+        loading={props.index < 4 ? "eager" : "lazy"}
+        priority={props.index < 2}
         className="w-full h-full object-cover rounded-lg"
       />
     </div>

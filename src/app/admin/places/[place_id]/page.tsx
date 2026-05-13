@@ -12,7 +12,6 @@ export default function EditPlacePage({
 })  {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
    const { place_id } = use(params);
 

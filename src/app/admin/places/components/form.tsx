@@ -165,8 +165,8 @@ export default function PlaceForm({
   initialData = {},
   onSubmit,
 }: Props) {
- const [placeWithText, setPlaceWithText] = useState("");
-const [placetype, setPlaceType] = useState("");   // ✅ change
+  const [placeWithText, setPlaceWithText] = useState("");
+  const [placetype, setPlaceType] = useState("");   // ✅ change
   const [form, setForm] = useState<PlaceFormData>(defaultForm);
 
   useEffect(() => {
@@ -283,6 +283,7 @@ setPlaceType((initialData.placetype || []).join(", "));  // ✅ change
         <Field label="Open Hours" name="OpenHours" value={form.OpenHours} onChange={handleChange} />
         <Field label="Description" name="description" textarea value={form.description} onChange={handleChange} />
       </Section>
+
 
       <Section title="Flags">
         <Checkbox label="Recommended" name="Reccomended" checked={form.Reccomended} onChange={handleChange} />

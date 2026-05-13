@@ -1,14 +1,12 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import PlaceForm from "../components/form";
 
 
 export default function NewPlacePage() {
-  const router = useRouter();
 
   async function createPlace(formData: any) {
-    const res = await fetch("api/links", {
+    const res = await fetch("/api/links", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,8 +18,6 @@ export default function NewPlacePage() {
       console.error("Failed to create place");
       return;
     }
-
-    router.push("/admin/places");
   }
 
   return (
