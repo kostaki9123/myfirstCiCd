@@ -80,35 +80,35 @@ export async function POST(req: Request) {
     mergeUnique(strict);
 
     // ---------------- 2. RELAX TYPE ----------------
-    if (dbResults.length < 20) {
-      const relaxedTypeWhere = { ...strictWhere };
-      delete relaxedTypeWhere.placetype;
-
-      const extra = await prisma.placeAffiliateLink.findMany({
-        where: relaxedTypeWhere,
-        orderBy: { Reccomended: "desc" },
-        take: 20 - dbResults.length
-      });
-
-      mergeUnique(extra);
-    }
-
-    // ---------------- 3. RELAX WITH ----------------
-    if (dbResults.length < 20) {
-      const relaxedWithWhere: any = { ...baseWhere };
-
-      if (tripbudget) {
-        relaxedWithWhere.placebudget = tripbudget;
-      }
-
-      const extra = await prisma.placeAffiliateLink.findMany({
-        where: relaxedWithWhere,
-        orderBy: { Reccomended: "desc" },
-        take: 20 - dbResults.length
-      });
-
-      mergeUnique(extra);
-    }
+   // if (dbResults.length < 20) {
+   //   const relaxedTypeWhere = { ...strictWhere };
+   //   delete relaxedTypeWhere.placetype;
+   //
+   //   const extra = await prisma.placeAffiliateLink.findMany({
+   //     where: relaxedTypeWhere,
+   //     orderBy: { Reccomended: "desc" },
+   //     take: 20 - dbResults.length
+   //   });
+   //
+   //   mergeUnique(extra);
+   // }
+   //
+   // // ---------------- 3. RELAX WITH ----------------
+   // if (dbResults.length < 20) {
+   //   const relaxedWithWhere: any = { ...baseWhere };
+   //
+   //   if (tripbudget) {
+   //     relaxedWithWhere.placebudget = tripbudget;
+   //   }
+   //
+   //   const extra = await prisma.placeAffiliateLink.findMany({
+   //     where: relaxedWithWhere,
+   //     orderBy: { Reccomended: "desc" },
+   //     take: 20 - dbResults.length
+   //   });
+   //
+   //   mergeUnique(extra);
+   // }
 
     // ---------------- 4. FINAL FALLBACK ----------------
     if (dbResults.length < 20) {
