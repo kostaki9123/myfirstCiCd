@@ -134,7 +134,7 @@ const filtered = places.filter((p) => {
             </thead>
 
             <tbody>
-              {filtered.map((p) => (
+              {filtered.map((p,index) => (
                 <tr
                   key={p.place_id}
                   className="border-t border-gray-800 hover:bg-gray-800/50"
@@ -142,7 +142,7 @@ const filtered = places.filter((p) => {
 
                   {/* NAME */}
                   <td className="p-3 font-medium flex">
-                    {p.name}{p.AccomodationOrPlace === "ACCOMMODATION" && <FaHotel className=" pt-1 pl-1 w-4 h-4" />}
+                   {index + 1}. {p.name}{p.AccomodationOrPlace === "ACCOMMODATION" && <FaHotel className=" pt-1 pl-1 w-4 h-4" />}
                   </td>
 
                   {/* PLACE ID */}
