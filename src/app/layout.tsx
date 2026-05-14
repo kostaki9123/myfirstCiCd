@@ -40,7 +40,7 @@ export const metadata : Metadata = {
     >
       <html lang="en" className="bg-[#010038]">
         <body
-        className="bg-[#010038]  "
+        className="bg-[#010038] "
           id="datepicker-portal"
         >       
           <Navbar withtripname={false} withoutHumburger={true}/>

@@ -13,7 +13,7 @@ export default async function Home() {
   ); 
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-gray-200 pt-20">
+    <div className="  min-h-screen bg-gradient-to-b from-[#0f172a] to-[#1e293b] text-gray-200 pt-20">
       
       {/* Header */}
       <header className="w-full py-8 text-center shadow-lg">

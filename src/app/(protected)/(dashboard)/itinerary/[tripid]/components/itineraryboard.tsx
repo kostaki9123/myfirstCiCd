@@ -105,7 +105,7 @@
 
     return (
       <div className="h-fit w-full p-3">
-        <div className="w-full rounded-md p-2 bg-[#ACA7CB] min-w-[290px] relative">
+        <div className="w-full rounded-md p-2 bg-[#ACA7CB] min-w-[260px] relative">
 
           {/* HEADER */}
           <div className="flex justify-center mb-2 relative">
