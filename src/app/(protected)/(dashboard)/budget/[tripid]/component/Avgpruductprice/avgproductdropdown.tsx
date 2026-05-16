@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import ReactCountryFlag from "react-country-flag"
-// import ReactCountryFlag from "react-country-flag";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +24,7 @@ const Avgproductdropdown = ({ setSelectedCountry, arrayOfCountries, selectedCoun
   const [open, setOpen] = useState<boolean>(false)
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  console.log('selectedCountryCode:' , selectedCountryCode)
   // Close dropdown if clicked outside
   const handleClickOutside = (event: MouseEvent) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {

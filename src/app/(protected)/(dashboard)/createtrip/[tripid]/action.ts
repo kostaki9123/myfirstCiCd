@@ -12,6 +12,9 @@ import { getPointsController } from "../../../../../../backend/interface-adapter
 import { deletePointController } from "../../../../../../backend/interface-adapters/controllers/points/delete-point.controller";
 import { movePointController } from "../../../../../../backend/interface-adapters/controllers/points/move-point.controller";
 import { updatePointController } from "../../../../../../backend/interface-adapters/controllers/points/update-point.controller";
+import { ITripsRepository } from "../../../../../../backend/application/repositories/trips.repository.interface";
+import { MockTripsRepository } from "../../../../../../backend/infrastructure/repository/trips.repository.mock";
+import { TripsRepository } from "../../../../../../backend/infrastructure/repository/trips.repository";
 
 
 export async function createPoint(formData: FormData) {
@@ -109,12 +112,29 @@ export async function getPoints(tripId : string) {
     process.env.NODE_ENV === 'test'
       ? new MockUsersRepository()
       : new UsersRepository();
+  
+  const tripsRepository: ITripsRepository =
+    process.env.NODE_ENV === 'test'
+      ? new MockTripsRepository()
+      : new TripsRepository();
 
   const existingUser = await usersRepository.getUser(userId);
 
   if (!existingUser) {
     redirect('/sign-in'); // ✅ Έξω από try/catch
   }
+
+   // Check ownership
+  const userTrips = await tripsRepository.getTripsForUser(userId);
+
+  const ownsTrip = userTrips.some(
+    (trip) => trip.id === tripId
+  );
+
+  if (!ownsTrip) {
+    redirect('/sign-in');
+  }
+
 
   try {
     const points = await getPointsController(tripId);

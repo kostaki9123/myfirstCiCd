@@ -29,6 +29,7 @@ export const countryBudgetProfilesEUR: Record<string, BudgetProfile> = {
   HR: { currency: "EUR", budget: 30, mid: 55, luxury: 100 },
   IE: { currency: "EUR", budget: 45, mid: 80, luxury: 150 },
   UK: { currency: "EUR", budget: 50, mid: 85, luxury: 160 },
+  GB: { currency: "EUR", budget: 60, mid: 110, luxury: 220 },
 
   // ─── NORTH AMERICA ───────────────────
   US: { currency: "EUR", budget: 45, mid: 85, luxury: 170 },
