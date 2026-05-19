@@ -13,7 +13,7 @@ const tripLabels = {
   } as Record<TripWith, { label: string; icon: string }>,
 
   tripBudget: {
-    'Economy traveler' : { label: "conomy traveler", icon: "💰" },
+    'Economy traveler' : { label: "Economy traveler", icon: "💰" },
     'Balanced traveler': { label: "Balanced traveler", icon: "⚖️" },
     'Luxury traveler' :  { label: "Luxury traveler", icon: "✨" },
   } as Record<TripBudget, { label: string; icon: string }>,

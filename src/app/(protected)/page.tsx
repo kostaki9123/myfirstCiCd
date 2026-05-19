@@ -75,7 +75,7 @@ export default async function Home() {
                   pathname: `/home/${trip.id}`,
                 }}
               >
-                <button className="px-4 py-2 bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white rounded-lg shadow-lg hover:scale-105 transition-transform">
+                <button className="px-4 py-2  bg-gradient-to-r from-[#22c55e] to-[#16a34a] text-white rounded-lg shadow-lg hover:scale-105 transition-transform">
                   Join Dashboard
                 </button>
               </Link>

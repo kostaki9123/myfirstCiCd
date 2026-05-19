@@ -159,10 +159,26 @@ export default function PlaceToVisitCard(props: Props) {
                    </svg>
             </div>
 
-            <div className="font-semibold flex items-center gap-1">
+            <div className="font-semibold flex items-center gap-1 hover:underline max-w-[140px] ">
               {props.name}
               <ChevronDown className="h-4 w-4 text-neutral-500" />
             </div>
+             <div className=" text-sm text-black no-underline! [text-decoration:none] " >     
+             {props.visitDate
+                ? new Date(props.visitDate).toLocaleDateString("en-GB", {
+                    month: "2-digit",
+                    day: "2-digit",
+                  })
+                : "No date"}
+             </div>
+              <div className=" text-sm text-black no-underline! [text-decoration:none] " >     
+            {props.visitTime
+               ? new Date(props.visitTime).toLocaleTimeString("en-GB", {
+                   hour: "2-digit",
+                   minute: "2-digit",
+                 })
+               : "No time"}
+             </div>
           </div>
           <Deleteplacebtn placeId={props.id} pointId={props.pointId} />
         </AccordionTrigger>

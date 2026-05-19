@@ -1,127 +1,156 @@
-'use client';
+  'use client';
 
-import { useMemo, useState } from 'react';
-import Itineraryboard from './itineraryboard';
-import Mapprovider from '@/app/component/map/map-provider';
-import { Place } from '../../../../../../../backend/entities/models/place';
+  import { useEffect, useMemo, useState } from 'react';
+  import Itineraryboard from './itineraryboard';
+  import Mapprovider from '@/app/component/map/map-provider';
+  import { Place } from '../../../../../../../backend/entities/models/place';
 
-export type Trip = {
-  id: string;
-  tripName: string;
-  userId: string;
-  tripBudget: string;
-  travelingWith: string;
-  tripTypes: string[];
-};
+  export type Trip = {
+    id: string;
+    tripName: string;
+    userId: string;
+    tripBudget: string;
+    travelingWith: string;
+    tripTypes: string[];
+  };
 
-type LatLng = {
-  lat: number;
-  lng: number;
-};
+  type LatLng = {
+    lat: number;
+    lng: number;
+  };
 
-const ItineraryClient = ({
-  points,
-  places,
-  budgetId,
-  trip,
-  selectedpointId
-}: {
-  points: any[];
-  places: Place[];
-  budgetId: string;
-  trip: Trip;
-  selectedpointId?: string;
-}) => {
+  export type PlaceforMap = {
+    id: string ;
+    name: string;
+    location: {
+      lat: number;
+      lng: number;
+    };
+  };
 
-  /* ✅ SAFE DEFAULT FOCUS */
-  const defaultLocation =
-    points.length > 0 &&
-    points[0]?.placeLat != null &&
-    points[0]?.placeLng != null
-      ? { lat: points[0].placeLat, lng: points[0].placeLng }
-      : null;
+  const ItineraryClient = ({
+    points,
+    places,
+    budgetId,
+    trip,
+    selectedpointId
+  }: {
+    points: any[];
+    places: Place[];
+    budgetId: string;
+    trip: Trip;
+    selectedpointId?: string;
+  }) => {
 
-  const [focusplace, setFocusplace] = useState<LatLng | null>(
-    defaultLocation
-  );
+    /* ✅ SAFE DEFAULT FOCUS */
+    const defaultLocation =
+      points.length > 0 &&
+      points[0]?.placeLat != null &&
+      points[0]?.placeLng != null
+        ? { lat: points[0].placeLat, lng: points[0].placeLng }
+        : null;
 
-  /* ✅ DERIVE SELECTED POINT ID SAFELY */
-  const selectedPointId = useMemo(() => {
-    if (!focusplace) return null;
-
-    const matchedPoint = points.find(
-      (p) =>
-        p.placeLat === focusplace.lat &&
-        p.placeLng === focusplace.lng
+    const [focusplace, setFocusplace] = useState<LatLng | null>(
+      defaultLocation
     );
+    const [addedStays, setaddedStays] = useState<PlaceforMap[] >([]);
+    const [addedVisits, setaddedVisits] = useState<PlaceforMap[]>([]);
+    
 
-    return matchedPoint?.id ?? null;
-  }, [focusplace, points]);
+    /* ✅ DERIVE SELECTED POINT ID SAFELY */
+    const selectedPointId = useMemo(() => {
+      if (!focusplace) return null;
 
-  /* ✅ SAFE MAP DATA */
-  const { addedStays, addedVisits } = useMemo(() => {
+      const matchedPoint = points.find(
+        (p) =>
+          p.placeLat === focusplace.lat &&
+          p.placeLng === focusplace.lng
+      );
+
+      return matchedPoint?.id ?? null;
+    }, [focusplace, points]);
+
+    /* ✅ SAFE MAP DATA */
+    useEffect(() => {
     if (!selectedPointId) {
-      return { addedStays: [], addedVisits: [] };
+      setaddedStays([]);
+      setaddedVisits([]);
+      return;
     }
 
-    const mapped = places
-      .filter(
-        (p) =>
-          p.pointId === selectedPointId &&
-          p.latitude != null &&
-          p.longitude != null
-      )
-      .map((p) => ({
-        id: p.id,
-        name: p.name,
-        location: {
-          lat: Number(p.latitude),
-          lng: Number(p.longitude),
-        },
-        type: p.placeType,
-      }));
+     const filtered = places.filter(
+    (p) =>
+      p.pointId === selectedPointId &&
+      p.latitude != null &&
+      p.longitude != null
+  );
 
-    return {
-      addedStays: mapped.filter((p) => p.type === "ACCOMMODATION"),
-      addedVisits: mapped.filter((p) => p.type === "PLACE_TO_VISIT"),
-    };
+  const stays: PlaceforMap[] = filtered
+    .filter((p) => p.placeType === 'ACCOMMODATION')
+    .map((p) => ({
+      id: String(p.id),
+      name: p.name,
+      location: {
+        lat: Number(p.latitude),
+        lng: Number(p.longitude),
+      }
+    }));
+
+  const visits: PlaceforMap[] = filtered
+    .filter((p) => p.placeType === 'PLACE_TO_VISIT')
+    .map((p) => ({
+      id: String(p.id),
+      name: p.name,
+      location: {
+        lat: Number(p.latitude),
+        lng: Number(p.longitude),
+      },
+    }));
+
+  setaddedStays(stays);
+  setaddedVisits(visits);
+
   }, [places, selectedPointId]);
 
-  return (
-    <div className="h-full absolute inset-0 flex min-w-[344px]">
+    return (
+      <div className="h-full absolute inset-0 flex min-w-[344px]">
 
-      {/* LEFT */}
-      <div className="h-full w-full 950:w-[53%] overflow-auto">
-        {points.length === 0 ? (
-          <div className="h-fit min-h-40 w-full p-3">
-            <div className="w-full rounded-md min-h-40 flex items-center justify-center p-2 bg-[#ACA7CB]">
-              There is no destination yet
+        {/* LEFT */}
+        <div className="h-full w-full 950:w-[53%] overflow-auto">
+          {points.length === 0 ? (
+            <div className="h-fit min-h-40 w-full p-3">
+              <div className="w-full rounded-md min-h-40 flex items-center justify-center p-2 bg-[#ACA7CB]">
+                There is no destination yet
+              </div>
             </div>
-          </div>
-        ) : (
-          <Itineraryboard
-            places={places}
-            trip={trip}
+          ) : (
+            <Itineraryboard
+              places={places}
+              trip={trip}
+              cyrclesArr={points}
+              focusplace={focusplace}
+              setFocusplace={setFocusplace}
+              budgetId={budgetId}
+              selectedpointId={selectedpointId}
+              setaddedStays={setaddedStays}
+              setaddedVisits={setaddedVisits}
+              addedStaysForMap={addedStays}
+              addedVisitsForMap={addedVisits}
+            />
+          )}
+        </div>
+
+        {/* RIGHT MAP */}
+        <div className="h-full w-[47%] hidden 950:block">
+          <Mapprovider
             cyrclesArr={points}
             focusplace={focusplace}
-            setFocusplace={setFocusplace}
-            budgetId={budgetId}
-            selectedpointId={selectedpointId}
+            addedplacetostay={addedStays}
+            addedplacetovisit={addedVisits}
           />
-        )}
+        </div>
       </div>
+    );
+  };
 
-      {/* RIGHT MAP */}
-      <div className="h-full w-[47%] hidden 950:block">
-        <Mapprovider
-          cyrclesArr={points}
-          focusplace={focusplace}
-          addedplacetostay={addedStays}
-          addedplacetovisit={addedVisits}
-        />
-      </div>
-    </div>
-  );
-};
-
-export default ItineraryClient;
+  export default ItineraryClient;

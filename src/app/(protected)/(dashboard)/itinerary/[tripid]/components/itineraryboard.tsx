@@ -6,7 +6,7 @@
   import PlaceToStayCard from './PlaceToStayCard';
   import PlaceToVisitCard from './PlaceToVisitCard';
   import { Place } from '../../../../../../../backend/entities/models/place';
-  import { Trip } from './itineraryClient';
+  import { PlaceforMap, Trip } from './itineraryClient';
 
   export interface ItineraryPoint {
     id: string;
@@ -36,6 +36,10 @@
     budgetId: string
     trip: Trip
     selectedpointId ?:string
+    setaddedStays: Dispatch<React.SetStateAction<PlaceforMap[]>>
+    setaddedVisits: Dispatch<React.SetStateAction<PlaceforMap[]>>
+    addedStaysForMap: PlaceforMap[]
+    addedVisitsForMap: PlaceforMap[]
   };
 
   const Itineraryboard = (props: Props) => {
@@ -91,17 +95,50 @@
         (place) =>
           place.pointId === selectedPoint.id &&
           place.placeType === 'ACCOMMODATION'
-      );
+      )
+       .map((place) => ({
+      ...place,
+      location: {
+        lat: Number(place.latitude),
+        lng: Number(place.longitude),
+      }}))
+      
     }, [props.places, selectedPoint.id]);
 
     /** Places to visit (recomputed on change) */
-    const placesToVisit = useMemo(() => {
-      return props.places.filter(
-        (place) =>
-          place.pointId === selectedPoint.id &&
-          place.placeType === 'PLACE_TO_VISIT'
+   const placesToVisit = useMemo(() => {
+  return props.places
+    .filter(
+      (place) =>
+        place.pointId === selectedPoint.id &&
+        place.placeType === 'PLACE_TO_VISIT'
+    )
+    .sort((a, b) => {
+      // Put null dates at the end
+      if (!a.visitDate && !b.visitDate) return 0;
+      if (!a.visitDate) return 1;
+      if (!b.visitDate) return -1;
+
+      // Sort earliest date first
+      return (
+        new Date(a.visitDate).getTime() -
+        new Date(b.visitDate).getTime()
       );
-    }, [props.places, selectedPoint.id]);
+     })
+      .map((place) => ({
+      ...place,
+      location: {
+        lat: Number(place.latitude),
+        lng: Number(place.longitude),
+      },
+    }));
+    
+}, [props.places, selectedPoint.id]);
+
+useEffect(() => {
+  props.setaddedStays(accommodationPlaces);
+  props.setaddedVisits(placesToVisit);
+}, [accommodationPlaces, placesToVisit, props]);
 
     return (
       <div className="h-fit w-full p-3">
@@ -184,7 +221,8 @@
               travelingWith={props.trip.travelingWith as TripWith}
               tripBudget={props.trip.tripBudget as TripBudget}
               tripTypes={props.trip.tripTypes as TripType[]}
-              
+              addedStaysForMap={props.addedStaysForMap}
+              addedVisitsForMap={props.addedVisitsForMap}
             />
           </div>
 
@@ -228,6 +266,8 @@
               travelingWith={props.trip.travelingWith as TripWith}
               tripBudget={props.trip.tripBudget as TripBudget}
               tripTypes={props.trip.tripTypes as TripType[]}
+              addedStaysForMap={props.addedStaysForMap}
+              addedVisitsForMap={props.addedVisitsForMap}
             />
           
             

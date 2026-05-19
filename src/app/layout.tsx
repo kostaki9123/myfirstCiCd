@@ -38,7 +38,7 @@ export const metadata : Metadata = {
     signInUrl="/sign-in"
     signUpUrl="/sign-up"
     >
-      <html lang="en" className="bg-[#010038]">
+      <html lang="en" translate="no" className="bg-[#010038]">
         <body
         className="bg-[#010038] "
           id="datepicker-portal"

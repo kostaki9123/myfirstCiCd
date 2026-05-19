@@ -13,6 +13,7 @@ import TripContextChips from "./tripContextChips";
 import Placecomponent from "./placecomponent";
 import Mapprovider from "@/app/component/map/map-provider";
 import { RecommendedPlace } from "@/app/component/map/map";
+import { PlaceforMap } from "./itineraryClient";
 
 type Props = {
   selectedPlace: ItineraryPoint;
@@ -22,6 +23,8 @@ type Props = {
   triggerName: string;
   descriptionName: string;
   addedPlaces: Place[];
+  addedStaysForMap: PlaceforMap[]
+  addedVisitsForMap: PlaceforMap[]
   travelingWith: TripWith;
   tripBudget: TripBudget;
   tripTypes: TripType[];
@@ -292,12 +295,11 @@ const Addaplace = (props: Props) => {
        ),  
    }
     }));
-  console.log('r',mapData)
+
   const handleSeeMore = () => {
     setVisibleCount((prev) => prev + 5);
   };
 
-  console.log('reqqwwww', placesResult);
 
   return (
     <Dialog>
@@ -433,8 +435,8 @@ const Addaplace = (props: Props) => {
                 ? mapData
                 : []
             }
-            addedplacetovisit={addedVisitss ?? []}
-            addedplacetostay={addedStayss ?? []}
+            addedplacetovisit={props.addedVisitsForMap ?? []}
+            addedplacetostay={props.addedStaysForMap ?? []}
           />
         </div>
       </DialogContent>

@@ -12,7 +12,7 @@ type Props = {
   focusplace?: LatLng | null;
   addedplacetovisit?: RecommendedPlace[]
   addedplacetostay?: RecommendedPlace[]
-  recommendedVisits?: RecommendedPlace[];
+  recommendedVisits?: RecommendedPlace[] 
   recommendedStays?: RecommendedPlace[];
   allPlaces?: Place[]
 }
