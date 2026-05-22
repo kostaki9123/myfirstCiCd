@@ -59,7 +59,7 @@ export default function DateRangeDropdown({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="w-full max-w-[202px] justify-between rounded-xl"
+          className="w-full text-white bg-white/10 hover:bg-white/5 hover:text-white max-w-[202px] justify-between rounded-xl"
         >
           {selectedDate
             ? selectedDate.toLocaleDateString('en-GB')
@@ -68,11 +68,11 @@ export default function DateRangeDropdown({
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-48 max-h-64 overflow-y-auto z-[69] ">
+      <DropdownMenuContent className="w-48 max-h-64 text-black overflow-y-auto z-[69] ">
         {dates.map((date) => {
           const isSelected =
             selectedDate?.toDateString() === date.toDateString()
-             console.log('inroow' ,date)
+           
           return (
             <DropdownMenuItem
               key={date.toISOString()}

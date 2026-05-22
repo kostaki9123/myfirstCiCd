@@ -55,7 +55,7 @@ function capitalizeFirst(str : string) {
  const date =props.departureDate ?  props.departureDate.toLocaleString('en-US', { month: 'short', day: '2-digit' }) : null
 
   return (
-     <div className="relative min-h-32 flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
+     <div className=" relative min-h-32 flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
             <div className=" lg:absolute top-1 mt-1 lg:mt-0s left-[-6px] px-3 py-1.5 rounded-md
                 bg-gray-700 text-white text-[11px] shadow-lg flex items-center gap-1">
                  <div className="uppercase tracking-wide text-gray-200">{date.split(' ')[0]}</div>
@@ -68,9 +68,9 @@ function capitalizeFirst(str : string) {
                  
             </div>
                     
-            <div className='flex flex-col' >  
+            <div className='flex flex-col ' >  
                  <h2 className=" text-base h-[32px] font-semibold text-white hidden lg:block "></h2>
-                 <Card className=" group  w-72  lg:mt-5  relative ml-3 lg:ml-0 p-2 ">
+                 <Card className=" group  w-72  lg:mt-5  relative ml-3 lg:ml-0 p-2 bg-white/10 border-none text-white  ">
                    <CardHeader className="p-3  ">  
                      <CardTitle className='flex flex-row gap-2'>
                           Transport  

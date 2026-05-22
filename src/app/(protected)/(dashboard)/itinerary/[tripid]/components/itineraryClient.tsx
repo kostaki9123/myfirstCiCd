@@ -113,13 +113,13 @@
   }, [places, selectedPointId]);
 
     return (
-      <div className="h-full absolute inset-0 flex min-w-[344px]">
+      <div className="h-full absolute inset-0 bg-[#010038] flex min-w-[344px]">
 
         {/* LEFT */}
         <div className="h-full w-full 950:w-[53%] overflow-auto">
           {points.length === 0 ? (
             <div className="h-fit min-h-40 w-full p-3">
-              <div className="w-full rounded-md min-h-40 flex items-center justify-center p-2 bg-[#ACA7CB]">
+              <div className="w-full bg-white/10 text-white rounded-md min-h-40 flex items-center justify-center p-2 ">
                 There is no destination yet
               </div>
             </div>

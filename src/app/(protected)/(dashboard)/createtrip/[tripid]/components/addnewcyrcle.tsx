@@ -110,8 +110,8 @@ useEffect(() => {
     <Dialog >
 
         <DialogTrigger onClick={handleCircleClick} style={{  marginLeft: props.withcurveline ? '0px' :  '10px'   ,gridRow :`${props.withcurveline ?positiongrid[props.index].gridRow : 2}` ,borderRadius : "50%" ,gridColumn : `${props.withcurveline ? props.index + 2 : 2} `, display : "flex" , alignItems : "center", justifyItems : "center" , height : "100px" , width : "100px" , zIndex : 2 ,}} >
-               <div className='flex items-center relative justify-center  rounded-[50%] w-[100px] h-[100px] z-50 bg-slate-700 cursor-pointer'>
-                   <MdAddLocationAlt style={{fontSize : "30px" , fontWeight : "bolder"}}/>
+               <div className='flex items-center relative justify-center  rounded-[50%] w-[100px] h-[100px] z-50 bg-[#1A1A4F] cursor-pointer'>
+                   <MdAddLocationAlt color='grey' style={{fontSize : "30px" , fontWeight : "bolder"}}/>
           
 
                </div>
@@ -155,8 +155,8 @@ useEffect(() => {
 
           <Tabs defaultValue="account" className="  343:w-full ">
               <TabsList className="grid  grid-cols-2 w-full   ">
-                   <TabsTrigger value="account">Place cyrcle </TabsTrigger>
-                   <TabsTrigger value="password">Moving cyrcle</TabsTrigger>
+                   <TabsTrigger value="account">Place circle </TabsTrigger>
+                   <TabsTrigger value="password">Moving circle</TabsTrigger>
               </TabsList>
               <TabsContent value="account" className='px-5  w-full'>
                  <Createplaceform index={props.index} tripId={props.tripId} minDate={props.minDate}    onSubmitSuccess={handleTransportAdded}  />

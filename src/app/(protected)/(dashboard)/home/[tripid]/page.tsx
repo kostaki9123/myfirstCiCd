@@ -55,7 +55,7 @@ const dateRange = formatDateRange(points);
 const route = formatRoute(points);
 
   return (
-    <div className=" absolute top-0 inset-0 flex items-start justify-start overflow-x-hidden 535:overflow-x-auto  bg-[#010038] "> 
+    <div className=" absolute top-0 inset-0 flex items-start justify-start overflow-x-hidden 535:overflow-x-auto bg-[#010038] "> 
       <div className="relative   flex items-start justify-start   h-full w-full">   
         <div className=" flex 535:flex-col flex-col 535:mt-0 relative  w-9   max-w-[200px]  535:max-w-content   justify-start items-start   gap-2 min-w-max p-6  ">
              <div className=" absolute left-[-9px] top-0   pl-4 h-full ">
@@ -65,7 +65,7 @@ const route = formatRoute(points);
             {/* Trip Overview */}
             <div className="flex w-full gap-12 ">
          
-               <Card className=" w-[80%] xxs:w-full  p-2 535:max-w-[370px]  ">
+               <Card className=" w-[80%] xxs:w-full p-2 535:max-w-[370px] bg-white/10 border-none text-white  ">
                   <CardHeader className=" p-3"> 
                     <CardTitle >Trip Summary 🌍</CardTitle>
                   </CardHeader>
@@ -87,12 +87,12 @@ const route = formatRoute(points);
             <Link href={`/createtrip/${tripid}`}>
               <div
                 className="group  w-[80%] xxs:w-full 535:max-w-[370px] flex flex-col items-center justify-center rounded-2xl 
-                bg-white p-8 shadow-md transition hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+                bg-white/10  border-none text-white  p-8 shadow-md transition hover:shadow-lg hover:-translate-y-1 cursor-pointer"
                 aria-label="Start planning your trip"
               >
-                <MdAddLocationAlt className="text-5xl text-blue-600 transition-transform group-hover:scale-110" />
+                <MdAddLocationAlt className="text-5xl text-white transition-transform group-hover:scale-110" />
           
-                <span className="mt-2 text-base font-semibold text-gray-700 group-hover:text-blue-600">
+                <span className="mt-2 text-base font-semibold text-white group-hover:text-white">
                   Plan Your Trip
                 </span>
           

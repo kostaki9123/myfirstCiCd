@@ -129,7 +129,7 @@ const icon = getTransportIcon(props.data.transportType);
     <Dialog >
        <div style={{ paddingBottom: `${props.withcurveline === false && '20px'}`, marginLeft: props.withcurveline    ? '0px' : positiongridphone[props.datalenght + 2 - props.index].pl,gridRow :`${props.withcurveline ?positiongrid[props.index].gridRow : props.datalenght + 2 - props.index}`  ,gridColumn : `${props.withcurveline ? props.index + 2 : positiongridphone[props.datalenght + 2 - props.index].gridColumn} `, display : "flex" , alignItems : "center", justifyItems : "center" , height : "100px" , width : "100px" , position: 'relative' }} >
            <DialogTrigger asChild>
-             <div className=' text-white cursor-pointer bg-[#2E305B] h-[100px] w-[100px] rounded-[50%] flex items-center justify-center gap-[3px] z-50 flex-col'>
+             <div className=' text-white cursor-pointer bg-[#1A1A4F] h-[100px] w-[100px] rounded-[50%] flex items-center justify-center gap-[3px] z-50 flex-col'>
                   <div className=' text-xl ' >
                     {icon}
                   </div>

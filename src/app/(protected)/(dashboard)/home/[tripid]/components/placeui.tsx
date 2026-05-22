@@ -53,14 +53,14 @@ data = (await getPlaces(props.id!)).sort((a, b) => {
 });
 
   return (
-    <div className="relative min-h-32 flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
+    <div className=" relative min-h-32 flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
                <div className="lg:absolute top-1 mt-1 lg:mt-0 left-[-6px] px-3 py-1.5 rounded-md
-                bg-gray-700 text-white text-[11px] shadow-lg flex items-center gap-1">
+                bg-gray-700 text-[11px] shadow-lg flex items-center gap-1">
                    <div className="uppercase tracking-wide text-gray-200">{start.split(' ')[0]}</div>
-                   <div className="font-semibold">{start.split(' ')[1]}</div>
-                   <span>-</span>
+                   <div className="font-semibold text-gray-200">{start.split(' ')[1]}</div>
+                   <span className='text-gray-200'>-</span>
                    <div className="uppercase tracking-wide text-gray-200">{end.split(' ')[0]}</div>
-                   <div className="font-semibold">{end.split(' ')[1]}</div>
+                   <div className="font-semibold text-gray-200">{end.split(' ')[1]}</div>
                 </div>
 
                 <div  className="relative pl-10 text-white w-40   ">

@@ -124,7 +124,7 @@ export default function PlaceToVisitCard(props: Props) {
     <Accordion
       type="single"
       collapsible
-      className="w-full bg-gray-400 rounded-md"
+      className="w-full bg-white/5 rounded-md"
       onValueChange={(v) => !v && resetState()}
     >
       <AccordionItem value="item-1">
@@ -163,21 +163,22 @@ export default function PlaceToVisitCard(props: Props) {
               {props.name}
               <ChevronDown className="h-4 w-4 text-neutral-500" />
             </div>
-             <div className=" text-sm text-black no-underline! [text-decoration:none] " >     
+             <div className=" text-sm text-gray no-underline! [text-decoration:none] " >     
              {props.visitDate
                 ? new Date(props.visitDate).toLocaleDateString("en-GB", {
                     month: "2-digit",
                     day: "2-digit",
                   })
-                : "No date"}
+                :"N/A"}
              </div>
-              <div className=" text-sm text-black no-underline! [text-decoration:none] " >     
+             <>-</>
+            <div className=" text-sm text-white no-underline! [text-decoration:none] " >     
             {props.visitTime
                ? new Date(props.visitTime).toLocaleTimeString("en-GB", {
                    hour: "2-digit",
                    minute: "2-digit",
                  })
-               : "No time"}
+               :"N/A"}
              </div>
           </div>
           <Deleteplacebtn placeId={props.id} pointId={props.pointId} />
@@ -189,7 +190,7 @@ export default function PlaceToVisitCard(props: Props) {
             {/* DATE */}
             <div className="grid grid-cols-2 gap-3" >
               <div>
-                  <label className="text-xs text-gray-700">Visit date</label>
+                  <label className="text-xs text-white">Visit date</label>
                   <AbleDatesDropdown
                     value={visitDate}
                     startDate={props.ablestayFrom ?? ""}
@@ -201,10 +202,10 @@ export default function PlaceToVisitCard(props: Props) {
                   />
               </div>
               <div>
-                  <label className="text-xs text-gray-700">Visit Time</label>
+                  <label className="text-xs text-white">Visit Time</label>
                   <TimeSlotsDropdown
-                   startTime="00:00"
-                   endTime="23:45"
+                   startTime="07:45"
+                   endTime="08:00"
                    stepMinutes={15}
                    value={visitTime}
                    onChange={(v) => {
@@ -221,13 +222,13 @@ export default function PlaceToVisitCard(props: Props) {
             {/* CHECK-IN / CHECK-OUT */}
                <div className="grid grid-cols-2 gap-3">
                    <div className="flex flex-col">
-                        <label className="text-xs text-gray-700  ">Cost</label>
+                        <label className="text-xs text-white  ">Cost</label>
                       <AddExpenseDialog connectedToId={props.internalId} budgedId={props.budgetid} fromAllExpenses={true}  fromItinerary/> 
                      
                    </div>
 
                    <div className="flex flex-col">
-                        <label className="text-xs text-gray-700">Payment Status</label>
+                        <label className="text-xs text-white">Payment Status</label>
                         <PayStatusDropdown
                           value={paymentStatus}
                           onChange={(v) => {

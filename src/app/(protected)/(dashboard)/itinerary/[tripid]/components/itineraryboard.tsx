@@ -142,7 +142,7 @@ useEffect(() => {
 
     return (
       <div className="h-fit w-full p-3">
-        <div className="w-full rounded-md p-2 bg-[#ACA7CB] min-w-[260px] relative">
+        <div className="w-full rounded-md p-2 bg-white/10 text-white min-w-[260px] relative">
 
           {/* HEADER */}
           <div className="flex justify-center mb-2 relative">
@@ -183,7 +183,7 @@ useEffect(() => {
           {/* ACCOMMODATION */}
           <div className="flex flex-col items-center p-2  450:mt-0 pt-7 relative gap-2 ">
 
-            <small className="absolute left-2 top-2 font-semibold">
+            <small className="absolute left-2 top-2 text-white font-semibold">
               Accommodation
             </small>
 
@@ -228,7 +228,7 @@ useEffect(() => {
 
           {/* PLACES TO VISIT */}
           <div className="flex flex-col items-center p-2 pt-7 relative gap-2">
-            <small className="absolute left-2 top-2 font-semibold">
+            <small className="absolute left-2 top-2 text-white font-semibold">
               Places to Visit
             </small>
 

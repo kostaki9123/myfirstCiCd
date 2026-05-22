@@ -68,13 +68,13 @@ const Setbudgetamount = ({
     
 
   return (
-    <div className="bg-[#ACA7CB] rounded-md p-2 relative base:row-start-2 base:row-end-3 base:col-start-1 base:col-end-2 535:row-start-1 535:row-end-2 535:col-start-2 535:col-end-3 986:row-start-1 986:row-end-5 986:col-start-2 986:col-end-3 lg:col-start-2 lg:787:col-end-3 xl:col-start-4 xl:col-end-5">
-      <h4 className="text-xl font-semibold tracking-tight">Budget</h4>
+    <div className="bg-white/10 text-white rounded-md p-2 relative base:row-start-2 base:row-end-3 base:col-start-1 base:col-end-2 535:row-start-1 535:row-end-2 535:col-start-2 535:col-end-3 986:row-start-1 986:row-end-5 986:col-start-2 986:col-end-3 lg:col-start-2 lg:787:col-end-3 xl:col-start-4 xl:col-end-5">
+      <h4 className="text-xl  font-semibold tracking-tight">Budget</h4>
 
       {/* -------- BEFORE (no budget) -------- */}
       {!isEditing && !savedBudget && (
-        <div className="absolute inset-x-2 bottom-2 top-11 flex items-center justify-center">
-          <Button onClick={() => setIsEditing(true)}>Set budget</Button>
+        <div className="absolute inset-x-2 bottom-2 top-11  flex items-center justify-center">
+          <Button className="bg-white/10 hover:bg-white/5" onClick={() => setIsEditing(true)}>Set budget</Button>
         </div>
       )}
 
@@ -84,7 +84,7 @@ const Setbudgetamount = ({
           <p className="text-lg font-medium">
             {savedBudget.currency} {savedBudget.amount}{currencysymbol?.[0].symbol}
           </p>
-          <Button variant="outline" onClick={() => setIsEditing(true)}>
+          <Button variant="outline" className="bg-white/10 hover:bg-white/5" onClick={() => setIsEditing(true)}>
             Edit
           </Button>
         </div>

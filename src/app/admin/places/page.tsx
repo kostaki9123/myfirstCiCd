@@ -146,7 +146,7 @@ const filtered = places.filter((p) => {
                   </td>
 
                   {/* PLACE ID */}
-                  <td className="p-3 text-xs text-gray-400 font-mono">
+                  <td className="p-3 text-xs text-gray-400 font-mono max-w-[150px] overflow-hidden">
                     {p.place_id}
                   </td>
 

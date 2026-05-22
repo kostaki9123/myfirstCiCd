@@ -86,7 +86,7 @@ const NotesBox = ({
           onClick={() => setMode("edit")}
           className={`flex items-center justify-center gap-2 w-full ${
             fromItinerary ? "max-w-[202px]" : "max-w-[152px]"
-          } bg-white border rounded-lg py-2 text-[14px] text-gray-700 hover:bg-gray-100 active:scale-95 transition shadow-sm`}
+          } bg-white rounded-lg py-2 text-[14px]  bg-white/10 hover:bg-white/5 active:scale-95 transition shadow-sm`}
         >
           <FaNoteSticky className="text-lg text-blue-600" /> Add notes
         </button>
@@ -103,10 +103,10 @@ const NotesBox = ({
           <div
             onClick={() => setMode("edit")}
             className="
-              bg-[#f5f7fa] border border-gray-300 rounded
-              p-2 text-sm text-gray-700
+              bg-white/10 rounded
+              p-2 text-sm text-white
               whitespace-pre-wrap break-words shadow-sm
-              hover:bg-gray-200 transition cursor-pointer
+              transition cursor-pointer
             "
           >
             {clientNotes}
@@ -135,9 +135,8 @@ const NotesBox = ({
             className={`
               w-full min-h-[20px] max-h-[200px] p-2
               ${fromItinerary ? "rounded-lg" : "rounded"}
-              bg-[#f5f7fa] text-sm text-gray-800
-              border border-gray-300
-              focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+              bg-white/10 text-sm text-white            
+              focus:ring-1 
               outline-none resize-none overflow-hidden
               transition-all shadow-sm mt-1
             `}

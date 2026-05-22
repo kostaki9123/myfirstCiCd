@@ -27,7 +27,7 @@ const page = async ({
   return (
     
    
-    <div className='  bg-white min-w-[364px]  gap-[30px] p-[30px] grid  base:min-w-[300px] base:h-[1500px] base:grid-rows-5 base:grid-cols-1                  535:h-[1000px] 535:grid-rows-3 535:grid-cols-2     986:h-full 986:grid-rows-8 986:grid-cols-3        xl:min-w-[1020px] lg:grid-cols-3 xl:grid-cols-4  '>
+    <div className=' bg-[#010038] text-white min-w-[364px]  gap-[30px] p-[30px] grid  base:min-w-[300px] base:h-[1500px] base:grid-rows-5 base:grid-cols-1                  535:h-[1000px] 535:grid-rows-3 535:grid-cols-2     986:h-full 986:grid-rows-8 986:grid-cols-3        xl:min-w-[1020px] lg:grid-cols-3 xl:grid-cols-4  '>
       {/** Display amount component */}
       <Amounts budgetId={budget.id!}  genCur={budget.genCurrency} budgetAmount={budget.budgetAmount} budgetCurrency={budget.budgetCurrency}/>
 

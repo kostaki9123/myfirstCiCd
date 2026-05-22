@@ -167,6 +167,9 @@ const LocationInput = ({
       setErrorMessagesForCustomAdd({});
 
       const formData = new FormData();
+
+      console.log(inputLocation)
+
       formData.append("id", inputLocation.place_id);
       formData.append("pointId", selectedPlace.id);
 

@@ -52,16 +52,16 @@ const CurrencyDropdown = ({
   return (
     <div ref={dropdownRef} className="relative ">
       <DropdownMenu open={open} onOpenChange={setOpen}>
-        <DropdownMenuTrigger className={`  pl-1 rounded-md ${fromAllExpenses &&' border-none'} ${fromSetBudget && 'border-none'} ${fromGeneralCurrency ? 'border-2  border-black' : 'border-input border' }  flex items-center justify-between w-full h-9 text-sm`}>
+        <DropdownMenuTrigger className={`    pl-1 rounded-md ${fromAllExpenses &&' border-none'} ${fromSetBudget && 'border-none'} ${fromGeneralCurrency ? 'bg-white/10 hover:bg-white/5' : 'border-input border' }  flex items-center justify-between w-full h-9 text-sm`}>
           <span>{value || 'None' }</span>
           <RiArrowDropDownLine fontSize="20px" />
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent className="w-56 max-h-60 z-[69] overflow-auto rounded-md bg-white border shadow-md">
+        <DropdownMenuContent className="w-56 max-h-60 z-[69] text-black overflow-auto rounded-md bg-white  border shadow-md">
           {CURRENCIES.map(({ code, name }) => (
             <DropdownMenuItem
               key={code}
-              className=" flex justify-start items-center h-8 text-sm cursor-pointer px-2 hover:bg-slate-200"
+              className=" flex justify-start items-center h-8  text-sm cursor-pointer px-2 hover:bg-slate-200"
               onClick={() => handleSelect(code)}
             >
               {code} — {name}

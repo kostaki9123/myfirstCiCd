@@ -74,8 +74,8 @@ const TripBudgetCard = ({ pointsArr }: Props) => {
   }))
 
   return (
-    <div className="bg-[#ACA7CB] relative p-2 rounded-md base:row-start-4 base:row-end-5 base:col-start-1 base:col-end-2 535:row-start-3 535:row-end-4 535:col-start-1 535:col-end-2   787:row-start-3 787:row-end-4 787:col-start-1 787:col-end-2 986:row-start-1 986:row-end-5 986:col-start-3 986:col-end-4  xl:row-start-5 xl:row-end-9 xl:col-start-3 xl:col-end-4  ">
-      <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+    <div className="bg-white/10 relative p-2 rounded-md text-white base:row-start-4 base:row-end-5 base:col-start-1 base:col-end-2 535:row-start-3 535:row-end-4 535:col-start-1 535:col-end-2   787:row-start-3 787:row-end-4 787:col-start-1 787:col-end-2 986:row-start-1 986:row-end-5 986:col-start-3 986:col-end-4  xl:row-start-5 xl:row-end-9 xl:col-start-3 xl:col-end-4  ">
+      <h4 className="scroll-m-20 text-xl  font-semibold tracking-tight">
         Avg Daily Budget
       </h4>
       {activeCountryCode ?
@@ -103,17 +103,17 @@ const TripBudgetCard = ({ pointsArr }: Props) => {
           <div className="mt-4 space-y-3 text-sm px-5 flex flex-col gap-3 986:gap-0 ">
             <div className="flex justify-between">
               <span>💸 Budget traveler</span>
-              <span>€ {profile.budget} / day</span>
+              <span>€ {profile.Economy} / day</span>
             </div>
 
             <div className="flex justify-between">
-              <span>💼 Mid-range traveler</span>
-              <span>€ {profile.mid} / day</span>
+              <span>💼 Balancedtraveler</span>
+              <span>€ {profile.Balanced} / day</span>
             </div>
 
             <div className="flex justify-between">
               <span>💎 Luxury traveler</span>
-              <span>€ {profile.luxury} / day</span>
+              <span>€ {profile.Luxury} / day</span>
             </div>
           </div>
         </div>

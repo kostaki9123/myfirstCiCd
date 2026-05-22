@@ -65,7 +65,7 @@ const Accomodationplace = (props: props) => {
         Accomodation
       </h2>
 
-      <Card className="w-72 426:w-auto relative h-fit p-2 535:max-w-[370px] max-w-[350px]">
+      <Card className="bg-white/10 border-none text-white w-72 426:w-auto relative h-fit p-2 535:max-w-[370px] max-w-[350px]">
         <CardHeader className="flex flex-row gap-2 p-3">
           {/* LEFT */}
           <div className="flex items-start gap-2">
@@ -94,7 +94,7 @@ const Accomodationplace = (props: props) => {
           {/* RIGHT */}
           <Link
             href={`/itinerary/${props.tripId}?point=${props.pointId}`}
-            className="text-xs max-h-7 px-2 py-1 rounded-md border absolute top-2 right-2 border-blue-200 text-blue-700 hover:bg-blue-50 transition"
+            className="text-xs max-h-7 px-2 py-1 rounded-md  absolute top-2 right-2 bg-white/10 hover:bg-white/5  text-white hover:bg-blue-50 transition"
           >
             Edit
           </Link>

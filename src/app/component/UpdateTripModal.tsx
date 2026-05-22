@@ -137,7 +137,7 @@ const UpdateTripModal = ({ tripId, initialName, initialBudget, initialTravelingW
                 <div>
                   <Label>Trip Types (max 3)</Label>
                   <div className="flex flex-wrap gap-2 mt-2">
-                    {["Adventures", "Cultural Enthusiasts", "Natural lovers", "Nightlife", "Festival", "Sports Enthusiast", "Events"].map((type) => (
+                    {["Adventures", "Cultural Enthusiast", "Natural lovers", "Nightlife", "Festival", "Sports Enthusiast", "Events"].map((type) => (
                       <div key={type} className="flex items-center gap-1">
                         <Checkbox
                           id={type}

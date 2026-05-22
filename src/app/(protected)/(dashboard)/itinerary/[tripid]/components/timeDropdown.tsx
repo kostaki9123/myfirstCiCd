@@ -83,7 +83,7 @@ const handleSelect = (time: string) => {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="w-full max-w-[202px] justify-between rounded-xl"
+          className="w-full max-w-[202px] justify-between text-white bg-white/10 hover:bg-white/5 hover:text-white "
         >
           {selectedLabel || 'Select time'}
           <ChevronsUpDownIcon className="h-4 w-4 opacity-60" />

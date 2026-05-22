@@ -55,7 +55,7 @@ export default function PayStatusDropdown({ value, onChange }: Props) {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="w-full max-w-[202px] justify-between rounded-xl"
+          className="w-full max-w-[202px] bg-white/10 text-white hover:bg-white/5 hover:text-white justify-between rounded-xl"
         >
           <div className="flex items-center gap-2">
             {selected && (

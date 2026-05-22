@@ -128,14 +128,14 @@
       <Accordion
         type="single"
         collapsible
-        className="w-full bg-gray-400 rounded-md"
+        className="w-full bg-white/5 rounded-md"
         onValueChange={(v) => {
           if (!v) resetState();
         }}
       >
         <AccordionItem value="item-1">
           {/* ---------------- HEADER ---------------- */}
-          <AccordionTrigger className="relative">
+          <AccordionTrigger className="relative ">
             <div className="flex items-center gap-2 pl-1">
               
               <div className="w-8 h-10">
@@ -171,19 +171,20 @@
                 {props.name}
                 <ChevronDown className="h-4 w-4 text-neutral-500" />
               </div>
-               <div className=" text-sm text-black no-underline! [text-decoration:none] " >     
+               <div className=" text-sm text-gray no-underline! [text-decoration:none] " >     
                  {props.stayFrom
                     ? new Date(props.stayFrom).toLocaleDateString("en-GB", {
                         month: "2-digit",
                         day: "2-digit",
                       })
-                    : "No date"} - 
+                    : "N/A"}
+                   <> - </>
                   {props.stayUntil
                     ? new Date(props.stayUntil).toLocaleDateString("en-GB", {
                         month: "2-digit",
                         day: "2-digit",
                       })
-                    : "No date"} 
+                    :  "N/A"} 
                 </div>
 
             </div>
@@ -191,12 +192,12 @@
           </AccordionTrigger>
 
           {/* ---------------- CONTENT ---------------- */}
-          <AccordionContent className="pb-4">
+          <AccordionContent className="pb-4 " >
             <div className="p-4 flex flex-col gap-4 max-w-[500px]">
               {/* CHECK-IN / CHECK-OUT */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="flex flex-col">
-                  <label className="text-xs text-gray-700">Check In</label>
+                  <label className="text-xs text-white">Check In</label>
                   <AbleDatesDropdown
                     value={checkIn}
                     startDate={props.ablestayFrom ?? ""}
@@ -209,7 +210,7 @@
                 </div>
 
                 <div className="flex flex-col">
-                  <label className="text-xs text-gray-700">Check Out</label>
+                  <label className="text-xs text-white">Check Out</label>
                   <AbleDatesDropdown
                     value={checkOut}
                     startDate={props.ablestayFrom ?? ""}
@@ -227,11 +228,11 @@
               {/* CHECK-IN / CHECK-OUT */}
                 <div className="grid grid-cols-2 gap-3">
                   <div className="flex flex-col ">
-                      <label className="text-xs text-gray-700  ">Cost</label>
+                      <label className="text-xs text-white ">Cost</label>
                       <AddExpenseDialog connectedToId={props.internalId} budgedId={props.budgetid} fromAllExpenses={true} fromItinerary/>             
                   </div>
                   <div className="flex flex-col">
-                      <label className="text-xs text-gray-700">Payment Status</label>
+                      <label className="text-xs text-white">Payment Status</label>
                       <PayStatusDropdown
                         value={paymentStatus}
                         onChange={(v) => {
@@ -248,7 +249,7 @@
 
               {/* NOTES */}
               <div className="flex flex-col">
-                <label className="text-xs text-gray-700">Notes</label>
+                <label className="text-xs text-white">Notes</label>
                 <NotesBox
                   placeholder="Check-in instructions, Wi-Fi, host contact…"
                   value={notes}

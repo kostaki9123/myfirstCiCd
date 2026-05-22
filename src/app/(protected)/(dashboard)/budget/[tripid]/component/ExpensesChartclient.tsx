@@ -15,15 +15,15 @@ const ExpensesChartClient = ({ labels, data }: Props) => {
   if (!hasData) {
     return (
       <div
-        className="border-2 border-dashed border-purple-300 xl:flex hidden
+        className="bg-white/10 xl:flex hidden
         items-center justify-center rounded-md p-6 text-center
-        bg-gray-50
+      
         base:row-start-3 base:row-end-4 base:col-start-1 base:col-end-2
         535:row-start-2 535:row-end-3 535:col-start-1 535:col-end-3
         986:row-start-1 986:row-end-5 986:col-start-2 986:col-end-4"
       >
         <div className="flex flex-col items-center gap-3 text-gray-500">
-          <BarChart3 className="w-10 h-10 text-purple-400" />
+          <BarChart3 className="w-10 h-10 text-blue-600" />
           <p className="text-sm font-medium">
             No expenses yet
           </p>
@@ -66,7 +66,7 @@ const ExpensesChartClient = ({ labels, data }: Props) => {
 
   return (
     <div
-      className="border-2 border-purple-400 xl:flex hidden items-center rounded-md justify-center p-2
+      className="xl:flex hidden items-center rounded-md justify-center p-2
       base:row-start-3 base:row-end-4 base:col-start-1 base:col-end-2
       535:row-start-2 535:row-end-3 535:col-start-1 535:col-end-3
       986:row-start-1 986:row-end-5 986:col-start-2 986:col-end-4"

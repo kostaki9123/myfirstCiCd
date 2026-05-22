@@ -19,8 +19,8 @@ const Actionsmenu = (props : props) => {
   return (
 
     <DropdownMenu >
-        <DropdownMenuTrigger asChild className=' cursor-pointer h-full w-full text-sm'>
-             <HiDotsHorizontal className=' text-xl z-10'/>
+        <DropdownMenuTrigger asChild className=' cursor-pointer bg-white/10 rounded-md p-1  text-sm'>
+             <HiDotsHorizontal className=' text-xl z-10 '/>
         </DropdownMenuTrigger>
         <Dropdowncontent tripId={props.tripId} pointIndex={props.pointIndex} pointId={props.pointId} pointslength={props.pointslength} />
     </DropdownMenu>

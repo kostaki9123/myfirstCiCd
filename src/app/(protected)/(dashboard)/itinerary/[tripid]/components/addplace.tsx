@@ -316,7 +316,7 @@ const Addaplace = (props: Props) => {
 
           fetchPlaces();
         }}
-        className="bg-gray-400 rounded-md min-w-[260px] h-10 flex items-center justify-center w-full gap-7 p-5 cursor-pointer"
+        className="bg-white/10 hover:bg-white/5 rounded-md min-w-[260px] h-10 flex items-center justify-center w-full gap-7 p-5 cursor-pointer"
       >
         <BsHouseAddFill fontSize="20px" />
 

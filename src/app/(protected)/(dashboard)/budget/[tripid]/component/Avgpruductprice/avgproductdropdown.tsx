@@ -51,7 +51,7 @@ const Avgproductdropdown = ({ setSelectedCountry, arrayOfCountries, selectedCoun
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
-          className='w-20 h-auto max-h-44 rounded-md bg-white z-[68] overflow-hidden border shadow-md
+          className='w-20 h-auto max-h-44 rounded-md bg-white  z-[68] overflow-hidden border shadow-md
                      data-[state=open]:animate-in data-[state=closed]:animate-out
                      data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
                      data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95
@@ -63,8 +63,8 @@ const Avgproductdropdown = ({ setSelectedCountry, arrayOfCountries, selectedCoun
           {arrayOfCountries.map((country, index) => (
             <DropdownMenuItem
               key={index}
-              className='h-7 flex text-base cursor-pointer justify-center items-center select-none outline-none transition-colors
-                         focus:bg-accent focus:text-accent-foreground
+              className='h-7 flex text-base hover:bg-slate-200 hover:border-2 hover:border-white/10 cursor-pointer justify-center items-center select-none outline-none transition-colors
+                         focus:text-accent-foreground
                          data-[disabled]:pointer-events-none data-[disabled]:opacity-50'
               onClick={() => {
                 setSelectedCountry(country.code)
