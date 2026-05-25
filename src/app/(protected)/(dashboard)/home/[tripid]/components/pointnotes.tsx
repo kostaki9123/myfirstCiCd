@@ -106,7 +106,7 @@ const Pointnotes = (props:props) => {
       {isDirty && (
           <div className="flex justify-end gap-2 items-center">
             {error && <p className="text-sm text-red-500">{error}</p>}
-            <Button onClick={handleSave}>Save</Button>
+            <Button className='border border-white/10 bg-white/5 text-white/85 hover:bg-white/10 h-10 px-4 rounded-xl font-medium text-sm transition-all duration-200 active:scale-[0.98]' onClick={handleSave}>Save</Button>
           </div>
       )}
   </> 

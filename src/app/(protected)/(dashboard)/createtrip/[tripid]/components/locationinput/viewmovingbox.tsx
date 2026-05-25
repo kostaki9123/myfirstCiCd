@@ -159,7 +159,7 @@ const ViewMovingBoxModal = ({ data }: Props) => {
   // Render
   // -----------------------------
   return (
-    <div className="flex flex-col gap-6 overflow-y-auto p-2">
+    <div className="flex flex-col gap-6 overflow-y-auto p-2 text-white/90">
       <div className="grid grid-cols-1 820:grid-cols-2 gap-4">
 
         {/* From */}
@@ -233,7 +233,10 @@ const ViewMovingBoxModal = ({ data }: Props) => {
 
       {/* Save */}
       <div className="w-full flex items-end justify-end">
-        <Button onClick={handleSave}>Save</Button>
+        <Button onClick={handleSave}              
+         className='bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg shadow-blue-950/40 px-4 py-2 rounded-xl font-medium transition-all duration-200 active:scale-[0.98]'
+         >Save
+         </Button>
       </div>
     </div>
   );

@@ -263,7 +263,8 @@ export default function PlaceToVisitCard(props: Props) {
                      target="_blank"
                      rel="noopener noreferrer"
                    >
-                     <Button className="w-full">
+                     <Button className="bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg
+                 shadow-blue-950/40 px-4 py-2 rounded-xl font-medium transition-all duration-200 active:scale-[0.98] w-full">
                        Book Here
                        <RiExternalLinkLine className=' text-lg'/>
                      </Button>
@@ -274,7 +275,8 @@ export default function PlaceToVisitCard(props: Props) {
             {isDirty && (
               <div className="flex justify-end gap-2 items-center">
                 {error && <p className="text-sm text-red-500">{error}</p>}
-                <Button onClick={handleSave}>Save</Button>
+                <Button className="bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg
+                 shadow-blue-950/40 px-4 py-2 rounded-xl font-medium transition-all duration-200 active:scale-[0.98]" onClick={handleSave}>Save</Button>
               </div>
             )}
           </div>

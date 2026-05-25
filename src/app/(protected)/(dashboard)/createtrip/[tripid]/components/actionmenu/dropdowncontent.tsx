@@ -44,7 +44,7 @@ const Dropdowncontent = ({ pointId, tripId, pointIndex, pointslength }: props) =
   return (
     <Dialog>
         <DropdownMenuContent className="w-56  rounded-md">
-              <DropdownMenuLabel className=' w-[240px] py-[6px] pr-4 text-center'>Actions List</DropdownMenuLabel>
+              <DropdownMenuLabel className=' w-[240px] py-[6px]  text-start'>Actions List</DropdownMenuLabel>
              
               <DropdownMenuGroup>
                  <DialogTrigger>       
@@ -64,7 +64,7 @@ const Dropdowncontent = ({ pointId, tripId, pointIndex, pointslength }: props) =
   <DialogContent className='  z-[52]    sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-4 '>
         <form onSubmit={handleMove} className="space-y-4" >
         
-              <DialogTitle>
+              <DialogTitle >
                 Move cyrcle
               </DialogTitle>
             

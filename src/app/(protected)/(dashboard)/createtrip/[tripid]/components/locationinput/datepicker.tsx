@@ -59,7 +59,8 @@ export default function DateRangePicker({
   };
 
   const inputClass =
-    `border relative focus:border-black focus:outline-none px-3  text-sm placeholder-gray-500  ${fromItinerary ? 'w-full rounded-lg h-[37px] sm:h-[37px] ' : '343:w-60 w-auto rounded h-[40px] sm:h-[44px]' }  `;
+    `text-white bg-transparent focus:outline-none
+   focus:ring-white placeholder:text-white/60  hover:text-white border relative  focus:outline-none px-3  text-sm placeholder-gray-500  ${fromItinerary ? 'w-full rounded-lg h-[37px] sm:h-[37px] ' : '343:w-60 w-auto rounded h-[40px] sm:h-[44px]' }  `;
 
   return (
     <div className={`flex flex-col ${fromItinerary ? "w-full" : "w-auto"}`}>

@@ -148,9 +148,9 @@ const Createmovingboxform = (props : props) => {
         setIsLoading(true);
         await onSubmit();
       }}
-      className="w-full m-1"
+      className="w-full m-1 text-white/90"
     >
-      <p className="leading-7  [&:not(:first-child)]:mt-6 text-gray-600 text-xs md:text-sm pb-1 450:whitespace-nowrap ">
+      <p className="leading-7  [&:not(:first-child)]:mt-6 text-white/60 text-xs md:text-sm pb-1 450:whitespace-nowrap ">
         The moving box represents your journey between places.
       </p>
 
@@ -208,7 +208,9 @@ const Createmovingboxform = (props : props) => {
 
       {/* SUBMIT BUTTON */}
       <div className="h-10 flex justify-center items-end ">
-        <Button type="submit" disabled={isLoading} className="ml-4">
+        <Button type="submit" disabled={isLoading}       
+           className='bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg ml-4 shadow-blue-950/40 px-4 py-2 rounded-xl font-medium transition-all duration-200 active:scale-[0.98]'
+>
           {isLoading ? "Creating..." : "Create moving circle"}
         </Button>
       </div>

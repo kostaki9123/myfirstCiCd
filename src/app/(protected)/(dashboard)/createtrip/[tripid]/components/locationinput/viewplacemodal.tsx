@@ -27,13 +27,16 @@ type Props = {
 
 const ActionRow = ({ href, label }: { href: string; label: string }) => (
   <Link href={href} className="w-full">
-    <div className="w-full flex items-center gap-3 bg-gray-100 rounded-md p-2 hover:bg-gray-200 cursor-pointer group">
-      <div className="w-12 h-12 flex items-center justify-center rounded-md text-gray-700">
-        <IoMdAdd size={20} />
-      </div>
-      <p className="font-medium text-gray-600 group-hover:text-gray-800">
-        {label}
-      </p>
+    <div className="w-full  bg-white/10
+            rounded-md p-2  cursor-pointer group  ">
+       <div className="text-white/70 hover:text-white flex items-center gap-3 ">    
+          <div className="w-12 h-12 flex items-center justify-center rounded-md ">
+            <IoMdAdd size={20} />
+          </div>
+          <p className="font-medium  ">
+            {label}
+          </p>
+      </div>   
     </div>
   </Link>
 );
@@ -93,24 +96,24 @@ const ViewPlaceModal = ({ pointId , tripId }: Props) => {
 
 if (loading) {
   return (
-    <div className="pl-0 flex flex-col 820:flex-row gap-6 w-full p-4">
+    <div className="pl-0 flex flex-col 820:flex-row gap-6 w-full p-4 overflow-hidden">
       {[1, 2].map((i) => (
         <div
           key={i}
-          className="w-full sm:w-[250px] min-h-[13rem] rounded-lg border-2 border-dashed border-gray-300 p-4 animate-pulse"
+          className="w-full sm:w-[250px] min-h-[13rem] rounded-lg   p-4 animate-pulse"
         >
-          <div className="h-4 bg-gray-300 rounded w-1/2 mx-auto mb-4" />
+          <div className="h-4 bg-white/10 rounded w-1/2 mx-auto mb-4" />
 
           <div className="space-y-3">
             {[1].map((j) => (
               <div
                 key={j}
-                className="flex items-center gap-3 bg-gray-200 rounded-md p-2"
+                className="flex items-center gap-3 bg-white/10 rounded-md p-2"
               >
-                <div className="w-12 h-12 bg-gray-300 rounded-md" />
+                <div className="w-12 h-12 bg-white/10rounded-md" />
                 <div className="flex-1 space-y-2">
-                  <div className="h-3 bg-gray-300 rounded w-3/4" />
-                  <div className="h-2 bg-gray-300 rounded w-1/2" />
+                  <div className="h-3 bg-white/10 rounded w-3/4" />
+                  <div className="h-2 bg-white/10 rounded w-1/2" />
                 </div>
               </div>
             ))}
@@ -125,7 +128,7 @@ if (loading) {
   return (
     <div className="pl-0 flex flex-col 820:flex-row gap-6 max-h-[375px] items-start justify-start w-full overflow-x-auto overflow-y-auto p-4 ">
       {/* ---------------- ACCOMMODATION ---------------- */}
-      <div className="flex-shrink-0 relative flex flex-col  overflow-auto gap-2 min-h-[13rem] w-full sm:w-[250px] rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 p-4">
+      <div className="flex-shrink-0 relative flex flex-col    overflow-auto gap-2 min-h-[13rem] w-full sm:w-[250px] rounded-lg p-4">
         <h4 className="text-base font-semibold text-center mb-2">
           Accommodation
         </h4>
@@ -139,15 +142,15 @@ if (loading) {
             <Link href={`/itinerary/${tripId}`}>
               <div
                 key={acc.id}
-                className="flex items-center gap-3 bg-gray-100 rounded-md p-2 hover:bg-gray-200"
+                className="flex items-center gap-3 bg-white/10  rounded-md p-2 "
               >
-                <div className="w-12 h-12 flex items-center justify-center rounded-md bg-gray-300">
+                <div className="w-12 h-12 flex items-center justify-center rounded-md ">
                   <MdHotel />
                 </div>
 
                 <div className="flex flex-col">
                   <div className="max-w-[141px]">
-                       <p className="font-medium text-gray-800 line-clamp-2">
+                       <p className="font-medium text-white/90 line-clamp-2">
                          {acc.name}
                        </p>
                   </div>
@@ -156,7 +159,7 @@ if (loading) {
                     {formatDate(acc.stayFrom)} → {formatDate(acc.stayUntil)}
                   </p>
                   {acc.notes && (
-                    <p className="text-xs text-gray-400 line-clamp-2">
+                    <p className="text-xs text-white/60 line-clamp-2">
                       {acc.notes}
                     </p>
                   )}
@@ -172,7 +175,7 @@ if (loading) {
       </div>
 
       {/* ---------------- PLACES ---------------- */}
-      <div className="flex-shrink-0 flex flex-col gap-2 overflow-auto min-h-[13rem] w-full sm:w-[250px] rounded-lg border-2 border-dashed border-gray-400 hover:border-gray-600 p-4">
+      <div className="flex-shrink-0 x flex flex-col gap-2 overflow-auto min-h-[13rem] w-full sm:w-[250px] rounded-lg  p-4">
         <h4 className="text-base font-semibold text-center mb-2">
           Places to visit
         </h4>
@@ -185,15 +188,15 @@ if (loading) {
             <Link href={`/itinerary/${tripId}`}>
               <div
                 key={place.id}
-                className="flex items-center gap-3 bg-gray-100 rounded-md p-2 hover:bg-gray-200"
+                className="flex items-center gap-3 bg-white/10  rounded-md p-2 "
               >
-                <div className="w-12 h-12 flex items-center justify-center rounded-md bg-gray-300">
+                <div className="w-12 h-12 flex items-center justify-center rounded-md text-white/60">
                   📍
                 </div>
 
                 <div className="flex flex-col">
                  <div className="max-w-[141px]">
-                    <p className="font-medium text-gray-800 line-clamp-2">
+                    <p className="font-medium text-white/90 line-clamp-2">
                       {place.name}
                     </p>
                  </div>

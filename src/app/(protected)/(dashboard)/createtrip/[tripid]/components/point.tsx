@@ -285,7 +285,8 @@ const Point =  (props:Props) => {
         </div>
 
 
-         <DialogContent  onOpenAutoFocus={(e) => e.preventDefault()} className="   z-[52] max-h-[500px] min-w-[262px] w-[90%] sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-3 rounded-xl">
+         <DialogContent  onOpenAutoFocus={(e) => e.preventDefault()} className="  bg-[#07124F]/95  border border-white/10
+              backdrop-blur-xl text-white z-[52] max-h-[500px] min-w-[262px] w-[90%] sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-3 rounded-xl">
             <DialogHeader className='flex justify-start  items-start'>
               <DialogTitle className=' text-xl w-[90%] '>
                   <PlaceSearchWrapper
@@ -324,7 +325,7 @@ const Point =  (props:Props) => {
                  
             {isDirty && (
             <div className="flex justify-end ">
-                <Button onClick={handleSave}>Save</Button>
+                <Button className='bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg shadow-blue-950/40 px-4 py-2 rounded-xl font-medium transition-all duration-200 active:scale-[0.98]' onClick={handleSave}>Save</Button>
             </div>
           )}
 

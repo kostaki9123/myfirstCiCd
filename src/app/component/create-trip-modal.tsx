@@ -15,7 +15,6 @@ import { z, ZodError } from 'zod';
 import { Checkbox } from '@/components/ui/checkbox';
 import { createTrip } from '../(protected)/action';
 import Budgetdropdown from './budgetdropdown';
-import { useUser } from '@clerk/nextjs';
 import { InputParseError } from '../../../backend/entities/errors/common';
 
 export const formSchema = z.object({
@@ -142,7 +141,17 @@ function onSubmit(
           + Create Trip    
       </DialogTrigger>
 
-       <DialogContent  className="    sm:max-h-[90%] w-full max-w-lg p-2 rounded-xl">
+       <DialogContent  className=" bg-[#07124F]/95
+    border border-white/10
+    backdrop-blur-xl
+
+    text-white
+    max-w-lg
+    rounded-2xl
+    p-6
+
+    shadow-2xl
+    shadow-black/40   sm:max-h-[90%] w-full ">
       
         <form
          onSubmit={async (e) => {
@@ -155,18 +164,18 @@ function onSubmit(
            setisLoading(false);
          }}
          >
-          <Card className=" w-full text-black">
+          <Card className=" w-full   bg-transparent shadow-none  border-none text-white ">
             <CardHeader>
-              <DialogTitle>
+              <DialogTitle className='text-white/90'>
                 Create trip
               </DialogTitle>
-              <DialogDescription>Plan the Perfect Trip with Us!</DialogDescription>
+              <DialogDescription className='text-white/70'>Plan the Perfect Trip with Us!</DialogDescription>
             </CardHeader>
             <CardContent>
               <div className="grid w-full items-center gap-4">
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="name" className="pb-2">Trip Name</Label>
-                  <Input id="name" name="tripName" placeholder="Name of your trip" maxLength={28} />
+                  <Input id="name" name="tripName" placeholder="Name of your trip" className=' placeholder:text-white/60' maxLength={28} />
                  {errorMessages.tripName && <p className="text-red-500 text-sm">{errorMessages.tripName}</p>}
                 </div>
               </div>
@@ -203,6 +212,7 @@ function onSubmit(
                         checked={selectedTypes.includes(type)}
                         onCheckedChange={() => handleCheckboxChange(type)}
                         disabled={isDisabled(type)}
+                        className='text-white'
                       />
                       <label
                         htmlFor={type}
@@ -222,6 +232,7 @@ function onSubmit(
                 disabled={
                 isLoading 
               }
+              className='bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg shadow-blue-950/40 px-4 py-2 rounded-xl font-medium transition-all duration-200 active:scale-[0.98]'
               >
                   {isLoading ? "Creating..." : "Create trip"}
               </Button>

@@ -42,7 +42,7 @@ export default function TransportDropdown({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="w-44 justify-between border-gray-300 text-gray-700 shadow-sm rounded-xl"
+          className="w-44 justify-between text-white bg-white/10 hover:bg-white/5 hover:text-white shadow-sm rounded-xl"
         >
           {selected ? (
             <span className="flex items-center gap-2">

@@ -94,19 +94,26 @@ const UpdateTripModal = ({ tripId, initialName, initialBudget, initialTravelingW
         ✏️
       </DialogTrigger>
 
-      <DialogContent className="sm:max-h-[90%] w-full max-w-lg p-2 rounded-xl">
+      <DialogContent className="  bg-[#07124F]/95
+    border border-white/10
+    backdrop-blur-xl
+    text-white
+    shadow-lg shadow-blue-950/40
+    px-4 py-2
+    rounded-xl
+    font-mediumsm:max-h-[90%] w-full max-w-lg p-2">
         <form onSubmit={onSubmit}>
-          <Card className="w-full text-black">
+          <Card className=" w-full   bg-transparent shadow-none  border-none text-white">
             <CardHeader>
-              <DialogTitle>Edit trip</DialogTitle>
-              <DialogDescription>Update your trip details</DialogDescription>
+              <DialogTitle className='text-white/90'>Edit trip</DialogTitle>
+              <DialogDescription className='text-white/70'>Update your trip details</DialogDescription>
             </CardHeader>
 
             <CardContent>
               <div className="flex flex-col space-y-4">
                 <div>
                   <Label>Trip Name</Label>
-                  <Input value={tripName} onChange={(e) => setTripName(e.target.value)} maxLength={28} />
+                  <Input value={tripName} onChange={(e) => setTripName(e.target.value)} maxLength={28} className=' placeholder:text-white/60'/>
                   {errorMessages.tripName && <p className="text-red-500 text-sm">{errorMessages.tripName}</p>}
                 </div>
 
@@ -159,7 +166,9 @@ const UpdateTripModal = ({ tripId, initialName, initialBudget, initialTravelingW
             </CardContent>
 
             <CardFooter className="flex justify-end">
-              <Button type="submit" disabled={isLoading}>
+              <Button type="submit" disabled={isLoading}   
+                className='bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg shadow-blue-950/40 px-4 py-2 rounded-xl font-medium transition-all duration-200 active:scale-[0.98]'
+                  >
                 {isLoading ? "Updating..." : "Update Trip"}
               </Button>
             </CardFooter>

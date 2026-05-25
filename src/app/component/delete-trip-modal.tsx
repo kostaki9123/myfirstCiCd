@@ -44,18 +44,24 @@ const DeleteAlertDialog = ({ tripId }: Props) => {
         </div>
       </AlertDialogTrigger>
 
-      <AlertDialogContent className="w-3/4 674:w-full">
+      <AlertDialogContent className="w-3/4 674:w-full  bg-[#07124F]">
         <AlertDialogHeader>
-          <AlertDialogTitle>Confirm delete</AlertDialogTitle>
-          <AlertDialogDescription>
+          <AlertDialogTitle className="text-white/90">Confirm delete</AlertDialogTitle>
+          <AlertDialogDescription className="text-white/70">
             Are you sure you want to delete this trip?
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isLoading}>
-            Cancel
-          </AlertDialogCancel>
+          <AlertDialogCancel
+            disabled={isLoading}
+            className="
+              h-10 px-4 rounded-xl font-medium text-sm bg-transparent
+              border border-white/10 text-white/55 hover:text-white/85 hover:bg-white/5   transition-all duration-200   active:scale-[0.98]
+              "
+           >
+             Cancel
+           </AlertDialogCancel>
 
           <form
             onSubmit={async (e) => {
@@ -76,7 +82,7 @@ const DeleteAlertDialog = ({ tripId }: Props) => {
             <AlertDialogAction
               type="submit"
               disabled={isLoading}
-              className="w-full"
+              className="w-full border border-red-400/40 bg-transparent text-red-300 hover:bg-red-500/10 hover:border-red-400/60"
             >
               {isLoading ? "Deleting..." : "Delete"}
             </AlertDialogAction>

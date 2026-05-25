@@ -138,7 +138,7 @@ useEffect(() => {
   </div>
 )}
 
-         <DialogContent  className=" z-[52]    sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-1  360:p-2 sm:p-2 rounded-xl">
+         <DialogContent  className=" z-[52]  bg-[#07124F]/95 border border-white/10   sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-1  360:p-2 sm:p-2 rounded-xl">
           <DialogTitle></DialogTitle>
           <DialogDescription>
           </DialogDescription>
@@ -154,9 +154,9 @@ useEffect(() => {
 }
 
           <Tabs defaultValue="account" className="  343:w-full ">
-              <TabsList className="grid  grid-cols-2 w-full   ">
-                   <TabsTrigger value="account">Place circle </TabsTrigger>
-                   <TabsTrigger value="password">Moving circle</TabsTrigger>
+              <TabsList className="grid  grid-cols-2 w-full  text-white/90 bg-[#07124F]/95 ">
+                   <TabsTrigger value="account" className='bg-[#07124F]/95' >Place circle </TabsTrigger>
+                   <TabsTrigger value="password" className='bg-[#07124F]/95'>Moving circle</TabsTrigger>
               </TabsList>
               <TabsContent value="account" className='px-5  w-full'>
                  <Createplaceform index={props.index} tripId={props.tripId} minDate={props.minDate}    onSubmitSuccess={handleTransportAdded}  />

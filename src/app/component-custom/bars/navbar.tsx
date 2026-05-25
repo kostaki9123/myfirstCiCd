@@ -52,7 +52,10 @@ const  Navbar =  (props : props) => {
            <div className=' hidden md:flex w-[158px] h-full  items-center justify-center   '>
              {props.withManageTripbtn ? 
               <Link href="/" >
-                <Button className=' bg-zinc-600'> Manage Trips</Button>
+                <Button className=' bg-[#0356BC]/80 hover:bg-[#0466D9]/80 text-white h-10 px-4 rounded-xl font-medium 
+                  text-sm transition-all duration-200 active:scale-[0.98]'> 
+                  Manage Trips
+                </Button>
               </Link>
               :
               <></>

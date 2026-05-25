@@ -131,9 +131,9 @@ const Createplaceform = (props : props) => {
         setIsLoading(true);
         await onSubmit();
       }}
-      className="w-full m-1"
+      className="w-full m-1 text-white/90"
     >
-      <p className="text-gray-600 text-sm pb-5">
+      <p className="text-white/60 text-sm pb-5">
         The place circle represents a city, town, or village you will stay.
       </p>
 
@@ -170,7 +170,8 @@ const Createplaceform = (props : props) => {
 
       {/* SUBMIT BUTTON */}
       <div className="h-14 flex justify-center items-end">
-        <Button type="submit" disabled={isLoading} className="ml-4">
+        <Button type="submit" disabled={isLoading}       
+           className='bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg shadow-blue-950/40 px-4 py-2 ml-4 rounded-xl font-medium transition-all duration-200 active:scale-[0.98]'>
           {isLoading ? "Creating..." : "Create place circle"}
         </Button>
       </div>

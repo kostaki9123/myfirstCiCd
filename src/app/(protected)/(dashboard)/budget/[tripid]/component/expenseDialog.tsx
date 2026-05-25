@@ -206,7 +206,7 @@ const ExpenseDialog = ({
       <DialogTrigger
         className={`rounded-lg ${
           fromItinerary
-            ? 'text-white bg-white/10 hover:bg-white/5 hover:text-white py-2 max-w-[200px] flex items-center justify-center gap-2 '
+            ? 'border border-white/15 bg-white/5 text-white hover:bg-white/10 hover:text-white py-2 max-w-[200px] flex items-center justify-center gap-2 '
             : expenseId
             ? 'text-blue-600 text-sm hover:underline'
             : 'absolute top-2 right-2 px-2 bg-white/10 hover:bg-white/5'

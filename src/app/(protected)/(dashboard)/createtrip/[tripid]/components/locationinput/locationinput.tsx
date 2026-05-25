@@ -64,6 +64,7 @@ function PlaceSearch({
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [selectedPlace, setSelectedPlace] = useState(false);
+  const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
 
   const [mobileMode, setMobileMode] = useState(false);
   const [keyboardOpen, setKeyboardOpen] = useState(false);
@@ -173,6 +174,7 @@ function PlaceSearch({
   // 🔹 Select a prediction
   // -------------------------------
   function handleSelect(prediction: google.maps.places.AutocompletePrediction) {
+     setSelectedPlaceId(prediction.place_id); 
     setQuery(prediction.description);
     setPredictions([]);
     setOpen(false);
@@ -296,98 +298,109 @@ function PlaceSearch({
   return (
     <>
       {/* Desktop */}
-      {!mobileMode && (
-        <div className="relative" ref={wrapperRef}>
-          <Input
-            ref={inputRef}
-            value={query}
-            onChange={(e) => handleInputChange(e.target.value)}
-            onKeyDown={onKeyDown}
-            onFocus={handleFocus}
-            placeholder="Search address, business, or place"
-            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-          />
-          {open && predictions.length > 0 && (
-            <ul className="absolute z-[57] left-0 right-0 mt-2 bg-white rounded-lg shadow-lg max-h-52 overflow-auto">
-              {predictions.map((p, i) => (
-                <li
-                  key={p.place_id}
-                  onClick={() => handleSelect(p)}
-                  className="px-3 py-2 cursor-pointer hover:bg-gray-100"
-                >
-                  <div className="font-medium text-sm">
-                    {p.structured_formatting.main_text}
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    {p.structured_formatting.secondary_text}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
-
-      {/* Mobile modal */}
-      {mobileMode && (
-        <div
-          className={`fixed inset-0 z-[53] bg-white ${
-            onMovingbox ? "top-[-30px]" : "top-[-100px]"
-          } flex flex-col`}
-          onClick={handleMobileClose}
-        >
-          <div
-            className="flex flex-col flex-1 min-h-0"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center border-b p-2">
-              <Input
-                ref={inputRef}
-                value={query}
-                onChange={(e) => handleInputChange(e.target.value)}
-                onKeyDown={onKeyDown}
-                placeholder="Search address, business, or place"
-                className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-              />
-              <button
-                onClick={handleMobileClose}
-                className="ml-2 p-2 rounded-full hover:bg-gray-100"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div
-              className={`flex-1 overflow-y-auto transition-all duration-200 ${
-                keyboardOpen ? "max-h-[260px]" : ""
-              }`}
-            >
-              {predictions.length > 0 ? (
-                <ul className="flex flex-col">
-                  {predictions.map((p) => (
+        {!mobileMode && (
+          <div className="relative" ref={wrapperRef}>
+            <Input
+              ref={inputRef}
+              value={query}
+              onChange={(e) => handleInputChange(e.target.value)}
+              onKeyDown={onKeyDown}
+              onFocus={handleFocus}
+              placeholder="Search address, business, or place"
+              className="w-full border rounded-lg  px-3 py-2 focus:outline-none focus:ring-2 placeholder:text-white/60 focus:ring-indigo-300"
+            />
+            {open && predictions.length > 0 && (
+              <ul className="absolute z-[57] left-0 right-0 mt-2 bg-white text-black rounded-lg shadow-lg max-h-52 overflow-auto">
+                {predictions.map((p, i) => (
                     <li
-                      key={p.place_id}
-                      onClick={() => handleSelect(p)}
-                      className="px-4 py-3 border-b cursor-pointer hover:bg-gray-50"
-                    >
-                      <div className="font-medium text-sm">
-                        {p.structured_formatting.main_text}
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        {p.structured_formatting.secondary_text}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-gray-400 text-center mt-6">
-                  No results found
-                </p>
-              )}
-            </div>
-          </div>         
-        </div>
-      )}
-    </>
+                       key={p.place_id}
+                       onClick={() => handleSelect(p)}
+                       className={`px-3 py-2 cursor-pointer transition
+                         ${i === activeIndex
+                           ? "bg-gray-200"
+                           : "hover:bg-gray-200"
+                         }
+                       `}
+                        >
+                    <div className="font-medium text-sm">
+                      {p.structured_formatting.main_text}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {p.structured_formatting.secondary_text}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+
+        {/* Mobile modal */}
+        {mobileMode && (
+          <div
+            className={`fixed inset-0 z-[53] bg-white ${
+              onMovingbox ? "top-[-30px]" : "top-[-100px]"
+            } flex flex-col`}
+            onClick={handleMobileClose}
+          >
+            <div
+              className="flex flex-col flex-1 min-h-0"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center border-b p-2">
+                <Input
+                  ref={inputRef}
+                  value={query}
+                  onChange={(e) => handleInputChange(e.target.value)}
+                  onKeyDown={onKeyDown}
+                  placeholder="Search address, business, or place"
+                  className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                />
+                <button
+                  onClick={handleMobileClose}
+                  className="ml-2 p-2 rounded-full hover:bg-gray-100"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div
+                className={`flex-1 overflow-y-auto transition-all duration-200 ${
+                  keyboardOpen ? "max-h-[260px]" : ""
+                }`}
+              >
+                {predictions.length > 0 ? (
+                  <ul className="flex flex-col">
+                    {predictions.map((p,i) => (
+                     <li
+                       key={p.place_id}
+                       onClick={() => handleSelect(p)}
+                       className={`px-3 py-2 cursor-pointer transition
+                         ${i === activeIndex
+                           ? "bg-gray-100"
+                           : "hover:bg-gray-100"
+                         }
+                       `}
+                        >
+                      
+                        <div className="font-medium text-sm">
+                          {p.structured_formatting.main_text}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {p.structured_formatting.secondary_text}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-400 text-center mt-6">
+                    No results found
+                  </p>
+                )}
+              </div>
+            </div>         
+          </div>
+        )}
+      </>
   );
 }

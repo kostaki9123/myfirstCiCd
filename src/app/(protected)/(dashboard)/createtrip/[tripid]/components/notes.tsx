@@ -28,7 +28,7 @@ const CreateTripNotesBox = ({
   }, [value]);
 
   return (
-    <div className="w-full">
+    <div className="w-full  bg-transparent">
       <textarea
         ref={textareaRef}
         value={value}
@@ -38,11 +38,11 @@ const CreateTripNotesBox = ({
         className={`
           w-full min-h-[40px]  p-2
           ${fromItinerary ? 'rounded-lg' : 'rounded'}
-          bg-[#f5f7fa] text-sm text-gray-800
-          border border-gray-300
-          focus:border-blue-500 focus:ring-1 focus:ring-blue-500
-          outline-none resize-none overflow-hidden
-          transition-all shadow-sm
+          className="
+           w-full min-h-[40px] p-2
+           text-sm
+           text-white placeholder:text-white/50 bg-transparent border border-white  focus:outline-none focus:ring-1 focus:ring-white resize-none overflow-hidden transition-all shadow-sm
+"
         `}
       />
 
