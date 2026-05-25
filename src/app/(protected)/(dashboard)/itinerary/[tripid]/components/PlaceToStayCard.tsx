@@ -171,7 +171,7 @@
                 {props.name}
                 <ChevronDown className="h-4 w-4 text-neutral-500" />
               </div>
-               <div className=" text-sm text-gray no-underline! [text-decoration:none] " >     
+               <div className=" text-xs text-white/70 no-underline! [text-decoration:none] " >     
                  {props.stayFrom
                     ? new Date(props.stayFrom).toLocaleDateString("en-GB", {
                         month: "2-digit",

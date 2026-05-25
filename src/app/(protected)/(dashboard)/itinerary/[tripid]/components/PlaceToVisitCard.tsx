@@ -163,7 +163,7 @@ export default function PlaceToVisitCard(props: Props) {
               {props.name}
               <ChevronDown className="h-4 w-4 text-neutral-500" />
             </div>
-             <div className=" text-sm text-gray no-underline! [text-decoration:none] " >     
+             <div className=" text-xs text-white/70 no-underline! [text-decoration:none] " >     
              {props.visitDate
                 ? new Date(props.visitDate).toLocaleDateString("en-GB", {
                     month: "2-digit",
@@ -172,7 +172,7 @@ export default function PlaceToVisitCard(props: Props) {
                 :"N/A"}
              </div>
              <>-</>
-            <div className=" text-sm text-white no-underline! [text-decoration:none] " >     
+            <div className=" text-xs text-white/70 no-underline! [text-decoration:none] " >     
             {props.visitTime
                ? new Date(props.visitTime).toLocaleTimeString("en-GB", {
                    hour: "2-digit",
@@ -204,8 +204,8 @@ export default function PlaceToVisitCard(props: Props) {
               <div>
                   <label className="text-xs text-white">Visit Time</label>
                   <TimeSlotsDropdown
-                   startTime="07:45"
-                   endTime="08:00"
+                   startTime="00:00"
+                   endTime="23:45"
                    stepMinutes={15}
                    value={visitTime}
                    onChange={(v) => {

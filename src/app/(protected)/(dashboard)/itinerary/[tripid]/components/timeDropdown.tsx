@@ -27,7 +27,7 @@ export default function TimeSlotsDropdown({
   onChange,
 }: Props) {
 
-  console.log('value',value)
+
   /* -------- Normalize selected time -------- */
   const selectedTime = React.useMemo(() => {
     if (!value) return null

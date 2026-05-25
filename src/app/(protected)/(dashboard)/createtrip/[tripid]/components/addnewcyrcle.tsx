@@ -111,14 +111,14 @@ useEffect(() => {
 
         <DialogTrigger onClick={handleCircleClick} style={{  marginLeft: props.withcurveline ? '0px' :  '10px'   ,gridRow :`${props.withcurveline ?positiongrid[props.index].gridRow : 2}` ,borderRadius : "50%" ,gridColumn : `${props.withcurveline ? props.index + 2 : 2} `, display : "flex" , alignItems : "center", justifyItems : "center" , height : "100px" , width : "100px" , zIndex : 2 ,}} >
                <div className='flex items-center relative justify-center  rounded-[50%] w-[100px] h-[100px] z-50 bg-[#1A1A4F] cursor-pointer'>
-                   <MdAddLocationAlt color='grey' style={{fontSize : "30px" , fontWeight : "bolder"}}/>
+                   <MdAddLocationAlt className='text-white/70 ' style={{fontSize : "30px" , fontWeight : "bolder"}}/>
           
 
                </div>
         </DialogTrigger>
         {props.withcurveline === false && props.lengtharr !== 0 &&
           <div className='relative '>
-             <div className={`h-[100px] w-[224px] top-[139px] z-0 right-[-119px] rotate-[146deg] absolute`}>
+             <div className={`h-[100px] w-[224px] top-[139px] z-0 right-[-119px] rotate-[146deg] text-white/70  absolute`}>
                  <svg viewBox="0 0 200 100">
                    {/* First curve with matching control points */}
                    <path d="M 20 70 q 90 -130 200 10" fill="none" stroke="white" strokeWidth="4" strokeDasharray="7 5" />

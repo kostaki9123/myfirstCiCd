@@ -68,19 +68,19 @@ function capitalizeFirst(str : string) {
                  
             </div>
                     
-            <div className='flex flex-col ' >  
+            <div className='flex flex-col  ' >  
                  <h2 className=" text-base h-[32px] font-semibold text-white hidden lg:block "></h2>
-                 <Card className=" group  w-72  lg:mt-5  relative ml-3 lg:ml-0 p-2 bg-white/10 border-none text-white  ">
+                 <Card className="  bg-white/10  border-none border-white/10 group  w-72  lg:mt-5  relative ml-3 lg:ml-0 p-2  text-white/90  ">
                    <CardHeader className="p-3  ">  
                      <CardTitle className='flex flex-row gap-2'>
                           Transport  
                            <div >{getTransportIcon(props.transportType)}</div> 
                      </CardTitle>                   
                    </CardHeader>
-                   <CardContent className=" p-2 pt-0 space-y-2 text-xs text-muted-foreground">
-                     <div className="flex items-start px-2 flex-col gap-2">                      
-                       <span>From:{props.fromName}</span>
-                       <span>To:{ props.toName}</span>
+                   <CardContent className="text-white/70 p-2 pt-0 space-y-2 text-xs text-muted-foreground">
+                     <div className="flex items-start px-2 text-white/70 flex-col gap-2">                      
+                       <span>From: {props.fromName}</span>
+                       <span>To: {props.toName}</span>
                      </div>
                      <Pointnotes  toName={props.toName} toId={props.toId} toAddress={props.toAddress} toLat={props.toLat} toLng={props.toLng} fromName={props.fromName} fromId={props.fromId} fromAddress={props.fromAddress} fromLat={props.fromLat} fromLng={props.fromLng} index={props.index} id={props.id} tripId={props.tripId} notes={props.notes} transportType={props.transportType} departureDate={props.departureDate} />
                    </CardContent>

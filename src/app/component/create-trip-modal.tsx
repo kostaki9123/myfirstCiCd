@@ -125,7 +125,20 @@ function onSubmit(
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-       <DialogTrigger  className="px-6 py-3 bg-gradient-to-r from-[#16a34a] to-[#22c55e] text-white rounded-lg shadow-lg hover:scale-105 transition-transform duration-200">
+       <DialogTrigger  className=" bg-[#0356BC]
+    hover:bg-[#0466D9]
+    text-white
+
+    border border-white/10
+    shadow-lg shadow-blue-950/40
+
+    px-4 py-2
+    rounded-xl
+    font-medium
+
+    transition-all
+    duration-200
+    active:scale-[0.98]">
           + Create Trip    
       </DialogTrigger>
 
@@ -159,7 +172,7 @@ function onSubmit(
               </div>
               <div className=' pt-2 flex '>
                  <div className=' w-1/2 ' >
-                     <Label htmlFor="name" >Trip Budget</Label>
+                     <Label htmlFor="name" >Trip budget</Label>
                      <Budgetdropdown
                        deafaultOption="Select"
                        allOptions={["Economy traveler", "Balanced traveler", "Luxury traveler"]}

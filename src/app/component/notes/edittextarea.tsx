@@ -86,7 +86,10 @@ const NotesBox = ({
           onClick={() => setMode("edit")}
           className={`flex items-center justify-center gap-2 w-full ${
             fromItinerary ? "max-w-[202px]" : "max-w-[152px]"
-          } bg-white rounded-lg py-2 text-[14px]  bg-white/10 hover:bg-white/5 active:scale-95 transition shadow-sm`}
+          }     border border-white/15
+          bg-white/5
+          text-white
+          hover:bg-white/10 bg-white px-4 py-2 rounded-xl font-medium duration-200 active:scale-[0.98] rtext-[14px]   transition shadow-sm`}
         >
           <FaNoteSticky className="text-lg text-blue-600" /> Add notes
         </button>

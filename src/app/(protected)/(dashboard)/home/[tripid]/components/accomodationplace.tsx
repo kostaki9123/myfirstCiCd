@@ -65,10 +65,10 @@ const Accomodationplace = (props: props) => {
         Accomodation
       </h2>
 
-      <Card className="bg-white/10 border-none text-white w-72 426:w-auto relative h-fit p-2 535:max-w-[370px] max-w-[350px]">
+      <Card className=" bg-white/10  border-none border-white/10  text-white/90 w-72 426:w-auto relative h-fit p-2 535:max-w-[370px] max-w-[350px]">
         <CardHeader className="flex flex-row gap-2 p-3">
           {/* LEFT */}
-          <div className="flex items-start gap-2">
+          <div className="flex items-start gap-2 ">
             <CardTitle>{props.name}</CardTitle>
             <MdHotel className="text-4xl 535:text-xl" />
 
@@ -102,7 +102,7 @@ const Accomodationplace = (props: props) => {
           <div className="min-w-8" />
         </CardHeader>
 
-        <CardContent className="p-2 pt-0 space-y-3 text-xs text-muted-foreground">
+        <CardContent className="p-2 pt-0 space-y-3 text-xs text-muted-foreground text-white/70 ">
           <div className="flex items-start px-2 flex-col gap-2">
             {props.stayFrom ? (
               <span>
@@ -137,7 +137,7 @@ const Accomodationplace = (props: props) => {
                 title="Open in map"
               >
                 <RiExternalLinkLine className="text-lg" />
-                <span className="pt-[2px]">Open In Map</span>
+                <span className="pt-[2px] hover:text-[#0466D9] ">Open In Map</span>
               </a>
             )}
           </div>

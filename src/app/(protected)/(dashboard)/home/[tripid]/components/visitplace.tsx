@@ -65,7 +65,7 @@ const Visitplace = (props: Props) => {
         Place
       </h2>
 
-      <Card className="bg-white/10 border-none text-white w-72 426:w-auto relative h-full p-2 535:max-w-[370px] max-w-[350px]">
+      <Card className=" bg-white/10 border-none border-white/10   text-white/90 w-72 426:w-auto relative h-full p-2 535:max-w-[370px] max-w-[350px]">
         <CardHeader className="flex flex-row gap-2 p-3">
           <div className="flex flex-row items-start gap-2">
             <CardTitle>{props.name}</CardTitle>
@@ -99,7 +99,7 @@ const Visitplace = (props: Props) => {
           <div className="min-w-8" />
         </CardHeader>
 
-        <CardContent className="p-2 pt-0 space-y-2 text-xs text-muted-foreground">
+        <CardContent className="p-2 pt-0 space-y-3 text-xs text-muted-foreground text-white/70 ">
           <div className="flex items-start px-2 flex-col gap-2">
             {props.visitdate ? (
               <span>
@@ -132,10 +132,10 @@ const Visitplace = (props: Props) => {
                 href={googleLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-blue-600 transition flex gap-1 items-center"
+                className="text-muted-foreground hover:text-[#0356BC] transition flex gap-1 items-center"
               >
                 <RiExternalLinkLine className="text-lg" />
-                <span className="pt-[2px]">Open in Map</span>
+                <span className="pt-[2px] hover:text-[#0466D9] ">Open in Map</span>
               </a>
             )}
           </div>

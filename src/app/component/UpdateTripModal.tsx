@@ -98,7 +98,7 @@ const UpdateTripModal = ({ tripId, initialName, initialBudget, initialTravelingW
         <form onSubmit={onSubmit}>
           <Card className="w-full text-black">
             <CardHeader>
-              <DialogTitle>Edit Trip</DialogTitle>
+              <DialogTitle>Edit trip</DialogTitle>
               <DialogDescription>Update your trip details</DialogDescription>
             </CardHeader>
 
@@ -112,7 +112,7 @@ const UpdateTripModal = ({ tripId, initialName, initialBudget, initialTravelingW
 
                 <div className="flex gap-2">
                   <div className="flex-1">
-                    <Label>Trip Budget</Label>
+                    <Label>Trip budget</Label>
                     <Budgetdropdown
                       deafaultOption="Select"
                       allOptions={["Economy traveler", "Balanced traveler", "Luxury traveler"]}
@@ -123,7 +123,7 @@ const UpdateTripModal = ({ tripId, initialName, initialBudget, initialTravelingW
                   </div>
 
                   <div className="flex-1">
-                    <Label>Traveling With</Label>
+                    <Label>Traveling with</Label>
                     <Budgetdropdown
                       deafaultOption="Select"
                       allOptions={["Solo", "Friends", "Couple", "Family", "Group"]}
@@ -135,7 +135,7 @@ const UpdateTripModal = ({ tripId, initialName, initialBudget, initialTravelingW
                 </div>
 
                 <div>
-                  <Label>Trip Types (max 3)</Label>
+                  <Label>Trip types (max 3)</Label>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {["Adventures", "Cultural Enthusiast", "Natural lovers", "Nightlife", "Festival", "Sports Enthusiast", "Events"].map((type) => (
                       <div key={type} className="flex items-center gap-1">

@@ -39,7 +39,7 @@ const DeleteAlertDialog = ({ tripId }: Props) => {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <div className="px-4 py-2 text-[#f87171] border border-[#f87171] rounded-lg hover:bg-[#f87171] hover:text-white transition cursor-pointer">
+        <div className="   border border-red-400/40 bg-transparent text-red-300 hover:bg-red-500/10 hover:border-red-400/60 active:scale-[0.98] px-4 py-2 rounded-xl font-medium transition-all duration-200  cursor-pointer">
           Delete
         </div>
       </AlertDialogTrigger>

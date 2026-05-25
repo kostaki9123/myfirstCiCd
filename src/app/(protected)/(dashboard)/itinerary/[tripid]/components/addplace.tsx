@@ -225,12 +225,14 @@ const Addaplace = (props: Props) => {
       console.log('places google api',places)
 
       const compound_code =
-        places[0]?.plus_code?.compound_code || "";
+      places.find((place: any )=> place?.plus_code?.compound_code)
+        ?.plus_code?.compound_code || "";
+        console.log('compound_code:',compound_code)
 
-      const cityName = compound_code
-        .replace(/"/g, "")
-        .split(" ")[1]
-        ?.replace(",", "");
+     const cityName = compound_code
+         ?.replace(/"/g, "")
+         ?.split(" ")?.[1]
+         ?.replace(",", "");
 
      console.log('extract',cityName)
 

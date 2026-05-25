@@ -65,16 +65,17 @@ const route = formatRoute(points);
             {/* Trip Overview */}
             <div className="flex w-full gap-12 ">
          
-               <Card className=" w-[80%] xxs:w-full p-2 535:max-w-[370px] bg-white/10 border-none text-white  ">
-                  <CardHeader className=" p-3"> 
+               <Card className=" w-[80%] xxs:w-full p-2 535:max-w-[370px] bg-white/10  border border-white/10
+           hover:bg-white/15  text-white  ">
+                  <CardHeader className="text-white/90 p-3 text-lg"> 
                     <CardTitle >Trip Summary 🌍</CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-2 p p-3  text-xs text-muted-foreground">
-                    <div className="flex items-center gap-2">
+                  <CardContent className="space-y-2 p p-3 text-white/70   text-xs text-muted-foreground">
+                    <div className="flex  text-white/70  items-center gap-2">
                       <Calendar className="h-4 w-4" />
                       <span>{dateRange}</span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex  text-white/70  items-center gap-2">
                       <MapPin className="h-4 w-4" />
                       <span>{route || "No places yet"}</span>
                     </div>
@@ -87,16 +88,16 @@ const route = formatRoute(points);
             <Link href={`/createtrip/${tripid}`}>
               <div
                 className="group  w-[80%] xxs:w-full 535:max-w-[370px] flex flex-col items-center justify-center rounded-2xl 
-                bg-white/10  border-none text-white  p-8 shadow-md transition hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+                border border-white/10 bg-white/10  hover:bg-white/15 text-white  p-8 shadow-md transition hover:shadow-lg hover:-translate-y-1 cursor-pointer"
                 aria-label="Start planning your trip"
               >
-                <MdAddLocationAlt className="text-5xl text-white transition-transform group-hover:scale-110" />
+                <MdAddLocationAlt className="text-5xl text-[#0356BC] transition-transform group-hover:scale-110" />
           
-                <span className="mt-2 text-base font-semibold text-white group-hover:text-white">
+                <span className="mt-2 text-base text-white/90 font-semibold text-white group-hover:text-white">
                   Plan Your Trip
                 </span>
           
-                <p className="text-sm text-gray-500 mt-1 text-center">
+                <p className="text-sm text-white/70 mt-1 text-center">
                   Add your first place to start building the journey
                 </p>
               </div>
