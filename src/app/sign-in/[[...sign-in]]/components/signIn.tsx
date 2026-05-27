@@ -17,11 +17,11 @@ export default function DelayedSignIn() {
 
   return (  
   <SignIn
-  appearance={{ elements: 
+      appearance={{ elements: 
     { card: "shadow-none border-none",
       headerTitle: "text-2xl font-semibold text-slate-800", 
       headerSubtitle: "text-slate-500"
-      , formButtonPrimary: "bg-sky-600 hover:bg-sky-700 text-white font-medium transition-all duration-200 rounded-lg", 
+      , formButtonPrimary: "bg-[#0356BC] hover:bg-[#0466D9]   rounded-xl font-medium transition-all duration-200 active:scale-[0.98]", 
       footerActionLink: "text-sky-600 hover:text-sky-700 font-medium",
      
        formFieldInput: "rounded-lg border-slate-300 focus:border-sky-500 focus:ring-sky-500", }, }} />
