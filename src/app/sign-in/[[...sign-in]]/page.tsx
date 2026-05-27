@@ -1,61 +1,104 @@
 import React from 'react'
 import DelayedSignIn from './components/signIn'
+import { FaRoute, FaMapMarkedAlt, FaWallet } from 'react-icons/fa'
 
-const  Page =  () => {
-
+const Page = () => {
   return (
-    <div className="relative min-h-screen grid md:grid-cols-2 bg-gradient-to-br from-sky-50 via-white to-emerald-50 overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-r from-[#010038] via-white/5 to-[#010038] text-white">
 
-      {/* Decorative Background Circles */}
-      <div className="absolute w-72 h-72 bg-sky-300 rounded-full blur-3xl opacity-20 -top-20 -left-20"></div>
-      <div className="absolute w-72 h-72 bg-emerald-300 rounded-full blur-3xl opacity-20 bottom-0 right-0"></div>
+      {/* Background Glow Effects */}
+      <div className="absolute top-[-120px] left-[-100px] w-[350px] h-[350px] rounded-full blur-3xl" />
+      
+      <div className="absolute bottom-[-120px] right-[-100px] w-[350px] h-[350px]rounded-full blur-3xl" />
 
-      {/* LEFT SIDE – Concept Explanation */}
-      <div className="hidden md:flex relative z-10 flex-col justify-center px-16 backdrop-blur-sm">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-sky-600 to-emerald-600 bg-clip-text text-transparent mb-6">
-          Design Your Trip Step by Step
-        </h1>
+      {/* Grid Layout */}
+      <div className="relative z-10 grid min-h-screen lg:grid-cols-2">
 
-        <p className="text-slate-600 mb-10 text-lg leading-relaxed">
-          Plan your journey visually. Add destination circles, link them in the order 
-          you’ll visit, and organize your entire trip — itinerary, stays, and budget — 
-          in one smart planner.
-        </p>
+        {/* LEFT SIDE */}
+        <div className="hidden  lg:flex flex-col justify-center px-16  lg:ml-28">
 
-        <div className="space-y-6">
-          <div className="p-4 rounded-xl bg-white/70 shadow-sm border border-slate-200">
-            <h3 className="font-semibold text-sky-600 mb-1">
-              📍 Place Nodes
-            </h3>
-            <p className="text-slate-600 text-sm">
-              Add destinations as interactive circles — click to edit details or add stops along your journey.
-            </p>
+                {/* Main Heading */}
+                <div className="max-w-xl">
+              
+                  <h1 className="text-5xl font-bold leading-tight">
+                    Plan Simply.
+                    <br />
+                    Travel Smarter.
+                  </h1>
+              
+                  <p className="mt-6 text-lg text-white/70 leading-relaxed">
+                    Create routes visually, organize every destination,
+                    and manage your whole journey in one smart travel planner.
+                  </p>
+                </div>
+              
+                {/* Small Features */}
+                <div className="mt-14 space-y-6 max-w-lg">
+              
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-400/20 flex items-center justify-center">
+                      <FaRoute className="text-blue-400" />
+                    </div>
+              
+                    <div>
+                      <h3 className="font-semibold text-white">
+                        Smart Route Building
+                      </h3>
+              
+                      <p className="text-white/60 text-sm mt-1">
+                        Connect destinations visually and optimize your journey.
+                      </p>
+                    </div>
+                  </div>
+              
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center">
+                      <FaMapMarkedAlt className="text-cyan-300" />
+                    </div>
+              
+                    <div>
+                      <h3 className="font-semibold text-white">
+                        Simple Itinerary Planning
+                      </h3>
+              
+                      <p className="text-white/60 text-sm mt-1">
+                        Organize stays, activities and places without complexity.
+                      </p>
+                    </div>
+                  </div>
+              
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-400/20 flex items-center justify-center">
+                      <FaWallet className="text-indigo-300" />
+                    </div>
+              
+                    <div>
+                      <h3 className="font-semibold text-white">
+                        Budget Tracking
+                      </h3>
+              
+                      <p className="text-white/60 text-sm mt-1">
+                        Keep your travel expenses organized in one place.
+                      </p>
+                    </div>
+                  </div>
+              
+                </div>
+        </div>
+
+        {/* RIGHT SIDE */}
+        <div className="relative flex items-center justify-center px-6 py-16 lg:px-12">
+
+          {/* Glass Background */}
+          <div className="absolute w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl" />
+
+          {/* Auth Form */}
+          <div className="relative z-10 w-full max-w-md">
+            <DelayedSignIn />
           </div>
 
-          <div className="p-4 rounded-xl bg-white/70 shadow-sm border border-slate-200">
-            <h3 className="font-semibold text-emerald-600 mb-1">
-              ✈ Travel Connections
-            </h3>
-            <p className="text-slate-600 text-sm">
-              Connect your destinations visually to define the path of your trip.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-xl bg-white/70 shadow-sm border border-slate-200">
-            <h3 className="font-semibold text-orange-500 mb-1">
-              📅 Smart Itinerary & Budget
-            </h3>
-            <p className="text-slate-600 text-sm">
-              Plan activities, accommodations, and track your expenses — all in one place.
-            </p>
-          </div>
         </div>
       </div>
-
-      {/* RIGHT SIDE – Sign In */}
-        <div className="relative z-10 flex items-center justify-center ">
-             <DelayedSignIn/>
-        </div>
     </div>
   )
 }

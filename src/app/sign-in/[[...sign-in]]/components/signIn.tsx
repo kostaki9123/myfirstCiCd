@@ -15,23 +15,16 @@ export default function DelayedSignIn() {
 
   if (!ready) return <MainLoader />;
 
-  return (
-    
-     <SignIn
-         appearance={{
-         elements: {
-           card: "shadow-none border-none",
-           headerTitle: "text-2xl font-semibold text-slate-800",
-           headerSubtitle: "text-slate-500",
-           formButtonPrimary:
-             "bg-sky-600 hover:bg-sky-700 text-white font-medium transition-all duration-200 rounded-lg",
-           footerActionLink:
-             "text-sky-600 hover:text-sky-700 font-medium",
-           formFieldInput:
-             "rounded-lg border-slate-300 focus:border-sky-500 focus:ring-sky-500",
-         },
-       }}
-    />
+  return (  
+  <SignIn
+  appearance={{ elements: 
+    { card: "shadow-none border-none",
+      headerTitle: "text-2xl font-semibold text-slate-800", 
+      headerSubtitle: "text-slate-500"
+      , formButtonPrimary: "bg-sky-600 hover:bg-sky-700 text-white font-medium transition-all duration-200 rounded-lg", 
+      footerActionLink: "text-sky-600 hover:text-sky-700 font-medium",
+     
+       formFieldInput: "rounded-lg border-slate-300 focus:border-sky-500 focus:ring-sky-500", }, }} />
    
   );
 }

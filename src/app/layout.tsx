@@ -37,6 +37,7 @@ export const metadata : Metadata = {
     <ClerkProvider 
     signInUrl="/sign-in"
     signUpUrl="/sign-up"
+    
     >
       <html lang="en" translate="no" className="bg-[#010038]">
         <body
