@@ -76,8 +76,9 @@ const  Navbar =  (props : props) => {
     {/* Sign Up */}
     <Link href={"/sign-up"}>
     
-      <span className="cursor-pointer px-4 py-2 rounded-lg bg-sky-600 text-white font-semibold 
-                       hover:bg-sky-700 transition-colors duration-200">
+      <span className="cursor-pointer px-4 py-2  text-white 
+                         bg-[#0356BC] hover:bg-[#0466D9] border border-white/10 shadow-lg
+                 shadow-blue-950/40 rounded-xl font-medium transition-all duration-200 active:scale-[0.98] ">
         Sign up
       </span>
   
