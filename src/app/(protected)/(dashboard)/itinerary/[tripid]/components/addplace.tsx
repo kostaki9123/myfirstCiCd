@@ -61,10 +61,12 @@ const Addaplace = (props: Props) => {
 
   const [addedStayss, setAddedStays] = useState<RecommendedPlace[]>([]);
   const [addedVisitss, setaddedVisits] = useState<RecommendedPlace[]>([]);
+  const [loding, setloading] = useState<Boolean>(false);
 
   const [debouncedLocation] = useState(inputLocation);
 
   const fetchPlaces = async () => {
+       setloading(true)
     try {
       const centerLat = debouncedLocation?.lat ?? props.latitude;
       const centerLng = debouncedLocation?.lng ?? props.longitude;
@@ -276,6 +278,7 @@ const Addaplace = (props: Props) => {
       );
 
       setPlacesResult(places);
+      setloading(false)
       console.log('reqqwwww',placesResult)
     } catch (err) {
       console.error("fetchPlaces error:", err);
@@ -328,9 +331,10 @@ const Addaplace = (props: Props) => {
       </DialogTrigger>
 
       <DialogContent
-        className="flex gap-2 h-[480px] w-[90%] sm:w-[70%] z-[60] sm:pl-4 mt-6"
+        className="flex gap-2 h-[480px] w-[90%] sm:w-[70%] z-[60] sm:pl-4 mt-6 bg-[#010038] border border-white/10 text-white"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
+        
         <div className="sm:w-full 950:w-[70%]">
           <DialogTitle>
             <APIProvider
@@ -356,7 +360,13 @@ const Addaplace = (props: Props) => {
               tripBudget={props.tripBudget}
               tripTypes={props.tripTypes}/>
 
-            {placesResult
+        { loding ?
+          <div className="flex justify-center items-center h-32">
+                  <span className="text-gray-500">Loading...</span>
+          </div>
+          : 
+           <>
+              {placesResult
               .slice(0, visibleCount)
               .map((place: any, index: number) => (
                 <Placecomponent
@@ -402,17 +412,18 @@ const Addaplace = (props: Props) => {
                   photoreference={place.PhotoUrl}
                 />
               ))}
-
-            {visibleCount < placesResult.length && (
-              <div className="flex justify-center mt-3">
-                <button
-                  onClick={handleSeeMore}
-                  className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 text-sm"
-                >
-                  See more
-                </button>
-              </div>
-            )}
+              {visibleCount < placesResult.length && (
+                <div className="flex justify-center mt-3">
+                  <button
+                    onClick={handleSeeMore}
+                    className="px-4 py-2 bg-white/10 rounded text-white text-sm"
+                  >
+                    See more
+                  </button>
+                </div>
+              )}
+          </>  
+        }   
           </div>
         </div>
 

@@ -56,14 +56,14 @@ const TripContextChips = ({
         {chips.map((chip, idx) => (
           <span
             key={idx}
-            className="flex items-center gap-1 px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full"
+            className="flex items-center gap-1 px-2 py-1 text-xs bg-white/10 text-white/90 rounded-full"
           >
             <span>{chip.icon}</span>
             <span>{chip.label}</span>
           </span>
         ))}
       </div>
-      <div className="text-[11px] text-gray-500">
+      <div className="text-[11px] text-white/70">
         Recommendations adapted to your trip style
       </div>
     </div>

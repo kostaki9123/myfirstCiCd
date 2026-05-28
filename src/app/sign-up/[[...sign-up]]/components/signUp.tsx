@@ -15,9 +15,7 @@ export default function DelayedSignUp() {
 
   if (!ready) return <MainLoader />;
 
-  return (
-     
-           
+  return (       
     <SignUp
                appearance={{
                  elements: {

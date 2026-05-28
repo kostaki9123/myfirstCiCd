@@ -19,6 +19,7 @@ import ViewPlaceMoadal from './locationinput/viewplacemodal';
 import { Button } from '@/components/ui/button';
 import { z } from "zod";
 import { updatePoint } from '../action';
+import { CiCircleCheck } from 'react-icons/ci';
 
 
 const updateSchema = z.object({
@@ -158,6 +159,8 @@ const Point =  (props:Props) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const [showUpdated, setShowUpdated] = useState(false);
+
   // SHOW SAVE BUTTON ONLY IF USER CHANGED SOMETHING
   const [isDirty, setIsDirty] = useState(false);
 
@@ -232,13 +235,20 @@ const Point =  (props:Props) => {
     fd.append("endDate", d.dates[1].toISOString());
 
     try {
-       console.log('selected place 2' , selectedPlace )
-      await updatePoint(fd); // <--- your backend update
+      const update = await updatePoint(fd);
+      console.log('update' , update)
+
+      setShowUpdated(true);
+    
+       setTimeout(() => {
+         setShowUpdated(false);
+       }, 3000);
       setIsDirty(false);
     } catch (e) {
       setError("Failed to update.");
       console.error(e);
     }
+   
   };
 
   return (
@@ -322,14 +332,28 @@ const Point =  (props:Props) => {
                  {error}
                </div>
              )}
+            
+
+             <ViewPlaceMoadal pointId={props.data.id} tripId={props.tripId}  />
+
+               {showUpdated && (
+                        <div className="absolute bottom-9 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-xl  bg-white/10 backdrop-blur-md px-4 py-2 text-green-200 shadow-lg">
+                            <CiCircleCheck
+                              className="text-green-400"
+                              size={20}
+                            />
+                          
+                            <div className="text-sm font-medium">
+                              Updated successfully
+                            </div>
+                         </div>
+                      )}
                  
             {isDirty && (
             <div className="flex justify-end ">
                 <Button className='bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg shadow-blue-950/40 px-4 py-2 rounded-xl font-medium transition-all duration-200 active:scale-[0.98]' onClick={handleSave}>Save</Button>
             </div>
           )}
-
-             <ViewPlaceMoadal pointId={props.data.id} tripId={props.tripId}  />
           </DialogContent>
      </Dialog>
      {props.datalenght === props.index + 1 && (

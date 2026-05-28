@@ -1,6 +1,6 @@
 // app/itinerary/[tripid]/page.tsx
 import ItineraryClient from './components/itineraryClient';
-import { getPoints } from '../../createtrip/[tripid]/action';
+import { getPoints } from '../../plan/[tripid]/action';
 import { getPlaces } from './action';
 import { getBudgetByTripId } from '../../budget/[tripid]/action';
 import { getTrip } from '@/app/(protected)/action';

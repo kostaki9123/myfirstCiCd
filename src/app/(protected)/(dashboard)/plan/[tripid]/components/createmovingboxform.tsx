@@ -82,11 +82,17 @@ const Createmovingboxform = (props : props) => {
   const [generalError, setGeneralError] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
+
   // --------------------
   // ✅ Submit Handler
   // --------------------
   const onSubmit = async () => {
     try {
+      if(props.index === 10){
+           setGeneralError('Maximum limit reached.')
+           return
+      }
+
       const validation = formSchema.safeParse({
         from: fromPlace,
         to: toPlace,
@@ -96,11 +102,10 @@ const Createmovingboxform = (props : props) => {
       });
 
       if (!validation.success) {
-        setGeneralError("⚠️ Please fill all fields correctly.");
+        setGeneralError("Please fill all fields correctly.");
         return;
       }
 
-      console.log("✅ Validated Moving Box Data:", validation.data);
       const formData = new FormData();
       formData.append("tripId",  `${props.tripId}`);
       formData.append("role", 'MOVING_BOX');
@@ -128,10 +133,10 @@ const Createmovingboxform = (props : props) => {
       if (props.onSubmitSuccess) props.onSubmitSuccess();
     } catch (err) {
       if (err instanceof InputParseError && err.cause instanceof ZodError) {
-        setGeneralError("⚠️ Invalid input. Please try again.");
+        setGeneralError("Invalid input. Please try again.");
       } else {
         console.error("Unexpected error:", err);
-        setGeneralError("⚠️ Something went wrong. Please try again.");
+        setGeneralError("Something went wrong. Please try again.");
       }
     } finally {
       setIsLoading(false);
@@ -151,7 +156,7 @@ const Createmovingboxform = (props : props) => {
       className="w-full m-1 text-white/90"
     >
       <p className="leading-7  [&:not(:first-child)]:mt-6 text-white/60 text-xs md:text-sm pb-1 450:whitespace-nowrap ">
-        The moving box represents your journey between places.
+        Transport represents your journey between places.
       </p>
 
       {/* FROM */}
@@ -211,7 +216,7 @@ const Createmovingboxform = (props : props) => {
         <Button type="submit" disabled={isLoading}       
            className='bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg ml-4 shadow-blue-950/40 px-4 py-2 rounded-xl font-medium transition-all duration-200 active:scale-[0.98]'
 >
-          {isLoading ? "Creating..." : "Create moving circle"}
+          {isLoading ? "Creating..." : "Create transport "}
         </Button>
       </div>
     </form>

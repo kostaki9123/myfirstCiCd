@@ -151,23 +151,6 @@ body {
    TIME PICKER POPPER MOBILE FIX ONLY
 --------------------------------*/
 /* Show styled scrollbars in Safari, Chrome, Edge */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f3f4f6; /* light gray */
-}
-
-::-webkit-scrollbar-thumb {
-  background: #9ca3af; /* gray */
-  border-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
-}
-
    @keyframes pulseLogo {
           0% { transform: scale(1); opacity: 1; }
           50% { transform: scale(1.2); opacity: 0.7; }
@@ -178,4 +161,30 @@ body {
           animation: pulseLogo 1.5s ease-in-out infinite;
         }
 
-        
+        /* container */
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* track */
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+}
+
+/* thumb */
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.7);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(96, 165, 250, 0.9);
+  background-clip: content-box;
+}

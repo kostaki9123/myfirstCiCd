@@ -224,9 +224,9 @@ const ExpenseDialog = ({
         )}
       </DialogTrigger>
 
-      <DialogContent className="w-[300px] text-black rounded-lg sm:max-h-[90%] p-1">
+      <DialogContent className="w-[300px] bg-[#010038] border border-white/10  rounded-lg sm:max-h-[90%] p-1">
         <form onSubmit={handleSubmit}>
-          <Card>
+          <Card className='bg-[#010038] border border-white/10 text-white border-none '>
             <CardHeader>
               <DialogTitle>
                 {expense || expenseId ? 'Update Expense' : 'Add Expense'}
@@ -246,12 +246,12 @@ const ExpenseDialog = ({
                     <div className="relative flex items-center">
                       <Input
                         type="number"
-                        step="0.01"
+                        step="1"
                         value={amount}
                         onChange={(e) =>
                           setAmount(e.target.value === '' ? '' : Number(e.target.value))
                         }
-                        className="pl-[60px]"
+                        className="pl-[48px]"
                       />
                       <div className="absolute">
                         <CurrencyDropdown
@@ -271,6 +271,7 @@ const ExpenseDialog = ({
                   <div>
                     <Label>Description</Label>
                     <Input
+                      className=' placeholder:text-white/70'
                       placeholder="e.g. Dinner"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
@@ -304,6 +305,7 @@ const ExpenseDialog = ({
               <Button
                 type="submit"
                 disabled={isLoading || isFetching || !category || !currency}
+                className='bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg shadow-blue-950/40 px-4 py-2 ml-4 rounded-xl font-medium transition-all duration-200 active:scale-[0.98]'
               >
                 {isLoading
                   ? expense || expenseId

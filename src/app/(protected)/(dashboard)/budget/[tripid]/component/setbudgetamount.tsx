@@ -74,7 +74,7 @@ const Setbudgetamount = ({
       {/* -------- BEFORE (no budget) -------- */}
       {!isEditing && !savedBudget && (
         <div className="absolute inset-x-2 bottom-2 top-11  flex items-center justify-center">
-          <Button className="bg-white/10 hover:bg-white/5" onClick={() => setIsEditing(true)}>Set budget</Button>
+          <Button className="bg-white/10 hover:bg-white/5 " onClick={() => setIsEditing(true)}>Set budget</Button>
         </div>
       )}
 
@@ -84,7 +84,7 @@ const Setbudgetamount = ({
           <p className="text-lg font-medium">
             {savedBudget.currency} {savedBudget.amount}{currencysymbol?.[0].symbol}
           </p>
-          <Button variant="outline" className="bg-white/10 hover:bg-white/5" onClick={() => setIsEditing(true)}>
+          <Button variant="outline" className="bg-white/10 hover:bg-white/5 hover:text-white border-none" onClick={() => setIsEditing(true)}>
             Edit
           </Button>
         </div>
@@ -113,7 +113,7 @@ const Setbudgetamount = ({
 
           <div className="h-1/2 flex justify-center gap-3 items-start pt-2">
             <Button
-              className="w-[89px]"
+              className="w-[89px] border border-red-400/40 bg-transparent text-red-300 hover:bg-red-500/10 hover:border-red-400/60"
               variant="destructive"
               onClick={handleCancel}
               disabled={isLoading}
@@ -122,7 +122,7 @@ const Setbudgetamount = ({
             </Button>
 
             <Button
-              className="w-[56px]"
+              className="w-[56px] bg-blue-600 hover:bg-blue-700 text-white"
               onClick={handleSetBudget}
               disabled={isLoading}
             >

@@ -63,6 +63,8 @@ const Createplaceform = (props : props) => {
   );
   const [isLoading, setIsLoading] = useState(false);
 
+  const [generalError, setGeneralError] = useState<string>("");
+
   // --------------------
   // ✅ Submit Handler
   // --------------------
@@ -73,6 +75,12 @@ const Createplaceform = (props : props) => {
         : [];
 
     try {
+
+      if(props.index === 10){
+           setGeneralError('Maximum limit reached.')
+           return
+      }
+
       const validation = formSchema.safeParse({
         place: selectedPlace,
         dates,
@@ -134,7 +142,7 @@ const Createplaceform = (props : props) => {
       className="w-full m-1 text-white/90"
     >
       <p className="text-white/60 text-sm pb-5">
-        The place circle represents a city, town, or village you will stay.
+        Destination represents a city, town, or village you will stay.
       </p>
 
       {/* PLACE */}
@@ -168,11 +176,16 @@ const Createplaceform = (props : props) => {
         <p className="text-red-500 text-sm mt-1">{errorMessages.dates}</p>
       )}
 
+    
+
       {/* SUBMIT BUTTON */}
-      <div className="h-14 flex justify-center items-end">
+      <div className="h-14 flex flex-col justify-center items-center">
+          {generalError && (
+              <p className="text-red-500 text-sm mt-4 text-center ">{generalError}</p>
+           )}
         <Button type="submit" disabled={isLoading}       
            className='bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg shadow-blue-950/40 px-4 py-2 ml-4 rounded-xl font-medium transition-all duration-200 active:scale-[0.98]'>
-          {isLoading ? "Creating..." : "Create place circle"}
+          {isLoading ? "Creating..." : "Create destination"}
         </Button>
       </div>
     </form>

@@ -17,8 +17,8 @@ const Humburger = () => {
           <Link href={`/home/${id}`} >
             <DropdownMenuItem className=' cursor-pointer' >Home</DropdownMenuItem>
           </Link>
-          <Link href={`/createtrip/${id}`} >
-            <DropdownMenuItem className=' cursor-pointer' >Create trip</DropdownMenuItem>
+          <Link href={`/plan/${id}`} >
+            <DropdownMenuItem className=' cursor-pointer' >Plan</DropdownMenuItem>
           </Link>
           <Link  href={`/itinerary/${id}`}>
              <DropdownMenuItem className=' cursor-pointer'>Itinerary</DropdownMenuItem>

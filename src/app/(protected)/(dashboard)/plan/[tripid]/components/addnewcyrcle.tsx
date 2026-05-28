@@ -126,37 +126,19 @@ useEffect(() => {
               </div>
           </div>
          }
-              {showHint && props.lengtharr === 0  && (
-  <div  className="absolute  360:top-[30%] left-[266px] xxs:top-[205px] xxs:left-[120px] -translate-x-1/2 bg-white rounded-2xl shadow-lg border border-gray-200 p-4 w-64 text-gray-900 z-50">
-    <h4 className="font-semibold text-base mb-1">First step</h4>
-    <p className="text-sm text-gray-700">
-      Click the circle to add your first place. After that, you can add a transport to connect places.
-    </p>
-
-    {/* Fixed small pointer triangle */}
-    <div className="absolute top-[-10px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-r-[10px] border-b-[10px] border-l-transparent border-r-transparent border-b-white"></div>
-  </div>
-)}
+            
 
          <DialogContent  className=" z-[52]  bg-[#07124F]/95 border border-white/10   sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-1  360:p-2 sm:p-2 rounded-xl">
           <DialogTitle></DialogTitle>
           <DialogDescription>
           </DialogDescription>
           <div className="relative">
-      {showTransportHint && props.lengtharr === 0  &&
- <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-3 mb-4 w-full text-gray-900 animate-pulse">
-    <h4 className="font-semibold text-base mb-1">Step 2</h4>
-    <p className="text-sm text-gray-700">
-      You can either add a <strong>Place Circle</strong> for a location you’ll visit, 
-      or a <strong>Moving Circle</strong> to represent the transport between places.
-    </p>
-  </div>
-}
+  
 
           <Tabs defaultValue="account" className="  343:w-full ">
               <TabsList className="grid  grid-cols-2 w-full  text-white/90 bg-[#07124F]/95 ">
-                   <TabsTrigger value="account" className='bg-[#07124F]/95' >Place circle </TabsTrigger>
-                   <TabsTrigger value="password" className='bg-[#07124F]/95'>Moving circle</TabsTrigger>
+                   <TabsTrigger value="account" className='bg-[#07124F]/95' >Add destination </TabsTrigger>
+                   <TabsTrigger value="password" className='bg-[#07124F]/95'>Add transport</TabsTrigger>
               </TabsList>
               <TabsContent value="account" className='px-5  w-full'>
                  <Createplaceform index={props.index} tripId={props.tripId} minDate={props.minDate}    onSubmitSuccess={handleTransportAdded}  />

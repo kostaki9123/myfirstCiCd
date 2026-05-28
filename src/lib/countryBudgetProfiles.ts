@@ -209,5 +209,6 @@ export const countryBudgetProfilesEUR: Record<string, BudgetProfile> = {
   NR: { currency: "EUR", Economy: 40, Balanced: 75, Luxury: 130 },  // Nauru 🇳🇷
   PW: { currency: "EUR", Economy: 40, Balanced: 75, Luxury: 130 },  // Palau 🇵🇼
   TV: { currency: "EUR", Economy: 40, Balanced: 75, Luxury: 130 },  // Tuvalu 🇹🇻
+  IN: { currency: "EUR", Economy: 25, Balanced: 55, Luxury: 140 }, // India 🇮🇳
 }
 

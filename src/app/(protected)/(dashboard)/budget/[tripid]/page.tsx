@@ -4,7 +4,7 @@ import Expenseschart from './component/expenseschart'
 import Setbudgetamount from './component/setbudgetamount'
 import Allexpenses from './component/allexpenses'
 import Currency from './component/currency'
-import { getPoints } from '../../createtrip/[tripid]/action'
+import { getPoints } from '../../plan/[tripid]/action'
 import TripBudgetCard from './component/Avgpruductprice/avgproductprice'
 import { getBudgetByTripId } from './action'
 

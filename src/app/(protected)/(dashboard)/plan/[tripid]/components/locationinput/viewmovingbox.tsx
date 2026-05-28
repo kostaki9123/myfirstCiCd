@@ -9,6 +9,8 @@ import DatePickerExample from "./datepicker";
 import { updatePoint } from "../../action";
 import CreateTripNotesBox from "../notes";
 import { z } from "zod";
+import { CiCircleCheck } from "react-icons/ci";
+
 
 const tripSegmentSchema = z.object({
   fromName: z.string().min(1, "From location is required"),
@@ -61,6 +63,7 @@ const ViewMovingBoxModal = ({ data }: Props) => {
   const [formData, setFormData] = useState<TripSegment>(data);
   const [notes, setNotes] = useState<string>(data.notes); 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [showUpdated, setShowUpdated] = useState(false);
 
   // -----------------------------
   // Generic value update
@@ -151,7 +154,17 @@ const ViewMovingBoxModal = ({ data }: Props) => {
     fd.append("notes", notes);
 
     // example:
-     await updatePoint(fd);
+     try {
+          const update = await updatePoint(fd);
+          setShowUpdated(true);
+
+          setTimeout(() => {
+            setShowUpdated(false);
+          }, 3000);
+
+        } catch (e) {
+          console.error(e);
+        }
 
   };
 
@@ -231,8 +244,21 @@ const ViewMovingBoxModal = ({ data }: Props) => {
            )}
         </div>
 
+        {showUpdated && (
+           <div className="absolute bottom-9 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-xl  bg-white/10 backdrop-blur-md px-4 py-2 text-green-200 shadow-lg">
+               <CiCircleCheck
+                 className="text-green-400"
+                 size={20}
+               />
+             
+               <div className="text-sm font-medium">
+                 Updated successfully
+               </div>
+            </div>
+         )}
+
       {/* Save */}
-      <div className="w-full flex items-end justify-end">
+      <div className="w-full flex gap-2 items-end justify-end">
         <Button onClick={handleSave}              
          className='bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg shadow-blue-950/40 px-4 py-2 rounded-xl font-medium transition-all duration-200 active:scale-[0.98]'
          >Save

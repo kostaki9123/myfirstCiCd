@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, MapPin} from "lucide-react";
 import { MdAddLocationAlt } from "react-icons/md";
-import { getPoints } from "../../createtrip/[tripid]/action";
+import { getPoints } from "../../plan/[tripid]/action";
 import Link from "next/link";
 import Transportui from "./components/transportui";
 import Placeui from "./components/placeui";
@@ -85,7 +85,7 @@ const route = formatRoute(points);
 
            {/* Itinerary */}
            {points.length === 0 && (
-            <Link href={`/createtrip/${tripid}`}>
+            <Link href={`/plan/${tripid}`}>
               <div
                 className="group  w-[80%] xxs:w-full 535:max-w-[370px] flex flex-col items-center justify-center rounded-2xl 
                 border border-white/10 bg-white/10  hover:bg-white/15 text-white  p-8 shadow-md transition hover:shadow-lg hover:-translate-y-1 cursor-pointer"

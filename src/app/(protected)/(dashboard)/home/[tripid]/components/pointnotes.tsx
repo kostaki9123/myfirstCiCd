@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import React, { useState } from 'react'
 import { z } from 'zod'
 import { updatePlace } from '../../../itinerary/[tripid]/action'
-import { updatePoint } from '../../../createtrip/[tripid]/action'
+import { updatePoint } from '../../../plan/[tripid]/action'
 
 type props = {
     id: string

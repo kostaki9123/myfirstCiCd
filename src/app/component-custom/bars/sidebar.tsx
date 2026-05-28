@@ -14,7 +14,7 @@ const Sidebar = () => {
   // Sidebar items
     const menuItems = [
       { name: 'Home', path: `/home/${id}` },
-      { name: 'Create trip', path: `/createtrip/${id}`  },
+      { name: 'Plan', path: `/plan/${id}`  },
       { name: 'Itinerary', path: `/itinerary/${id}`  },
       { name: 'Budget', path: `/budget/${id}`  },
     ];
@@ -27,7 +27,7 @@ const Sidebar = () => {
           {menuItems.map((item) => (
             <Link key={item.path} href={item.path} className='py-2 text-base  relative  flex items-center gap-3 justify-start pl-[70px]' >
                 {item.name === "Home" &&<div className=' text-xl'><CiHome/></div>}
-                {item.name === "Create trip" && <div className=' text-xl'><IoMdCreate/></div> }
+                {item.name === "Plan" && <div className=' text-xl'><IoMdCreate/></div> }
                 {item.name === "Itinerary" && <div className=' text-xl'><GrSchedule/></div>}
                 {item.name === "Budget" && <div className=' text-xl'> <LuWallet/> </div>}
                {pathname === item.path &&

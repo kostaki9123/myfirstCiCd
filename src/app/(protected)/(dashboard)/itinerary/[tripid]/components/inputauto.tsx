@@ -226,7 +226,7 @@ const LocationInput = ({
         <Button
           onClick={addPlace}
           disabled={loadingForCustomAdd}
-          className="px-4 py-2 rounded-lg"
+          className="bg-blue-600 hover:bg-blue-700 text-white"
         >
           {loadingForCustomAdd ? "Adding..." : "Add"}
         </Button>
@@ -242,7 +242,7 @@ const LocationInput = ({
                 index === activeIndex ? "bg-gray-100" : ""
               }`}
             >
-              <div className="font-medium text-sm">
+              <div className="font-medium text-sm text-gray-700">
                 {p.structured_formatting.main_text}
               </div>
               <div className="text-xs text-gray-500">

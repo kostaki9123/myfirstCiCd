@@ -75,7 +75,7 @@ const ExpenseCategorydropdown = ({
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
-          className="w-32 max-h-44 rounded-md bg-white z-50  border shadow-md
+          className="w-32 max-h-44 text-black rounded-md bg-white z-50  border shadow-md
                      data-[state=open]:animate-in data-[state=closed]:animate-out
                      data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
                      data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95

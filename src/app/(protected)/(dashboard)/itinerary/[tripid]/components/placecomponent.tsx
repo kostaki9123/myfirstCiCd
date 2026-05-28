@@ -156,7 +156,7 @@ console.log('category',  props.category)
   const isAdded = props.alreadyAdded || justAdded;
 
   return (
-   <div className="relative flex flex-col sm:max-w-xl bg-white rounded-xl shadow-md hover:shadow-lg transition duration-200 p-4 ">
+   <div className="relative flex flex-col sm:max-w-xl bg-white/10 rounded-xl shadow-md hover:shadow-lg transition duration-200 p-4 ">
 
   {/* TOP SECTION */}
   <div className="flex flex-col sm:flex-row gap-3">
@@ -194,9 +194,9 @@ console.log('category',  props.category)
       {/* Distance + Rating */}
       <div className="flex justify-between items-center mt-2 text-sm">
         <div className="flex flex-col">
-             <p>{props.category}</p>
+             <p className="text-white/90">{props.category}</p>
              {props.LocationComments &&
-              <p className="text-xs text-gray-500 line-clamp-3 ">
+              <p className="text-xs text-white/70 line-clamp-3 ">
                 {props.LocationComments}
               </p> 
              }
@@ -208,7 +208,7 @@ console.log('category',  props.category)
         </div>
         <div className="flex items-center gap-1">
           <IoStar className="text-yellow-500" size={14} />
-          <span className="font-medium text-gray-800 text-sm">
+          <span className="font-medium text-white/90 text-sm">
             {props.rating ? props.rating.toFixed(1) : "N/A"}
           </span>
          </div>
@@ -218,12 +218,12 @@ console.log('category',  props.category)
       {props.Priceperday > 0  &&
        <div className="mt-2 flex justify-between items-end"> 
            <div>
-              <div className="text-sm font-semibold text-gray-900"> {props.Priceperday}$
+              <div className="text-sm font-semibold text-white/90"> {props.Priceperday}$
                  {props.type === 'ACCOMMODATION' &&
-                 <span className="text-xs font-normal text-gray-500">/ night</span>
+                 <span className="text-xs font-normal text-white/60">/ night</span>
                   }
                 </div> 
-              <div className="text-[10px] text-gray-400"> estimated price </div> 
+              <div className="text-[10px] text-white/60"> estimated price </div> 
            </div>
       </div>
       }
@@ -246,7 +246,7 @@ console.log('category',  props.category)
     <a href={props.affiliatelink ? props.affiliatelink : googleLink!} target="_blank" className="flex-1">
       <Button
         variant="outline"
-        className="w-full h-9 text-sm"
+        className="w-full text-black h-9 text-sm"
       >
         View
       </Button>

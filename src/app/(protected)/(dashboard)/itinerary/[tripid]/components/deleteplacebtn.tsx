@@ -63,8 +63,7 @@ const Deleteplacebtn = ({ placeId, pointId }: Props) => {
          }
        }}
        className={`
-         bg-red-600 hover:bg-red-700 active:bg-red-800
-         text-white transition p-2 rounded-full
+         border border-red-400/40 bg-transparent text-red-300 hover:bg-red-500/10 hover:border-red-400/60 transition p-2 rounded-full
          cursor-pointer select-none
          focus:outline-none focus:ring-2 focus:ring-red-400
         ${isLoading || justDeleted ? "opacity-50 pointer-events-none" : ""}
