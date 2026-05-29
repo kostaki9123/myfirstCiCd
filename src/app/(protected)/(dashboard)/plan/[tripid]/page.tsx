@@ -24,11 +24,11 @@ const Page = async ({ params }: PageProps) => {
     const allPlaces = placesPerPoint.flat();
 
   return (
-     <div className=' min-h-[490px] bg-gray-500  bottom-0 absolute right-0 left-0 top-0  flex flex-col '>
+     <div className=' min-h-[490px] bg-[#010038] bottom-0 absolute right-0 left-0 top-0  flex flex-col '>
         <div className=' h-[45%]  xxs:block hidden    ' >
            <Tripboard  tripId={tripid} cyrclesArr={points} />
         </div>
-        <div className=' h-[55%]  w-full xxs:block hidden bg-slate-500  ' >
+        <div className=' h-[55%]  w-full xxs:block hidden  ' >
              <Mapprovider cyrclesArr={points} allPlaces={allPlaces} /> 
         </div>
 

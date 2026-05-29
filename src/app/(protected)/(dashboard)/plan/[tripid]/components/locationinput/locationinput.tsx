@@ -338,7 +338,7 @@ function PlaceSearch({
         {/* Mobile modal */}
         {mobileMode && (
           <div
-            className={`fixed inset-0 z-[53] bg-white ${
+            className={`fixed inset-0 z-[53] bg-[#010038] ${
               onMovingbox ? "top-[-30px]" : "top-[-100px]"
             } flex flex-col`}
             onClick={handleMobileClose}
@@ -377,8 +377,8 @@ function PlaceSearch({
                        onClick={() => handleSelect(p)}
                        className={`px-3 py-2 cursor-pointer transition
                          ${i === activeIndex
-                           ? "bg-gray-100"
-                           : "hover:bg-gray-100"
+                           ? "bg-white/10"
+                           : "hover:bg-white/10"
                          }
                        `}
                         >
