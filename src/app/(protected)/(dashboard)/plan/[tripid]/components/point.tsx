@@ -300,6 +300,7 @@ const Point =  (props:Props) => {
             <DialogHeader className='flex justify-start  items-start'>
               <DialogTitle className=' text-xl w-[90%] '>
                   <PlaceSearchWrapper
+                      Placeholder=''
                       onPlaceSelected={(place) => {
                         setSelectedPlace(place)
                         setIsDirty(true);
@@ -332,11 +333,8 @@ const Point =  (props:Props) => {
                  {error}
                </div>
              )}
-            
 
-             <ViewPlaceMoadal pointId={props.data.id} tripId={props.tripId}  />
-
-               {showUpdated && (
+              {showUpdated && (
                         <div className="absolute bottom-9 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-xl  bg-white/10 backdrop-blur-md px-4 py-2 text-green-200 shadow-lg">
                             <CiCircleCheck
                               className="text-green-400"
@@ -347,13 +345,17 @@ const Point =  (props:Props) => {
                               Updated successfully
                             </div>
                          </div>
-                      )}
-                 
-            {isDirty && (
-            <div className="flex justify-end ">
-                <Button className='bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg shadow-blue-950/40 px-4 py-2 rounded-xl font-medium transition-all duration-200 active:scale-[0.98]' onClick={handleSave}>Save</Button>
+                )}
+
+             {isDirty && (
+            <div className="flex justify-end  ">
+                <Button className='bg-[#0356BC] mb-10 787:mb-0 hover:bg-[#0466D9] text-white border border-white/10 shadow-lg shadow-blue-950/40 px-4 py-2 rounded-xl font-medium transition-all duration-200 active:scale-[0.98]' onClick={handleSave}>Save</Button>
             </div>
           )}
+            
+
+             <ViewPlaceMoadal pointId={props.data.id} tripId={props.tripId}  />                 
+            
           </DialogContent>
      </Dialog>
      {props.datalenght === props.index + 1 && (

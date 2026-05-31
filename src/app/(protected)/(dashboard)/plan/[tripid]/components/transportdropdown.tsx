@@ -42,7 +42,7 @@ export default function TransportDropdown({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="w-44 justify-between text-white bg-white/10 hover:bg-white/5 hover:text-white shadow-sm rounded-xl"
+          className="w-full justify-between text-white bg-white/10 hover:bg-white/5 hover:text-white shadow-sm rounded-lg"
         >
           {selected ? (
             <span className="flex items-center gap-2">
@@ -61,7 +61,7 @@ export default function TransportDropdown({
         className="w-44 z-[55] max-h-60 overflow-y-auto rounded-xl shadow-lg border border-gray-100 bg-white scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
         align="start"
       >
-        <DropdownMenuLabel className="text-gray-500 text-xs uppercase tracking-wide px-2 py-1">
+        <DropdownMenuLabel className="text-gray-500  text-xs uppercase tracking-wide px-2 py-1">
           Transport Modes
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

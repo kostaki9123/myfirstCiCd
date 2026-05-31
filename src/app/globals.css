@@ -93,7 +93,7 @@ body {
   }
 
   .date-only .react-datepicker__day {
-    width: 1.8rem !important;
+    
     height: 1.5rem !important;
     line-height: 1.5rem !important;
     font-size: 0.65rem !important;
@@ -112,7 +112,7 @@ body {
 
   .date-only .react-datepicker__time-container {
     font-size: 0.7rem !important;
-    width: 60px !important;
+    
   }
 
   .date-only .react-datepicker__time-list-item {

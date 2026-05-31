@@ -20,6 +20,7 @@ type Props = {
   lat: number;
   lng: number;
   radius?: number; // meters (default 5000)
+  placeholder : string
 };
 
 const LocationInput = ({
@@ -32,6 +33,7 @@ const LocationInput = ({
   lat,
   lng,
   radius = 5000,
+  placeholder
 }: Props) => {
   const [loadingForCustomAdd, setLoadingForCustomAdd] = useState(false);
   const [errorMessagesForCustomAdd, setErrorMessagesForCustomAdd] =
@@ -216,7 +218,7 @@ const LocationInput = ({
       <div className="flex gap-2">
         <Input
           ref={inputRef}
-          placeholder="Search places nearby..."
+          placeholder={`${placeholder}`}
           defaultValue={defaultValue}
           onChange={handleChange}
           onKeyDown={handleKeyDown}

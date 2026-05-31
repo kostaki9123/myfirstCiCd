@@ -126,7 +126,7 @@ if (loading) {
 
 
   return (
-    <div className="pl-0 flex flex-col 820:flex-row gap-6 max-h-[375px] items-start justify-start w-full overflow-x-auto overflow-y-auto p-4 ">
+    <div className="pl-0 flex flex-col 820:flex-row gap-6 max-h-[315px] items-start justify-start w-full overflow-x-auto overflow-y-auto p-4 ">
       {/* ---------------- ACCOMMODATION ---------------- */}
       <div className="flex-shrink-0 relative flex flex-col    overflow-auto gap-2 min-h-[13rem] w-full sm:w-[250px] rounded-lg p-4">
         <h4 className="text-base font-semibold text-center mb-2">

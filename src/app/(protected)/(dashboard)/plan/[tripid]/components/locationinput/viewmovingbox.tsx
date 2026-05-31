@@ -179,6 +179,7 @@ const ViewMovingBoxModal = ({ data }: Props) => {
         <div className="flex flex-col gap-1">
           <Label>From</Label>
           <PlaceSearchWrapper
+            Placeholder=""
             onMovingbox
             apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}
             defaultQuery={data.fromName}
@@ -193,6 +194,7 @@ const ViewMovingBoxModal = ({ data }: Props) => {
         <div className="flex flex-col gap-1">
           <Label>To</Label>
           <PlaceSearchWrapper
+            Placeholder=""
             onMovingbox
             apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}
             defaultQuery={data.toName}

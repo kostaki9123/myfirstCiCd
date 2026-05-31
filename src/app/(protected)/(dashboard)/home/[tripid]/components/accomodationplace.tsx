@@ -69,8 +69,8 @@ const Accomodationplace = (props: props) => {
         <CardHeader className="flex flex-row gap-2 p-3">
           {/* LEFT */}
           <div className="flex items-start gap-2 ">
-            <CardTitle>{props.name}</CardTitle>
-            <MdHotel className="text-4xl 535:text-xl" />
+            <CardTitle className="  max-w-[130px]  535:max-w-none line-clamp-2 535:line-clamp-none  ">{props.name}</CardTitle>
+            <MdHotel className="text-lg 535:text-xl " />
 
             {props.paymentStatus === "PAID" && (
               <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-green-100 text-green-700">
@@ -142,7 +142,7 @@ const Accomodationplace = (props: props) => {
             )}
           </div>
 
-          <Notes internalId={props.internalId} notes={props.notes} />
+          <Notes internalId={props.internalId} notes={props.notes} forAccomodation />
         </CardContent>
       </Card>
     </div>

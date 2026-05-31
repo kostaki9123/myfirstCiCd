@@ -19,6 +19,7 @@ interface PlaceSearchWrapperProps {
   onMovingbox?: boolean;
   defaultQuery?: string;
   defaultPlace?: PlaceResult;
+  Placeholder : string
 }
 
 export default function PlaceSearchWrapper({
@@ -27,6 +28,7 @@ export default function PlaceSearchWrapper({
   onMovingbox,
   defaultQuery,
   defaultPlace,
+  Placeholder
 }: PlaceSearchWrapperProps) {
   return (
     <APIProvider apiKey={apiKey} libraries={["places"]}>
@@ -36,6 +38,7 @@ export default function PlaceSearchWrapper({
           onPlaceSelected={onPlaceSelected}
           defaultQuery={defaultQuery}
           defaultPlace={defaultPlace}
+          Placeholder={Placeholder}
         />
       </div>
     </APIProvider>
@@ -47,6 +50,7 @@ interface PlaceSearchProps {
   onMovingbox: boolean;
   defaultQuery?: string;
   defaultPlace?: PlaceResult;
+  Placeholder:string
 }
 
 function PlaceSearch({
@@ -54,6 +58,7 @@ function PlaceSearch({
   onMovingbox,
   defaultQuery,
   defaultPlace,
+  Placeholder
 }: PlaceSearchProps) {
   const placesLib = useMapsLibrary("places");
 
@@ -306,7 +311,7 @@ function PlaceSearch({
               onChange={(e) => handleInputChange(e.target.value)}
               onKeyDown={onKeyDown}
               onFocus={handleFocus}
-              placeholder="Search address, business, or place"
+              placeholder={Placeholder}
               className="w-full border rounded-lg  px-3 py-2 focus:outline-none focus:ring-2 placeholder:text-white/60 focus:ring-indigo-300"
             />
             {open && predictions.length > 0 && (
@@ -353,7 +358,7 @@ function PlaceSearch({
                   value={query}
                   onChange={(e) => handleInputChange(e.target.value)}
                   onKeyDown={onKeyDown}
-                  placeholder="Search address, business, or place"
+                  placeholder={Placeholder}
                   className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
                 />
                 <button

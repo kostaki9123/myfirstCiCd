@@ -9,6 +9,7 @@ import { updatePlace } from '../../../itinerary/[tripid]/action'
 type props = {
     internalId: string; 
     notes : string | null | undefined
+    forAccomodation? : boolean
 }
 
 
@@ -66,7 +67,7 @@ const Notes = (props:props) => {
        setNotes(v);
        setIsDirty(true);
      }}
-     placeholder="Opening hours, ticket info, best time to visit…"
+     placeholder={props.forAccomodation ? "Check-in instructions, booking reference, special requests…" : "Opening hours, ticket info, best time to visit…"  }
      showLabel={false}
      fromItinerary={false}
      />

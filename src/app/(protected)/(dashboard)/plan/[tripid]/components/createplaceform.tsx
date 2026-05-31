@@ -142,12 +142,13 @@ const Createplaceform = (props : props) => {
       className="w-full m-1 text-white/90"
     >
       <p className="text-white/60 text-sm pb-5">
-        Destination represents a city, town, or village you will stay.
+        Destination represents a city, town, or village you will visit.
       </p>
 
       {/* PLACE */}
       <Label>Place</Label>
       <PlaceSearchWrapper
+        Placeholder="Enter a city, town, or village you will visit"
         onPlaceSelected={(place) => setSelectedPlace(place)}
         onMovingbox={false}
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}

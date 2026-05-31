@@ -155,13 +155,14 @@ const Createmovingboxform = (props : props) => {
       }}
       className="w-full m-1 text-white/90"
     >
-      <p className="leading-7  [&:not(:first-child)]:mt-6 text-white/60 text-xs md:text-sm pb-1 450:whitespace-nowrap ">
+      <p className="leading-7   [&:not(:first-child)]:mt-6 text-white/60 text-xs md:text-sm pb-1 450:whitespace-nowrap ">
         Transport represents your journey between places.
       </p>
 
       {/* FROM */}
       <Label className=" " >From</Label>
       <PlaceSearchWrapper
+        Placeholder="Where are you leaving from?"
         onPlaceSelected={(place) => setFromPlace(place)}
         onMovingbox={true}
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}
@@ -170,6 +171,7 @@ const Createmovingboxform = (props : props) => {
       {/* TO */}
       <Label>To</Label>
       <PlaceSearchWrapper
+        Placeholder="Where are you going?"
         onPlaceSelected={(place) => setToPlace(place)}
         onMovingbox={true}
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}
@@ -204,6 +206,7 @@ const Createmovingboxform = (props : props) => {
          <CreateTripNotesBox
              value={notes}
              onChange={setNotes}
+             placeholder="e.g. Flight BA117 arrives at 14:30, pick up rental car"
          />
 
       {/* GLOBAL ERROR MESSAGE */}

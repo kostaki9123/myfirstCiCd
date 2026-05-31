@@ -59,8 +59,6 @@ const Addaplace = (props: Props) => {
   const [inputLocation, setInputLocation] = useState<any>();
   const [visibleCount, setVisibleCount] = useState(10);
 
-  const [addedStayss, setAddedStays] = useState<RecommendedPlace[]>([]);
-  const [addedVisitss, setaddedVisits] = useState<RecommendedPlace[]>([]);
   const [loding, setloading] = useState<Boolean>(false);
 
   const [debouncedLocation] = useState(inputLocation);
@@ -224,8 +222,6 @@ const Addaplace = (props: Props) => {
         return;
       }
 
-      console.log('places google api',places)
-
       const compound_code =
       places.find((place: any )=> place?.plus_code?.compound_code)
         ?.plus_code?.compound_code || "";
@@ -344,6 +340,11 @@ const Addaplace = (props: Props) => {
             >
               <LocationInput
                 inputName=""
+                placeholder={props.triggerName
+                      .toLowerCase()
+                      .includes("stay")
+                      ? 'Add custom accommodation'
+                      : 'Add custom place'}
                 lat={props.latitude}
                 lng={props.longitude}
                 addedPlaces={props.addedPlaces}
