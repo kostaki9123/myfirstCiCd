@@ -274,7 +274,7 @@ const finalCenter = useMemo(() => {
 {addedplacetovisit?.map((place, key) => (
   <Marker
     key={`added-visit-${place.id}`}
-    zIndex={1000}
+    zIndex={999}
     position={place.location}
     icon={{
   url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
@@ -317,7 +317,7 @@ const finalCenter = useMemo(() => {
   <Marker
     key={`added-stay-${place.id}`}
     position={place.location}
-    zIndex={1000}
+    zIndex={999}
     icon={{
       url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
         <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
