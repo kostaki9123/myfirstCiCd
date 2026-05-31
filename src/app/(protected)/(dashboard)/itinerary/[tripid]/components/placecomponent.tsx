@@ -50,6 +50,7 @@ const Placecomponent = (props: Props) => {
   const [justAdded, setJustAdded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
   
  useEffect(() => {
       setIsMobile(isMobileDevice());
@@ -150,8 +151,7 @@ const extractPlaceId = (url?: string | null) => {
       setIsLoading(false);
     }
   };
-console.log("PHOTO REF:", props.photoreference);
-console.log('category',  props.category)
+
 
   const isAdded = props.alreadyAdded || justAdded;
 
@@ -179,7 +179,7 @@ console.log('category',  props.category)
     <div className="relative flex flex-col flex-1 min-w-0 p-1">
 
       {/* Ranking */}
-      <div className="absolute left-1 top-1 w-6 h-6 flex items-center justify-center bg-[#1E90FF] text-white text-xs font-medium rounded">
+      <div className="absolute left-1 top-1 w-6 h-6 flex items-center justify-center bg-[#40E0D0] text-white text-xs font-medium rounded">
         {props.index + 1}
       </div>
 
@@ -194,7 +194,7 @@ console.log('category',  props.category)
       {/* Distance + Rating */}
       <div className="flex justify-between items-center mt-2 text-sm">
         <div className="flex flex-col">
-             <p className="text-white/90">{props.category}</p>
+             <p className="text-white/90">{props.category ? props.category : props.type === 'PLACE_TO_VISIT' ? 'attraction' : 'lodging'}</p>
              {props.LocationComments &&
               <p className="text-xs text-white/70 line-clamp-3 ">
                 {props.LocationComments}

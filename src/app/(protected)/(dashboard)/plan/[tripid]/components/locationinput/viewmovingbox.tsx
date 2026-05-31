@@ -238,6 +238,7 @@ const ViewMovingBoxModal = ({ data }: Props) => {
           <div className="flex flex-col gap-1 ">
           <Label>Notes</Label>
             <CreateTripNotesBox
+             placeholder="e.g. Flight BA117 arrives at 14:30, pick up rental car"
              value={notes}
              onChange={setNotes}
             />

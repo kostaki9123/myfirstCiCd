@@ -176,25 +176,37 @@ const transportMarkers = useMemo(() => {
 
   /* ---------------------- MAP CENTER ---------------------- */
 
-  const mapCenter = useMemo(() => {
-    const pts: LatLng[] = [];
+const finalCenter = useMemo(() => {
+  const pts: LatLng[] = [];
 
-    sorted.forEach((i) => {
-      const p = safePoint(i.placeLat, i.placeLng);
-      if (p) pts.push(p);
-      pts.push({ lat: i.fromLat, lng: i.fromLng });
-      pts.push({ lat: i.toLat, lng: i.toLng });
+  // Transport marker positions
+  transportMarkers.forEach((tm) => {
+    pts.push(tm.pos);
+  });
+
+  // POINT locations
+  sorted
+    .filter((pt) => pt.role === "POINT")
+    .forEach((pt) => {
+      if (pt.placeLat != null && pt.placeLng != null) {
+        pts.push({
+          lat: pt.placeLat,
+          lng: pt.placeLng,
+        });
+      }
     });
 
-    if (!pts.length) return { lat: 39, lng: -98 };
+  if (!pts.length) {
+    return { lat: 39, lng: -98 };
+  }
 
-    return {
-      lat: pts.reduce((s, p) => s + p.lat, 0) / pts.length,
-      lng: pts.reduce((s, p) => s + p.lng, 0) / pts.length,
-    };
-  }, [cyrclesArr]);
+  return {
+    lat: pts.reduce((sum, p) => sum + p.lat, 0) / pts.length,
+    lng: pts.reduce((sum, p) => sum + p.lng, 0) / pts.length,
+  };
+}, [transportMarkers, sorted]);
 
-  const finalCenter = focusplace ?? mapCenter;
+  
 
   /* ---------------------- RENDER ---------------------- */
   return (
@@ -211,7 +223,7 @@ const transportMarkers = useMemo(() => {
           key={i}
           path={path}
           options={{
-            strokeColor: "#FF0000",
+            strokeColor: "#1A1A4F",
             strokeOpacity: 1,
             strokeWeight: 3,
           }}
@@ -229,36 +241,72 @@ const transportMarkers = useMemo(() => {
         .map((pt ,key) => {
           const pos = safePoint(pt.placeLat, pt.placeLng);
           if (!pos) return null;
-          return <Marker key={pt.id} position={pos} label={{ text: String(key + 1) }} zIndex={1000} />;
+          return  <Marker
+            key={pt.id}
+            position={pos}
+            icon={{
+              url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+                <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z"
+                        fill="#1A1A4F"
+                        stroke="#1A1A4F"
+                        stroke-width="1"/>
+          
+                  <circle cx="12" cy="9" r="4" fill="white"/>
+          
+                  <text
+                    x="12"
+                    y="22"
+                    text-anchor="middle"
+                    font-size="10"
+                    fill="white"
+                    font-family="Arial"
+                    font-weight="bold">
+                    ${key + 1}
+                  </text>
+                </svg>
+              `)}`,
+            }}
+            zIndex={1000}
+          />
         })}
 
 {addedplacetovisit?.map((place, key) => (
   <Marker
     key={`added-visit-${place.id}`}
+    zIndex={1000}
     position={place.location}
     icon={{
-      url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-        <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
-          <!-- Blue map pin -->
-          <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#401eff" stroke="#311eff" stroke-width="1"/>
+  url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+    <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
+      <!-- Pin -->
+      <path
+        d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z"
+        fill="#401eff"
+        stroke="#311eff"
+        stroke-width="1"
+      />
 
-          <!-- Circle icon (moved UP) -->
-          <circle cx="12" cy="9" r="4" fill="white"/>
+      <!-- Tourist attraction star -->
+      <path
+        d="M12 4.5 L13.2 7.2 L16.2 7.5 L14 9.4 L14.7 12.2 L12 10.7 L9.3 12.2 L10 9.4 L7.8 7.5 L10.8 7.2 Z"
+        fill="white"
+      />
 
-          <!-- Number label -->
-          <text 
-            x="12" 
-            y="22" 
-            text-anchor="middle" 
-            font-size="10" 
-            fill="white" 
-            font-family="Arial" 
-            font-weight="bold">
-            ${key + 1}
-          </text>
-        </svg>
-      `)}`,
-    }}
+      <!-- Number -->
+      <text
+        x="12"
+        y="22"
+        text-anchor="middle"
+        font-size="10"
+        fill="white"
+        font-family="Arial"
+        font-weight="bold">
+        ${key + 1}
+      </text>
+    </svg>
+  `)}`,
+}}
     title={place.name}
   />
 ))}
@@ -269,7 +317,7 @@ const transportMarkers = useMemo(() => {
   <Marker
     key={`added-stay-${place.id}`}
     position={place.location}
-    zIndex={1}
+    zIndex={1000}
     icon={{
       url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
         <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
@@ -300,19 +348,35 @@ const transportMarkers = useMemo(() => {
 ))}
     
           {/* 🏨 RECOMMENDED STAYS — now numbered */}
-          {recommendedStays?.map((place, idx) => (
+          {recommendedStays?.map((place, key) => (
        <Marker
     key={`visit-${place.id}`}
     position={place.location}
     icon={{
       url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
         <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
-          <!-- Blue map pin -->
-          <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#1E90FF" stroke="#1E90FF" stroke-width="1"/>
-          <!-- Number label inside the pin -->
-          <text x="12" y="13" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${idx + 1}</text>
+          <!-- Pin base -->
+          <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#40E0D0"/>
+          
+
+          <!-- House (final tiny move UP) -->
+          <path d="M8 8.5 L12 4.5 L16 8.5 V13.5 H8 Z" fill="white"/>
+          <rect x="10" y="10.5" width="4" height="3" fill="#40E0D0"/>
+
+          <!-- Number (moved UP) -->
+          <text 
+            x="12" 
+            y="22" 
+            text-anchor="middle" 
+            font-size="10" 
+            fill="white" 
+            font-family="Arial" 
+            font-weight="bold">
+            ${key + 1}
+          </text>
         </svg>
-      `)}`,
+      `)}`
+,
       scaledSize: new google.maps.Size(32, 48),
       anchor: new google.maps.Point(16, 48),
     }}
@@ -321,19 +385,41 @@ const transportMarkers = useMemo(() => {
     ))}
 
       {/* ⭐ RECOMMENDED VISITS — now numbered */}
-     {recommendedVisits?.map((place, idx) => (
+     {recommendedVisits?.map((place, key) => (
   <Marker
     key={`visit-${place.id}`}
     position={place.location}
-    icon={{
-      url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-        <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
-          <!-- Blue map pin -->
-          <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#1E90FF" stroke="#1E90FF" stroke-width="1"/>
-          <!-- Number label inside the pin -->
-          <text x="12" y="13" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${idx + 1}</text>
-        </svg>
-      `)}`,
+     icon={{
+  url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+    <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
+      <!-- Pin -->
+      <path
+        d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z"
+        fill="#40E0D0"
+        stroke="#40E0D0"
+        stroke-width="1"
+      />
+
+      <!-- Tourist attraction star -->
+      <path
+        d="M12 4.5 L13.2 7.2 L16.2 7.5 L14 9.4 L14.7 12.2 L12 10.7 L9.3 12.2 L10 9.4 L7.8 7.5 L10.8 7.2 Z"
+        fill="white"
+      />
+
+      <!-- Number -->
+      <text
+        x="12"
+        y="22"
+        text-anchor="middle"
+        font-size="10"
+        fill="white"
+        font-family="Arial"
+        font-weight="bold">
+        ${key + 1}
+      </text>
+    </svg>
+  `)}`
+   ,
       scaledSize: new google.maps.Size(32, 48),
       anchor: new google.maps.Point(16, 48),
     }}

@@ -4,7 +4,8 @@ import { useState } from "react";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { APIProvider } from "@vis.gl/react-google-maps";
-import { BsHouseAddFill } from "react-icons/bs";
+import { IoAddCircleSharp } from "react-icons/io5";
+
 
 import { Place } from "../../../../../../../backend/entities/models/place";
 import { ItineraryPoint } from "./itineraryboard";
@@ -222,6 +223,8 @@ const Addaplace = (props: Props) => {
         return;
       }
 
+      console.log('lat' ,places)
+
       const compound_code =
       places.find((place: any )=> place?.plus_code?.compound_code)
         ?.plus_code?.compound_code || "";
@@ -265,7 +268,7 @@ const Addaplace = (props: Props) => {
             a.pointId === props.selectedPlace.id
         ),
         googleMapsUri: `https://www.google.com/maps/place/?q=place_id:${p.place_id}`,
-        category: p.TypeOflodgindOrPlace || 'lodging'
+        category: p.TypeOflodgindOrPlace
       }));
 
       sessionStorage.setItem(
@@ -273,10 +276,17 @@ const Addaplace = (props: Props) => {
         JSON.stringify(places)
       );
 
+      console.log('ddd',places)
+      if(places.length === 0){
+         setPlacesResult([])
+      }else{
       setPlacesResult(places);
+      }
       setloading(false)
-      console.log('reqqwwww',placesResult)
+  
     } catch (err) {
+
+      setloading(false)
       console.error("fetchPlaces error:", err);
     }
   };
@@ -319,7 +329,7 @@ const Addaplace = (props: Props) => {
         }}
         className="bg-white/10 hover:bg-white/5 rounded-md min-w-[260px] h-10 flex items-center justify-center w-full gap-7 p-5 cursor-pointer"
       >
-        <BsHouseAddFill fontSize="20px" />
+        <IoAddCircleSharp fontSize="20px" />
 
         <div className="text-base font-medium">
           {props.triggerName}
@@ -366,7 +376,11 @@ const Addaplace = (props: Props) => {
                   <span className="text-gray-500">Loading...</span>
           </div>
           : 
-           <>
+           <> {placesResult.length === 0 &&
+              <div className="flex justify-center items-center h-32">
+                      <span className="text-gray-500">Places not found</span>
+              </div>
+              }
               {placesResult
               .slice(0, visibleCount)
               .map((place: any, index: number) => (
