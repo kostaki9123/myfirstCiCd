@@ -133,17 +133,20 @@ export default function PlaceToVisitCard(props: Props) {
           <div className="flex items-center  gap-2 pl-1">
             <div className="w-8 h-10">
                    <svg viewBox="0 0 24 36" className="w-full h-full">
-                     {/* Blue pin */}
+                     {/* Pin */}
                      <path
                        d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z"
                        fill="#401eff"
-                       stroke="#311eff"
+                       stroke="#401eff"
                        strokeWidth="1"
                      />
-                 
-                     {/* Circle icon */}
-                     <circle cx="12" cy="9" r="4" fill="white" />
-                 
+                
+                     {/* Tourist attraction star */}
+                     <path
+                       d="M12 4.5 L13.2 7.2 L16.2 7.5 L14 9.4 L14.7 12.2 L12 10.7 L9.3 12.2 L10 9.4 L7.8 7.5 L10.8 7.2 Z"
+                       fill="white"
+                     />
+                
                      {/* Number */}
                      <text
                        x="12"
@@ -157,7 +160,7 @@ export default function PlaceToVisitCard(props: Props) {
                        {props.index + 1}
                      </text>
                    </svg>
-            </div>
+                </div>
 
             <div className="font-semibold flex items-center gap-1 hover:underline max-w-[140px] ">
               {props.name}

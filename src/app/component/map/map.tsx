@@ -390,8 +390,8 @@ const finalCenter = useMemo(() => {
     key={`visit-${place.id}`}
     position={place.location}
      icon={{
-  url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-    <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
+     url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+     <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
       <!-- Pin -->
       <path
         d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z"
