@@ -60,6 +60,7 @@ export async function createPlace(formData: FormData) {
       affiliatelink 
     };
 
+
     const result = await createPlaceController(input);
 
   //  console.log("✅ Point created successfully:", result);
