@@ -1,6 +1,8 @@
 "use client";
 
-import PlaceForm from "../components/form";
+import { APIProvider } from "@vis.gl/react-google-maps";
+import PlaceForm from "../components/createform";
+
 
 
 export default function NewPlacePage() {
@@ -26,10 +28,17 @@ export default function NewPlacePage() {
         Create New Place
       </h1>
 
+    <APIProvider
+              apiKey={
+                process.env.NEXT_PUBLIC_GOOGLE_MAP_API!
+              }
+            >
       <PlaceForm
-        initialData={{}}   // empty form
+        initialData={{}}
         onSubmit={createPlace}
       />
+    </APIProvider>
+      
     </div>
   );
 }

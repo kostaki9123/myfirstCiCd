@@ -209,7 +209,7 @@ setPlaceType((initialData.placetype || []).join(", "));  // ✅ change
     .map((v) => v.trim())
     .filter(Boolean),
 
-  placeType: placetype
+  placetype: placetype
   .split(",")
   .map((v) => v.trim())
   .filter(Boolean),

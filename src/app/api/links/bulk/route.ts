@@ -115,7 +115,7 @@ export async function POST(req: Request) {
       const extra = await prisma.placeAffiliateLink.findMany({
         where: baseWhere,
         orderBy: { Reccomended: "desc" },
-        take: 20 - dbResults.length
+        take: 20 
       });
 
       mergeUnique(extra);
