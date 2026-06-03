@@ -122,7 +122,7 @@ export async function POST(req: Request) {
     }
 
     // ---------------- FILL FROM GOOGLE PLACES ----------------
-    const remainingNeeded = Math.max(20 - dbResults.length, 0);
+    const remainingNeeded = 0
 
     const filledPlaces = places.slice(0, remainingNeeded);
 
@@ -131,16 +131,16 @@ export async function POST(req: Request) {
     
     const seenPlaceIds = new Set<string>();
     
-    const finalRecommendations = merged.filter((item) => {
-      if (!item.place_id) return true;
-    
-      if (seenPlaceIds.has(item.place_id)) {
-        return false;
-      }
-    
-      seenPlaceIds.add(item.place_id);
-      return true;
-    }).slice(0, 20);
+     const finalRecommendations = merged.filter((item) => {
+       if (!item.place_id) return true;
+     
+       if (seenPlaceIds.has(item.place_id)) {
+         return false;
+       }
+     
+       seenPlaceIds.add(item.place_id);
+       return true;
+     }).slice(0, 20);
 
     // ---------------- DEV INSERT ----------------
     if (process.env.ADMIN_EMAIL === "kostantinospapoui@gmail.com") {

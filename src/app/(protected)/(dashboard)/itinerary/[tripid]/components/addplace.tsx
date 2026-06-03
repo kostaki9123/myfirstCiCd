@@ -210,7 +210,7 @@ const Addaplace = (props: Props) => {
         body: JSON.stringify({
           lat: centerLat,
           lng: centerLng,
-          types: includedTypes,
+          types: [],
         }),
       });
 
@@ -223,7 +223,6 @@ const Addaplace = (props: Props) => {
         return;
       }
 
-      console.log('lat' ,places)
 
       const compound_code =
       places.find((place: any )=> place?.plus_code?.compound_code)
@@ -377,8 +376,9 @@ const Addaplace = (props: Props) => {
           </div>
           : 
            <> {placesResult.length === 0 &&
-              <div className="flex justify-center items-center h-32">
-                      <span className="text-gray-500">Places not found</span>
+              <div className="flex justify-center items-center h-32  w-full">
+                      <span className="text-white/70 text-center max-w-[60%]  ">No recommendations available yet — 
+                      coming soon.You can add places manually in the meantime.</span>
               </div>
               }
               {placesResult

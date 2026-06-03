@@ -53,7 +53,7 @@ const defaultForm: PlaceFormData = {
 
   latitude: "",
   longitude: "",
-  compound_code: "",
+  compound_code: "Rome",
   LocationComments: "",
 
   Priceperday: "",
@@ -63,7 +63,7 @@ const defaultForm: PlaceFormData = {
   placetype: [],
 
   TypeOflodgindOrPlace: "",
-  AccomodationOrPlace: "",
+  AccomodationOrPlace: "PLACE_TO_VISIT",
 
   Rating: "",
   AvarageTime: "",
@@ -84,6 +84,7 @@ function Field({
   textarea,
   value,
   onChange,
+  
 }: any) {
   return (
     <div className="flex flex-col gap-1">

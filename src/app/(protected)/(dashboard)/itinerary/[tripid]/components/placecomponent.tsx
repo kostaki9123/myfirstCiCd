@@ -215,7 +215,7 @@ const extractPlaceId = (url?: string | null) => {
       </div>
 
       {/* Price */}
-      {props.Priceperday > 0  &&
+      {props.Priceperday > 0 ?
        <div className="mt-2 flex justify-between items-end"> 
            <div>
               <div className="text-sm font-semibold text-white/90"> {props.Priceperday}$
@@ -226,6 +226,10 @@ const extractPlaceId = (url?: string | null) => {
               <div className="text-[10px] text-white/60"> estimated price </div> 
            </div>
       </div>
+      :
+      <div className="text-sm font-semibold text-emerald-300">
+      Free
+    </div>
       }
    </div>
   </div>

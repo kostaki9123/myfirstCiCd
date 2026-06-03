@@ -73,21 +73,17 @@ const FeaturesSection = () => {
                     <div className="absolute inset-0 bg-blue-500/10 blur-2xl rounded-[3rem]" />
                 
                     {/* Phone body */}
-                    <div className="relative w-full h-full rounded-[3rem] bg-black border border-white/20 shadow-2xl overflow-hidden">
+                    <div className="relative w-full h-[375px] rounded-xl bg-black border border-white/20 shadow-2xl overflow-hidden">
                 
-                      {/* Top notch */}
-                      <div className="absolute top-3 left-1/2 -translate-x-1/2 w-[100px] h-[22px] bg-black rounded-full z-20 flex items-center justify-center">
-                        <div className="w-2 h-2 bg-gray-700 rounded-full mr-2" />
-                        <div className="w-10 h-2 bg-gray-800 rounded-full" />
-                      </div>
+                    
                 
                       {/* Screen */}
-                      <div className="absolute inset-2 rounded-[2.5rem] overflow-hidden bg-white/5">
+                      <div className="absolute  rounded-sm overflow-hidden bg-white/5">
                 
                         <img
-                          src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?q=80&w=1200&auto=format&fit=crop"
+                          src={'/Στιγμιότυπο οθόνης 2026-06-03, 8.46.32 πμ.png'}
                           alt="app preview"
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover   "
                         />
                 
                         {/* Screen overlay */}
