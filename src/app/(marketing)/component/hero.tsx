@@ -5,7 +5,7 @@ const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="relative bg-gradient-to-r  text-white py-24 sm:py-32 md:py-40 h-[60vh] overflow-hidden"
+      className="relative bg-gradient-to-r  text-white py-24 sm:py-32 md:py-40 h-[70vh] overflow-hidden"
     >
       {/* Background Lines/Map Concept */}
       <div className="absolute inset-20 flex justify-center items-center z-0 pointer-events-none">
