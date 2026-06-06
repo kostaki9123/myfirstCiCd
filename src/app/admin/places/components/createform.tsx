@@ -49,11 +49,11 @@ const defaultForm: PlaceFormData = {
   name: "",
   PhotoUrl: "",
   affiliate_url: "",
-  source: "",
+  source: "GetYourGuide",
 
   latitude: "",
   longitude: "",
-  compound_code: "Rome",
+  compound_code: "Copenhagen",
   LocationComments: "",
 
   Priceperday: "",
