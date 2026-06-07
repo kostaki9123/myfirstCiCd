@@ -180,6 +180,7 @@ export default function PlaceToVisitCard(props: Props) {
                ? new Date(props.visitTime).toLocaleTimeString("en-GB", {
                    hour: "2-digit",
                    minute: "2-digit",
+                   timeZone: "UTC",
                  })
                :"N/A"}
              </div>
@@ -207,9 +208,6 @@ export default function PlaceToVisitCard(props: Props) {
               <div>
                   <label className="text-xs text-white">Visit Time</label>
                   <TimeSlotsDropdown
-                   startTime="00:00"
-                   endTime="23:45"
-                   stepMinutes={15}
                    value={visitTime}
                    onChange={(v) => {
                      setVisitTime(v);
