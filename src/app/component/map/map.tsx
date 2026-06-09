@@ -64,13 +64,7 @@ function PolylineOverlay({
 }
 
 /* ---------------------- TRANSPORT ICON MARKER ---------------------- */
-function TransportMarker({
-  position,
-  icon,
-}: {
-  position: LatLng;
-  icon: string;
-}) {
+function TransportMarker({ position, icon }: { position: LatLng; icon: string }) {
   const transportIcons: Record<string, string> = {
     flight: "✈️",
     train: "🚆",
@@ -86,20 +80,23 @@ function TransportMarker({
 
   const selectedIcon = transportIcons[icon] || transportIcons.other;
 
+  const svgString = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+      <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="24">
+        ${selectedIcon}
+      </text>
+    </svg>
+  `;
+
+  // ✅ base64 handles multi-byte Unicode safely
+  const url = `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgString)))}`;
+
   return (
     <Marker
       position={position}
       icon={{
-        url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="24">
-              ${selectedIcon}
-            </text>
-          </svg>
-        `)}`,
+        url,
         scaledSize: new google.maps.Size(40, 40),
-
-        // ✅ THIS IS THE IMPORTANT PART
         anchor: new google.maps.Point(20, 20),
       }}
     />
