@@ -319,47 +319,31 @@ const finalCenter = useMemo(() => {
 
 
 
-     {addedplacetostay?.map((place, key) => {
-   const isActive = focusplace &&
-      place.location.lat === focusplace.lat &&
-      place.location.lng === focusplace.lng;
-  
+{addedplacetostay?.map((place, key) => {
+  const isActive = focusplace &&
+    place.location.lat === focusplace.lat &&
+    place.location.lng === focusplace.lng;
+
   return (
-
-  <Marker
-    key={`added-stay-${place.id}`}
-    position={place.location}
-    zIndex={999}
-    icon={{
-      url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-        <svg width="${isActive ? 40 : 32}" height="${isActive ? 60 : 48}" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
-          <!-- Pin base -->
-          <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#22c55e"/>
-          
-
-          <!-- House (final tiny move UP) -->
-          <path d="M8 8.5 L12 4.5 L16 8.5 V13.5 H8 Z" fill="white"/>
-          <rect x="10" y="10.5" width="4" height="3" fill="#22c55e"/>
-
-          <!-- Number (moved UP) -->
-          <text 
-            x="12" 
-            y="22" 
-            text-anchor="middle" 
-            font-size="10" 
-            fill="white" 
-            font-family="Arial" 
-            font-weight="bold">
-            ${key + 1}
-          </text>
-        </svg>
-      `)}`,
+    <Marker
+      key={`added-stay-${place.id}`}
+      position={place.location}
+      zIndex={999}
+      icon={{
+        url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+          <svg width="${isActive ? 40 : 32}" height="${isActive ? 60 : 48}" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#22c55e"/>
+            <path d="M8 8.5 L12 4.5 L16 8.5 V13.5 H8 Z" fill="white"/>
+            <rect x="10" y="10.5" width="4" height="3" fill="#22c55e"/>
+            <text x="12" y="22" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${key + 1}</text>
+          </svg>
+        `)}`,
         scaledSize: new google.maps.Size(isActive ? 40 : 32, isActive ? 60 : 48),
-       anchor: new google.maps.Point(isActive ? 20 : 16, isActive ? 60 : 48),
-    }}
-    title={place.name}
-  />
-  )
+        anchor: new google.maps.Point(isActive ? 20 : 16, isActive ? 60 : 48),
+      }}
+      title={place.name}
+    />
+  );
 })}
     
           {/* 🏨 RECOMMENDED STAYS — now numbered */}
