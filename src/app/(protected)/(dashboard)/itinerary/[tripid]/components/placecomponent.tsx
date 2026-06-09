@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoStar } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import { z, ZodError } from "zod";
@@ -27,6 +27,7 @@ type Props = {
   affiliatelink:string
   photoreference? : string
   LocationComments : string
+  onVisible?: (index: number) => void; 
 };
 
 export const PlaceTypeEnum = z.enum([
@@ -50,6 +51,30 @@ const Placecomponent = (props: Props) => {
   const [justAdded, setJustAdded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+ 
+ const cardRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el || !props.onVisible) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          props.onVisible!(props.index);
+        }
+      },
+      {
+        threshold: 0.5,      // fires when 50% of card is visible
+        root: el.closest(".overflow-auto"),  // scoped to the scroll container
+      }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+
+   
+  }, [props.index, props.onVisible]);
+
 
   
  useEffect(() => {
@@ -156,7 +181,7 @@ const extractPlaceId = (url?: string | null) => {
   const isAdded = props.alreadyAdded || justAdded;
 
   return (
-   <div className="relative flex flex-col sm:max-w-xl bg-white/10 rounded-xl shadow-md hover:shadow-lg transition duration-200 p-4 ">
+   <div ref={cardRef}  className="relative  flex flex-col sm:max-w-xl bg-white/10 rounded-xl shadow-md hover:shadow-lg transition duration-200 p-4 ">
 
   {/* TOP SECTION */}
   <div className="flex flex-col sm:flex-row gap-3">

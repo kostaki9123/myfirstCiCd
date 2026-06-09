@@ -266,7 +266,7 @@ export default function PlaceToVisitCard(props: Props) {
                    >
                      <Button className="bg-[#0356BC] hover:bg-[#0466D9] text-white border border-white/10 shadow-lg
                  shadow-blue-950/40 px-4 py-2 rounded-xl font-medium transition-all duration-200 active:scale-[0.98] w-full">
-                       Book Here
+                       {props.affiliateLink.includes('www.google.com') ? 'View Here'  : "Book Here"}
                        <RiExternalLinkLine className=' text-lg'/>
                      </Button>
                    </a>

@@ -111,8 +111,9 @@ function App({
   focusplace,
   recommendedVisits,
   recommendedStays,
-   addedplacetovisit,
+  addedplacetovisit,
   addedplacetostay,
+    
 }: {
   cyrclesArr: TripSegment[];
   focusplace?: LatLng | null;
@@ -127,16 +128,16 @@ function App({
   function MapController({ focusplace }: { focusplace?: LatLng | null }) {
   const map = useMap();
 
-  useEffect(() => {
+  
+ useEffect(() => {
     if (!map || !focusplace) return;
 
     map.panTo(focusplace);
-    map.setZoom(13);
+    setTimeout(() => map.setZoom(13), 500);
   }, [map, focusplace]);
 
   return null;
-}
-
+  }
 
  const movingBoxPaths: LatLng[][] = useMemo(() => {
   const paths: LatLng[][] = []
@@ -213,7 +214,7 @@ const finalCenter = useMemo(() => {
     <Map
       className="h-[100%] w-full z-50"
       defaultCenter={finalCenter}
-      defaultZoom={focusplace ? 13 : 3}
+      defaultZoom={focusplace ? 8 : 3}
     >
       <MapController focusplace={focusplace} />
       {/* ROUTES */}
@@ -271,56 +272,70 @@ const finalCenter = useMemo(() => {
           />
         })}
 
-{addedplacetovisit?.map((place, key) => (
-  <Marker
-    key={`added-visit-${place.id}`}
-    zIndex={999}
-    position={place.location}
-    icon={{
-  url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-    <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
-      <!-- Pin -->
-      <path
-        d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z"
-        fill="#401eff"
-        stroke="#311eff"
-        stroke-width="1"
-      />
+{addedplacetovisit?.map((place, key) => {
+   const isActive = focusplace &&
+      place.location.lat === focusplace.lat &&
+      place.location.lng === focusplace.lng;
 
-      <!-- Tourist attraction star -->
-      <path
-        d="M12 4.5 L13.2 7.2 L16.2 7.5 L14 9.4 L14.7 12.2 L12 10.7 L9.3 12.2 L10 9.4 L7.8 7.5 L10.8 7.2 Z"
-        fill="white"
-      />
+  return(
+         <Marker
+           key={`added-visit-${place.id}`}
+           zIndex={999}
+           position={place.location}
+           icon={{
+         url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+           <svg width="${isActive ? 40 : 32}" height="${isActive ? 60 : 48}" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
+             <!-- Pin -->
+             <path
+               d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z"
+               fill="#401eff"
+               stroke="#311eff"
+               stroke-width="1"
+             />
+       
+             <!-- Tourist attraction star -->
+             <path
+               d="M12 4.5 L13.2 7.2 L16.2 7.5 L14 9.4 L14.7 12.2 L12 10.7 L9.3 12.2 L10 9.4 L7.8 7.5 L10.8 7.2 Z"
+               fill="white"
+             />
+       
+             <!-- Number -->
+             <text
+               x="12"
+               y="22"
+               text-anchor="middle"
+               font-size="10"
+               fill="white"
+               font-family="Arial"
+               font-weight="bold">
+               ${key + 1}
+             </text>
+           </svg>
+           
+         `)}`,
+             scaledSize: new google.maps.Size(isActive ? 40 : 32, isActive ? 60 : 48),
+             anchor: new google.maps.Point(isActive ? 20 : 16, isActive ? 60 : 48),
+          }}
+          title={place.name}
+        />)
+})}
 
-      <!-- Number -->
-      <text
-        x="12"
-        y="22"
-        text-anchor="middle"
-        font-size="10"
-        fill="white"
-        font-family="Arial"
-        font-weight="bold">
-        ${key + 1}
-      </text>
-    </svg>
-  `)}`,
-}}
-    title={place.name}
-  />
-))}
 
 
+     {addedplacetostay?.map((place, key) => {
+   const isActive = focusplace &&
+      place.location.lat === focusplace.lat &&
+      place.location.lng === focusplace.lng;
+  
+  return (
 
-     {addedplacetostay?.map((place, key) => (
   <Marker
     key={`added-stay-${place.id}`}
     position={place.location}
     zIndex={999}
     icon={{
       url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-        <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
+        <svg width="${isActive ? 40 : 32}" height="${isActive ? 60 : 48}" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
           <!-- Pin base -->
           <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#22c55e"/>
           
@@ -341,92 +356,69 @@ const finalCenter = useMemo(() => {
             ${key + 1}
           </text>
         </svg>
-      `)}`
+      `)}`,
+        scaledSize: new google.maps.Size(isActive ? 40 : 32, isActive ? 60 : 48),
+       anchor: new google.maps.Point(isActive ? 20 : 16, isActive ? 60 : 48),
     }}
     title={place.name}
   />
-))}
+  )
+})}
     
           {/* 🏨 RECOMMENDED STAYS — now numbered */}
-          {recommendedStays?.map((place, key) => (
-       <Marker
-    key={`visit-${place.id}`}
-    position={place.location}
-    icon={{
-      url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-        <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
-          <!-- Pin base -->
-          <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#40E0D0"/>
-          
+     {recommendedStays?.map((place, key) => {
+  const isActive = focusplace &&
+    place.location.lat === focusplace.lat &&
+    place.location.lng === focusplace.lng;
 
-          <!-- House (final tiny move UP) -->
-          <path d="M8 8.5 L12 4.5 L16 8.5 V13.5 H8 Z" fill="white"/>
-          <rect x="10" y="10.5" width="4" height="3" fill="#40E0D0"/>
-
-          <!-- Number (moved UP) -->
-          <text 
-            x="12" 
-            y="22" 
-            text-anchor="middle" 
-            font-size="10" 
-            fill="white" 
-            font-family="Arial" 
-            font-weight="bold">
-            ${key + 1}
-          </text>
-        </svg>
-      `)}`
-,
-      scaledSize: new google.maps.Size(32, 48),
-      anchor: new google.maps.Point(16, 48),
-    }}
-    title={place.name}
-  />
-    ))}
+  return (
+    <Marker
+      key={`stay-${place.id}`}
+      position={place.location}
+      zIndex={998}
+      icon={{
+        url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+          <svg width="${isActive ? 40 : 32}" height="${isActive ? 60 : 48}" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#40E0D0"/>
+            <path d="M8 8.5 L12 4.5 L16 8.5 V13.5 H8 Z" fill="white"/>
+            <rect x="10" y="10.5" width="4" height="3" fill="#40E0D0"/>
+            <text x="12" y="22" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${key + 1}</text>
+          </svg>
+        `)}`,
+       scaledSize: new google.maps.Size(isActive ? 40 : 32, isActive ? 60 : 48),
+       anchor: new google.maps.Point(isActive ? 20 : 16, isActive ? 60 : 48),
+      }}
+      title={place.name}
+    />
+  );
+})}
 
       {/* ⭐ RECOMMENDED VISITS — now numbered */}
-     {recommendedVisits?.map((place, key) => (
-  <Marker
-    key={`visit-${place.id}`}
-    position={place.location}
-     icon={{
-     url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-     <svg width="32" height="48" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
-      <!-- Pin -->
-      <path
-        d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z"
-        fill="#40E0D0"
-        stroke="#40E0D0"
-        stroke-width="1"
-      />
+    {recommendedVisits?.map((place, key) => {
+  const isActive = focusplace &&
+    place.location.lat === focusplace.lat &&
+    place.location.lng === focusplace.lng;
 
-      <!-- Tourist attraction star -->
-      <path
-        d="M12 4.5 L13.2 7.2 L16.2 7.5 L14 9.4 L14.7 12.2 L12 10.7 L9.3 12.2 L10 9.4 L7.8 7.5 L10.8 7.2 Z"
-        fill="white"
-      />
-
-      <!-- Number -->
-      <text
-        x="12"
-        y="22"
-        text-anchor="middle"
-        font-size="10"
-        fill="white"
-        font-family="Arial"
-        font-weight="bold">
-        ${key + 1}
-      </text>
-    </svg>
-  `)}`
-   ,
-      scaledSize: new google.maps.Size(32, 48),
-      anchor: new google.maps.Point(16, 48),
-    }}
-    title={place.name}
-  />
-
-    ))}
+  return (
+    <Marker
+      key={`visit-${place.id}`}
+      position={place.location}
+      zIndex={998}
+      icon={{
+        url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+          <svg width="${isActive ? 40 : 32}" height="${isActive ? 60 : 48}" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z" fill="#40E0D0" stroke="#40E0D0" stroke-width="1"/>
+            <path d="M12 4.5 L13.2 7.2 L16.2 7.5 L14 9.4 L14.7 12.2 L12 10.7 L9.3 12.2 L10 9.4 L7.8 7.5 L10.8 7.2 Z" fill="white"/>
+            <text x="12" y="22" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${key + 1}</text>
+          </svg>
+        `)}`,
+       scaledSize: new google.maps.Size(isActive ? 40 : 32, isActive ? 60 : 48),
+       anchor: new google.maps.Point(isActive ? 20 : 16, isActive ? 60 : 48),
+      }}
+      title={place.name}
+    />
+  );
+})}
 
 
     </Map>

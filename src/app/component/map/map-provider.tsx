@@ -15,6 +15,7 @@ type Props = {
   recommendedVisits?: RecommendedPlace[] 
   recommendedStays?: RecommendedPlace[];
   allPlaces?: Place[]
+  activePlace? : LatLng
 }
 
 const Mapprovider = ({
@@ -25,6 +26,7 @@ const Mapprovider = ({
   addedplacetostay,
   recommendedVisits,
   recommendedStays,
+  activePlace
 }: Props) => {
 
   // If allPlaces is provided, separate them into stays and visits
@@ -54,7 +56,7 @@ const Mapprovider = ({
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_API!}>
       <App
         cyrclesArr={cyrclesArr}
-        focusplace={focusplace}
+        focusplace={activePlace ?? focusplace}
         recommendedStays={recommendedStays}
         recommendedVisits={recommendedVisits}
         addedplacetostay={finalAddedStays}

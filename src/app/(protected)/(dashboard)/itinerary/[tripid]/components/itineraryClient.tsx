@@ -4,6 +4,7 @@
   import Itineraryboard from './itineraryboard';
   import Mapprovider from '@/app/component/map/map-provider';
   import { Place } from '../../../../../../../backend/entities/models/place';
+import PhoneMap from './phonemap';
 
   export type Trip = {
     id: string;
@@ -139,6 +140,14 @@
             />
           )}
         </div>
+
+        {/* MAP ON PHONE */}
+         <PhoneMap 
+            cyrclesArr={points}
+            focusplace={focusplace}
+            addedplacetostay={addedStays}
+            addedplacetovisit={addedVisits}
+         />
 
         {/* RIGHT MAP */}
         <div className="h-full w-[47%] hidden 950:block">

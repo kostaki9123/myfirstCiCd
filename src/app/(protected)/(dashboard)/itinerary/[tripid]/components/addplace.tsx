@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { APIProvider } from "@vis.gl/react-google-maps";
@@ -63,6 +63,10 @@ const Addaplace = (props: Props) => {
   const [loding, setloading] = useState<Boolean>(false);
 
   const [debouncedLocation] = useState(inputLocation);
+
+  const [activePlaceIndex, setActivePlaceIndex] = useState(0);
+
+// The focused place, ready to pass to Mapprovider when prop is ready
 
   const fetchPlaces = async () => {
        setloading(true)
@@ -310,6 +314,16 @@ const Addaplace = (props: Props) => {
     setVisibleCount((prev) => prev + 5);
   };
 
+const activeFocusPlace = mapData[activePlaceIndex]?.location?.lat && mapData[activePlaceIndex]?.location?.lng
+  ? {
+      lat: mapData[activePlaceIndex].location.lat,
+      lng: mapData[activePlaceIndex].location.lng,
+    }
+  : undefined;
+
+  useEffect(() => {
+  console.log("Active place index:", activePlaceIndex);
+}, [activePlaceIndex]);
 
   return (
     <Dialog>
@@ -336,7 +350,7 @@ const Addaplace = (props: Props) => {
       </DialogTrigger>
 
       <DialogContent
-        className="flex gap-2 h-[480px] w-[90%] sm:w-[70%] z-[60] sm:pl-4 mt-6 bg-[#010038] border border-white/10 text-white"
+        className="flex flex-col-reverse 950:flex-row gap-2  950:h-[480px] w-[90%] sm:w-[70%] z-[60] sm:pl-4 mt-6 bg-[#010038] border border-white/10 text-white"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         
@@ -386,7 +400,7 @@ const Addaplace = (props: Props) => {
               .map((place: any, index: number) => (
                 <Placecomponent
                   key={index}
-                  
+                  onVisible={(i) => setActivePlaceIndex(i)}
                   tripId={props.selectedPlace.tripId}
                   pointId={props.selectedPlace.id}
                   placeId={place.place_id ?? place.id}
@@ -442,7 +456,7 @@ const Addaplace = (props: Props) => {
           </div>
         </div>
 
-        <div className="hidden 950:flex w-[50%] mt-7 h-[407px]">
+        <div className=" 950:flex max-h-64  w-full 950:max-h-none 950:w-[50%] mt-7 h-[407px]">
           <Mapprovider
             cyrclesArr={props.cyrclesArr}
             focusplace={{
@@ -465,6 +479,7 @@ const Addaplace = (props: Props) => {
             }
             addedplacetovisit={props.addedVisitsForMap ?? []}
             addedplacetostay={props.addedStaysForMap ?? []}
+            activePlace={activeFocusPlace}
           />
         </div>
       </DialogContent>
