@@ -310,8 +310,8 @@ const finalCenter = useMemo(() => {
            </svg>
            
          `)}`,
-             scaledSize: new google.maps.Size(isActive ? 40 : 32, isActive ? 60 : 48),
-             anchor: new google.maps.Point(isActive ? 20 : 16, isActive ? 60 : 48),
+            scaledSize: { width: isActive ? 40 : 32, height: isActive ? 60 : 48 } as unknown as google.maps.Size,
+anchor: { x: isActive ? 20 : 16, y: isActive ? 60 : 48 } as unknown as google.maps.Point,
           }}
           title={place.name}
         />)
@@ -338,8 +338,8 @@ const finalCenter = useMemo(() => {
             <text x="12" y="22" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${key + 1}</text>
           </svg>
         `)}`,
-        scaledSize: new google.maps.Size(isActive ? 40 : 32, isActive ? 60 : 48),
-        anchor: new google.maps.Point(isActive ? 20 : 16, isActive ? 60 : 48),
+       scaledSize: { width: isActive ? 40 : 32, height: isActive ? 60 : 48 } as unknown as google.maps.Size,
+anchor: { x: isActive ? 20 : 16, y: isActive ? 60 : 48 } as unknown as google.maps.Point,
       }}
       title={place.name}
     />
@@ -366,8 +366,8 @@ const finalCenter = useMemo(() => {
             <text x="12" y="22" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${key + 1}</text>
           </svg>
         `)}`,
-       scaledSize: new google.maps.Size(isActive ? 40 : 32, isActive ? 60 : 48),
-       anchor: new google.maps.Point(isActive ? 20 : 16, isActive ? 60 : 48),
+       scaledSize: { width: isActive ? 40 : 32, height: isActive ? 60 : 48 } as unknown as google.maps.Size,
+anchor: { x: isActive ? 20 : 16, y: isActive ? 60 : 48 } as unknown as google.maps.Point,
       }}
       title={place.name}
     />
@@ -393,8 +393,8 @@ const finalCenter = useMemo(() => {
             <text x="12" y="22" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${key + 1}</text>
           </svg>
         `)}`,
-       scaledSize: new google.maps.Size(isActive ? 40 : 32, isActive ? 60 : 48),
-       anchor: new google.maps.Point(isActive ? 20 : 16, isActive ? 60 : 48),
+      scaledSize: { width: isActive ? 40 : 32, height: isActive ? 60 : 48 } as unknown as google.maps.Size,
+anchor: { x: isActive ? 20 : 16, y: isActive ? 60 : 48 } as unknown as google.maps.Point,
       }}
       title={place.name}
     />
