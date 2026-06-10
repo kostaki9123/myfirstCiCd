@@ -7,22 +7,20 @@ const globalForPrisma = globalThis as unknown as {
   pgPool?: pg.Pool;
 };
 
-// ✅ reuse pool
+// ✅ always cache — both dev and production
 const pool =
   globalForPrisma.pgPool ??
   new pg.Pool({
     connectionString: process.env.DATABASE_URL,
-    max: 5, // βάλε explicit limit
+    max: 5,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 5000,
   });
 
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.pgPool = pool;
-}
+globalForPrisma.pgPool = pool; // ← removed the NODE_ENV guard
 
-// ✅ adapter με reused pool
 const adapter = new PrismaPg(pool);
 
-// ✅ prisma singleton
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
@@ -30,8 +28,6 @@ export const prisma =
     log: process.env.NODE_ENV === "development" ? ["query", "error"] : [],
   });
 
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
-}
+globalForPrisma.prisma = prisma; // ← removed the NODE_ENV guard
 
 export default prisma;
