@@ -294,21 +294,19 @@ const Addaplace = (props: Props) => {
     }
   };
 
-  const mapData = placesResult
-    .slice(0, visibleCount)
-    .map((p: any) => ({
+  const mapData: RecommendedPlace[] = placesResult
+  .slice(0, visibleCount)
+  .map((p: any) => {
+    const lat = Number(p.geometry?.location?.lat ?? p.latitude);
+    const lng = Number(p.geometry?.location?.lng ?? p.longitude);
+    if (!p.place_id || isNaN(lat) || isNaN(lng)) return null;
+    return {
       id: p.place_id,
-      name: p.displayName?.text || p.name,
-      location: {
-         lat: Number(
-         p.geometry?.location?.lat ?? p.latitude
-       ),
-       
-       lng: Number(
-         p.geometry?.location?.lng ?? p.longitude
-       ),  
-   }
-    }));
+      name: p.displayName?.text || p.name || "Unknown",
+      location: { lat, lng },
+    };
+  })
+  .filter(Boolean) as RecommendedPlace[];
 
   const handleSeeMore = () => {
     setVisibleCount((prev) => prev + 5);
