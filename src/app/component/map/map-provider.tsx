@@ -59,8 +59,8 @@ const Mapprovider = ({
         focusplace={activePlace ?? focusplace}
         recommendedStays={recommendedStays}
         recommendedVisits={recommendedVisits}
-        addedplacetostay={finalAddedStays}
-        addedplacetovisit={finalAddedVisits}
+        addedplacetostay={finalAddedStays ? finalAddedStays : []}
+        addedplacetovisit={finalAddedVisits ? finalAddedVisits : []}
       />
     </APIProvider>
   )
