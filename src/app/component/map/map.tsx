@@ -356,7 +356,7 @@ anchor: { x: isActive ? 20 : 16, y: isActive ? 60 : 48 } as unknown as google.ma
     <Marker
       key={`stay-${place.id}`}
       position={place.location}
-      zIndex={998}
+      zIndex={isActive ? 999 : 998}
       icon={{
         url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
           <svg width="${isActive ? 40 : 32}" height="${isActive ? 60 : 48}" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
@@ -384,7 +384,7 @@ anchor: { x: isActive ? 20 : 16, y: isActive ? 60 : 48 } as unknown as google.ma
     <Marker
       key={`visit-${place.id}`}
       position={place.location}
-      zIndex={998}
+      zIndex={isActive ? 999 : 998}
       icon={{
         url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
           <svg width="${isActive ? 40 : 32}" height="${isActive ? 60 : 48}" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
