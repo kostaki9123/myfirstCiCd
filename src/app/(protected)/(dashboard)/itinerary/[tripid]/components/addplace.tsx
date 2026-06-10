@@ -294,19 +294,21 @@ const Addaplace = (props: Props) => {
     }
   };
 
-  const mapData: RecommendedPlace[] = placesResult
-  .slice(0, visibleCount)
-  .map((p: any) => {
-    const lat = Number(p.geometry?.location?.lat ?? p.latitude);
-    const lng = Number(p.geometry?.location?.lng ?? p.longitude);
-    if (!p.place_id || isNaN(lat) || isNaN(lng)) return null;
-    return {
+  const mapData = placesResult
+    .slice(0, visibleCount)
+    .map((p: any) => ({
       id: p.place_id,
-      name: p.displayName?.text || p.name || "Unknown",
-      location: { lat, lng },
-    };
-  })
-  .filter(Boolean) as RecommendedPlace[];
+      name: p.displayName?.text || p.name,
+      location: {
+         lat: Number(
+         p.geometry?.location?.lat ?? p.latitude
+       ),
+       
+       lng: Number(
+         p.geometry?.location?.lng ?? p.longitude
+       ),  
+   }
+    }));
 
   const handleSeeMore = () => {
     setVisibleCount((prev) => prev + 5);
@@ -455,29 +457,7 @@ const activeFocusPlace = mapData[activePlaceIndex]?.location?.lat && mapData[act
         </div>
 
         <div className=" 950:flex max-h-64  w-full 950:max-h-none 950:w-[50%] mt-7 h-[407px]">
-          <Mapprovider
-            cyrclesArr={props.cyrclesArr}
-            focusplace={{
-              lat: props.latitude,
-              lng: props.longitude,
-            }}
-            recommendedStays={
-              props.triggerName
-                .toLowerCase()
-                .includes("stay")
-                ? mapData
-                : []
-            }
-            recommendedVisits={
-              props.triggerName
-                .toLowerCase()
-                .includes("visit")
-                ? mapData
-                : []
-            }
           
-            activePlace={activeFocusPlace}
-          />
         </div>
       </DialogContent>
     </Dialog>
