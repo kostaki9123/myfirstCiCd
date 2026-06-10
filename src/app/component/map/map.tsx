@@ -65,8 +65,6 @@ function PolylineOverlay({
 
 /* ---------------------- TRANSPORT ICON MARKER ---------------------- */
 function TransportMarker({ position, icon }: { position: LatLng; icon: string }) {
-  if (!icon) return null;
-
   const transportIcons: Record<string, string> = {
     flight: "✈️",
     train: "🚆",
@@ -358,7 +356,7 @@ anchor: { x: isActive ? 20 : 16, y: isActive ? 60 : 48 } as unknown as google.ma
     <Marker
       key={`stay-${place.id}`}
       position={place.location}
-      zIndex={isActive ? 999 : 998}
+      zIndex={998}
       icon={{
         url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
           <svg width="${isActive ? 40 : 32}" height="${isActive ? 60 : 48}" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
@@ -368,8 +366,8 @@ anchor: { x: isActive ? 20 : 16, y: isActive ? 60 : 48 } as unknown as google.ma
             <text x="12" y="22" text-anchor="middle" font-size="10" fill="white" font-family="Arial" font-weight="bold">${key + 1}</text>
           </svg>
         `)}`,
-       scaledSize: { width: isActive ? 40 : 32, height: isActive ? 60 : 48 } as unknown as google.maps.Size,
-anchor: { x: isActive ? 20 : 16, y: isActive ? 60 : 48 } as unknown as google.maps.Point,
+      scaledSize: { width: isActive ? 40 : 32, height: isActive ? 60 : 48 } as unknown as google.maps.Size,
+      anchor: { x: isActive ? 20 : 16, y: isActive ? 60 : 48 } as unknown as google.maps.Point,
       }}
       title={place.name}
     />
@@ -386,7 +384,7 @@ anchor: { x: isActive ? 20 : 16, y: isActive ? 60 : 48 } as unknown as google.ma
     <Marker
       key={`visit-${place.id}`}
       position={place.location}
-      zIndex={isActive ? 999 : 998}
+      zIndex={998}
       icon={{
         url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
           <svg width="${isActive ? 40 : 32}" height="${isActive ? 60 : 48}" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">
@@ -396,7 +394,7 @@ anchor: { x: isActive ? 20 : 16, y: isActive ? 60 : 48 } as unknown as google.ma
           </svg>
         `)}`,
       scaledSize: { width: isActive ? 40 : 32, height: isActive ? 60 : 48 } as unknown as google.maps.Size,
-anchor: { x: isActive ? 20 : 16, y: isActive ? 60 : 48 } as unknown as google.maps.Point,
+      anchor: { x: isActive ? 20 : 16, y: isActive ? 60 : 48 } as unknown as google.maps.Point,
       }}
       title={place.name}
     />
