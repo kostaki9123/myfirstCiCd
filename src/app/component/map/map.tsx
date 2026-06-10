@@ -65,6 +65,8 @@ function PolylineOverlay({
 
 /* ---------------------- TRANSPORT ICON MARKER ---------------------- */
 function TransportMarker({ position, icon }: { position: LatLng; icon: string }) {
+  if (!icon) return null;
+
   const transportIcons: Record<string, string> = {
     flight: "✈️",
     train: "🚆",
