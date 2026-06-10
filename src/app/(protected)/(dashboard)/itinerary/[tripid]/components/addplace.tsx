@@ -457,7 +457,29 @@ const activeFocusPlace = mapData[activePlaceIndex]?.location?.lat && mapData[act
         </div>
 
         <div className=" 950:flex max-h-64  w-full 950:max-h-none 950:w-[50%] mt-7 h-[407px]">
+          <Mapprovider
+            cyrclesArr={props.cyrclesArr}
+            focusplace={{
+              lat: props.latitude,
+              lng: props.longitude,
+            }}
+            recommendedStays={
+              props.triggerName
+                .toLowerCase()
+                .includes("stay")
+                ? mapData
+                : []
+            }
+            recommendedVisits={
+              props.triggerName
+                .toLowerCase()
+                .includes("visit")
+                ? mapData
+                : []
+            }
           
+            activePlace={activeFocusPlace}
+          />
         </div>
       </DialogContent>
     </Dialog>
