@@ -229,7 +229,7 @@
                 <div className="grid grid-cols-2 gap-3">
                   <div className="flex flex-col ">
                       <label className="text-xs text-white ">Cost</label>
-                      <AddExpenseDialog connectedToId={props.internalId} budgedId={props.budgetid} fromAllExpenses={true} fromItinerary bgdark/>             
+                      <AddExpenseDialog connectedToId={props.internalId} budgedId={props.budgetid} fromAllExpenses={true} fromItinerary />             
                   </div>
                   <div className="flex flex-col">
                       <label className="text-xs text-white">Payment Status</label>
