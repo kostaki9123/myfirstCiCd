@@ -19,6 +19,7 @@ const placeBaseSchema = z.object({
   latitude: z.coerce.number(),
   longitude: z.coerce.number(),
 
+  entryPrice: z.number().optional() ,
   stayFrom: z.coerce.date().nullable().optional(),
   stayUntil: z.coerce.date().nullable().optional(),
   googleMapLink: z.string().nullable().optional(),
