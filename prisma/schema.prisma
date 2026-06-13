@@ -116,6 +116,7 @@
 
     placeType  PlaceType
     name       String
+    entryPrice  Int?
     googleMapLink String? 
 
     stayFrom   DateTime?
