@@ -19,7 +19,7 @@ const placeBaseSchema = z.object({
   latitude: z.coerce.number(),
   longitude: z.coerce.number(),
 
-  entryPrice: z.number().optional() ,
+  entryPrice: z.number().optional().nullable() ,
   stayFrom: z.coerce.date().nullable().optional(),
   stayUntil: z.coerce.date().nullable().optional(),
   googleMapLink: z.string().nullable().optional(),
@@ -70,7 +70,8 @@ export const insertCreatePlaceSchema = placeBaseSchema.pick({
   visitDate: true,
   visitTime: true,
   paymentStatus: true,
-  affiliatelink: true
+  affiliatelink: true,
+  entryPrice: true
 });
 
 export type PlaceInsert = z.infer<typeof insertCreatePlaceSchema>;

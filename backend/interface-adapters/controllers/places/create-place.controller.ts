@@ -20,8 +20,10 @@ export const inputSchema = z.object({
 
   name: z.string().min(1, 'Name is required'),
 
+  entryPrice: z.number().optional().nullable() ,
   latitude: z.coerce.number(),
   longitude: z.coerce.number(),
+
 
   stayFrom: z.coerce.date().optional(),
   stayUntil: z.coerce.date().optional(),
@@ -53,7 +55,8 @@ export const createPlaceController =
             googleMapsUri : data.googleMapsUri,
             latitude: data.latitude,
             longitude:data.longitude,
-            affiliatelink:data.affiliatelink
+            affiliatelink:data.affiliatelink,
+            entryPrice:data.entryPrice
           })
     }
     

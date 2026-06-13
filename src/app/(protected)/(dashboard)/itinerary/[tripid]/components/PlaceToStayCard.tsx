@@ -33,6 +33,7 @@
     ablestayUntil: Date | null | undefined
     affiliateLink?: string | null
     paymentStatus?: string;
+    entryPrice? : number | null
   };
 
   /* -------------------------------------------------------
@@ -136,7 +137,7 @@
         <AccordionItem value="item-1">
           {/* ---------------- HEADER ---------------- */}
           <AccordionTrigger className="relative ">
-            <div className="flex items-center gap-2 pl-1">
+            <div className="flex items-center gap-4 pl-1">
               
               <div className="w-8 h-10">
                   <svg viewBox="0 0 24 36" className="w-full h-full">
@@ -186,6 +187,27 @@
                       })
                     :  "N/A"} 
                 </div>
+                {props.entryPrice  &&
+                (props.entryPrice > 0 ? (
+                  <div className="mt-2 flex items-center justify-between">
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-1">
+                        <span className="text-xs opacity-60">🏨</span>
+                        <span className="text-sm font-medium text-white/70">
+                          ${props.entryPrice}/night
+                        </span>
+                      </div>
+              
+                      <span className="text-[9px] text-white/40">
+                        Est. accommodation
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-sm font-semibold text-emerald-300 opacity-60">
+                    Free stay
+                  </div>
+                ))}
 
             </div>
             <Deleteplacebtn placeId={props.id} pointId={props.pointId} />

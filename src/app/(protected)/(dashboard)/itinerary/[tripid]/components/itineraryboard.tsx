@@ -210,6 +210,7 @@ useEffect(() => {
                 ablestayUntil={selectedPoint.endDate}
                 paymentStatus={place.paymentStatus ? place.paymentStatus : undefined}
                 affiliateLink={place.affiliatelink}
+                entryPrice={place.entryPrice}
               />
             ))}
 
@@ -261,6 +262,7 @@ useEffect(() => {
       paymentStatus={place.paymentStatus ? place.paymentStatus : undefined}
       affiliateLink={place.affiliatelink}
       dateColorClass={visitDateKey ? props.visitDateColorMap[visitDateKey] : undefined}
+      entryPrice={place.entryPrice}
     />
   );
 })}

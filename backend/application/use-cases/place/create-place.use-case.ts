@@ -17,6 +17,7 @@ type props = {
   latitude : number
   longitude : number
   affiliatelink? : string
+  entryPrice?: number | null
 };
 
 
@@ -39,6 +40,7 @@ export const createPlaceUseCase = async (input: props) => {
            latitude : input.latitude,
            longitude : input.longitude,
            affiliatelink : input.affiliatelink,
+           entryPrice : input.entryPrice
            
   });
 

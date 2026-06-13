@@ -18,7 +18,7 @@ export class PlaceRepository implements IPlaceRepository {
           latitude : insert.latitude,
           longitude : insert.longitude,
           affiliatelink: insert.affiliatelink ,
-          
+          entryPrice : insert.entryPrice
         },
       });
     } catch (err: any) {

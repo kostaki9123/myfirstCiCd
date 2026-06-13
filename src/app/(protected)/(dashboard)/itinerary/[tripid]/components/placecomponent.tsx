@@ -146,6 +146,7 @@ const extractPlaceId = (url?: string | null) => {
       formData.append("id", props.placeId);
       formData.append("pointId", props.pointId);
       formData.append("placeType", props.type);
+      formData.append("entryPrice", props.Priceperday.toString() ?? "");
       formData.append(
        "latitude",
           props.latitude.toString() ?? ""

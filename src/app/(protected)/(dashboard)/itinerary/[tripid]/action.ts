@@ -35,12 +35,15 @@ export async function createPlace(formData: FormData) {
     const placeType = formData.get("placeType") as any;
     const name = formData.get("name") as string;
     const tripId = formData.get("tripId") as string;
+   
     const googleMapsUri = formData.get("googleMapsUri") as string;
     const affiliatelink = formData.get("affiliatelink") as string ?? undefined 
 
+    const entryPriceStr = formData.get("entryPrice") as string | null;
     const latitudeStr = formData.get("latitude") as string | null;
     const longitudeStr = formData.get("longitude") as string | null;
 
+    const entryPrice = entryPriceStr ? parseFloat(entryPriceStr) : undefined;
     const latitude = latitudeStr ? parseFloat(latitudeStr) : undefined;
     const longitude = longitudeStr ? parseFloat(longitudeStr) : undefined;
 
@@ -57,7 +60,8 @@ export async function createPlace(formData: FormData) {
       googleMapsUri,
       latitude,
       longitude,
-      affiliatelink 
+      affiliatelink,
+      entryPrice
     };
 
 
