@@ -69,7 +69,7 @@ const ExpenseCategorydropdown = ({
                      cursor-pointer select-none text-sm outline-none mt-[6px] z-50 "
         >
           <div>
-            {value || placeholder}
+            {value || 'Select category'}
           </div>
           <RiArrowDropDownLine fontSize="20px "  />          
         </DropdownMenuTrigger>

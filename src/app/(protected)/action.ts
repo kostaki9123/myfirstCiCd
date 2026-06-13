@@ -37,6 +37,7 @@ export async function createTrip(formData:FormData ) {
     //  { recordResponse: true },
         const { userId } = await auth(); // 🔐 Auth check
         if (!userId) {
+           console.log('ddd1')
           redirect('/moreThanTrip')
         }
         
@@ -48,6 +49,7 @@ export async function createTrip(formData:FormData ) {
              let existingUser = await usersRepository.getUser(userId);
 
            if (!existingUser) {
+              console.log('ddd')
              redirect('/moreThanTrip')
            }
 

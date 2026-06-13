@@ -27,6 +27,7 @@ import PhoneMap from './phonemap';
       lat: number;
       lng: number;
     };
+    pinColor? : string
   };
 
   const ItineraryClient = ({
@@ -113,6 +114,78 @@ import PhoneMap from './phonemap';
 
   }, [places, selectedPointId]);
 
+   const placesToVisit = useMemo(() => {
+  return places
+    .filter(
+      (place) =>
+        place.pointId === selectedPointId &&
+        place.placeType === 'PLACE_TO_VISIT'
+    )
+    .sort((a, b) => {
+  // null dates last
+  if (!a.visitDate && !b.visitDate) return 0;
+  if (!a.visitDate) return 1;
+  if (!b.visitDate) return -1;
+
+  const dateDiff =
+    new Date(a.visitDate).getTime() -
+    new Date(b.visitDate).getTime();
+
+  // different dates
+  if (dateDiff !== 0) return dateDiff;
+
+  // same date -> sort by time
+
+  if (!a.visitTime && !b.visitTime) return 0;
+  if (!a.visitTime) return 1; // null goes last
+  if (!b.visitTime) return -1;
+
+  return (
+    new Date(a.visitTime).getTime() -
+    new Date(b.visitTime).getTime()
+  );
+})
+      .map((place) => ({
+      ...place,
+      location: {
+        lat: Number(place.latitude),
+        lng: Number(place.longitude),
+      },
+    }));
+    
+}, [places, selectedPointId]);
+
+const DATE_COLORS = ['#3b82f6', '#92400e', '#7c3aed', '#f97316', '#ec4899','#ef4444', '#10b981',
+    '#f59e0b', '#06b6d4', '#84cc16', '#e11d48','#0ea5e9','#a855f7', '#14b8a6', '#f43f5e', 
+];
+
+const visitDateColorMap = useMemo(() => {
+  const dates = placesToVisit
+    .filter((p) => p.visitDate)
+    .map((p) => new Date(p.visitDate!).toISOString().split('T')[0]);
+
+  const uniqueDates = Array.from(new Set(dates));
+
+  return uniqueDates.reduce<Record<string, string>>((acc, date, i) => {
+    acc[date] = DATE_COLORS[i % DATE_COLORS.length];
+    console.log(acc)
+    return acc;
+  }, {});
+}, [placesToVisit]);
+
+const visitDateColors = useMemo(() => {
+  const colors: Record<string, string> = {};
+  for (const place of placesToVisit) {
+    if (place.visitDate) {
+      const dateKey = new Date(place.visitDate).toISOString().split('T')[0];
+      const color = visitDateColorMap[dateKey];
+      if (color) colors[String(place.id)] = color;
+    }
+  }
+  return colors;
+}, [placesToVisit, visitDateColorMap]);
+
+
     return (
       <div className="h-full absolute inset-0 bg-[#010038] flex min-w-[344px]">
 
@@ -137,6 +210,7 @@ import PhoneMap from './phonemap';
               setaddedVisits={setaddedVisits}
               addedStaysForMap={addedStays}
               addedVisitsForMap={addedVisits}
+              visitDateColorMap={visitDateColorMap}
             />
           )}
         </div>
@@ -147,6 +221,7 @@ import PhoneMap from './phonemap';
             focusplace={focusplace}
             addedplacetostay={addedStays}
             addedplacetovisit={addedVisits}
+            visitDateColors={visitDateColors}
          />
 
         {/* RIGHT MAP */}
@@ -156,6 +231,7 @@ import PhoneMap from './phonemap';
             focusplace={focusplace}
             addedplacetostay={addedStays}
             addedplacetovisit={addedVisits}
+            visitDateColors={visitDateColors}
           />
         </div>
       </div>

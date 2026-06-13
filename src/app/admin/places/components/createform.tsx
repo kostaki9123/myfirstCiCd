@@ -53,7 +53,7 @@ const defaultForm: PlaceFormData = {
 
   latitude: "",
   longitude: "",
-  compound_code: "València",
+  compound_code: "Naples",
   LocationComments: "",
 
   Priceperday: "",

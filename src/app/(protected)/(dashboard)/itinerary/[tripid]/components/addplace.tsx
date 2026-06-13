@@ -477,7 +477,8 @@ const activeFocusPlace = mapData[activePlaceIndex]?.location?.lat && mapData[act
                 ? mapData
                 : []
             }
-          
+           
+            addedplacetostay={props.addedStaysForMap ?? []}
             activePlace={activeFocusPlace}
           />
         </div>

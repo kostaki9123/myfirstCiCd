@@ -83,7 +83,7 @@ const Visitplace = (props: Props) => {
             )}
 
             {props.paymentStatus === "PARTIALLY_PAID" && (
-              <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-yellow-100 text-yellow-500">
+              <span className="text-[10px] px-2 py-1 w-fit text-center rounded-full font-medium bg-yellow-100 text-yellow-500">
                 Partially Paid
               </span>
             )}

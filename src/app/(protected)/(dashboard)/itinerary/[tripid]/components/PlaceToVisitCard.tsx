@@ -35,6 +35,7 @@ type Props = {
   notes?: string | null;
   affiliateLink?: string | null
   paymentStatus?: string;
+  dateColorClass?: string
 };
 
 /* -------------------------------------------------------
@@ -135,9 +136,9 @@ export default function PlaceToVisitCard(props: Props) {
                    <svg viewBox="0 0 24 36" className="w-full h-full">
                      {/* Pin */}
                      <path
+                    
                        d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z"
-                       fill="#401eff"
-                       stroke="#401eff"
+                       fill={`${props.dateColorClass ? props.dateColorClass : '#6b7280'}`}
                        strokeWidth="1"
                      />
                 
@@ -245,7 +246,7 @@ export default function PlaceToVisitCard(props: Props) {
 
             {/* NOTES */}
             <div className="flex flex-col">
-              <label className="text-xs text-gray-700">Notes</label>
+              <label className="text-xs text-white">Notes</label>
               <NotesBox
                 value={notes}
                 onChange={(v) => {

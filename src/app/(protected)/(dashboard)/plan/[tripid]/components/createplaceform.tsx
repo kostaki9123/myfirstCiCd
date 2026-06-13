@@ -76,7 +76,7 @@ const Createplaceform = (props : props) => {
 
     try {
 
-      if(props.index === 10){
+      if(props.index === 14){
            setGeneralError('Maximum limit reached.')
            return
       }

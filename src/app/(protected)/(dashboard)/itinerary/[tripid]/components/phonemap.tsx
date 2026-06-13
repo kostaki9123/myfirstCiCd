@@ -14,6 +14,7 @@ type props = {
       addedplacetostay?: RecommendedPlace[]
       recommendedVisits?: RecommendedPlace[] 
       recommendedStays?: RecommendedPlace[];
+      visitDateColors?: Record<string, string> 
 }          
 
 export default function PhoneMap(props:props) {
@@ -44,6 +45,7 @@ export default function PhoneMap(props:props) {
             focusplace={props.focusplace}
             addedplacetostay={props.addedplacetostay}
             addedplacetovisit={props.addedplacetovisit}
+            visitDateColors={props.visitDateColors}  
           />
 
           {/* Back Button */}

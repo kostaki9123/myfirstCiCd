@@ -40,6 +40,7 @@
     setaddedVisits: Dispatch<React.SetStateAction<PlaceforMap[]>>
     addedStaysForMap: PlaceforMap[]
     addedVisitsForMap: PlaceforMap[]
+    visitDateColorMap : any
   };
 
   const Itineraryboard = (props: Props) => {
@@ -114,17 +115,29 @@
         place.placeType === 'PLACE_TO_VISIT'
     )
     .sort((a, b) => {
-      // Put null dates at the end
-      if (!a.visitDate && !b.visitDate) return 0;
-      if (!a.visitDate) return 1;
-      if (!b.visitDate) return -1;
+  // null dates last
+  if (!a.visitDate && !b.visitDate) return 0;
+  if (!a.visitDate) return 1;
+  if (!b.visitDate) return -1;
 
-      // Sort earliest date first
-      return (
-        new Date(a.visitDate).getTime() -
-        new Date(b.visitDate).getTime()
-      );
-     })
+  const dateDiff =
+    new Date(a.visitDate).getTime() -
+    new Date(b.visitDate).getTime();
+
+  // different dates
+  if (dateDiff !== 0) return dateDiff;
+
+  // same date -> sort by time
+
+  if (!a.visitTime && !b.visitTime) return 0;
+  if (!a.visitTime) return 1; // null goes last
+  if (!b.visitTime) return -1;
+
+  return (
+    new Date(a.visitTime).getTime() -
+    new Date(b.visitTime).getTime()
+  );
+})
       .map((place) => ({
       ...place,
       location: {
@@ -139,6 +152,8 @@ useEffect(() => {
   props.setaddedStays(accommodationPlaces);
   props.setaddedVisits(placesToVisit);
 }, [accommodationPlaces, placesToVisit, props]);
+
+
 
     return (
       <div className="h-fit w-full p-3">
@@ -223,25 +238,32 @@ useEffect(() => {
               Places to Visit
             </small>
 
-            {placesToVisit.map((place , key) => (
-              <PlaceToVisitCard
-                index={key}
-                key={place.internalId ?? place.id}
-                budgetid={props.budgetId}
-                internalId={place.internalId!}
-                id={place.id}
-                pointId={place.pointId}
-                placeType={place.placeType}
-                name={place.name}
-                visitDate={place.visitDate}
-                visitTime={place.visitTime}
-                ablestayFrom={selectedPoint.startDate}
-                ablestayUntil={selectedPoint.endDate}
-                notes={place.notes}
-                paymentStatus={place.paymentStatus ? place.paymentStatus : undefined}
-                affiliateLink={place.affiliatelink}
-              />
-            ))}
+           {placesToVisit.map((place, key) => {
+  const visitDateKey = place.visitDate
+    ? new Date(place.visitDate).toISOString().split("T")[0]
+    : null;
+
+  return (
+    <PlaceToVisitCard
+      index={key}
+      key={place.internalId ?? place.id}
+      budgetid={props.budgetId}
+      internalId={place.internalId!}
+      id={place.id}
+      pointId={place.pointId}
+      placeType={place.placeType}
+      name={place.name}
+      visitDate={place.visitDate}
+      visitTime={place.visitTime}
+      ablestayFrom={selectedPoint.startDate}
+      ablestayUntil={selectedPoint.endDate}
+      notes={place.notes}
+      paymentStatus={place.paymentStatus ? place.paymentStatus : undefined}
+      affiliateLink={place.affiliatelink}
+      dateColorClass={visitDateKey ? props.visitDateColorMap[visitDateKey] : undefined}
+    />
+  );
+})}
             <Addaplace
               onSubmitSuccess={setShowItineraryHint}
               addedPlaces={props.places.filter(

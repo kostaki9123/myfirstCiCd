@@ -1,4 +1,4 @@
-import React from 'react'
+ import React from 'react'
 import { getPlaces } from '../../../itinerary/[tripid]/action';
 import { Place } from '../../../../../../../backend/entities/models/place';
 import Accomodationplace from './accomodationplace';

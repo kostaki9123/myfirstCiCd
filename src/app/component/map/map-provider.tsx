@@ -16,6 +16,7 @@ type Props = {
   recommendedStays?: RecommendedPlace[];
   allPlaces?: Place[]
   activePlace? : LatLng
+   visitDateColors?: Record<string, string> 
 }
 
 const Mapprovider = ({
@@ -26,7 +27,8 @@ const Mapprovider = ({
   addedplacetostay,
   recommendedVisits,
   recommendedStays,
-  activePlace
+  activePlace,
+  visitDateColors
 }: Props) => {
 
   // If allPlaces is provided, separate them into stays and visits
@@ -61,6 +63,7 @@ const Mapprovider = ({
         recommendedVisits={recommendedVisits}
         addedplacetostay={finalAddedStays ? finalAddedStays : []}
         addedplacetovisit={finalAddedVisits ? finalAddedVisits : []}
+        visitDateColors={visitDateColors}  
       />
     </APIProvider>
   )

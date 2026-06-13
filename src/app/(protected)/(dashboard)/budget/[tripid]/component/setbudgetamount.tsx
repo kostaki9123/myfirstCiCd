@@ -96,7 +96,7 @@ const Setbudgetamount = ({
           <div className="h-1/2 flex justify-center items-end pb-2 relative">
             <div className="relative">
               <Input
-                className="w-[160px] pl-[59px]"
+                className="w-[160px] pl-[53px]"
                 type="number"
                 defaultValue={amount} // controlled input
                 onChange={(e) => setAmount(Number(e.target.value))}

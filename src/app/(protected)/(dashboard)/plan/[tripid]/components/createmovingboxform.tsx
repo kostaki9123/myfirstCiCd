@@ -88,7 +88,7 @@ const Createmovingboxform = (props : props) => {
   // --------------------
   const onSubmit = async () => {
     try {
-      if(props.index === 10){
+      if(props.index === 14){
            setGeneralError('Maximum limit reached.')
            return
       }

@@ -23,6 +23,7 @@ type Expense = {
 type Props = {
   budgedId: string
   tripId: string
+  bgdark?: boolean
 }
 
 const Allexpenses = async (props :Props) => {
@@ -82,7 +83,8 @@ const Allexpenses = async (props :Props) => {
                   <ExpenseDialog
                    budgedId={props.budgedId}
                    expenseId={expense.id}
-                   fromAllExpenses={true}  
+                   fromAllExpenses={true} 
+                    
                    />
               </TableCell>
 

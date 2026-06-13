@@ -110,14 +110,15 @@ function App({
   recommendedStays,
   addedplacetovisit,
   addedplacetostay,
-    
+  visitDateColors
 }: {
   cyrclesArr: TripSegment[];
   focusplace?: LatLng | null;
   recommendedVisits?: RecommendedPlace[];
   recommendedStays?: RecommendedPlace[];
-   addedplacetovisit?: RecommendedPlace[];
+  addedplacetovisit?: RecommendedPlace[];
   addedplacetostay?: RecommendedPlace[];
+  visitDateColors?: Record<string, string>;
 }) {
   const sorted = [...cyrclesArr].sort((a, b) => a.index - b.index);
 
@@ -273,6 +274,10 @@ const finalCenter = useMemo(() => {
    const isActive = focusplace &&
       place.location.lat === focusplace.lat &&
       place.location.lng === focusplace.lng;
+      
+       const pinColor = visitDateColors?.[place.id] ?? '#6b7280';        // ← add
+  const strokeColor = pinColor === '#6b7280' ? '#6b7280' : pinColor; // ← add
+
 
   return(
          <Marker
@@ -285,8 +290,8 @@ const finalCenter = useMemo(() => {
              <!-- Pin -->
              <path
                d="M12 0C7 0 3 4 3 9c0 6 9 21 9 21s9-15 9-21c0-5-4-9-9-9z"
-               fill="#401eff"
-               stroke="#311eff"
+               fill="${pinColor}"       
+              stroke="${strokeColor}"  
                stroke-width="1"
              />
        

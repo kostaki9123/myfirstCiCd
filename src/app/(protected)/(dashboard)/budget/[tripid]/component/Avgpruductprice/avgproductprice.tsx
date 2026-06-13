@@ -107,7 +107,7 @@ const TripBudgetCard = ({ pointsArr }: Props) => {
             </div>
 
             <div className="flex justify-between">
-              <span>💼 Balancedtraveler</span>
+              <span>💼 Balanced traveler</span>
               <span>€ {profile.Balanced} / day</span>
             </div>
 

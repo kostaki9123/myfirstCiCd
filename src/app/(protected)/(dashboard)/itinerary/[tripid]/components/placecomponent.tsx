@@ -190,6 +190,7 @@ const extractPlaceId = (url?: string | null) => {
     {props.photoreference &&
     <div className="w-full sm:w-[160px] h-[140px] sm:h-[120px] flex-shrink-0">
       <Image
+        
         src={props.photoreference}
         alt={props.displayName}
         width={200}
