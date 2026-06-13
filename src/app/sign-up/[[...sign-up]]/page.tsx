@@ -12,7 +12,7 @@ const Page = () => {
       <div className="absolute bottom-[-120px] right-[-100px] w-[350px] h-[350px]rounded-full blur-3xl" />
 
       {/* Grid Layout */}
-      <div className="relative z-10 grid min-h-screen lg:grid-cols-2">
+      <div className="relative z-10 grid min-h-screen lg:grid-cols-2 ">
 
         {/* LEFT SIDE */}
         <div className="hidden  lg:flex flex-col justify-center px-16  lg:ml-28">
@@ -94,9 +94,9 @@ const Page = () => {
 
           {/* Auth Form */}
           
- <div className="relative z-10 flex items-center justify-center p-6">
-         <DelayedSignUp/>
-      </div>
+          <div className="relative z-10  flex items-center justify-center ">
+             <DelayedSignUp/>
+         </div>
 
         </div>
       </div>
