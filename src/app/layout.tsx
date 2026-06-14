@@ -7,10 +7,13 @@ import Navbar from "./component-custom/bars/navbar";
 export const metadata : Metadata = {
   title: "Tripaki - Your Personal Trip Planner",
   description: "Tripaki is a trip planning app that helps you organize your journeys. Create destinations, connect them with transportation, build your itinerary with places to stay and visit, and manage your travel budget in one place.",
+   icons: {
+    icon: "/favicon.png",
+  },
   openGraph: {
     title: "Tripaki - Your Personal Trip Planner",
     description: "Tripaki is a trip planning app that helps you organize your journeys. Create destinations, connect them with transportation, build your itinerary with places to stay and visit, and manage your travel budget in one place.",
-     url: "https://yourdomain.com",
+     url: "https://tripaki.travel",
     siteName: "Tripaki",
     images: [
       {
