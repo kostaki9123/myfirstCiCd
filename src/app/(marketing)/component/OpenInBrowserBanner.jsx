@@ -23,7 +23,7 @@ const OpenInBrowserBanner = () => {
   if (!isInAppBrowser) return null
 
   return (
-   <div className="fixed top-0 left-0 right-0 z-[999] bg-[#010038] text-white text-sm px-5 py-4 flex items-center justify-between shadow-lg">
+   <div className="fixed top-0 left-0 right-0 z-[999] bg-[#010038]  text-white text-sm px-5 py-4 flex items-center justify-between shadow-lg">
   {/* Logo on the left */}
   <div className="flex items-center gap-2 shrink-0 ">
               <Link
@@ -45,9 +45,9 @@ const OpenInBrowserBanner = () => {
   </div>
 
   {/* Message on the right */}
-        <div className="  flex items-center justify-end gap-2  bg-yellow-500/10  w-[300px]  py-3">
+        <div className="  flex items-center justify-end gap-2  w-[300px]  py-3">
         <GoArrowRight className=' text-2xl' />
-            <span className="text-base">🌐</span>
+        
             <p className="text-[11px] leading-tight text-center  font-medium">
             Tap <strong>···</strong> then <strong>"Open in browser"</strong>
             </p>
