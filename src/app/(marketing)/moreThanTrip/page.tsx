@@ -4,7 +4,7 @@ import Testimonials from '../component/testimonials'
 
 import TestimonialsSection from '../component/testimonials'
 import FeaturesSection from '../component/feuatereDesti'
-
+import OpenInBrowserBanner from '../component/OpenInBrowserBanner'
 import HeroSection from '../component/hero'
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa'
 import Link from 'next/link'
@@ -13,6 +13,7 @@ import Image from 'next/image'
 const LandingPage = () => {
   return (
     <div className=' bg-gradient-to-r from-[#010038] via-white/5 to-[#010038] text-white/90 '>
+      <OpenInBrowserBanner/>
       <HeroSection/>
       <HowItWorks/>
       <FeaturesSection />
