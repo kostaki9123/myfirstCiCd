@@ -15,13 +15,6 @@ export const metadata : Metadata = {
     description: "Tripaki is a trip planning app that helps you organize your journeys. Create destinations, connect them with transportation, build your itinerary with places to stay and visit, and manage your travel budget in one place.",
      url: "https://tripaki.travel",
     siteName: "Tripaki",
-    images: [
-      {
-        url: "/Tripaki-logo-transparent.png",
-        width: 1200,
-        height: 630 ,
-      },
-    ],
     locale: "en_US",
     type: 'website',
   },
