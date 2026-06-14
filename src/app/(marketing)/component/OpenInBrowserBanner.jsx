@@ -7,7 +7,7 @@ import { GoArrowRight } from "react-icons/go";
 
 
 const OpenInBrowserBanner = () => {
-  const [isInAppBrowser, setIsInAppBrowser] = useState(true)
+  const [isInAppBrowser, setIsInAppBrowser] = useState(false)
 
   useEffect(() => {
     const ua = navigator.userAgent || ''
