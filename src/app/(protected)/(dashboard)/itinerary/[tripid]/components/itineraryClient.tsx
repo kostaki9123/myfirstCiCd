@@ -215,7 +215,6 @@ const visitDateColors = useMemo(() => {
           )}
         </div>
 
-        {/* MAP ON PHONE */}
          <PhoneMap 
             cyrclesArr={points}
             focusplace={focusplace}
@@ -223,6 +222,7 @@ const visitDateColors = useMemo(() => {
             addedplacetovisit={addedVisits}
             visitDateColors={visitDateColors}
          />
+         
 
         {/* RIGHT MAP */}
         <div className="h-full w-[47%] hidden 950:block">

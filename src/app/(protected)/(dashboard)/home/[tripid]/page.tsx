@@ -5,6 +5,26 @@ import { getPoints } from "../../plan/[tripid]/action";
 import Link from "next/link";
 import Transportui from "./components/transportui";
 import Placeui from "./components/placeui";
+import { getPlaces } from "../../itinerary/[tripid]/action";
+import PhoneMap from "../../itinerary/[tripid]/components/phonemap";
+
+const DATE_COLORS = [
+  '#3b82f6',
+  '#92400e',
+  '#7c3aed',
+  '#f97316',
+  '#ec4899',
+  '#ef4444',
+  '#10b981',
+  '#f59e0b',
+  '#06b6d4',
+  '#84cc16',
+  '#e11d48',
+  '#0ea5e9',
+  '#a855f7',
+  '#14b8a6',
+  '#f43f5e',
+]
 
 interface PageProps {
   params: Promise<{ tripid: string }>; // ✅ params is now async
@@ -53,6 +73,72 @@ function formatRoute(points: any[]) {
 
 const dateRange = formatDateRange(points);
 const route = formatRoute(points);
+
+
+
+
+const pointsOnly = points.filter((p) => p.role === "POINT");
+
+const placesPerPoint = await Promise.all(
+  pointsOnly.map((point) => getPlaces(point.id))
+);
+
+const allPlaces = placesPerPoint.flat();
+
+const placesToVisit = allPlaces.filter(
+  (p) => p.placeType === "PLACE_TO_VISIT"
+);
+
+const stays = allPlaces
+  .filter((p) => p.placeType === "ACCOMMODATION")
+  .map((p) => ({
+    id: String(p.id),
+    name: p.name,
+    location: {
+      lat: Number(p.latitude),
+      lng: Number(p.longitude),
+    },
+  }));
+
+const visits = placesToVisit.map((p) => ({
+  id: String(p.id),
+  name: p.name,
+  location: {
+    lat: Number(p.latitude),
+    lng: Number(p.longitude),
+  },
+}));
+
+const visitDateColors: Record<string, string> = {};
+
+for (const point of pointsOnly) {
+  const pointPlacesToVisit = placesToVisit.filter(
+    (place) => place.pointId === point.id && place.visitDate
+  );
+
+  const uniqueDatesForPoint = Array.from(
+    new Set(
+      pointPlacesToVisit.map((place) =>
+        new Date(place.visitDate!).toISOString().split("T")[0]
+      )
+    )
+  ).sort();
+
+  const dateColorMapForPoint: Record<string, string> = {};
+
+  uniqueDatesForPoint.forEach((date, index) => {
+    dateColorMapForPoint[date] = DATE_COLORS[index % DATE_COLORS.length];
+  });
+
+  for (const place of pointPlacesToVisit) {
+    const dateKey = new Date(place.visitDate!).toISOString().split("T")[0];
+    const color = dateColorMapForPoint[dateKey];
+
+    if (color) {
+      visitDateColors[String(place.id)] = color;
+    }
+  }
+}
 
   return (
     <div className=" absolute top-0 inset-0 flex items-start justify-start overflow-x-hidden 535:overflow-x-auto bg-[#010038] "> 
@@ -112,6 +198,13 @@ const route = formatRoute(points);
              :
               <Transportui  key={key}  notes={point.notes}    toId={point.toPlaceId} toName={point.toName}  toAddress={point.toAddress} toLat={point.toLat.toString()} toLng={point.toLng.toString()!} fromId={point.fromPlaceId} fromName={point.fromName}  fromAddress={point.fromAddress} fromLat={point.fromLat.toString()!} fromLng={point.fromLng.toString()!}  id={point.id} tripId={point.tripId} index={point.index} transportType={point.transportType!} departureDate={point.departureDate} />    
             ))}
+            <div className="h-20 535:hidden"></div>
+            <PhoneMap
+                    cyrclesArr={points}
+                    addedplacetostay={stays}
+                    addedplacetovisit={visits}
+                    visitDateColors={visitDateColors}
+             />
         </div>
       </div>
     </div>

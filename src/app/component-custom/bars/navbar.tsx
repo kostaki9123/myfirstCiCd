@@ -6,6 +6,8 @@ import Humburger from './humburger';
 import UserAvatarWithLoading from './UserAvatarWithLoading';
 import Ded from './ded';
 import Image from 'next/image';
+import Navbarphone from './navbarphove';
+import { TiArrowBack } from "react-icons/ti";
 
 
 type props = {
@@ -18,10 +20,39 @@ const  Navbar =  (props : props) => {
  // const expensiveAI = await allowExpensiveAI();
 
   return (
-    <div className= 'h-14 fixed bg-[#010038] top-0 left-0 right-0  justify-center flex   items-center z-[51] md:min-w-screen shadow-lg'>
-          
+    <div className= 'h-14 fixed bg-[#010038] top-0 left-0 right-0  535:justify-center flex   items-center z-[51] md:min-w-screen shadow-lg'>
+       
+       <div className=' 535:hidden flex  '>
+          <Link href="/" className=' text-2xl text-white pl-4 p-2 '>
+           {!props.withoutHumburger &&
+            <TiArrowBack />
+           }
+          </Link>
+          <Link
+                  href="/"
+                  className="relative w-[200px] md:ml-5 flex justify-center items-center "
+                >
+                  <Image
+                    src="/ChatGPT Image 10 Μαρ 2026, 04_35_50 μμ.png"
+                    alt="Trip Planner Logo"
+                    width={90}
+                    height={90}
+                    className="object-contain min-w-24  mt-2 absolute left-0 md:left-3"
+                  />
+                
+                  <h3 className="mt-1 text-xl font-semibold tracking-tight text-white absolute left-16 md:left-20">
+                    Tripaki
+                  </h3>
+          </Link>  
+        </div>
 
-       <div className='absolute left-0 min-w-fit h-full flex  text-white  '> 
+       {props.withoutHumburger ?
+            <></>
+           :
+         <Navbarphone/> 
+        }
+
+       <div className=' hidden 535:absolute left-0 min-w-fit h-full 535:flex  text-white  '> 
            {props.withoutHumburger ?
             <></>
            :<Humburger/>

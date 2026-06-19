@@ -350,7 +350,7 @@ const activeFocusPlace = mapData[activePlaceIndex]?.location?.lat && mapData[act
       </DialogTrigger>
 
       <DialogContent
-        className="flex flex-col-reverse 950:flex-row gap-2  950:h-[480px] w-[90%] sm:w-[70%] z-[60] sm:pl-4 mt-6 bg-[#010038] border border-white/10 text-white"
+        className="flex flex-col-reverse 950:flex-row gap-2   950:h-[480px] w-[90%] sm:w-[70%] z-[999] sm:pl-4 mt-6 bg-[#010038] border border-white/10 text-white"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         

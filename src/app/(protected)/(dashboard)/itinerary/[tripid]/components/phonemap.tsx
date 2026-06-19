@@ -1,9 +1,12 @@
+'use client'
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { BsMap } from "react-icons/bs";
 import { IoArrowBack } from "react-icons/io5";
 import Mapprovider from "@/app/component/map/map-provider";
 import { RecommendedPlace } from "@/app/component/map/map";
+import { LucideMapPinned } from "lucide-react";
 
 type LatLng = { lat: number; lng: number };
 
@@ -21,19 +24,21 @@ export default function PhoneMap(props:props) {
   const [mapOpen, setMapOpen] = useState(false);
 
   return (
-    <>
+    <div className="">
       {/* Trigger Button */}
-      <Button
+      <div
         onClick={() => setMapOpen(true)}
         className="
-          absolute bottom-5 left-1/2 -translate-x-1/2 h-10 px-5 rounded-lg
-          bg-white/10 hover:bg-white/15 text-white border border-white/15 backdrop-blur-md
-          shadow-lg shadow-black/20 transition-all duration-200 flex items-center gap-2 950:hidden
+          fixed cursor-pointer  bottom-[15px] left-1/2 -translate-x-1/2 px-5 
+          bg-white/10 hover:bg-white/15 text-white  border-white/15 backdrop-blur-md
+          shadow-black/20  gap-2 535:hidden
+           flex h-16 w-16 items-center justify-center rounded-full
+             z-[998]    bg-gradient-to-br from-blue-500 to-emerald-500
+          shadow-xl transition-all duration-300 text-4xl
         "
       >
-        <BsMap />
-        View Map
-      </Button>
+         <LucideMapPinned  className="text-white" />
+      </div>
 
       {/* Full-Screen Map Overlay */}
       {mapOpen && (
@@ -63,6 +68,6 @@ export default function PhoneMap(props:props) {
           </Button>
         </div>
       )}
-    </>
+    </div>
   );
 }

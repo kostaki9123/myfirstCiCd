@@ -12,7 +12,7 @@ const Humburger = () => {
 
   return (
     <DropdownMenu>
-        <DropdownMenuTrigger className='text-white md:hidden my-2 mx-2 px-5 text-xl '>☰</DropdownMenuTrigger>
+        <DropdownMenuTrigger className='text-white 535:flex hidden md:hidden my-2 mx-2 px-5 text-xl '>☰</DropdownMenuTrigger>
         <DropdownMenuContent align='start'  side='bottom' className=' cursor-pointer  md:hidden  bg-[#010038] text-white mt-1 z-[60]' >
           <Link href={`/home/${id}`} >
             <DropdownMenuItem className=' cursor-pointer' >Home</DropdownMenuItem>

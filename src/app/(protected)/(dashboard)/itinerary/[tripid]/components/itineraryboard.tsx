@@ -285,7 +285,7 @@ useEffect(() => {
               addedVisitsForMap={props.addedVisitsForMap}
             />
           
-            
+               <div className="h-16 535:hidden"></div>
           </div>
         </div>
       </div>
