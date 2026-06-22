@@ -154,7 +154,7 @@ for (const point of pointsOnly) {
                <Card className=" w-[80%] xxs:w-full p-2 535:max-w-[370px] bg-white/10  border border-white/10
            hover:bg-white/15  text-white  ">
                   <CardHeader className="text-white/90 p-3 text-lg"> 
-                    <CardTitle >Trip Summary 🌍</CardTitle>
+                    <CardTitle >Trip Summary </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2 p p-3 text-white/70   text-xs text-muted-foreground">
                     <div className="flex  text-white/70  items-center gap-2">

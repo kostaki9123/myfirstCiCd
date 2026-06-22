@@ -262,7 +262,7 @@ const Point =  (props:Props) => {
            <DialogTrigger asChild>
              <div onClick={() => setIsOpen(true)}  className=' text-white cursor-pointer bg-[#1A1A4F] h-[100px] w-[100px] rounded-[50%] flex items-center justify-center gap-[3px] flex-col z-50'>
                 <IoLocationSharp className=' text-xl'/>
-                <h4 className=' text-center  '>
+                <h4 className=' text-center max-w-[100px] truncate '>
                    <>{props.data.placeName}</>  
                 </h4>
                 <div className=' h-5'>
