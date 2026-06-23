@@ -33,7 +33,7 @@ export default function PhoneMap(props:props) {
           bg-white/10 hover:bg-white/15 text-white  border-white/15 backdrop-blur-md
           shadow-black/20  gap-2 535:hidden
            flex h-16 w-16 items-center justify-center rounded-full
-             z-[998]    bg-gradient-to-br from-blue-500 to-emerald-500
+             z-[52]    bg-gradient-to-br from-blue-500 to-emerald-500
           shadow-xl transition-all duration-300 text-4xl
         "
       >

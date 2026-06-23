@@ -95,6 +95,7 @@ export default function DateRangePicker({
         // DATE RANGE MODE
         <div>
           <DatePicker
+            popperClassName="z-[9999]"
             selected={startDate}
             onChange={handleRangeChange}
             startDate={startDate}
