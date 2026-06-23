@@ -164,7 +164,7 @@ export default function PlaceToVisitCard(props: Props) {
                    </svg>
                 </div>
 
-            <div className="font-semibold text-xs 450:text-sm  flex items-center gap-1 hover:underline max-w-[60px] 450:max-w-[70px] md:max-w-[80px] 986:max-w-[140px] ">
+            <div className="font-semibold overflow-hidden  text-xs 450:text-sm  flex items-center gap-1 hover:underline max-w-[60px] 450:max-w-[70px] md:max-w-[80px] 986:max-w-[140px] ">
               {props.name}
               <ChevronDown className="h-4 w-4 text-neutral-500" />
             </div>
