@@ -213,6 +213,7 @@ const finalCenter = useMemo(() => {
       className="h-[100%] w-full z-50"
       defaultCenter={finalCenter}
       defaultZoom={focusplace ? 8 : 3}
+      gestureHandling="greedy"
     >
       <MapController focusplace={focusplace} />
       {/* ROUTES */}
