@@ -168,24 +168,32 @@
                     </text>
                   </svg>
               </div>
-              <div className="font-semibold flex items-center gap-1 max-w-36  426:max-w-48  535:max-w-none">
+              <div className=" font-semibold overflow-hidden  text-xs 450:text-sm  flex items-center gap-1 hover:underline max-w-[60px] 450:max-w-[70px] md:max-w-[80px] 986:max-w-[140px]">
                 {props.name}
                 <ChevronDown className="h-4 w-4 text-neutral-500" />
               </div>
-               <div className=" text-xs text-white/70 no-underline! [text-decoration:none] " >     
-                 {props.stayFrom
-                    ? new Date(props.stayFrom).toLocaleDateString("en-GB", {
-                        month: "2-digit",
-                        day: "2-digit",
-                      })
-                    : "N/A"}
-                   <> - </>
-                  {props.stayUntil
-                    ? new Date(props.stayUntil).toLocaleDateString("en-GB", {
-                        month: "2-digit",
-                        day: "2-digit",
-                      })
-                    :  "N/A"} 
+            <div className="flex flex-col  535:flex-row md:flex-col 986:flex-col 1150:flex-row   gap-2 items-center justify-center">
+                  <div className=" text-xs  text-white/70 no-underline! [text-decoration:none] " >
+                       {props.stayFrom
+                       ? new Date(props.stayFrom).toLocaleDateString("en-GB", {
+                           month: "2-digit",
+                           day: "2-digit",
+                         })
+                       : "N/A"}
+                    </div>  
+                    <div className="  h-1 flex items-center justify-center" >
+                       <div>
+                        -
+                       </div>
+                     </div>
+                      <div className="  text-xs text-white/70 no-underline! [text-decoration:none] " >
+                      {props.stayUntil
+                        ? new Date(props.stayUntil).toLocaleDateString("en-GB", {
+                            month: "2-digit",
+                            day: "2-digit",
+                          })
+                        :  "N/A"} 
+                      </div> 
                 </div>
                 {props.entryPrice  &&
                 (props.entryPrice > 0 ? (
@@ -208,8 +216,8 @@
                     Free stay
                   </div>
                 ))}
-
-            </div>
+              </div>
+            
             <Deleteplacebtn placeId={props.id} pointId={props.pointId} />
           </AccordionTrigger>
 
