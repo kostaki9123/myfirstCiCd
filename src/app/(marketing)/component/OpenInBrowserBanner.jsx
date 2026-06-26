@@ -26,11 +26,13 @@ const OpenInBrowserBanner = () => {
    <div className="fixed top-0 left-0 right-0 z-[999] border-white/10 bg-gradient-to-r from-[#0B1F6A] via-[#1747A6] to-[#0B1F6A] backdrop-blur-xl text-white text-sm px-5 py-4 flex items-center justify-between shadow-lg">
   {/* Logo on the left */}
  {/* Logo */}
-<div className="flex items-center gap-2 shrink-0">
+ 
+<div className="flex items-center  gap-2 shrink-0">
   <Link
     href="/"
     className="relative w-[180px] md:ml-5 flex items-center "
   >
+    
     <Image
       src="/ChatGPT Image 10 Μαρ 2026, 04_35_50 μμ.png"
       alt="Trip Planner Logo"
@@ -46,14 +48,11 @@ const OpenInBrowserBanner = () => {
 
      
     </div>
-     <p className="text-[11px] absolute bottom-[-30px] ml-10 text-white/70 ">
-        Best experience in your browser
-    </p>
   </Link>
 </div>  
 
   {/* Message on the right */}
-        <div className="  flex items-center  my-auto justify-end gap-2  w-[300px]  py-3 mt-3">
+        <div className="  flex items-center   justify-end gap-2  w-[300px]  py-3 ">
         <GoArrowRight className=' text-2xl' />
         
             <p className="text-[11px] leading-tight text-center  font-medium">
