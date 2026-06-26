@@ -7,7 +7,7 @@ import { GoArrowRight } from "react-icons/go";
 
 
 const OpenInBrowserBanner = () => {
-  const [isInAppBrowser, setIsInAppBrowser] = useState(true)
+  const [isInAppBrowser, setIsInAppBrowser] = useState(false)
 
   useEffect(() => {
     const ua = navigator.userAgent || ''
@@ -56,10 +56,10 @@ const OpenInBrowserBanner = () => {
         <GoArrowRight className=' text-2xl' />
         
             <p className="text-[11px] leading-tight text-center  font-medium">
-            Tap  <span className="rounded-md px-2 py-1 font-bold">
+             Tap  <span className="rounded-md px-2 py-1 font-bold">
                   •••
                 </span>
- then <strong>"Open in browser"</strong>
+             then <strong>"Open in browser"</strong>
             </p>
         </div>
 

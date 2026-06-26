@@ -5,7 +5,7 @@ const FeaturesSection = () => {
   return (
     <section
       id="features"
-      className="relative py-28 px-5 bg-gradient-to-r from-[#010038] via-white/5 to-[#010038]"
+      className="relative py-28 px-5  bg-transparent"
     >
       <div className="container mx-auto">
 

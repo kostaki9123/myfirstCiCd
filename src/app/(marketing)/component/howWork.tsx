@@ -29,7 +29,7 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="relative py-24 overflow-hidden bg-gradient-to-r ">
+    <section className="relative py-24 overflow-hidden  bg-transparent ">
       
       {/* Background Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none" />

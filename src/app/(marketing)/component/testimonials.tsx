@@ -6,7 +6,7 @@ const testimonials = [
   
   const TestimonialsSection = () => {
     return (
-      <section id="testimonials" className="py-20 text-white  bg-gradient-to-r px-5">
+      <section id="testimonials" className="py-20 text-white   bg-transparent px-5">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-semibold  mb-10">What Our Travelers Say</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
