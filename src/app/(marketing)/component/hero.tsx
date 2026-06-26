@@ -54,26 +54,22 @@
           </div>
 
           {/* Right screenshot */}
-         <div className="relative mx-auto w-full max-w-[300px]">
+         <div className="relative mx-auto w-full ">
 
   {/* Glow */}
-  <div className="absolute inset-0 rounded-[48px] bg-blue-500/25 blur-3xl" />
+  <div className="absolute b inset-0 rounded-[48px] bg-blue-500/25 blur-3xl" />
 
   {/* Screenshot */}
-  <div className="relative mx-auto w-[258px] pt-[14px]">
-    <Image
-      src="/mock phone_.png"
-      alt="Tripaki home page"
-      width={500}
-      height={1100}
-      priority
-      className="w-full rounded-[28px]"
-    />
-
-    {/* Phone Frame */}
-    
-    
-  </div>
+<div className="relative mx-auto flex justify-center">
+  <Image
+    src="/mock phone_.png"
+    alt="Tripaki home page"
+    width={800}
+    height={1600}
+    priority
+    className="w-[400px] md:w-[420px] lg:w-[480px] h-auto"
+  />
+</div>
 
  
 
