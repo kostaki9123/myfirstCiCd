@@ -54,40 +54,30 @@
           </div>
 
           {/* Right screenshot */}
-          <div className="relative mx-auto w-full max-w-[300px]">
-            <div className="absolute inset-0 rounded-[48px] bg-blue-500/25 blur-3xl" />
+         <div className="relative mx-auto w-full max-w-[300px]">
 
-              <div className="relative rounded-[36px]  md:rounded-[46px] border border-white/10 bg-black/80 p-3 shadow-2xl shadow-black/50">
-                <div className="overflow-hidden rounded-[36px]  md:rounded-[36px] border border-white/10">
-                  <Image
-                    src="/Στιγμιότυπο οθόνης 2026-06-26, 12.41.59 μμ.png"
-                    alt="Tripaki home page"
-                    width={500}
-                    height={1100}
-                    priority
-                    className="h-auto w-full"
-                  />
-                </div>
-              </div>
+  {/* Glow */}
+  <div className="absolute inset-0 rounded-[48px] bg-blue-500/25 blur-3xl" />
 
-            <div className="absolute -right-5 top-14 rounded-2xl border border-white/10 bg-[#0356BC]/90 px-4 py-3 shadow-xl backdrop-blur">
-              <p className="text-sm font-semibold text-white">
-                Whole trip
-              </p>
-              <p className="text-xs text-white/70">
-                One scroll
-              </p>
-            </div>
+  {/* Screenshot */}
+  <div className="relative mx-auto w-[258px] pt-[14px]">
+    <Image
+      src="/mock phone_.png"
+      alt="Tripaki home page"
+      width={500}
+      height={1100}
+      priority
+      className="w-full rounded-[28px]"
+    />
 
-            <div className="absolute -left-5 bottom-20 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 shadow-xl backdrop-blur">
-              <p className="text-sm font-semibold text-white">
-                Custom trip
-              </p>
-              <p className="text-xs text-white/60">
-                Built by you
-              </p>
-            </div>
-          </div>
+    {/* Phone Frame */}
+    
+    
+  </div>
+
+ 
+
+</div>
         </div>
       </section>
     );
