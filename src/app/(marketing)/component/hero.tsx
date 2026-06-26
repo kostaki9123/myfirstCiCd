@@ -21,9 +21,7 @@
           </svg>
         </div>
 
-        <div className="absolute right-[10%] top-[18%] z-0 rotate-[-18deg] text-white/50">
-          <FaPlane className="text-5xl" />
-        </div>
+       
 
         <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-2">
           {/* Left */}
@@ -59,8 +57,8 @@
           <div className="relative mx-auto w-full max-w-[300px]">
             <div className="absolute inset-0 rounded-[48px] bg-blue-500/25 blur-3xl" />
 
-              <div className="relative rounded-[20px]  md:rounded-[46px] border border-white/10 bg-black/80 p-3 shadow-2xl shadow-black/50">
-                <div className="overflow-hidden rounded-[20px]  md:rounded-[36px] border border-white/10">
+              <div className="relative rounded-[36px]  md:rounded-[46px] border border-white/10 bg-black/80 p-3 shadow-2xl shadow-black/50">
+                <div className="overflow-hidden rounded-[36px]  md:rounded-[36px] border border-white/10">
                   <Image
                     src="/Στιγμιότυπο οθόνης 2026-06-26, 12.41.59 μμ.png"
                     alt="Tripaki home page"
