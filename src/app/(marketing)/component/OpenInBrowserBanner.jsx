@@ -23,7 +23,7 @@ const OpenInBrowserBanner = () => {
   if (!isInAppBrowser) return null
 
   return (
-   <div className="fixed top-0 left-0 right-0 z-[999] border-white/10 bg-gradient-to-r from-[#0B1F6A] via-[#1747A6] to-[#0B1F6A] backdrop-blur-xl text-white text-sm px-5 py-4 flex items-center justify-between shadow-lg">
+   <div className="fixed top-0 left-0 right-0 z-[9999] border-white/10 bg-gradient-to-r from-[#0B1F6A] via-[#1747A6] to-[#0B1F6A] backdrop-blur-xl text-white text-sm px-5 py-4 flex items-center justify-between shadow-lg">
   {/* Logo on the left */}
  {/* Logo */}
  

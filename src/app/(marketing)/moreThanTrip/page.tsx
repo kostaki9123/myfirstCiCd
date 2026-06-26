@@ -25,9 +25,10 @@ const LandingPage = () => {
       {/* Dark overlay */}
       <div className="fixed inset-0 z-0 bg-[#010038]/55" />
 
+      <OpenInBrowserBanner />
       {/* Content */}
       <div className="relative z-10">
-        <OpenInBrowserBanner />
+  
         <HeroSection />
         <HowItWorks />
         <FeaturesSection />
