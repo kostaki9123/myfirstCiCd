@@ -18,14 +18,17 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
     if (!user) {
       throw new Error("User not found");
     }
+const email = user.emailAddresses[0]?.emailAddress ?? "";
 
-    const email = user.emailAddresses[0]?.emailAddress ?? "";
-    const username = `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim();
+const username =
+  user.firstName
+    ? `${user.firstName} ${user.lastName ?? ""}`.trim()
+    : email.split("@")[0];
 
     console.log(
         'user id',user.id,
         'email' , email,
-        'username' ,  username
+        'username' ,  user.firstName
       )
 
     await signIn(user.id, email, username);
