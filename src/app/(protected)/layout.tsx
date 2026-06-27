@@ -22,6 +22,12 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
     const email = user.emailAddresses[0]?.emailAddress ?? "";
     const username = `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim();
 
+    console.log(
+        'user id',user.id,
+        'email' , email,
+        'username' ,  username
+      )
+
     await signIn(user.id, email, username);
   } catch (err) {
     // 🛡 Revoke session only if there's a session and an error
