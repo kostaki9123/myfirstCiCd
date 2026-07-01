@@ -151,7 +151,7 @@ for (const point of pointsOnly) {
             {/* Trip Overview */}
             <div className="flex w-full gap-12 ">
          
-               <Card className=" w-[80%] xxs:w-full p-2 535:max-w-[370px] bg-white/10  border border-white/10
+               <Card className=" w-[83%] xxs:w-full p-2 535:max-w-[370px] bg-white/10  border border-white/10
            hover:bg-white/15  text-white  ">
                   <CardHeader className="text-white/90 p-3 text-lg"> 
                     <CardTitle >Trip Summary </CardTitle>
@@ -173,7 +173,7 @@ for (const point of pointsOnly) {
            {points.length === 0 && (
             <Link href={`/plan/${tripid}`}>
               <div
-                className="group  w-[80%] xxs:w-full 535:max-w-[370px] flex flex-col items-center justify-center rounded-2xl 
+                className="group  w-[83%] xxs:w-full 535:max-w-[370px] flex flex-col items-center justify-center rounded-2xl 
                 border border-white/10 bg-white/10  hover:bg-white/15 text-white  p-8 shadow-md transition hover:shadow-lg hover:-translate-y-1 cursor-pointer"
                 aria-label="Start planning your trip"
               >
