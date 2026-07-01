@@ -53,7 +53,7 @@ const defaultForm: PlaceFormData = {
 
   latitude: "",
   longitude: "",
-  compound_code: "Tallinn",
+  compound_code: "Bruges",
   LocationComments: "",
 
   Priceperday: "",
