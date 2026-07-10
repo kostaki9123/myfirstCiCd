@@ -328,6 +328,7 @@ const activeFocusPlace = mapData[activePlaceIndex]?.location?.lat && mapData[act
   return (
     <Dialog>
       <DialogTrigger
+      id='onboarding-itinerary-action' 
         onClick={() => {
           props.onSubmitSuccess?.(false);
 

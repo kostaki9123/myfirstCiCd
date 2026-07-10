@@ -1,5 +1,6 @@
 'use client'
 
+import { useNextStep } from "nextstepjs";
 import React, { useEffect, useState } from 'react'
 import { MdAddLocationAlt } from "react-icons/md";
 import {
@@ -73,43 +74,45 @@ type Props = {
     ]
 
 const Addnewcyrcle =  (props : Props) => {
- const [showHint, setShowHint] = useState(false);
-const [showTransportHint, setShowTransportHint] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+ const {
+  currentTour,
+  currentStep,
+  isNextStepVisible,
+  setCurrentStep,
+} = useNextStep();
 
+const handleCircleClick = () => {
+  const isSecondOnboardingStep =
+    isNextStepVisible &&
+    currentTour === "plan-onboarding" &&
+    currentStep === 1;
 
-
-useEffect(() => {
-  const seenTransport = localStorage.getItem("createTripTransportHint");
-  if (!seenTransport) setShowTransportHint(false); // initially hidden
-}, []);
-  // Show the first-time hint
-  useEffect(() => {
-    const seen = localStorage.getItem("createTripHintSeen");
-    if (!seen) {
-      setShowHint(true);
-    }
-  }, []);
-
-  // Handle circle click
-  const handleCircleClick = () => {
-  localStorage.setItem("createTripHintSeen", "true");
-  setShowHint(false);
-
-  // Only show Step 2 if first-time
-  const seenTransport = localStorage.getItem("createTripTransportHint");
-  if (!seenTransport) setShowTransportHint(true);
+  if (isSecondOnboardingStep) {
+    window.setTimeout(() => {
+      setCurrentStep(2);
+    }, 150);
+  }
 };
 
-   const handleTransportAdded = () => {
-    setShowTransportHint(false)
-    localStorage.setItem("createTripTransportHint", "true")
-  }
+const tabsAreLocked =
+  isNextStepVisible &&
+  currentTour === "plan-onboarding" &&
+  currentStep === 2;
 
   return (
     
-    <Dialog >
+    <Dialog open={dialogOpen}
+  onOpenChange={(open) => {
+    if (!open && tabsAreLocked) return;
 
-        <DialogTrigger onClick={handleCircleClick} style={{  marginLeft: props.withcurveline ? '0px' :  '10px'   ,gridRow :`${props.withcurveline ?positiongrid[props.index].gridRow : 2}` ,borderRadius : "50%" ,gridColumn : `${props.withcurveline ? props.index + 2 : 2} `, display : "flex" , alignItems : "center", justifyItems : "center" , height : "100px" , width : "100px" , zIndex : 2 ,}} >
+    setDialogOpen(open);
+  }}>
+
+        <DialogTrigger  onClick={() => {
+    setDialogOpen(true);
+    handleCircleClick();
+  }} id='onboarding-add-circle' style={{  marginLeft: props.withcurveline ? '0px' :  '10px'   ,gridRow :`${props.withcurveline ?positiongrid[props.index].gridRow : 2}` ,borderRadius : "50%" ,gridColumn : `${props.withcurveline ? props.index + 2 : 2} `, display : "flex" , alignItems : "center", justifyItems : "center" , height : "100px" , width : "100px" , zIndex : 2 ,}} >
                <div className='flex items-center relative justify-center  rounded-[50%] w-[100px] h-[100px] z-50 bg-[#1A1A4F] cursor-pointer'>
                    <MdAddLocationAlt className='text-white/70 ' style={{fontSize : "30px" , fontWeight : "bolder"}}/>
           
@@ -128,7 +131,22 @@ useEffect(() => {
          }
             
 
-         <DialogContent  className=" z-[52]  bg-[#07124F]/95 border border-white/10   sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-1  360:p-2 sm:p-2 rounded-xl">
+         <DialogContent  onPointerDownOutside={(event) => {
+    if (tabsAreLocked) {
+      event.preventDefault();
+    }
+  }}
+  onInteractOutside={(event) => {
+    if (tabsAreLocked) {
+      event.preventDefault();
+    }
+  }}
+  onEscapeKeyDown={(event) => {
+    if (tabsAreLocked) {
+      event.preventDefault();
+    }
+  }}
+   className=" z-[52]  bg-[#07124F]/95 border border-white/10   sm:max-h-[90%] min-w-[262px] w-full sm:w-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-1  360:p-2 sm:p-2 rounded-xl">
           <DialogTitle></DialogTitle>
           <DialogDescription>
           </DialogDescription>
@@ -136,15 +154,15 @@ useEffect(() => {
   
 
           <Tabs defaultValue="account" className="  343:w-full ">
-              <TabsList className="grid  grid-cols-2 w-full  text-white/90 bg-[#07124F]/95 ">
-                   <TabsTrigger value="account" className='bg-[#07124F]/95' >Add destination </TabsTrigger>
-                   <TabsTrigger value="password" className='bg-[#07124F]/95'>Add transport</TabsTrigger>
+              <TabsList id="onboarding-destination-transport" className="grid  grid-cols-2 w-full  text-white/90 bg-[#07124F]/95 ">
+                   <TabsTrigger disabled={tabsAreLocked} value="account" className='bg-[#07124F]/95'  >Add destination </TabsTrigger>
+                   <TabsTrigger disabled={tabsAreLocked} value="password" className='bg-[#07124F]/95'>Add transport</TabsTrigger>
               </TabsList>
               <TabsContent value="account" className='px-5  w-full'>
-                 <Createplaceform index={props.index} tripId={props.tripId} minDate={props.minDate}    onSubmitSuccess={handleTransportAdded}  />
+                 <Createplaceform index={props.index} tripId={props.tripId} minDate={props.minDate} />
               </TabsContent>
               <TabsContent value="password" className='px-5  w-full ' >
-                 <Createmovingboxform tripId={props.tripId} index={props.index} minDate={props.minDate} onSubmitSuccess={handleTransportAdded}/>
+                 <Createmovingboxform tripId={props.tripId} index={props.index} minDate={props.minDate} />
               </TabsContent>
          </Tabs>
          </div>

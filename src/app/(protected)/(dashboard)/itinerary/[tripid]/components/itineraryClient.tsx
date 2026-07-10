@@ -5,6 +5,7 @@
   import Mapprovider from '@/app/component/map/map-provider';
   import { Place } from '../../../../../../../backend/entities/models/place';
 import PhoneMap from './phonemap';
+import StartItineraryOnboarding from '@/app/component-custom/onboarding/startItineraryOnboarding';
 
   export type Trip = {
     id: string;
@@ -188,7 +189,9 @@ const visitDateColors = useMemo(() => {
 
     return (
       <div className="h-full absolute inset-0 bg-[#010038] flex min-w-[344px]">
-
+         <StartItineraryOnboarding
+  hasDestinations={points.length > 0}
+/>
         {/* LEFT */}
         <div className="h-full w-full 950:w-[53%] overflow-auto">
           {points.length === 0 ? (

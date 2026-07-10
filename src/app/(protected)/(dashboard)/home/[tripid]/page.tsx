@@ -7,6 +7,8 @@ import Transportui from "./components/transportui";
 import Placeui from "./components/placeui";
 import { getPlaces } from "../../itinerary/[tripid]/action";
 import PhoneMap from "../../itinerary/[tripid]/components/phonemap";
+import StartOnboarding from "@/app/component-custom/onboarding/start-onboarding";
+import PlanTripOnboardingLink from "./components/PlanTripOnboardingLink";
 
 const DATE_COLORS = [
   '#3b82f6',
@@ -144,6 +146,7 @@ for (const point of pointsOnly) {
     <div className=" absolute top-0 inset-0 flex items-start justify-start overflow-x-hidden 535:overflow-x-auto bg-[#010038] "> 
       <div className="relative   flex items-start justify-start   h-full w-full">   
         <div className=" flex 535:flex-col flex-col 535:mt-0 relative  w-9   max-w-[200px]  535:max-w-content   justify-start items-start   gap-2 min-w-max p-6  ">
+             <StartOnboarding/>
              <div className=" absolute left-[-9px] top-0   pl-4 h-full ">
                     <div className=" bottom-0 w-1 bg-gray-500 rounded-full h-[98%] my-5 "></div>
              </div>
@@ -171,8 +174,9 @@ for (const point of pointsOnly) {
 
            {/* Itinerary */}
            {points.length === 0 && (
-            <Link href={`/plan/${tripid}`}>
+            <PlanTripOnboardingLink tripid={tripid}>
               <div
+                id="onboarding-plan-trip"
                 className="group  w-[83%] xxs:w-full 535:max-w-[370px] flex flex-col items-center justify-center rounded-2xl 
                 border border-white/10 bg-white/10  hover:bg-white/15 text-white  p-8 shadow-md transition hover:shadow-lg hover:-translate-y-1 cursor-pointer"
                 aria-label="Start planning your trip"
@@ -187,7 +191,7 @@ for (const point of pointsOnly) {
                   Add your first place to start building the journey
                 </p>
               </div>
-            </Link>
+            </PlanTripOnboardingLink>
             )}
               
            {points.map(( point: any, key:number ) => ( 

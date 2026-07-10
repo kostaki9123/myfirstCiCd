@@ -5,6 +5,7 @@ import Tripboardphone from './components/tripboardphone'
 import { getPoints } from './action'
 import { getPlaces } from '../../itinerary/[tripid]/action'
 import PhoneMap from '../../itinerary/[tripid]/components/phonemap'
+import ContinueOnboarding from './components/continueOnboarding'
 
 interface PageProps {
   params: Promise<{ tripid: string }>
@@ -98,9 +99,12 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <div className="absolute bottom-0 left-0 right-0 top-0 flex min-h-[490px] flex-col bg-[#010038]">
+      <ContinueOnboarding/>
       <div className="hidden h-[45%] xxs:block">
         <Tripboard tripId={tripid} cyrclesArr={points} />
       </div>
+
+      
 
       <div className="hidden h-[55%] w-full xxs:block">
         <Mapprovider cyrclesArr={points} allPlaces={allPlaces} />

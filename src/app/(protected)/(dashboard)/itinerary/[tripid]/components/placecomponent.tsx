@@ -263,6 +263,7 @@ const extractPlaceId = (url?: string | null) => {
   {/* BUTTONS */}
   <div className="mt-4 flex gap-2">
     <Button
+    id="onboarding-add-place"
       disabled={isAdded || isLoading}
       onClick={addPlace}
       className={`flex-1 h-9 text-sm rounded-md ${

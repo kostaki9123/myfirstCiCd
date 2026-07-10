@@ -21,7 +21,7 @@ const Placesdropdown = (props: props) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild id='onboarding-destination-switcher'>
         <div className="cursor-pointer flex items-center gap-2 text-xl font-semibold">
           <div>
             {props.selectedPlace?.placeName || "No place"}

@@ -179,6 +179,7 @@ useEffect(() => {
             </div>
 
             <Placesdropdown
+          
               cyrclesArr={pointsOnly}
               selectedPlace={selectedPoint}
               setSelectedPoint={setSelectedPoint}
@@ -187,7 +188,7 @@ useEffect(() => {
 
 
           {/* ACCOMMODATION */}
-          <div className="flex flex-col items-center p-2  450:mt-0 pt-7 relative gap-2 ">
+          <div   className="flex flex-col items-center p-2  450:mt-0 pt-7 relative gap-2 ">
 
             <small className="absolute left-2 top-2 text-white font-semibold">
               Accommodation
