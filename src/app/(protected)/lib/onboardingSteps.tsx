@@ -16,7 +16,7 @@ export const getOnboardingSteps = (isMobile: boolean): Tour[] => [
         pointerRadius: 10,
       },
       {
-        icon: <>📍</>,
+        icon: <></>,
         title: "Click to add your first destination",
         content: <>Tap here to start building your route.</>,
         selector: isMobile
