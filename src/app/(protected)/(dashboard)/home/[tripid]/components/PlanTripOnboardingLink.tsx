@@ -22,12 +22,20 @@ export default function PlanTripOnboardingLink({
   } = useNextStep();
 
   const handleClick = () => {
+    console.log("Plan card clicked:", {
+      currentTour,
+      currentStep,
+      isNextStepVisible,
+    });
+
     const isFirstPlanStep =
       isNextStepVisible &&
       currentTour === "plan-onboarding" &&
       currentStep === 0;
 
     if (isFirstPlanStep) {
+      console.log("Saving continuation for Step 2");
+
       sessionStorage.setItem(
         "tripaki-plan-onboarding-step",
         "1"

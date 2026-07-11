@@ -16,7 +16,7 @@ const Tripboardphone = (props : props) => {
     <div style={{gridTemplateRows : `70px repeat(${props.cyrclesArr?.length}, 132px)`,gridTemplateColumns:'200px 200px' ,minWidth: '344px' , display: 'grid', gap: '7px' , width: '100%',paddingTop: '7px', paddingBottom: '7px', background : ' #010038' , height:'fit-content' , minHeight: '100%' }}  >
          {
              props.cyrclesArr?.length === 0 
-             ?   <Addnewcyrcle withcurveline={false} lengtharr={props.cyrclesArr.length} index={0} tripId={props.tripId}  /> 
+             ?   <Addnewcyrcle idForOnboarding='onboarding-add-circle-mobile' withcurveline={false} lengtharr={props.cyrclesArr.length} index={0} tripId={props.tripId}  /> 
              :
              props.cyrclesArr?.map(( point: any , key:number ) => (
              point.role === "POINT" 

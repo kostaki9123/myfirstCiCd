@@ -1,6 +1,6 @@
 import type { Tour } from "nextstepjs";
 
-export const onboardingSteps: Tour[] = [
+export const getOnboardingSteps = (isMobile: boolean): Tour[] => [
   {
     tour: "plan-onboarding",
     steps: [
@@ -19,7 +19,9 @@ export const onboardingSteps: Tour[] = [
         icon: <>📍</>,
         title: "Add your first destination",
         content: <>Tap here to start building your route.</>,
-        selector: "#onboarding-add-circle",
+        selector: isMobile
+          ? "#onboarding-add-circle-mobile"
+          : "#onboarding-add-circle-desktop",
         side: "bottom",
         showControls: false,
         showSkip: true,
@@ -77,7 +79,6 @@ export const onboardingSteps: Tour[] = [
         pointerPadding: 0,
         pointerRadius: 12,
       },
-
     ],
   },
 ];

@@ -34,13 +34,18 @@ export default function ContinueOnboarding() {
 
     const waitForTarget = window.setInterval(() => {
       const target = document.querySelector(
-        "#onboarding-add-circle"
+        "#onboarding-add-circle-mobile, #onboarding-add-circle-desktop"
       );
 
-      if (!target) return;
+      if (!target) {
+        console.log("Waiting for onboarding circle target");
+        return;
+      }
 
       window.clearInterval(waitForTarget);
       hasContinued.current = true;
+
+      console.log("Found onboarding target:", target);
 
       if (currentTour !== "plan-onboarding") {
         startNextStep("plan-onboarding");
@@ -52,7 +57,7 @@ export default function ContinueOnboarding() {
         sessionStorage.removeItem(
           "tripaki-plan-onboarding-step"
         );
-      }, 200);
+      }, 250);
     }, 100);
 
     return () => {

@@ -25,6 +25,7 @@ type Props = {
     withcurveline : boolean
     lengtharr : number
     minDate?: Date
+    idForOnboarding : string
   }
   
   const positiongrid = [
@@ -112,7 +113,7 @@ const tabsAreLocked =
         <DialogTrigger  onClick={() => {
     setDialogOpen(true);
     handleCircleClick();
-  }} id='onboarding-add-circle' style={{  marginLeft: props.withcurveline ? '0px' :  '10px'   ,gridRow :`${props.withcurveline ?positiongrid[props.index].gridRow : 2}` ,borderRadius : "50%" ,gridColumn : `${props.withcurveline ? props.index + 2 : 2} `, display : "flex" , alignItems : "center", justifyItems : "center" , height : "100px" , width : "100px" , zIndex : 2 ,}} >
+  }} id={props.idForOnboarding} style={{   marginLeft: props.withcurveline ? '0px' :  '10px'   ,gridRow :`${props.withcurveline ?positiongrid[props.index].gridRow : 2}` ,borderRadius : "50%" ,gridColumn : `${props.withcurveline ? props.index + 2 : 2} `, display : "flex" , alignItems : "center", justifyItems : "center" , height : "100px" , width : "100px" , zIndex : 2 ,}} >
                <div className='flex items-center relative justify-center  rounded-[50%] w-[100px] h-[100px] z-50 bg-[#1A1A4F] cursor-pointer'>
                    <MdAddLocationAlt className='text-white/70 ' style={{fontSize : "30px" , fontWeight : "bolder"}}/>
           

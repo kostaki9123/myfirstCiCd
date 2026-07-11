@@ -50,7 +50,7 @@ const Tripboard = (props : props) => {
     <div   style={{   minWidth: "344px" ,display: "grid",gridTemplateRows : "20px 69px" ,gridTemplateColumns: `70px repeat(${props.cyrclesArr?.length + 1}, 132px)`, backgroundColor: "#010038", width: "100%", height: "100%", overflowX : "auto" , overflowY : "hidden" ,minHeight: 'h-full'}}    >
        {
              props.cyrclesArr?.length === 0 
-             ? <Addnewcyrcle lengtharr={props.cyrclesArr.length} index={0} tripId={props.tripId}  withcurveline minDate={new Date()} /> 
+             ? <Addnewcyrcle idForOnboarding='onboarding-add-circle-desktop' lengtharr={props.cyrclesArr.length} index={0} tripId={props.tripId}  withcurveline minDate={new Date()} /> 
              :
              props.cyrclesArr?.map(( point: any , key:number ) => (
              point.role === "POINT" 
