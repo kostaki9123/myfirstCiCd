@@ -19,27 +19,24 @@ export default function PlanTripOnboardingLink({
     currentTour,
     currentStep,
     isNextStepVisible,
+    closeNextStep,
   } = useNextStep();
 
   const handleClick = () => {
-    console.log("Plan card clicked:", {
-      currentTour,
-      currentStep,
-      isNextStepVisible,
-    });
-
     const isFirstPlanStep =
       isNextStepVisible &&
       currentTour === "plan-onboarding" &&
       currentStep === 0;
 
     if (isFirstPlanStep) {
-      console.log("Saving continuation for Step 2");
-
+      // Tell the Plan page to continue at Step 2.
       sessionStorage.setItem(
         "tripaki-plan-onboarding-step",
         "1"
       );
+
+      // Hide the old spotlight before changing page.
+      closeNextStep();
     }
 
     router.push(`/plan/${tripid}`);

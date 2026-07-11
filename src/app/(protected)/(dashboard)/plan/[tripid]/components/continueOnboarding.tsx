@@ -5,9 +5,8 @@ import { useNextStep } from "nextstepjs";
 
 export default function ContinueOnboarding() {
   const {
-    currentTour,
-    setCurrentStep,
     startNextStep,
+    setCurrentStep,
   } = useNextStep();
 
   const hasContinued = useRef(false);
@@ -32,24 +31,27 @@ export default function ContinueOnboarding() {
 
     if (!shouldContinue) return;
 
-    const waitForTarget = window.setInterval(() => {
-      const target = document.querySelector(
-        "#onboarding-add-circle-mobile, #onboarding-add-circle-desktop"
+    const interval = window.setInterval(() => {
+      const mobileTarget = document.querySelector(
+        "#onboarding-add-circle-mobile"
       );
 
-      if (!target) {
-        console.log("Waiting for onboarding circle target");
-        return;
-      }
+      const desktopTarget = document.querySelector(
+        "#onboarding-add-circle-desktop"
+      );
 
-      window.clearInterval(waitForTarget);
+      const visibleTarget = [mobileTarget, desktopTarget].find(
+        (element) =>
+          element instanceof HTMLElement &&
+          element.getClientRects().length > 0
+      );
+
+      if (!visibleTarget) return;
+
+      window.clearInterval(interval);
       hasContinued.current = true;
 
-      console.log("Found onboarding target:", target);
-
-      if (currentTour !== "plan-onboarding") {
-        startNextStep("plan-onboarding");
-      }
+      startNextStep("plan-onboarding");
 
       window.setTimeout(() => {
         setCurrentStep(1);
@@ -57,17 +59,13 @@ export default function ContinueOnboarding() {
         sessionStorage.removeItem(
           "tripaki-plan-onboarding-step"
         );
-      }, 250);
+      }, 200);
     }, 100);
 
     return () => {
-      window.clearInterval(waitForTarget);
+      window.clearInterval(interval);
     };
-  }, [
-    currentTour,
-    setCurrentStep,
-    startNextStep,
-  ]);
+  }, [startNextStep, setCurrentStep]);
 
   return null;
 }
