@@ -17,16 +17,17 @@ export const getOnboardingSteps = (isMobile: boolean): Tour[] => [
       },
       {
         icon: <>📍</>,
-        title: "Add your first destination",
+        title: "Click to add your first destination",
         content: <>Tap here to start building your route.</>,
         selector: isMobile
           ? "#onboarding-add-circle-mobile"
           : "#onboarding-add-circle-desktop",
-        side: "bottom",
+        side: 'bottom' ,
         showControls: false,
         showSkip: true,
         pointerPadding: 0,
         pointerRadius: 999,
+        
       },
       {
         icon: <>🗺️</>,
