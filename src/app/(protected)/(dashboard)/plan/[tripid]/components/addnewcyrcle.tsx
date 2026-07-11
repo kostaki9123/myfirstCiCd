@@ -25,7 +25,7 @@ type Props = {
     withcurveline : boolean
     lengtharr : number
     minDate?: Date
-    idForOnboarding : string
+    idForOnboarding? : string
   }
   
   const positiongrid = [
