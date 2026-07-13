@@ -7,6 +7,8 @@
   import PlaceToVisitCard from './PlaceToVisitCard';
   import { Place } from '../../../../../../../backend/entities/models/place';
   import { PlaceforMap, Trip } from './itineraryClient';
+import { DateMenubar } from './DateMenubar';
+import ViewModeDropdown from './viewmodedropdown';
 
   export interface ItineraryPoint {
     id: string;
@@ -44,7 +46,8 @@
   };
 
   const Itineraryboard = (props: Props) => {
-    const [showItineraryHint, setShowItineraryHint] = useState(false);
+   const [mode, setMode] = useState<"DAY_BY_DAY" | "CUSTOM">("DAY_BY_DAY");
+   const [selectedDate, setSelectedDate] = useState<string | null>(null); 
     /** Only POINT items */
     const pointsOnly = useMemo(
       () => props.cyrclesArr.filter((item) => item.role === 'POINT'),
@@ -70,12 +73,6 @@
   }
 }, [selectedPoint?.placeLat, selectedPoint?.placeLng, props.setFocusplace]);
 
-      useEffect(() => {
-    const seen = localStorage.getItem("tripItineraryHintSeen");
-    if (!seen) {
-      setShowItineraryHint(true);
-    }
-  }, []);
 
     /** Sync selectedPoint when prop changes */
     useEffect(() => {
@@ -216,7 +213,6 @@ useEffect(() => {
             ))}
 
             <Addaplace
-              onSubmitSuccess={setShowItineraryHint}
               addedPlaces={props.places.filter(
                 (p) => p.pointId === selectedPoint.id
               )}
@@ -235,40 +231,48 @@ useEffect(() => {
           </div>
 
           {/* PLACES TO VISIT */}
-          <div className="flex flex-col items-center p-2 pt-7 relative gap-2">
-            <small className="absolute left-2 top-2 text-white font-semibold">
-              Places to Visit
-            </small>
-
+          <div className={`flex flex-col items-center p-2 ${mode === 'DAY_BY_DAY' ? 'pt-7' : 'pt-11' } relative gap-2 `}>
+             
+              <small className="absolute left-2 top-2  flex gap-4 text-white font-semibold ">
+                Places to Visit
+                <ViewModeDropdown setSelectedMode={setMode} selectedMode={mode}/>
+              </small>
+              {mode === 'DAY_BY_DAY' &&
+               <DateMenubar 
+                 ablestayFrom={selectedPoint.startDate}
+                 ablestayUntil={selectedPoint.endDate}
+                 selectedDate={selectedDate}
+                 setSelectedDate={setSelectedDate}/>
+              }
            {placesToVisit.map((place, key) => {
-  const visitDateKey = place.visitDate
-    ? new Date(place.visitDate).toISOString().split("T")[0]
-    : null;
-
-  return (
-    <PlaceToVisitCard
-      index={key}
-      key={place.internalId ?? place.id}
-      budgetid={props.budgetId}
-      internalId={place.internalId!}
-      id={place.id}
-      pointId={place.pointId}
-      placeType={place.placeType}
-      name={place.name}
-      visitDate={place.visitDate}
-      visitTime={place.visitTime}
-      ablestayFrom={selectedPoint.startDate}
-      ablestayUntil={selectedPoint.endDate}
-      notes={place.notes}
-      paymentStatus={place.paymentStatus ? place.paymentStatus : undefined}
-      affiliateLink={place.affiliatelink}
-      dateColorClass={visitDateKey ? props.visitDateColorMap[visitDateKey] : undefined}
-      entryPrice={place.entryPrice}
-    />
-  );
-})}
+               const visitDateKey = place.visitDate
+                 ? new Date(place.visitDate).toISOString().split("T")[0]
+                 : null;
+             
+               return (
+                 <PlaceToVisitCard
+                   index={key}
+                   key={place.internalId ?? place.id}
+                   budgetid={props.budgetId}
+                   internalId={place.internalId!}
+                   id={place.id}
+                   pointId={place.pointId}
+                   placeType={place.placeType}
+                   name={place.name}
+                   visitDate={place.visitDate}
+                   visitTime={place.visitTime}
+                   ablestayFrom={selectedPoint.startDate}
+                   ablestayUntil={selectedPoint.endDate}
+                   notes={place.notes}
+                   paymentStatus={place.paymentStatus ? place.paymentStatus : undefined}
+                   affiliateLink={place.affiliatelink}
+                   dateColorClass={visitDateKey ? props.visitDateColorMap[visitDateKey] : undefined}
+                   entryPrice={place.entryPrice}
+                 />
+               );
+             })}
             <Addaplace
-              onSubmitSuccess={setShowItineraryHint}
+           
               addedPlaces={props.places.filter(
                 (p) => p.pointId === selectedPoint.id
               )}
