@@ -1,12 +1,13 @@
 import React from "react";
-import HowItWorks from "../component/howWork";
-import TestimonialsSection from "../component/testimonials";
-import FeaturesSection from "../component/feuatereDesti";
-import OpenInBrowserBanner from "../component/OpenInBrowserBanner";
-import HeroSection from "../component/hero";
+
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
+import HeroSection from "./component/hero";
+import HowItWorks from "./component/howWork";
+import FeaturesSection from "./component/feuatereDesti";
+import TestimonialsSection from "./component/testimonials";
+import OpenInBrowserBanner from "./component/OpenInBrowserBanner";
 
 const LandingPage = () => {
   return (
@@ -25,14 +26,14 @@ const LandingPage = () => {
       {/* Dark overlay */}
       <div className="fixed inset-0 z-0 bg-[#010038]/55" />
 
-      <OpenInBrowserBanner />
+      <OpenInBrowserBanner/>
       {/* Content */}
       <div className="relative z-10">
   
-        <HeroSection />
-        <HowItWorks />
-        <FeaturesSection />
-        <TestimonialsSection />
+        <HeroSection/>
+        <HowItWorks/>
+        <FeaturesSection/>
+        <TestimonialsSection/>
 
         <footer className="border-t border-white/10  bg-transparent py-10 backdrop-blur-sm">
           <div className="container mx-auto grid grid-cols-1 gap-8 px-6 sm:grid-cols-3 sm:px-12 lg:px-16">
