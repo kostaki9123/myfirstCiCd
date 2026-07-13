@@ -145,6 +145,26 @@ import ViewModeDropdown from './viewmodedropdown';
     
 }, [props.places, selectedPoint.id]);
 
+const visiblePlacesToVisit = useMemo(() => {
+  if (mode === "CUSTOM") {
+    return placesToVisit;
+  }
+
+  if (!selectedDate) {
+    return [];
+  }
+
+  return placesToVisit.filter((place) => {
+    if (!place.visitDate) return false;
+
+    const visitDateKey = new Date(place.visitDate)
+      .toISOString()
+      .split("T")[0];
+
+    return visitDateKey === selectedDate;
+  });
+}, [mode, placesToVisit, selectedDate]);
+
 useEffect(() => {
   props.setaddedStays(accommodationPlaces);
   props.setaddedVisits(placesToVisit);
@@ -244,7 +264,7 @@ useEffect(() => {
                  selectedDate={selectedDate}
                  setSelectedDate={setSelectedDate}/>
               }
-           {placesToVisit.map((place, key) => {
+         {visiblePlacesToVisit.map((place, key) => {
                const visitDateKey = place.visitDate
                  ? new Date(place.visitDate).toISOString().split("T")[0]
                  : null;

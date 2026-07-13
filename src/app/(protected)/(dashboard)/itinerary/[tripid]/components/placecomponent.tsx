@@ -189,7 +189,7 @@ const extractPlaceId = (url?: string | null) => {
 
     {/* IMAGE */}
     {props.photoreference &&
-    <div className=" w-[80px] 950:h-[150px] h-[104px] 426:h-[80px]  sm:h-[90px] flex-shrink-0">
+    <div className=" w-[80px] lg:w-[200px]  950:h-[100px] h-[104px] 426:h-[80px]  sm:h-[90px] flex-shrink-0">
       <Image
         
         src={props.photoreference}
