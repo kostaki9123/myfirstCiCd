@@ -351,7 +351,7 @@ const activeFocusPlace = mapData[activePlaceIndex]?.location?.lat && mapData[act
       </DialogTrigger>
 
       <DialogContent
-        className="flex flex-col-reverse 950:flex-row gap-2   950:h-[480px] w-[90%] sm:w-[70%] z-[999] sm:pl-4 mt-6 bg-[#010038] border border-white/10 text-white"
+        className="flex flex-col-reverse 950:flex-row gap-2 h-[90%]   950:h-[480px] w-[90%] sm:w-[70%] z-[999] sm:pl-4 mt-6 bg-[#010038] border border-white/10 text-white"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         
@@ -379,7 +379,7 @@ const activeFocusPlace = mapData[activePlaceIndex]?.location?.lat && mapData[act
             </APIProvider>
           </DialogTitle>
 
-          <div className="w-full flex gap-2 flex-col h-[345px] pt-2 pr-2 overflow-auto mt-2">
+          <div className="w-full flex gap-2 flex-col h-[285px] 950:h-[400px] pt-2 pr-2 overflow-auto mt-2">
             <TripContextChips
              travelingWith={props.travelingWith}
               tripBudget={props.tripBudget}

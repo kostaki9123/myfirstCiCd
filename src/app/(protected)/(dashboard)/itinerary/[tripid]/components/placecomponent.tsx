@@ -182,14 +182,14 @@ const extractPlaceId = (url?: string | null) => {
   const isAdded = props.alreadyAdded || justAdded;
 
   return (
-   <div ref={cardRef}  className="relative  flex flex-col sm:max-w-xl bg-white/10 rounded-xl shadow-md hover:shadow-lg transition duration-200 p-4 ">
+   <div ref={cardRef}  className="relative  flex flex-col   bg-white/10 rounded-xl shadow-md hover:shadow-lg transition duration-200 p-4 ">
 
   {/* TOP SECTION */}
-  <div className="flex flex-col sm:flex-row gap-3">
+  <div className="flex flex-row gap-3">
 
     {/* IMAGE */}
     {props.photoreference &&
-    <div className="w-full sm:w-[160px] h-[140px] sm:h-[120px] flex-shrink-0">
+    <div className=" w-[80px] 950:h-[150px] h-[104px] 426:h-[80px]  sm:h-[90px] flex-shrink-0">
       <Image
         
         src={props.photoreference}
@@ -223,12 +223,12 @@ const extractPlaceId = (url?: string | null) => {
         <div className="flex flex-col">
              <p className="text-white/90">{props.category ? props.category : props.type === 'PLACE_TO_VISIT' ? 'attraction' : 'lodging'}</p>
              {props.LocationComments &&
-              <p className="text-xs text-white/70 line-clamp-3 ">
+              <p className="text-xs text-white/70 line-clamp-4 ">
                 {props.LocationComments}
               </p> 
              }
              {props.description &&
-              <p className="text-xs text-white/70 line-clamp-3 ">
+              <p className="text-xs text-white/70 line-clamp-4 ">
                 {props.description}
               </p> 
              }
