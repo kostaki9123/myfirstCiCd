@@ -29,6 +29,8 @@ type Props = {
   travelingWith: TripWith;
   tripBudget: TripBudget;
   tripTypes: TripType[];
+  currentMode? : "DAY_BY_DAY" | "CUSTOM"
+  currentDate? : string | null
   onSubmitSuccess?: (success: boolean) => void;
 };
 
@@ -65,6 +67,8 @@ const Addaplace = (props: Props) => {
   const [debouncedLocation] = useState(inputLocation);
 
   const [activePlaceIndex, setActivePlaceIndex] = useState(0);
+
+   console.log( props.currentDate , 'selected date add place board')
 
 // The focused place, ready to pass to Mapprovider when prop is ready
 
@@ -440,6 +444,8 @@ const activeFocusPlace = mapData[activePlaceIndex]?.location?.lat && mapData[act
                   alreadyAdded={place.alreadyAdded}
                   googleMapsUri={place.googleMapsUri}
                   photoreference={place.PhotoUrl}
+                  currentMode={props.currentMode}
+                  currentDate={props.currentDate}
                 />
               ))}
               {visibleCount < placesResult.length && (

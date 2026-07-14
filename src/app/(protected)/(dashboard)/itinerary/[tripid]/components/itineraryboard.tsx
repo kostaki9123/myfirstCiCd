@@ -48,6 +48,8 @@ import ViewModeDropdown from './viewmodedropdown';
   const Itineraryboard = (props: Props) => {
    const [mode, setMode] = useState<"DAY_BY_DAY" | "CUSTOM">("DAY_BY_DAY");
    const [selectedDate, setSelectedDate] = useState<string | null>(null); 
+
+   console.log(selectedDate , 'selected date itinerary board')
     /** Only POINT items */
     const pointsOnly = useMemo(
       () => props.cyrclesArr.filter((item) => item.role === 'POINT'),
@@ -308,6 +310,8 @@ useEffect(() => {
               tripTypes={props.trip.tripTypes as TripType[]}
               addedStaysForMap={props.addedStaysForMap}
               addedVisitsForMap={props.addedVisitsForMap}
+              currentMode={mode}
+              currentDate={selectedDate}
             />
           
                <div className="h-16 535:hidden"></div>

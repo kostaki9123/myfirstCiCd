@@ -56,7 +56,8 @@ export const createPlaceController =
             latitude: data.latitude,
             longitude:data.longitude,
             affiliatelink:data.affiliatelink,
-            entryPrice:data.entryPrice
+            entryPrice:data.entryPrice,
+            visitDate : data.visitDate
           })
     }
     

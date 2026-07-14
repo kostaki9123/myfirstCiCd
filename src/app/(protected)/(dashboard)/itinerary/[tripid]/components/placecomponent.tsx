@@ -27,6 +27,8 @@ type Props = {
   affiliatelink:string
   photoreference? : string
   LocationComments : string
+  currentMode? : "DAY_BY_DAY" | "CUSTOM"
+  currentDate? : string | null
   onVisible?: (index: number) => void; 
 };
 
@@ -160,7 +162,10 @@ const extractPlaceId = (url?: string | null) => {
       formData.append("tripId", props.tripId);
       formData.append("googleMapsUri", props.googleMapsUri);
       formData.append("affiliatelink", props.affiliatelink);
-
+      if (props.currentMode === "DAY_BY_DAY" && props.currentDate) {
+         formData.append("visitDate", props.currentDate);
+        }
+        console.log(props.currentDate , 'current date')
       await createPlace(formData);
       setJustAdded(true);
       setErrorMessages({});

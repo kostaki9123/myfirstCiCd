@@ -42,11 +42,14 @@ export async function createPlace(formData: FormData) {
     const entryPriceStr = formData.get("entryPrice") as string | null;
     const latitudeStr = formData.get("latitude") as string | null;
     const longitudeStr = formData.get("longitude") as string | null;
+    const visitDateRaw = formData.get("visitDate") as string | null;
 
     const entryPrice = entryPriceStr ? parseFloat(entryPriceStr) : undefined;
     const latitude = latitudeStr ? parseFloat(latitudeStr) : undefined;
     const longitude = longitudeStr ? parseFloat(longitudeStr) : undefined;
-
+    const visitDate = visitDateRaw
+     ? new Date(`${visitDateRaw}T12:00:00`)
+     : undefined;
        
     if (!id || !pointId || !placeType || !name) {
       throw new Error("Missing required fields: id or notes");
@@ -61,7 +64,8 @@ export async function createPlace(formData: FormData) {
       latitude,
       longitude,
       affiliatelink,
-      entryPrice
+      entryPrice,
+      visitDate
     };
 
 
