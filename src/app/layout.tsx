@@ -13,7 +13,12 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-touch-icon.png",
   },
+  other: {
+    "ahrefs-site-verification":
+      "884be9de59cce95c18424b71fe712578a913470b932941b6522ac405bfdab509",
+  },
 };
+
 
 
   export default async function RootLayout({
