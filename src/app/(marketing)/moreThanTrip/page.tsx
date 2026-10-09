@@ -31,9 +31,17 @@ const LandingPage = () => {
       <div className="relative z-10">
   
         <HeroSection/>
-        <HowItWorks/>
-        <FeaturesSection/>
-        <TestimonialsSection/>
+       <section id="how-it-works">
+  <HowItWorks />
+</section>
+
+<section id="things-youll-love">
+  <FeaturesSection />
+</section>
+
+<section id="testimonials">
+  <TestimonialsSection />
+</section>
 
         <footer className="border-t border-white/10  bg-transparent py-10 backdrop-blur-sm">
           <div className="container mx-auto grid grid-cols-1 gap-8 px-6 sm:grid-cols-3 sm:px-12 lg:px-16">
@@ -63,17 +71,19 @@ const LandingPage = () => {
               <h3 className="mb-4 text-lg font-semibold">Follow Us</h3>
 
               <div className="flex justify-center space-x-6 sm:justify-end">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                  <FaFacebook className="text-2xl text-white hover:text-gray-200 transition" />
+                 <a href="https://www.instagram.com/tripaki.travel/" target="_blank" rel="noopener noreferrer">
+                  <FaInstagram className="text-2xl text-white hover:text-gray-200 transition" />
                 </a>
-
+               
+               {/*
                 <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
                   <FaTwitter className="text-2xl text-white hover:text-gray-200 transition" />
                 </a>
-
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                  <FaInstagram className="text-2xl text-white hover:text-gray-200 transition" />
-                </a>
+                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                  <FaFacebook className="text-2xl text-white hover:text-gray-200 transition" />
+                </a>              
+                **/}
+                
               </div>
             </div>
           </div>

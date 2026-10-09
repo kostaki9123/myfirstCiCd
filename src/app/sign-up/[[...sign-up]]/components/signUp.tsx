@@ -17,6 +17,8 @@ export default function DelayedSignUp() {
 
   return (       
    <SignUp
+    fallbackRedirectUrl="/"
+  signInUrl="/sign-in"
   appearance={{
     layout: {
       logoImageUrl: "/ChatGPT Image 10 Μαρ 2026, 04_35_50 μμ.png",
