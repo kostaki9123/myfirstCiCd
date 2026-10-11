@@ -12,6 +12,8 @@ import OpenInBrowserBanner from "./component/OpenInBrowserBanner";
 const LandingPage = () => {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#010038] text-white/90">
+
+      
       {/* Background Image */}
       <div className="fixed inset-0 z-0">
         <Image

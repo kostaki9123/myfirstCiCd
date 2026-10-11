@@ -14,6 +14,7 @@
     withtripname? : boolean
     withManageTripbtn? : boolean
     withoutHumburger? : boolean
+    withNavigation? : boolean
   } 
 
   const  Navbar =  (props : props) => {
@@ -77,14 +78,8 @@
               <Ded/>
             }
         </div>
-         <div className="hidden 950:flex items-center gap-2"> {/* Navigation */}
-            <div className="flex items-center gap-1 rounded-xl bg-white/5 border border-white/10 px-1 py-1"> 
-               <Link href="/#how-it-works" className="px-3 py-2 rounded-lg text-white/80 text-sm font-medium hover:text-white hover:bg-white/10 transition-colors duration-200" > How It Works </Link>
-               <Link href="/#things-youll-love" className="px-3 py-2 rounded-lg text-white/80 text-sm font-medium hover:text-white hover:bg-white/10 transition-colors duration-200" > Things You'll Love </Link>
-               <Link href="/#testimonials" className="px-3 py-2 rounded-lg text-white/80 text-sm font-medium hover:text-white hover:bg-white/10 transition-colors duration-200" > Testimonials </Link> 
-               <Link href="/blog" className="px-3 py-2 rounded-lg text-white/80 text-sm font-medium hover:text-white hover:bg-white/10 transition-colors duration-200" > Blog </Link> 
-            </div>  
-        </div>
+       
+        
 
         <div className=" ml-[210px] 343:ml-0  343:absolute top-0 right-0 flex h-full items-center justify-around base:pl-36 150:pl-36 200:pl-28 255:pl-16  290:pl-10 343:px-6 text-white " >
 
@@ -112,8 +107,17 @@
     </div>
     
   </SignedOut>
+   {props.withManageTripbtn &&
+            <Link
+                  href="/"
+                  className=" border-2  border-lime-500  ml-1 px-4 mx-8 py-2 rounded-lg bg-[#0356BC] hover:bg-[#0466D9]  border-white/10 text-white text-sm font-semibold shadow-lg shadow-blue-950/40 transition-all duration-200 active:scale-[0.98] whitespace-nowrap"
+                >
+                  Manage Trip
+           </Link>
+         }
           
               <div className='w-11  flex items-center justify-center h-full '>
+                
                 <SignedIn>                     
                       <UserAvatarWithLoading/>    
                 </SignedIn>

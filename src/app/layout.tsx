@@ -39,7 +39,7 @@ export const metadata: Metadata = {
         className="bg-[#010038] "
           id="datepicker-portal"
         >       
-          <Navbar withtripname={false} withoutHumburger={true}/>
+          <Navbar withtripname={false} withoutHumburger={true} withNavigation/>
           {children}
           <Analytics />
         </body>

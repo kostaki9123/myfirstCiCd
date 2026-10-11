@@ -12,7 +12,7 @@ const DashboardLayout = async ({ children }: props) => {
   return (
     <div className=' h-screen relative '>
        <Navbar  withtripname={true} withManageTripbtn={true}/>
-       <Sidebar/>
+       <Sidebar  />
        <div className=' bg-white top-14 absolute md:left-56 left-0 right-0 bottom-0 '>
        {children} 
        </div>

@@ -15,15 +15,6 @@ const CYPRUS_TRIP = {
       name: "Larnaca",
       places: [
         {
-          id: "cyprus-day1-larnaca",
-          name: "Larnaca",
-          type: "PLACE_TO_VISIT",
-          latitude: 34.9003,
-          longitude: 33.6232,
-          googleMapLink:
-            "https://www.google.com/maps/search/?api=1&query=Larnaca+Cyprus",
-        },
-        {
           id: "cyprus-day1-la-veranda",
           name: "La Veranda",
           type: "ACCOMMODATION",
@@ -39,15 +30,7 @@ const CYPRUS_TRIP = {
       index: 1,
       name: "Ayia Napa & Protaras",
       places: [
-        {
-          id: "cyprus-day2-ayia-napa",
-          name: "Ayia Napa",
-          type: "PLACE_TO_VISIT",
-          latitude: 34.9892,
-          longitude: 34.0158,
-          googleMapLink:
-            "https://www.google.com/maps/search/?api=1&query=Ayia+Napa+Cyprus",
-        },
+        /** 
         {
           id: "cyprus-day2-protaras",
           name: "Protaras",
@@ -56,7 +39,8 @@ const CYPRUS_TRIP = {
           longitude: 34.0583,
           googleMapLink:
             "https://www.google.com/maps/search/?api=1&query=Protaras+Cyprus",
-        },
+        }
+        */
         {
           id: "cyprus-day2-anesis",
           name: "Anesis Hotel",
@@ -74,15 +58,6 @@ const CYPRUS_TRIP = {
       name: "Nicosia",
       places: [
         {
-          id: "cyprus-day3-nicosia",
-          name: "Nicosia",
-          type: "PLACE_TO_VISIT",
-          latitude: 35.1856,
-          longitude: 33.3823,
-          googleMapLink:
-            "https://www.google.com/maps/search/?api=1&query=Nicosia+Cyprus",
-        },
-        {
           id: "cyprus-day3-semeli",
           name: "Semeli Hotel",
           type: "ACCOMMODATION",
@@ -98,15 +73,6 @@ const CYPRUS_TRIP = {
       index: 3,
       name: "Troodos Mountains",
       places: [
-        {
-          id: "cyprus-day4-troodos",
-          name: "Troodos Mountains",
-          type: "PLACE_TO_VISIT",
-          latitude: 34.9236,
-          longitude: 32.8731,
-          googleMapLink:
-            "https://www.google.com/maps/search/?api=1&query=Troodos+Mountains+Cyprus",
-        },
         {
           id: "cyprus-day4-troodos-hotel",
           name: "Troodos Hotel",
@@ -124,15 +90,6 @@ const CYPRUS_TRIP = {
       name: "Limassol",
       places: [
         {
-          id: "cyprus-day5-limassol",
-          name: "Limassol",
-          type: "PLACE_TO_VISIT",
-          latitude: 34.6786,
-          longitude: 33.0413,
-          googleMapLink:
-            "https://www.google.com/maps/search/?api=1&query=Limassol+Cyprus",
-        },
-        {
           id: "cyprus-day5-harmony-bay",
           name: "Harmony Bay Hotel",
           type: "ACCOMMODATION",
@@ -148,15 +105,6 @@ const CYPRUS_TRIP = {
       index: 5,
       name: "Paphos",
       places: [
-        {
-          id: "cyprus-day6-paphos",
-          name: "Paphos",
-          type: "PLACE_TO_VISIT",
-          latitude: 34.7754,
-          longitude: 32.421,
-          googleMapLink:
-            "https://www.google.com/maps/search/?api=1&query=Paphos+Cyprus",
-        },
         {
           id: "cyprus-day6-capital-coast",
           name: "Capital Coast Resort & Spa",
