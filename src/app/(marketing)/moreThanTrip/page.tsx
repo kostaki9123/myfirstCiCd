@@ -8,11 +8,12 @@ import HowItWorks from "./component/howWork";
 import FeaturesSection from "./component/feuatereDesti";
 import TestimonialsSection from "./component/testimonials";
 import OpenInBrowserBanner from "./component/OpenInBrowserBanner";
+import Navbar from "./component/navbar";
 
 const LandingPage = () => {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#010038] text-white/90">
-
+      <Navbar withNavigation />
       
       {/* Background Image */}
       <div className="fixed inset-0 z-0">

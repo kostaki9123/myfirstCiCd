@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Navbar from "../moreThanTrip/component/navbar";
 
 
 const posts = [
@@ -83,6 +84,7 @@ const BlogPage = () => {
 
   return (
     <main className="min-h-screen bg-[#010038] text-white">
+        <Navbar withNavigation/>
       {/* Header */}
       <section className="relative overflow-hidden pt-32 pb-20">
         <div className="absolute inset-0">

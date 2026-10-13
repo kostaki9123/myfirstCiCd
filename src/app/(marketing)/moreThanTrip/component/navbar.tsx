@@ -1,0 +1,140 @@
+  import React from 'react'
+  import {  SignedIn, SignedOut, SignInButton} from "@clerk/nextjs";
+  import Link from 'next/link';
+  import { Button } from '@/components/ui/button';
+  import Humburger from '@/app/component-custom/bars/humburger';
+  import UserAvatarWithLoading from '@/app/component-custom/bars/UserAvatarWithLoading';
+  import Ded from '@/app/component-custom/bars/ded';
+  import Image from 'next/image';
+  import Navbarphone from '@/app/component-custom/bars/navbarphove';
+  import { TiArrowBack } from "react-icons/ti";
+
+
+  type props = {
+    withtripname? : boolean
+    withManageTripbtn? : boolean
+    withoutHumburger? : boolean
+    withNavigation? : boolean
+  } 
+
+  const  Navbar =  (props : props) => {
+  // const expensiveAI = await allowExpensiveAI();
+
+    return (
+      <div className= 'h-14 fixed bg-[#010038] top-0 left-0 right-0  535:justify-center flex   items-center z-[52] md:min-w-screen shadow-lg'>
+        
+        <div className=' 535:hidden flex  '>
+            <Link href="/" className=' text-2xl text-white pl-4 p-2 '>
+            {!props.withoutHumburger &&
+              <TiArrowBack />
+            }
+            </Link>
+            <Link
+                    href="/"
+                    className="relative w-[200px] md:ml-5 flex justify-center items-center "
+                  >
+                    <Image
+                      src="/ChatGPT Image 10 Μαρ 2026, 04_35_50 μμ.png"
+                      alt="Trip Planner Logo"
+                      width={90}
+                      height={90}
+                      className="object-contain min-w-24  mt-2 absolute left-0 md:left-3"
+                    />
+                  
+                    <h3 className="mt-1 text-xl font-semibold tracking-tight text-white absolute left-16 md:left-20">
+                      Tripaki
+                    </h3>
+            </Link>  
+          </div>
+
+        {props.withoutHumburger ?
+              <></>
+            :
+          <Navbarphone/> 
+          }
+
+        <div className=' hidden 535:absolute left-0 min-w-fit h-full 535:flex  text-white  '> 
+            {props.withoutHumburger ?
+              <></>
+            :<Humburger/>
+            }
+            <Link
+                  href="/"
+                  className="relative w-[200px] md:ml-5 flex justify-center items-center "
+                >
+                  <Image
+                    src="/ChatGPT Image 10 Μαρ 2026, 04_35_50 μμ.png"
+                    alt="Trip Planner Logo"
+                    width={90}
+                    height={90}
+                    className="object-contain mt-2 absolute left-0 md:left-3"
+                  />
+                
+                  <h3 className="mt-1 text-xl font-semibold tracking-tight text-white absolute left-16 md:left-20">
+                    Tripaki
+                  </h3>
+              </Link>
+            {props.withtripname &&
+              <Ded/>
+            }
+        </div>
+        {props.withNavigation &&
+                <div className="hidden 950:flex items-center gap-2"> {/* Navigation */}
+                   <div className="flex items-center gap-1 rounded-xl bg-white/5 border border-white/10 px-1 py-1"> 
+                      <Link href="/moreThanTrip#how-it-works" className="px-3 py-2 rounded-lg text-white/80 text-sm font-medium hover:text-white hover:bg-white/10 transition-colors duration-200" > How It Works </Link>
+                      <Link href="/moreThanTrip#things-youll-love" className="px-3 py-2 rounded-lg text-white/80 text-sm font-medium hover:text-white hover:bg-white/10 transition-colors duration-200" > Things You'll Love </Link>
+                      <Link href="/moreThanTrip#testimonials" className="px-3 py-2 rounded-lg text-white/80 text-sm font-medium hover:text-white hover:bg-white/10 transition-colors duration-200" > Testimonials </Link> 
+                      <Link href="/blog" className="px-3 py-2 rounded-lg text-white/80 text-sm font-medium hover:text-white hover:bg-white/10 transition-colors duration-200" > Blog </Link> 
+                   </div>      
+               </div>
+                }
+        
+
+        <div className=" ml-[210px] 343:ml-0  343:absolute top-0 right-0 flex h-full items-center justify-around base:pl-36 150:pl-36 200:pl-28 255:pl-16  290:pl-10 343:px-6 text-white " >
+
+    <SignedOut >
+    <div className="hidden md:flex gap-4 items-center ">
+      
+      {/* Sign In */}
+      <SignInButton>
+        <span className="cursor-pointer px-4 py-2 rounded-lg text-white font-medium 
+                        hover:bg-white/10 transition-colors duration-200">
+          log in
+        </span>
+      </SignInButton>
+
+      {/* Sign Up */}
+      <Link href={"/sign-up"}>
+      
+        <span className="cursor-pointer px-4 py-2  text-white 
+                          bg-[#0356BC] hover:bg-[#0466D9] border border-white/10 shadow-lg
+                  shadow-blue-950/40 rounded-xl font-medium transition-all duration-200 active:scale-[0.98] ">
+          Sign up
+        </span>
+    
+    </Link>
+    </div>
+    
+  </SignedOut>
+   {props.withManageTripbtn &&
+            <Link
+                  href="/"
+                  className="  hidden 535:absolute  border-2  border-lime-500  ml-1 px-4 mx-8 py-2 rounded-lg bg-[#0356BC] hover:bg-[#0466D9]  border-white/10 text-white text-sm font-semibold shadow-lg shadow-blue-950/40 transition-all duration-200 active:scale-[0.98] whitespace-nowrap"
+                >
+                  Manage Trip
+           </Link>
+         }
+          
+              <div className='w-11  flex items-center justify-center h-full '>
+                
+                <SignedIn>                     
+                      <UserAvatarWithLoading/>    
+                </SignedIn>
+              </div>
+              
+          </div>
+      </div>
+    )
+  }
+
+  export default Navbar

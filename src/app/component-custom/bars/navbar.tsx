@@ -110,7 +110,7 @@
    {props.withManageTripbtn &&
             <Link
                   href="/"
-                  className=" border-2  border-lime-500  ml-1 px-4 mx-8 py-2 rounded-lg bg-[#0356BC] hover:bg-[#0466D9]  border-white/10 text-white text-sm font-semibold shadow-lg shadow-blue-950/40 transition-all duration-200 active:scale-[0.98] whitespace-nowrap"
+                  className=" hidden 535:flex  border-2  border-lime-500  ml-1 px-4 mx-8 py-2 rounded-lg bg-[#0356BC] hover:bg-[#0466D9]  border-white/10 text-white text-sm font-semibold shadow-lg shadow-blue-950/40 transition-all duration-200 active:scale-[0.98] whitespace-nowrap"
                 >
                   Manage Trip
            </Link>
