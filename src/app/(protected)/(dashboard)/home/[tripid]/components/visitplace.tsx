@@ -1,10 +1,11 @@
+
 "use client";
 
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import React, { useEffect, useState } from "react";
+import { MapPin, ChevronRight, CalendarDays, Clock } from "lucide-react";
 import { RiExternalLinkLine } from "react-icons/ri";
 import Notes from "./placenote";
-import Link from "next/link";
 
 type Props = {
   internalId: string;
@@ -16,17 +17,9 @@ type Props = {
   googleMapLink: string | null | undefined;
   paymentStatus?: string | null;
   tripId: string;
+  imageUrl?: string | null;
 };
 
-// detect mobile safely
-const isMobileDevice = () => {
-  if (typeof window === "undefined") return false;
-  return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Mobile/i.test(
-    navigator.userAgent
-  );
-};
-
-// extract place_id
 const extractPlaceId = (url?: string | null) => {
   if (!url) return null;
 
@@ -37,112 +30,122 @@ const extractPlaceId = (url?: string | null) => {
   return match?.[1] ?? null;
 };
 
+const formatDate = (date?: Date | string | null) => {
+  if (!date) return "--";
+
+  const parsed = new Date(date);
+  if (Number.isNaN(parsed.getTime())) return "--";
+
+  return parsed.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+};
+
+const formatTime = (time?: Date | string | null) => {
+  if (!time) return "--";
+
+  const parsed = new Date(time);
+  if (Number.isNaN(parsed.getTime())) return "--";
+
+  return parsed.toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "UTC",
+  });
+};
+
 const Visitplace = (props: Props) => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setIsMobile(isMobileDevice());
-  }, []);
-
   const placeId = extractPlaceId(props.googleMapLink);
 
-  // FINAL URL LOGIC (BEST RELIABILITY)
-  const googleLink = (() => {
-    if (!props.googleMapLink) return null;
-
-    // If we have place_id → use strongest universal format
-    if (placeId) {
-      return `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${placeId}`;
-    }
-
-    // fallback
-    return props.googleMapLink;
-  })();
+  const googleLink = props.googleMapLink
+    ? placeId
+      ? `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${placeId}`
+      : props.googleMapLink
+    : null;
 
   return (
-    <div className="flex flex-col">
-      <h2 className="text-base py-2 font-semibold text-white hidden lg:block">
-        Place
-      </h2>
+    <div className="group min-w-0 border-b border-blue-950/90 last:border-b-0">
+      <Link
+        href={`/itinerary/${props.tripId}?point=${props.pointId}`}
+        className="flex min-w-0 items-center gap-3 px-0 py-2 transition hover:bg-blue-900/20 sm:gap-4"
+      >
+        {/* Place thumbnail */}
+        <div className="h-[60px] w-[100px] shrink-0 overflow-hidden rounded-xl border border-blue-900/80 bg-gradient-to-br from-blue-900/70 to-[#020b2b] sm:h-[68px] sm:w-[110px]">
+          {props.imageUrl ? (
+            <img
+              src={props.imageUrl}
+              alt={props.name}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center">
+              <MapPin className="h-7 w-7 text-blue-400/70" />
+            </div>
+          )}
+        </div>
 
-      <Card className=" bg-white/10 border-none border-white/10   text-white/90 w-72 426:w-auto relative h-full p-2 535:max-w-[370px] max-w-[350px]">
-        <CardHeader className="flex flex-row gap-2 p-3">
-          <div className="flex flex-row items-start gap-2">
-            <CardTitle>{props.name}</CardTitle>
+        {/* Place name and details */}
+        <div className="min-w-0 flex-1">
+          <h3 className="truncate text-sm font-medium text-slate-100 sm:text-base">
+            {props.name}
+          </h3>
 
-            {props.paymentStatus === "PAID" && (
-              <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-green-100 text-green-700">
-                Paid
+          <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-400">
+            <span className="inline-flex items-center gap-1">
+              <CalendarDays className="h-3.5 w-3.5 text-blue-400" />
+              {formatDate(props.visitdate)}
+            </span>
+
+            {props.visitTime && (
+              <span className="inline-flex items-center gap-1">
+                <Clock className="h-3.5 w-3.5 text-blue-400" />
+                {formatTime(props.visitTime)}
               </span>
             )}
 
-            {props.paymentStatus === "UNPAID" && (
-              <span className="text-[10px] px-2 py-1 rounded-full font-medium bg-red-100 text-red-500">
-                Unpaid
-              </span>
-            )}
-
-            {props.paymentStatus === "PARTIALLY_PAID" && (
-              <span className="text-[10px] px-2 py-1 w-fit text-center rounded-full font-medium bg-yellow-100 text-yellow-500">
-                Partially Paid
-              </span>
-            )}
-          </div>
-
-          <Link
-            href={`/itinerary/${props.tripId}?point=${props.pointId}`}
-            className="text-xs max-h-7 px-2 py-1 rounded-md absolute top-2 right-2  bg-white/10 hover:bg-white/5  text-white hover:bg-blue-50 transition"
-          >
-            Edit
-          </Link>
-
-          <div className="min-w-8" />
-        </CardHeader>
-
-        <CardContent className="p-2 pt-0 space-y-3 text-xs text-muted-foreground text-white/70 ">
-          <div className="flex items-start px-2 flex-col gap-2">
-            {props.visitdate ? (
-              <span>
-                Visit Date:{" "}
-                {new Date(props.visitdate).toLocaleDateString(undefined, {
-                  day: "numeric",
-                  month: "short",
-                })}
-              </span>
-            ) : (
-              <span>Visit Date: --</span>
-            )}
-
-            {props.visitTime ? (
-              <span>
-                Visit Time:{" "}
-                {props.visitTime.toLocaleTimeString("en-GB", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: false,
-                  timeZone: "UTC",
-                })}
-              </span>
-            ) : (
-              <span>Visit Time: --</span>
-            )}
-
-            {googleLink && (
-              <a
-                href={googleLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-[#0356BC] transition flex gap-1 items-center"
+            {props.paymentStatus && (
+              <span
+                className={
+                  props.paymentStatus === "PAID"
+                    ? "text-emerald-300"
+                    : props.paymentStatus === "UNPAID"
+                      ? "text-red-300"
+                      : "text-amber-300"
+                }
               >
-                <RiExternalLinkLine className="text-lg" />
-                <span className="pt-[2px] hover:text-[#0466D9] ">Open in Map</span>
-              </a>
+                {props.paymentStatus === "PARTIALLY_PAID"
+                  ? "Partially paid"
+                  : props.paymentStatus === "PAID"
+                    ? "Paid"
+                    : props.paymentStatus === "UNPAID"
+                      ? "Unpaid"
+                      : props.paymentStatus}
+              </span>
             )}
           </div>
+        </div>
 
-          <Notes internalId={props.internalId} notes={props.notes} />
-        </CardContent>
-      </Card>
+        <ChevronRight className="h-5 w-5 shrink-0 text-blue-300 transition-transform group-hover:translate-x-0.5" />
+      </Link>
+
+      {/* Additional actions and notes 
+      {(googleLink || props.notes) && (
+        <div className="pb-2 pl-0 sm:pl-[126px]">
+         
+
+          {props.notes && (
+            <div className="mt-2 border-t border-blue-950/70 pt-2">
+              <Notes
+                internalId={props.internalId}
+                notes={props.notes}
+              />
+            </div>
+          )}
+        </div>
+      )}
+        */}
     </div>
   );
 };

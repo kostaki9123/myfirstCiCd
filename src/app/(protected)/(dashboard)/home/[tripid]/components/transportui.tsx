@@ -1,11 +1,24 @@
-'use client'
 
-import React from 'react'
-import { IoAirplaneOutline , IoTrain } from "react-icons/io5";
-import { FaCar , FaBusAlt , FaBicycle, FaShip,FaWalking } from "react-icons/fa";
-import { FaMotorcycle , FaTrainSubway  } from "react-icons/fa6";
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Pointnotes from './pointnotes';
+"use client";
+
+import React from "react";
+import {
+  IoAirplaneOutline,
+  IoTrain,
+} from "react-icons/io5";
+import {
+  FaCar,
+  FaBusAlt,
+  FaBicycle,
+  FaShip,
+  FaWalking,
+} from "react-icons/fa";
+import {
+  FaMotorcycle,
+  FaTrainSubway,
+} from "react-icons/fa6";
+import { Clock3 } from "lucide-react";
+import Pointnotes from "./pointnotes";
 
 const transportModes = [
   { value: "flight", icon: <IoAirplaneOutline /> },
@@ -20,74 +33,108 @@ const transportModes = [
   { value: "other", icon: <FaShip /> },
 ];
 
-type props = {
-   id: string ,
-   tripId : string
-   index: number,
-   fromId : string
-   fromName: string,
-   fromAddress : string
-   fromLat : string
-   fromLng : string
-   toName: string,
-   toId : string
-   toAddress : string
-   toLat : string
-   toLng : string
-   transportType: string,
-   departureDate?: any,
-   departureTime?: any
-   notes?: string
-}
+type Props = {
+  id: string;
+  tripId: string;
+  index: number;
+  fromId: string;
+  fromName: string;
+  fromAddress: string;
+  fromLat: string;
+  fromLng: string;
+  toName: string;
+  toId: string;
+  toAddress: string;
+  toLat: string;
+  toLng: string;
+  transportType: string;
+  departureDate?: any;
+  departureTime?: any;
+  notes?: string;
+};
 
-const Transportui = (props : props) => {
-  
-const getTransportIcon = (type: string) => {
-    const found = transportModes.find((m) => m.value === type);
-    return found ? found.icon : type;
-  };
+const Transportui = (props: Props) => {
+  const transport = transportModes.find(
+    (mode) => mode.value === props.transportType
+  );
 
-function capitalizeFirst(str : string) {
-  if (!str) return "";
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
+  const icon = transport?.icon ?? <FaCar />;
 
- const date =props.departureDate ?  props.departureDate.toLocaleString('en-US', { month: 'short', day: '2-digit' }) : null
+  const capitalizeFirst = (value: string) =>
+    value ? value.charAt(0).toUpperCase() + value.slice(1) : "Transport";
+
+  const date = props.departureDate
+    ? new Date(props.departureDate).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      })
+    : null;
+
+  const departureTime = props.departureTime
+    ? String(props.departureTime)
+    : null;
 
   return (
-     <div className=" relative min-h-32 flex flex-col lg:flex-row gap-3 lg:gap-12  justify-center items-start lg:items-center ">
-            <div className=" lg:absolute top-1 mt-1 lg:mt-0s left-[-6px] px-3 py-1.5 rounded-md
-                bg-gray-700 text-white text-[11px] shadow-lg flex items-center gap-1">
-                 <div className="uppercase tracking-wide text-gray-200">{date.split(' ')[0]}</div>
-                 <div className="font-semibold">{date.split(' ')[1]}</div>
-            </div>
+    <section className="relative w-full min-w-0">
+      {/* Subtle connector to the next destination */}
+      <div className="flex w-full min-w-0 items-center gap-3 rounded-xl border border-blue-900/80 border-l-4 border-l-blue-500 bg-[#071638] px-3 py-3 shadow-sm transition-colors hover:border-blue-700 sm:gap-4 sm:px-4 sm:py-3.5">
+        {/* Transport icon */}
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white shadow-md shadow-blue-950/50 sm:h-12 sm:w-12 [&>svg]:text-xl">
+          {icon}
+        </div>
 
-            <div  className="relative pl-10 text-white w-40   ">
-                  <div className="absolute left-0 top-1.5 w-3 h-3 bg-white rounded-full border-2 border-lime-500"></div>
-                  <div className="text-lg font-semibold">{capitalizeFirst(props.transportType)}</div>
-                 
-            </div>
-                    
-            <div className='flex flex-col  ' >  
-                 <h2 className=" text-base h-[32px] font-semibold text-white hidden lg:block "></h2>
-                 <Card className="  bg-white/10  border-none border-white/10 group  w-72  lg:mt-5  relative ml-3 lg:ml-0 p-2  text-white/90  ">
-                   <CardHeader className="p-3  ">  
-                     <CardTitle className='flex flex-row gap-2'>
-                          Transport  
-                           <div >{getTransportIcon(props.transportType)}</div> 
-                     </CardTitle>                   
-                   </CardHeader>
-                   <CardContent className="text-white/70 p-2 pt-0 space-y-2 text-xs text-muted-foreground">
-                     <div className="flex items-start px-2 text-white/70 flex-col gap-2">                      
-                       <span>From: {props.fromName}</span>
-                       <span>To: {props.toName}</span>
-                     </div>
-                     <Pointnotes  toName={props.toName} toId={props.toId} toAddress={props.toAddress} toLat={props.toLat} toLng={props.toLng} fromName={props.fromName} fromId={props.fromId} fromAddress={props.fromAddress} fromLat={props.fromLat} fromLng={props.fromLng} index={props.index} id={props.id} tripId={props.tripId} notes={props.notes} transportType={props.transportType} departureDate={props.departureDate} />
-                   </CardContent>
-                 </Card>
-            </div> 
+        {/* Route information */}
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span className="text-sm font-semibold text-white sm:text-base">
+              {capitalizeFirst(props.transportType)}
+            </span>
+
+            {date && (
+              <span className="rounded-full border border-blue-900 bg-blue-950/70 px-2 py-0.5 text-[11px] text-blue-200">
+                {date}
+              </span>
+            )}
+          </div>
+
+          <p className="mt-1 truncate text-xs text-slate-400 sm:text-sm">
+            {props.fromName || "Starting point"}
+            <span className="mx-2 text-blue-400">→</span>
+            {props.toName || "Next destination"}
+          </p>
+
+          {departureTime && (
+            <p className="mt-1 flex items-center gap-1 text-xs text-slate-500">
+              <Clock3 className="h-3 w-3" />
+              {departureTime}
+            </p>
+          )}
+        </div>
+
+        {/* Existing edit action */}
+        <div className="flex shrink-0 items-center">
+          <Pointnotes
+            toName={props.toName}
+            toId={props.toId}
+            toAddress={props.toAddress}
+            toLat={props.toLat}
+            toLng={props.toLng}
+            fromName={props.fromName}
+            fromId={props.fromId}
+            fromAddress={props.fromAddress}
+            fromLat={props.fromLat}
+            fromLng={props.fromLng}
+            index={props.index}
+            id={props.id}
+            tripId={props.tripId}
+            notes={props.notes}
+            transportType={props.transportType}
+            departureDate={props.departureDate}
+          />
+        </div>
       </div>
-  )
-}
+    </section>
+  );
+};
 
-export default Transportui
+export default Transportui;

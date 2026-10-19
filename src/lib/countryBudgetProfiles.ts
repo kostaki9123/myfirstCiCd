@@ -7,6 +7,7 @@ export type BudgetProfile = {
 
 export const countryBudgetProfilesEUR: Record<string, BudgetProfile> = {
   // ─── EUROPE ─────────────────────────
+
   FR: { currency: "EUR", Economy: 35, Balanced: 65, Luxury: 120 },
   DE: { currency: "EUR", Economy: 40, Balanced: 70, Luxury: 130 },
   IT: { currency: "EUR", Economy: 35, Balanced: 65, Luxury: 120 },

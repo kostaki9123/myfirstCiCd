@@ -8,131 +8,117 @@ const CYPRUS_TRIP = {
   tripBudget: "Balanced",
   travelingWith: "Solo",
   tripTypes: ["Cultural", "Natural", "Adventures"],
-
-  days: [
-    {
-      index: 0,
-      name: "Larnaca",
-      places: [
-        {
-          id: "cyprus-day1-la-veranda",
-          name: "La Veranda",
-          type: "ACCOMMODATION",
-          latitude: 34.9167,
-          longitude: 33.629,
-          googleMapLink:
-            "https://www.google.com/maps/search/?api=1&query=La+Veranda+Larnaca+Cyprus",
-        },
-      ],
-    },
-
-    {
-      index: 1,
-      name: "Ayia Napa & Protaras",
-      places: [
-        /** 
-        {
-          id: "cyprus-day2-protaras",
-          name: "Protaras",
-          type: "PLACE_TO_VISIT",
-          latitude: 35.0125,
-          longitude: 34.0583,
-          googleMapLink:
-            "https://www.google.com/maps/search/?api=1&query=Protaras+Cyprus",
-        }
-        */
-        {
-          id: "cyprus-day2-anesis",
-          name: "Anesis Hotel",
-          type: "ACCOMMODATION",
-          latitude: 34.9897,
-          longitude: 34.0147,
-          googleMapLink:
-            "https://www.google.com/maps/search/?api=1&query=Anesis+Hotel+Ayia+Napa+Cyprus",
-        },
-      ],
-    },
-
-    {
-      index: 2,
-      name: "Nicosia",
-      places: [
-        {
-          id: "cyprus-day3-semeli",
-          name: "Semeli Hotel",
-          type: "ACCOMMODATION",
-          latitude: 35.1578,
-          longitude: 33.3628,
-          googleMapLink:
-            "https://www.google.com/maps/search/?api=1&query=Semeli+Hotel+Nicosia+Cyprus",
-        },
-      ],
-    },
-
-    {
-      index: 3,
-      name: "Troodos Mountains",
-      places: [
-        {
-          id: "cyprus-day4-troodos-hotel",
-          name: "Troodos Hotel",
-          type: "ACCOMMODATION",
-          latitude: 34.9239,
-          longitude: 32.8707,
-          googleMapLink:
-            "https://www.google.com/maps/search/?api=1&query=Troodos+Hotel+Cyprus",
-        },
-      ],
-    },
-
-    {
-      index: 4,
-      name: "Limassol",
-      places: [
-        {
-          id: "cyprus-day5-harmony-bay",
-          name: "Harmony Bay Hotel",
-          type: "ACCOMMODATION",
-          latitude: 34.6874,
-          longitude: 33.0738,
-          googleMapLink:
-            "https://www.google.com/maps/search/?api=1&query=Harmony+Bay+Hotel+Limassol+Cyprus",
-        },
-      ],
-    },
-
-    {
-      index: 5,
-      name: "Paphos",
-      places: [
-        {
-          id: "cyprus-day6-capital-coast",
-          name: "Capital Coast Resort & Spa",
-          type: "ACCOMMODATION",
-          latitude: 34.7815,
-          longitude: 32.406,
-          googleMapLink:
-            "https://www.google.com/maps/search/?api=1&query=Capital+Coast+Resort+Spa+Paphos+Cyprus",
-        },
-      ],
-    },
-
-    {
-      index: 6,
-      name: "Larnaca & departure",
-      places: [
-        {
-          id: "cyprus-day7-larnaca",
-          name: "Larnaca International Airport",
-          type: "PLACE_TO_VISIT",
-          latitude: 34.8751,
-          longitude: 33.6249,
-          googleMapLink:
-            "https://www.google.com/maps/search/?api=1&query=Larnaca+International+Airport",
-        },
-      ],
-    },
-  ],
+days: [
+  {
+    index: 0,
+    name: "Larnaca",
+    placeLat: 34.92290000,
+    placeLng: 33.62330000,
+    places: [
+      {
+        id: "cyprus-day1-la-veranda",
+        name: "La Veranda",
+        type: "ACCOMMODATION",
+        latitude: 34.91670000,
+        longitude: 33.62900000,
+        googleMapLink:
+          "https://www.google.com/maps/search/?api=1&query=La+Veranda+Larnaca+Cyprus",
+      },
+    ],
+  },
+  {
+    index: 1,
+    name: "Ayia Napa & Protaras",
+    placeLat: 35.01250000,
+    placeLng: 34.05830000,
+    places: [
+      {
+        id: "cyprus-day2-anesis",
+        name: "Anesis Hotel",
+        type: "ACCOMMODATION",
+        latitude: 34.98970000,
+        longitude: 34.01470000,
+        googleMapLink:
+          "https://www.google.com/maps/search/?api=1&query=Anesis+Hotel+Ayia+Napa+Cyprus",
+      },
+    ],
+  },
+  {
+    index: 2,
+    name: "Nicosia",
+    placeLat: 35.18560000,
+    placeLng: 33.38230000,
+    places: [
+      {
+        id: "cyprus-day3-semeli",
+        name: "Semeli Hotel",
+        type: "ACCOMMODATION",
+        latitude: 35.15780000,
+        longitude: 33.36280000,
+        googleMapLink:
+          "https://www.google.com/maps/search/?api=1&query=Semeli+Hotel+Nicosia+Cyprus",
+      },
+    ],
+  },
+  {
+    index: 3,
+    name: "Troodos Mountains",
+    placeLat: 34.92390000,
+    placeLng: 32.87070000,
+    places: [
+      {
+        id: "cyprus-day4-troodos-hotel",
+        name: "Troodos Hotel",
+        type: "ACCOMMODATION",
+        latitude: 34.92390000,
+        longitude: 32.87070000,
+        googleMapLink:
+          "https://www.google.com/maps/search/?api=1&query=Troodos+Hotel+Cyprus",
+      },
+    ],
+  },
+  {
+    index: 4,
+    name: "Limassol",
+    placeLat: 34.70710000,
+    placeLng: 33.02260000,
+    places: [
+      {
+        id: "cyprus-day5-harmony-bay",
+        name: "Harmony Bay Hotel",
+        type: "ACCOMMODATION",
+        latitude: 34.68740000,
+        longitude: 33.07380000,
+        googleMapLink:
+          "https://www.google.com/maps/search/?api=1&query=Harmony+Bay+Hotel+Limassol+Cyprus",
+      },
+    ],
+  },
+  {
+    index: 5,
+    name: "Paphos",
+    placeLat: 34.77540000,
+    placeLng: 32.42180000,
+    places: [
+      {
+        id: "cyprus-day6-capital-coast",
+        name: "Capital Coast Resort & Spa",
+        type: "ACCOMMODATION",
+        latitude: 34.78150000,
+        longitude: 32.40600000,
+        googleMapLink:
+          "https://www.google.com/maps/search/?api=1&query=Capital+Coast+Resort+Spa+Paphos+Cyprus",
+      },
+    ],
+  },
+  {
+    index: 6,
+    name: "Larnaca & departure",
+    placeLat: 34.87510000,
+    placeLng: 33.62490000,
+    places: [],
+  },
+],
 };
 
 export async function POST(request: Request) {
@@ -248,6 +234,8 @@ export async function POST(request: Request) {
           role: "POINT",
           index: day.index,
           placeName: day.name,
+          placeLat: day.placeLat ,
+          placeLng: day.placeLng,
         },
       });
 
@@ -272,6 +260,7 @@ export async function POST(request: Request) {
       }
     }
 
+    console.log('created')
     // --------------------------------------------------
     // 9. Return the new trip ID
     // --------------------------------------------------
@@ -280,6 +269,7 @@ export async function POST(request: Request) {
       success: true,
       tripId: trip.id,
     });
+    
   } catch (error) {
     console.error(
       "CYPRUS TRIP TEMPLATE ERROR:",

@@ -1,99 +1,92 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, MapPin} from "lucide-react";
-import { MdAddLocationAlt } from "react-icons/md";
+
+import { CalendarDays, MapPin, Route, Plane } from "lucide-react";
 import { getPoints } from "../../plan/[tripid]/action";
-import Link from "next/link";
+import { getPlaces } from "../../itinerary/[tripid]/action";
 import Transportui from "./components/transportui";
 import Placeui from "./components/placeui";
-import { getPlaces } from "../../itinerary/[tripid]/action";
 import PhoneMap from "../../itinerary/[tripid]/components/phonemap";
 import StartOnboarding from "@/app/component-custom/onboarding/start-onboarding";
 import PlanTripOnboardingLink from "./components/PlanTripOnboardingLink";
 
-const DATE_COLORS = [
-  '#3b82f6',
-  '#92400e',
-  '#7c3aed',
-  '#f97316',
-  '#ec4899',
-  '#ef4444',
-  '#10b981',
-  '#f59e0b',
-  '#06b6d4',
-  '#84cc16',
-  '#e11d48',
-  '#0ea5e9',
-  '#a855f7',
-  '#14b8a6',
-  '#f43f5e',
-]
-
 interface PageProps {
-  params: Promise<{ tripid: string }>; // ✅ params is now async
+  params: Promise<{ tripid: string }>;
 }
 
-const Home = async ({ params }: PageProps) => {
+const DATE_COLORS = [
+  "#3b82f6", "#92400e", "#7c3aed", "#f97316", "#ec4899",
+  "#ef4444", "#10b981", "#f59e0b", "#06b6d4", "#84cc16",
+  "#e11d48", "#0ea5e9", "#a855f7", "#14b8a6", "#f43f5e",
+];
 
+function getDateRange(points: any[]) {
+  const dates = points
+    .flatMap((p) => [p.startDate, p.endDate, p.departureDate])
+    .filter(Boolean)
+    .map((d) => new Date(d).getTime())
+    .filter(Number.isFinite);
+
+  if (!dates.length) return "Dates not set";
+
+  const min = new Date(Math.min(...dates));
+  const max = new Date(Math.max(...dates));
+
+  const fmt = (d: Date) =>
+    d.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    });
+
+  return `${fmt(min)} – ${fmt(max)}, ${max.getFullYear()}`;
+}
+
+function getDayCount(points: any[]) {
+  const dates = points
+    .flatMap((p) => [p.startDate, p.endDate])
+    .filter(Boolean)
+    .map((d) => new Date(d).getTime())
+    .filter(Number.isFinite);
+
+  if (!dates.length) return 0;
+
+  const min = Math.min(...dates);
+  const max = Math.max(...dates);
+
+  return Math.max(
+    1,
+    Math.round((max - min) / 86_400_000) + 1
+  );
+}
+
+export default async function Home({ params }: PageProps) {
   const { tripid } = await params;
-
   const points = await getPoints(tripid);
 
-  function formatDateRange(points: any[]) {
-  const dates = points
-    .flatMap((p) => [
-      p.startDate ? new Date(p.startDate) : null,
-      p.endDate ? new Date(p.endDate) : null,
-      p.departureDate ? new Date(p.departureDate) : null,
-    ])
-    .filter(Boolean) as Date[];
+  const destinations = points
+    .filter((p: any) => p.role === "POINT")
+    .sort((a: any, b: any) => a.index - b.index);
 
-  if (dates.length === 0) return "No dates";
+  const placesByDestination = await Promise.all(
+    destinations.map((point: any) => getPlaces(point.id))
+  );
 
-  const min = new Date(Math.min(...dates.map((d) => d.getTime())));
-  const max = new Date(Math.max(...dates.map((d) => d.getTime())));
+  const allPlaces = placesByDestination.flat();
 
-  return `${min.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
+  const placesToVisit = allPlaces.filter(
+    (p: any) => p.placeType === "PLACE_TO_VISIT"
+  );
 
-  })} - ${max.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  
-  })}`;
-}
+  const stays = allPlaces
+    .filter((p: any) => p.placeType === "ACCOMMODATION")
+    .map((p: any) => ({
+      id: String(p.id),
+      name: p.name,
+      location: {
+        lat: Number(p.latitude),
+        lng: Number(p.longitude),
+      },
+    }));
 
-function formatRoute(points: any[]) {
-  return points
-    .filter((p) => p.role === "POINT" && p.placeName)
-    .sort((a, b) => a.index - b.index)
-    .map((p) => p.placeName)
-    .join(" → ");
-}
-
-const dateRange = formatDateRange(points);
-const route = formatRoute(points);
-
-
-
-
-const pointsOnly = points.filter((p) => p.role === "POINT");
-
-const placesPerPoint = await Promise.all(
-  pointsOnly.map((point) => getPlaces(point.id))
-);
-
-const allPlaces = placesPerPoint.flat();
-
-const placesToVisit = allPlaces.filter(
-  (p) => p.placeType === "PLACE_TO_VISIT"
-);
-
-const stays = allPlaces
-  .filter((p) => p.placeType === "ACCOMMODATION")
-  .map((p) => ({
+  const visits = placesToVisit.map((p: any) => ({
     id: String(p.id),
     name: p.name,
     location: {
@@ -102,118 +95,241 @@ const stays = allPlaces
     },
   }));
 
-const visits = placesToVisit.map((p) => ({
-  id: String(p.id),
-  name: p.name,
-  location: {
-    lat: Number(p.latitude),
-    lng: Number(p.longitude),
-  },
-}));
+  const visitDateColors: Record<string, string> = {};
 
-const visitDateColors: Record<string, string> = {};
+  for (const point of destinations) {
+    const pointVisits = placesToVisit.filter(
+      (place: any) =>
+        place.pointId === point.id && place.visitDate
+    );
 
-for (const point of pointsOnly) {
-  const pointPlacesToVisit = placesToVisit.filter(
-    (place) => place.pointId === point.id && place.visitDate
-  );
-
-  const uniqueDatesForPoint = Array.from(
-    new Set(
-      pointPlacesToVisit.map((place) =>
-        new Date(place.visitDate!).toISOString().split("T")[0]
+    const uniqueDates = Array.from(
+      new Set(
+        pointVisits.map((place: any) =>
+          new Date(place.visitDate).toISOString().split("T")[0]
+        )
       )
-    )
-  ).sort();
+    ).sort();
 
-  const dateColorMapForPoint: Record<string, string> = {};
+    const colors: Record<string, string> = {};
 
-  uniqueDatesForPoint.forEach((date, index) => {
-    dateColorMapForPoint[date] = DATE_COLORS[index % DATE_COLORS.length];
-  });
+    uniqueDates.forEach((date, index) => {
+      colors[date] = DATE_COLORS[index % DATE_COLORS.length];
+    });
 
-  for (const place of pointPlacesToVisit) {
-    const dateKey = new Date(place.visitDate!).toISOString().split("T")[0];
-    const color = dateColorMapForPoint[dateKey];
+    for (const place of pointVisits) {
+      const date = new Date(place.visitDate!)
+        .toISOString()
+        .split("T")[0];
 
-    if (color) {
-      visitDateColors[String(place.id)] = color;
+      if (colors[date]) {
+        visitDateColors[String(place.id)] = colors[date];
+      }
     }
   }
-}
+
+  const transfers = points.filter(
+    (p: any) => p.role !== "POINT"
+  );
+
+  const dateRange = getDateRange(points);
+  const dayCount = getDayCount(points);
 
   return (
-    <div className=" absolute top-0 inset-0 flex items-start justify-start overflow-x-hidden 535:overflow-x-auto bg-[#010038] "> 
-      <div className="relative   flex items-start justify-start   h-full w-full">   
-        <div className=" flex 535:flex-col flex-col 535:mt-0 relative  w-9   max-w-[200px]  535:max-w-content   justify-start items-start   gap-2 min-w-max p-6  ">
-             <StartOnboarding/>
-             <div className=" absolute left-[-9px] top-0   pl-4 h-full ">
-                    <div className=" bottom-0 w-1 bg-gray-500 rounded-full h-[98%] my-5 "></div>
-             </div>
+    <main className="absolute inset-0 overflow-hidden bg-[#020b2b] text-white">
+      <StartOnboarding />
 
-            {/* Trip Overview */}
-            <div className="flex w-full gap-12 ">
-         
-               <Card className=" w-[83%] xxs:w-full p-2 535:max-w-[370px] bg-white/10  border border-white/10
-           hover:bg-white/15  text-white  ">
-                  <CardHeader className="text-white/90 p-3 text-lg"> 
-                    <CardTitle >Trip Summary </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2 p p-3 text-white/70   text-xs text-muted-foreground">
-                    <div className="flex  text-white/70  items-center gap-2">
-                      <Calendar className="h-4 w-4" />
-                      <span>{dateRange}</span>
-                    </div>
-                    <div className="flex  text-white/70  items-center gap-2">
-                      <MapPin className="h-4 w-4" />
-                      <span>{route || "No places yet"}</span>
-                    </div>
-                  </CardContent>
-              </Card>   
-           </div>
+      {/* Scrollable itinerary workspace */}
+      <div className="h-full overflow-y-auto overflow-x-hidden">
+        <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
 
-           {/* Itinerary */}
-           {points.length === 0 && (
+          {/* Page heading */}
+          <header className="mb-6">
+            <p className="mb-2 text-sm font-medium text-blue-400">
+              TRIPAKI / YOUR TRIP
+            </p>
+
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Your itinerary
+            </h1>
+
+            <p className="mt-2 text-sm text-slate-400 sm:text-base">
+              Explore your trip, one destination at a time.
+            </p>
+          </header>
+
+          {/* Trip overview */}
+          <section className="mb-8 grid grid-cols-3 overflow-hidden rounded-xl border border-blue-900/70 bg-[#071638]">
+            <div className="flex min-w-0 items-center gap-2 border-r border-blue-900/70 px-3 py-4 sm:gap-3 sm:px-6">
+              <CalendarDays className="h-5 w-5 shrink-0 text-blue-400" />
+              <div className="min-w-0">
+                <p className="text-lg font-semibold">
+                  {dayCount || "—"}
+                </p>
+                <p className="text-xs text-slate-400 sm:text-sm">
+                  Days
+                </p>
+              </div>
+            </div>
+
+            <div className="flex min-w-0 items-center gap-2 border-r border-blue-900/70 px-3 py-4 sm:gap-3 sm:px-6">
+              <MapPin className="h-5 w-5 shrink-0 text-blue-400" />
+              <div className="min-w-0">
+                <p className="text-lg font-semibold">
+                  {destinations.length}
+                </p>
+                <p className="text-xs text-slate-400 sm:text-sm">
+                  Destinations
+                </p>
+              </div>
+            </div>
+
+            <div className="flex min-w-0 items-center gap-2 px-3 py-4 sm:gap-3 sm:px-6">
+              <Route className="h-5 w-5 shrink-0 text-blue-400" />
+              <div className="min-w-0">
+                <p className="text-lg font-semibold">
+                  {transfers.length}
+                </p>
+                <p className="text-xs text-slate-400 sm:text-sm">
+                  Transfers
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="text-lg font-semibold">Your route</h2>
+              <p className="mt-1 text-sm text-slate-400">
+                {dateRange}
+              </p>
+            </div>
+          </div>
+
+          {/* Destination timeline */}
+          {points.length === 0 ? (
             <PlanTripOnboardingLink tripid={tripid}>
               <div
                 id="onboarding-plan-trip"
-                className="group  w-[83%] xxs:w-full 535:max-w-[370px] flex flex-col items-center justify-center rounded-2xl 
-                border border-white/10 bg-white/10  hover:bg-white/15 text-white  p-8 shadow-md transition hover:shadow-lg hover:-translate-y-1 cursor-pointer"
-                aria-label="Start planning your trip"
+                className="flex min-h-64 cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-blue-700/60 bg-[#071638] p-8 text-center transition hover:border-blue-400 hover:bg-blue-950/60"
               >
-                <MdAddLocationAlt className="text-5xl text-[#0356BC] transition-transform group-hover:scale-110" />
-          
-                <span className="mt-2 text-base text-white/90 font-semibold text-white group-hover:text-white">
-                  Plan Your Trip
-                </span>
-          
-                <p className="text-sm text-white/70 mt-1 text-center">
-                  Add your first place to start building the journey
+                <MapPin className="mb-4 h-10 w-10 text-blue-400" />
+                <h3 className="text-lg font-semibold">
+                  Start planning your trip
+                </h3>
+                <p className="mt-2 max-w-sm text-sm text-slate-400">
+                  Add your first destination to start building your itinerary.
                 </p>
               </div>
             </PlanTripOnboardingLink>
-            )}
-              
-           {points.map(( point: any, key:number ) => ( 
-              point.role === "POINT" 
-             ? 
-              <Placeui  id={point.id} index={point.index} key={key}
-              placeName={point.placeName} tripId={tripid}  startDate={point.startDate}  endDate={point.endDate}   />         
-             :
-              <Transportui  key={key}  notes={point.notes}    toId={point.toPlaceId} toName={point.toName}  toAddress={point.toAddress} toLat={point.toLat.toString()} toLng={point.toLng.toString()!} fromId={point.fromPlaceId} fromName={point.fromName}  fromAddress={point.fromAddress} fromLat={point.fromLat.toString()!} fromLng={point.fromLng.toString()!}  id={point.id} tripId={point.tripId} index={point.index} transportType={point.transportType!} departureDate={point.departureDate} />    
-            ))}
-            <div className="h-20 535:hidden"></div>
+          ) : (
+            <div className="relative">
+              {/* Timeline line */}
+              <div
+                className="absolute bottom-12 left-[19px] top-6 w-0.5 bg-gradient-to-b from-blue-400 via-blue-600/70 to-blue-950 sm:left-[23px]"
+                aria-hidden="true"
+              />
+
+              <div className="space-y-7 sm:space-y-8">
+                {points.map((point: any, key: number) => {
+                  if (point.role === "POINT") {
+                    const destinationNumber = destinations.findIndex(
+                      (p: any) => p.id === point.id
+                    );
+
+                    return (
+                      <section
+                        key={point.id}
+                        className="relative pl-12 sm:pl-14"
+                      >
+                        {/* Numbered timeline marker */}
+                        <div className="absolute left-0 top-1 z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 border-blue-500 bg-[#06204c] text-sm font-bold shadow-[0_0_18px_rgba(0,112,255,0.18)] sm:h-12 sm:w-12">
+                          {String(destinationNumber + 1).padStart(2, "0")}
+                        </div>
+
+                        {/* Existing destination component */}
+                        <div className="min-w-0">
+                          <Placeui
+                            id={point.id}
+                            index={point.index}
+                            placeName={point.placeName}
+                            tripId={tripid}
+                            startDate={point.startDate}
+                            endDate={point.endDate}
+                          />
+                        </div>
+                      </section>
+                    );
+                  }
+
+                  return (
+                    <div
+                      key={point.id ?? key}
+                      className="relative pl-12 sm:pl-14"
+                    >
+                      <div className="flex min-w-0 items-center gap-3 rounded-xl border border-blue-900/70 border-l-4 border-l-blue-500 bg-[#071638] p-3 sm:gap-4 sm:p-4">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600">
+                          <Plane className="h-5 w-5" />
+                        </div>
+
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-semibold sm:text-base">
+                            {point.fromName || point.placeName || "Transport"}
+                            {" → "}
+                            {point.toName || "Next destination"}
+                          </p>
+                          <p className="mt-1 text-xs text-slate-400 sm:text-sm">
+                            {point.transportType || "Transfer"}
+                            {point.departureDate
+                              ? ` · ${new Date(point.departureDate).toLocaleDateString("en-US", {
+                                  month: "short",
+                                  day: "numeric",
+                                })}`
+                              : ""}
+                          </p>
+                        </div>
+
+                        <div className="shrink-0">
+                          <Transportui
+                            notes={point.notes}
+                            toId={point.toPlaceId}
+                            toName={point.toName}
+                            toAddress={point.toAddress}
+                            toLat={point.toLat.toString()}
+                            toLng={point.toLng.toString()}
+                            fromId={point.fromPlaceId}
+                            fromName={point.fromName}
+                            fromAddress={point.fromAddress}
+                            fromLat={point.fromLat.toString()}
+                            fromLng={point.fromLng.toString()}
+                            id={point.id}
+                            tripId={point.tripId}
+                            index={point.index}
+                            transportType={point.transportType!}
+                            departureDate={point.departureDate}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Map */}
+          <div className="mt-10">
             <PhoneMap
-                    cyrclesArr={points}
-                    addedplacetostay={stays}
-                    addedplacetovisit={visits}
-                    visitDateColors={visitDateColors}
-             />
+              cyrclesArr={points}
+              addedplacetostay={stays}
+              addedplacetovisit={visits}
+              visitDateColors={visitDateColors}
+            />
+          </div>
+
+          <div className="h-16 sm:h-8" />
         </div>
       </div>
-    </div>
-    
+    </main>
   );
-};
-
-export default Home;
+}

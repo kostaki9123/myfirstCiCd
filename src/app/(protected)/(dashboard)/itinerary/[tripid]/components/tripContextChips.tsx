@@ -1,7 +1,29 @@
-export type TripWith = "Solo" | "Friends" | "Couple" |  "Family" | "Group"
-export type TripBudget = "Economy traveler" | "Balanced traveler" | "Luxury traveler"
-export type TripType = "Adventures"| "Cultural Enthusiast"| "Natural lovers"| "Nightlife"| "Festival"| "Sports Enthusiast"| "Events"
 
+export type TripWith =
+  | "Solo"
+  | "Friends"
+  | "Couple"
+  | "Family"
+  | "Group";
+
+export type TripBudget =
+  | "Economy traveler"
+  | "Balanced traveler"
+  | "Luxury traveler";
+
+export type TripType =
+  | "Adventures"
+  | "Cultural Enthusiast"
+  | "Natural lovers"
+  | "Nightlife"
+  | "Festival"
+  | "Sports Enthusiast"
+  | "Events";
+
+type TripChip = {
+  label: string;
+  icon: string;
+};
 
 const tripLabels = {
   travelingWith: {
@@ -10,52 +32,78 @@ const tripLabels = {
     Solo: { label: "Solo traveler", icon: "🧍" },
     Couple: { label: "Couple getaway", icon: "❤️" },
     Group: { label: "Group adventure", icon: "👥" },
-  } as Record<TripWith, { label: string; icon: string }>,
+  } satisfies Record<TripWith, TripChip>,
 
   tripBudget: {
-    'Economy traveler' : { label: "Economy traveler", icon: "💰" },
-    'Balanced traveler': { label: "Balanced traveler", icon: "⚖️" },
-    'Luxury traveler' :  { label: "Luxury traveler", icon: "✨" },
-  } as Record<TripBudget, { label: string; icon: string }>,
+    "Economy traveler": {
+      label: "Economy traveler",
+      icon: "💰",
+    },
+    "Balanced traveler": {
+      label: "Balanced traveler",
+      icon: "⚖️",
+    },
+    "Luxury traveler": {
+      label: "Luxury traveler",
+      icon: "✨",
+    },
+  } satisfies Record<TripBudget, TripChip>,
 
   tripType: {
-    'Adventures' : { label: "Adventures", icon: "🧗" },
-    'Cultural Enthusiast': { label: "Cultural Enthusiast", icon: "🏛" },
-    'Natural lovers': { label: "Natural lovers", icon: "🌿" },
-    'Nightlife': { label: "Nightlife", icon: "🌙" },
-    'Festival': { label: "Festival", icon: "🎉" },
-    'Sports Enthusiast': { label: "Sports Enthusiast", icon: "⚽" },
-    'Events': { label: "Events", icon: "🎟️" },
-  } as Record<TripType, { label: string; icon: string }>,
+    Adventures: { label: "Adventures", icon: "🧗" },
+    "Cultural Enthusiast": {
+      label: "Cultural Enthusiast",
+      icon: "🏛️",
+    },
+    "Natural lovers": { label: "Natural lovers", icon: "🌿" },
+    Nightlife: { label: "Nightlife", icon: "🌙" },
+    Festival: { label: "Festival", icon: "🎉" },
+    "Sports Enthusiast": {
+      label: "Sports Enthusiast",
+      icon: "⚽",
+    },
+    Events: { label: "Events", icon: "🎟️" },
+  } satisfies Record<TripType, TripChip>,
+};
+
+type Props = {
+  travelingWith?: TripWith | null;
+  tripBudget?: TripBudget | null;
+  tripTypes?: TripType[] | null;
 };
 
 const TripContextChips = ({
   travelingWith,
   tripBudget,
   tripTypes,
-}: {
-  travelingWith: TripWith;
-  tripBudget: TripBudget;
-  tripTypes: TripType[];
-}) => {
-    
-  const chips: { label: string; icon: string }[] = [];
+}: Props) => {
+  const chips: TripChip[] = [];
 
-  // Direct lookup (type-safe)
-  chips.push(tripLabels.travelingWith[travelingWith]);
-  chips.push(tripLabels.tripBudget[tripBudget]);
+  const withChip = travelingWith
+    ? tripLabels.travelingWith[travelingWith]
+    : undefined;
 
-  tripTypes.forEach((type) => {
-    chips.push(tripLabels.tripType[type]);
-  });
+  const budgetChip = tripBudget
+    ? tripLabels.tripBudget[tripBudget]
+    : undefined;
 
+  if (withChip) chips.push(withChip);
+  if (budgetChip) chips.push(budgetChip);
+
+  for (const type of tripTypes ?? []) {
+    const chip = tripLabels.tripType[type];
+
+    if (chip) {
+      chips.push(chip);
+    }
+  }
 
   return (
     <div className="px-2 mb-2">
       <div className="flex flex-wrap gap-2 mb-1">
-        {chips.map((chip, idx) => (
+        {chips.map((chip) => (
           <span
-            key={idx}
+            key={`${chip.label}`}
             className="flex items-center gap-1 px-2 py-1 text-xs bg-white/10 text-white/90 rounded-full"
           >
             <span>{chip.icon}</span>
@@ -63,6 +111,7 @@ const TripContextChips = ({
           </span>
         ))}
       </div>
+
       <div className="text-[11px] text-white/70">
         Recommendations adapted to your trip style
       </div>
@@ -70,4 +119,4 @@ const TripContextChips = ({
   );
 };
 
-export default TripContextChips 
+export default TripContextChips;
