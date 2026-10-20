@@ -262,56 +262,34 @@ export default async function Home({ params }: PageProps) {
                     );
                   }
 
-                  return (
-                    <div
-                      key={point.id ?? key}
-                      className="relative pl-12 sm:pl-14"
-                    >
-                      <div className="flex min-w-0 items-center gap-3 rounded-xl border border-blue-900/70 border-l-4 border-l-blue-500 bg-[#071638] p-3 sm:gap-4 sm:p-4">
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600">
-                          <Plane className="h-5 w-5" />
-                        </div>
+                 
+return (
+  <div
+    key={point.id ?? key}
+    className="relative min-w-0 pl-12 sm:pl-14"
+  >
+    <Transportui
+      notes={point.notes}
+      toId={point.toPlaceId}
+      toName={point.toName}
+      toAddress={point.toAddress}
+      toLat={String(point.toLat ?? "")}
+      toLng={String(point.toLng ?? "")}
+      fromId={point.fromPlaceId}
+      fromName={point.fromName}
+      fromAddress={point.fromAddress}
+      fromLat={String(point.fromLat ?? "")}
+      fromLng={String(point.fromLng ?? "")}
+      id={point.id}
+      tripId={tripid}
+      index={point.index}
+      transportType={point.transportType || "other"}
+      departureDate={point.departureDate}
+      departureTime={point.departureTime}
+    />
+  </div>
+);
 
-                        <div className="min-w-0 flex-1">
-                          <p className="text-sm font-semibold sm:text-base">
-                            {point.fromName || point.placeName || "Transport"}
-                            {" → "}
-                            {point.toName || "Next destination"}
-                          </p>
-                          <p className="mt-1 text-xs text-slate-400 sm:text-sm">
-                            {point.transportType || "Transfer"}
-                            {point.departureDate
-                              ? ` · ${new Date(point.departureDate).toLocaleDateString("en-US", {
-                                  month: "short",
-                                  day: "numeric",
-                                })}`
-                              : ""}
-                          </p>
-                        </div>
-
-                        <div className="shrink-0">
-                          <Transportui
-                            notes={point.notes}
-                            toId={point.toPlaceId}
-                            toName={point.toName}
-                            toAddress={point.toAddress}
-                            toLat={point.toLat.toString()}
-                            toLng={point.toLng.toString()}
-                            fromId={point.fromPlaceId}
-                            fromName={point.fromName}
-                            fromAddress={point.fromAddress}
-                            fromLat={point.fromLat.toString()}
-                            fromLng={point.fromLng.toString()}
-                            id={point.id}
-                            tripId={point.tripId}
-                            index={point.index}
-                            transportType={point.transportType!}
-                            departureDate={point.departureDate}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  );
                 })}
               </div>
             </div>
