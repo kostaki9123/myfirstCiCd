@@ -49,13 +49,6 @@ const formatDate = (d?: Date | null) =>
       })
     : "--";
 
-const formatTime = (d?: Date | null) =>
-  d
-    ? new Date(d).toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    : "--";
 
 const ViewPlaceModal = ({ pointId , tripId }: Props) => {
   const [places, setPlaces] = useState<Place[]>([]);

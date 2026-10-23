@@ -129,6 +129,7 @@
     notes      String?
     paymentStatus String?
     affiliatelink String?
+    PhotoUrl    String?
 
     visitDate  DateTime?
     visitTime  DateTime?

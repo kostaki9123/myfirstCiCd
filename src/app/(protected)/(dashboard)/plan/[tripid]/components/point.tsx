@@ -143,8 +143,8 @@ const Point =  (props:Props) => {
     location: { lat: number; lng: number };
   } | null>({
     name: props.data.placeName ?? "",
-    address: props.data.placeAddress,
-    placeId: props.data.placeId,
+    address: props.data.placeAddress ?? "",
+    placeId: props.data.placeId ?? "",
     location: {
       lat: props.data.placeLat ?? 0,
       lng: props.data.placeLng ?? 0,
@@ -196,7 +196,7 @@ const Point =  (props:Props) => {
 
       console.log('selected place 1' , selectedPlace )
     const validation = updateSchema.safeParse({
-      place: selectedPlace,
+      place : selectedPlace,
       dates,
       id: props.data.id,
       tripId: props.data.tripId,
@@ -207,7 +207,8 @@ const Point =  (props:Props) => {
        const err = validation.error.errors[0];
      
        if (err.path[0] === "place") {
-         setError("Please select a valid place");
+         console.log('Error:' , err.message , err.path[0] , )
+         setError(`Please select a valid place`);
        } else if (err.path[0] === "dates") {
          setError(err.message);
        } else {

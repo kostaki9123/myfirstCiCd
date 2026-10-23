@@ -61,6 +61,7 @@ const paymentLabels: Record<string, string> = {
   PARTIALLY_PAID: "Partially paid",
 };
 
+
 const Accomodationplace = (props: Props) => {
   const placeId = extractPlaceId(props.googleMapLink);
 
@@ -69,6 +70,8 @@ const Accomodationplace = (props: Props) => {
       ? `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${placeId}`
       : props.googleMapLink
     : null;
+
+  console.log(props.imageUrl)
 
   return (
     <Card className="w-full min-w-0 overflow-hidden rounded-xl border border-blue-900/80 bg-[#071638] p-0 text-white shadow-none transition-colors hover:border-blue-700/80">

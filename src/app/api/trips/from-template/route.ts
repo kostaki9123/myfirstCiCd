@@ -21,6 +21,7 @@ days: [
         type: "ACCOMMODATION",
         latitude: 34.91670000,
         longitude: 33.62900000,
+        PhotoUrl : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReCsYrCObKXc0DtpVjUJG7w3qKapIhbPNo0X4CTAa6kQ&s=10' ,
         googleMapLink:
           "https://www.google.com/maps/search/?api=1&query=La+Veranda+Larnaca+Cyprus",
       },
@@ -38,6 +39,7 @@ days: [
         type: "ACCOMMODATION",
         latitude: 34.98970000,
         longitude: 34.01470000,
+        PhotoUrl : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbZN4ziZRy4tgE28tUw7Z9AnkRG-iR7GuV3lcQJB03yg&s=10' ,
         googleMapLink:
           "https://www.google.com/maps/search/?api=1&query=Anesis+Hotel+Ayia+Napa+Cyprus",
       },
@@ -55,6 +57,7 @@ days: [
         type: "ACCOMMODATION",
         latitude: 35.15780000,
         longitude: 33.36280000,
+        PhotoUrl : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiwsfgW2WK1S-ykKQLGu8vjt4L79vgpoy4DKUA3cxsIg&s=10' ,
         googleMapLink:
           "https://www.google.com/maps/search/?api=1&query=Semeli+Hotel+Nicosia+Cyprus",
       },
@@ -72,6 +75,7 @@ days: [
         type: "ACCOMMODATION",
         latitude: 34.92390000,
         longitude: 32.87070000,
+        PhotoUrl : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnvUwPQavd5diknKnjs0RTHVUcAW0IUD8s7TEQ40QJcQ&s=10' ,
         googleMapLink:
           "https://www.google.com/maps/search/?api=1&query=Troodos+Hotel+Cyprus",
       },
@@ -89,6 +93,7 @@ days: [
         type: "ACCOMMODATION",
         latitude: 34.68740000,
         longitude: 33.07380000,
+        PhotoUrl : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvL-9QKKAjgi_AIgbixcXtTLpGH_n66Jci2rthE1in5g&s=10' , 
         googleMapLink:
           "https://www.google.com/maps/search/?api=1&query=Harmony+Bay+Hotel+Limassol+Cyprus",
       },
@@ -106,6 +111,7 @@ days: [
         type: "ACCOMMODATION",
         latitude: 34.78150000,
         longitude: 32.40600000,
+        PhotoUrl : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6h6Vm_yZEB_H8TTv4GU-Ec78U4Y92btf85XdBccBLoA&s=10' ,
         googleMapLink:
           "https://www.google.com/maps/search/?api=1&query=Capital+Coast+Resort+Spa+Paphos+Cyprus",
       },
@@ -255,6 +261,7 @@ export async function POST(request: Request) {
             latitude: place.latitude,
             longitude: place.longitude,
             googleMapLink: place.googleMapLink,
+            PhotoUrl : place.PhotoUrl
           },
         });
       }

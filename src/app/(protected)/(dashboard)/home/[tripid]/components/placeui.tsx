@@ -89,6 +89,9 @@ const Placeui = async (props: Props) => {
   const itineraryUrl =
     `/itinerary/${props.tripId}?point=${props.id}`;
 
+    
+   console.log('Accodations',accommodations)
+
   return (
     <div className="w-full min-w-0">
       {/* Destination heading */}
@@ -143,6 +146,7 @@ const Placeui = async (props: Props) => {
                   googleMapLink={place.googleMapLink}
                   paymentStatus={place.paymentStatus}
                   tripId={props.tripId}
+                  imageUrl={place.PhotoUrl}
                 />
               ))
             ) : (

@@ -67,6 +67,7 @@ export const selectPointSchema = z.object({
 
   notes: z
      .string().nullable().optional(),
+  
 });
 
 export type Point = z.infer<typeof selectPointSchema>;

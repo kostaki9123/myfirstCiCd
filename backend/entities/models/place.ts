@@ -28,6 +28,8 @@ const placeBaseSchema = z.object({
   cost: z.coerce.number().positive().nullable().optional(),
   notes: z.string().nullable().optional(),
   paymentStatus: z.string().nullable().optional(),
+  PhotoUrl: z
+     .string().nullable().optional(),
 
   visitDate: z.coerce.date().nullable().optional(),
   visitTime: z.coerce.date().nullable().optional(),
